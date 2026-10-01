@@ -3,8 +3,8 @@ from fastapi.testclient import TestClient
 from kavach.main import app
 
 
-def test_healthz():
-    assert TestClient(app).get("/healthz").json() == {"ok": True}
+def test_health():
+    assert TestClient(app).get("/health").json() == {"ok": True}
 
 
 def test_create_and_get_case(monkeypatch):

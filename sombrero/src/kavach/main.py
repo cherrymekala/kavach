@@ -9,6 +9,6 @@ app.include_router(analysis.router)
 app.include_router(tracker.router)
 
 
-@app.get("/healthz")
-def healthz() -> dict:
+@app.get("/health")
+def health() -> dict:
     return {"ok": True}
