@@ -68,6 +68,27 @@ resource "google_project_iam_member" "run_roles" {
   member  = "serviceAccount:${google_service_account.run.email}"
 }
 
+resource "google_service_account" "build" {
+  account_id   = "kavach-build"
+  display_name = "Cloud Build deployer for Kavach"
+}
+
+resource "google_project_iam_member" "build_roles" {
+  for_each = toset([
+    # run.admin (not run.developer) so the deploy can set --allow-unauthenticated.
+    "roles/run.admin", "roles/artifactregistry.writer", "roles/logging.logWriter",
+  ])
+  project = var.project_id
+  role    = each.value
+  member  = "serviceAccount:${google_service_account.build.email}"
+}
+
+resource "google_service_account_iam_member" "build_acts_as_run" {
+  service_account_id = google_service_account.run.name
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:${google_service_account.build.email}"
+}
+
 data "google_project" "this" {}
 
 resource "google_billing_budget" "cap" {
