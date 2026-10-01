@@ -1,0 +1,6 @@
+**
+!sombrero/pyproject.toml
+!sombrero/src/**
+!magellan/packs/*.json
+**/__pycache__
+**/*.egg-info

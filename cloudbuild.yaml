@@ -10,7 +10,7 @@ options:
   logging: CLOUD_LOGGING_ONLY
 steps:
   - name: gcr.io/cloud-builders/docker
-    args: ["build", "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$SHORT_SHA", "sombrero"]
+    args: ["build", "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$SHORT_SHA", "-f", "sombrero/Dockerfile", "."]
   - name: gcr.io/cloud-builders/docker
     args: ["push", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$SHORT_SHA"]
   - name: gcr.io/google.com/cloudsdktool/cloud-sdk
