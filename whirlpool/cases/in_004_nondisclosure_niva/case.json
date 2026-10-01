@@ -1,0 +1,32 @@
+{
+  "id": "in_004_nondisclosure_niva",
+  "country": "IN",
+  "synthetic": true,
+  "note": "Over 60 months continuous cover: moratorium (6.1.10) bars non-disclosure grounds except proven fraud.",
+  "documents": [
+    "rejection_letter.txt",
+    "discharge_summary.txt",
+    {
+      "policy.pdf": "magellan/sources/policies/Niva_Bupa_ReAssure_3.pdf"
+    }
+  ],
+  "doc_types": {
+    "rejection_letter.txt": "rejection_letter",
+    "discharge_summary.txt": "discharge_summary",
+    "policy.pdf": "policy"
+  },
+  "expected": {
+    "insurer": "Niva Bupa Health Insurance",
+    "tpa": null,
+    "policy_start": "2020-02-01",
+    "admission_date": "2026-05-18",
+    "first_diagnosis_date": null,
+    "diagnosis": "Coronary artery disease, single vessel (LAD)",
+    "claim_amount": 345000,
+    "currency": "INR",
+    "rejection_code": "NB-ND-03",
+    "rejection_category": "non_disclosure",
+    "cited_clause": "6.1.14",
+    "strength": "strong"
+  }
+}

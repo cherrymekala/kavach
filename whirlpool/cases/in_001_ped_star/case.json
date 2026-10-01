@@ -1,0 +1,32 @@
+{
+  "id": "in_001_ped_star",
+  "country": "IN",
+  "synthetic": true,
+  "note": "Policy first incepted 15/03/2022 (stated in the case, not in the letter).",
+  "documents": [
+    "rejection_letter.txt",
+    "discharge_summary.txt",
+    {
+      "policy.pdf": "magellan/sources/policies/Star_Family_Health_Optima_V21.pdf"
+    }
+  ],
+  "doc_types": {
+    "rejection_letter.txt": "rejection_letter",
+    "discharge_summary.txt": "discharge_summary",
+    "policy.pdf": "policy"
+  },
+  "expected": {
+    "insurer": "Star Health and Allied Insurance",
+    "tpa": null,
+    "policy_start": null,
+    "admission_date": "2026-07-12",
+    "first_diagnosis_date": "2026-07-05",
+    "diagnosis": "Cholelithiasis with chronic cholecystitis",
+    "claim_amount": 184000,
+    "currency": "INR",
+    "rejection_code": null,
+    "rejection_category": "pre_existing",
+    "cited_clause": "Code Excl 01",
+    "strength": "strong"
+  }
+}

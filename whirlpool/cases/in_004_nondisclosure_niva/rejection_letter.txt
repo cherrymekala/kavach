@@ -1,0 +1,15 @@
+NIVA BUPA HEALTH INSURANCE COMPANY LIMITED
+Claim Repudiation Letter
+
+Date: 10-06-2026
+Claim ID: 26RE0098812   Policy No: 31458899201 (ReAssure 3.0)
+Continuous coverage with Niva Bupa since: 01-02-2020
+Insured: Mr. Imran Sheikh (SYNTHETIC)
+Date of Admission: 18-05-2026   Amount Claimed: Rs. 3,45,000
+
+Dear Customer,
+The claim for Coronary Angiography with PTCA to LAD (Coronary Artery Disease) has been
+reviewed. Investigation reveals that the insured is a known case of Type 2 Diabetes
+Mellitus for 8 years, which was not disclosed in the proposal form. As per Section 6.1.14
+Disclosure of Information, the policy is liable to be void in the event of non-disclosure
+of any material fact. Hence the claim is repudiated (Reason code: NB-ND-03).

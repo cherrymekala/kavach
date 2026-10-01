@@ -17,7 +17,12 @@ def run_case(case_id: str) -> None:
     case = store.load_case(case_id)
     try:
         _progress(case, "Reading your documents")
-        case.facts = intake.extract_facts([d.gcs_uri for d in case.documents])
+        result = intake.run([d.gcs_uri for d in case.documents])
+        for label in result.documents:
+            if 0 <= label.index < len(case.documents):
+                case.documents[label.index].doc_type = label.doc_type
+                case.documents[label.index].warning = label.warning
+        case.facts = result.facts
 
         _progress(case, "Decoding the rejection")
         decoded = code_decoder.decode(case.country, case.facts.tpa, case.facts.rejection_code)

@@ -65,3 +65,6 @@ Thumbs.db
 .idea/
 .vscode/
 *.swp
+# ── Source data (public PDFs with personal names; never commit) ──
+magellan/sources/
+whirlpool/private/
