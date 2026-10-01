@@ -3,6 +3,11 @@ substitutions:
   _REGION: asia-south1
   _SERVICE: sombrero
   _REPO: kavach
+  _MODEL_FAST: gemini-3.5-flash-lite
+  _MODEL_REASONING: gemini-3.8-flash
+options:
+  # Required when the trigger runs as a user-managed service account.
+  logging: CLOUD_LOGGING_ONLY
 steps:
   - name: gcr.io/cloud-builders/docker
     args: ["build", "-t", "${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$SHORT_SHA", "sombrero"]
@@ -17,8 +22,10 @@ steps:
       - --image=${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$SHORT_SHA
       - --region=${_REGION}
       - --service-account=sombrero-run@$PROJECT_ID.iam.gserviceaccount.com
+      # Public at the network level; the app checks Firebase tokens itself.
+      - --allow-unauthenticated
       - --min-instances=0
       - --max-instances=3
-      - --set-env-vars=GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},USE_VERTEX=true
+      - --set-env-vars=GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},USE_VERTEX=true,DOCS_BUCKET=$PROJECT_ID-docs,MODEL_FAST=${_MODEL_FAST},MODEL_REASONING=${_MODEL_REASONING}
 images:
   - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$SHORT_SHA
