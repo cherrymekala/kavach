@@ -1,0 +1,19 @@
+{
+  "country": "SG",
+  "currency": "SGD",
+  "languages": ["en", "zh", "ms", "ta"],
+  "regulator": "MAS",
+  "dispute_process": [
+    {"step": "Insurer grievance cell", "deadline_days": 15, "form": "Grievance letter", "form_fields": ["policy_no", "claim_no", "grounds"]},
+    {"step": "FIDReC dispute", "deadline_days": 90, "form": "FIDReC lodgement (TODO: confirm)", "form_fields": ["complainant", "insurer", "policy_no", "claim_amount", "grounds"]}
+  ],
+  "rejection_codes": {
+    "SAMPLE-PED": {"meaning": "Pre-existing disease: waiting period not completed", "category": "pre_existing"},
+    "SAMPLE-ROOM": {"meaning": "Room rent above the policy limit", "category": "room_rent"}
+  },
+  "regulations": [
+    {"ref": "MAS guidelines (TODO: confirm reference)", "children": [
+      {"ref": "SAMPLE Section: Pre-existing disease definition", "text": "TODO: paste the checked section text"}
+    ]}
+  ]
+}

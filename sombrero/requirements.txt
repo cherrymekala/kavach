@@ -1,0 +1,27 @@
+# Kavach · sombrero (FastAPI + Google ADK backend)
+# Pinned to the versions currently installed in sombrero/.venv (Python 3.14).
+# Install:  pip install -r requirements.txt
+
+# API
+fastapi==0.142.2
+uvicorn[standard]==0.54.0
+python-multipart==0.0.32
+httpx==0.28.1
+
+# Config / models
+pydantic==2.13.5
+pydantic-settings==2.15.0
+python-dotenv==1.2.3
+
+# Gemini / agents
+google-adk==1.14.1
+google-genai==1.75.0
+
+# Firebase / GCP
+firebase-admin==6.9.0
+google-cloud-firestore==2.33.0
+google-cloud-storage==2.19.0
+
+# Dev / test (not needed in the Docker image)
+pytest==9.1.1
+ruff==0.16.9

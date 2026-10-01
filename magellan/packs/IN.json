@@ -1,0 +1,20 @@
+{
+  "country": "IN",
+  "currency": "INR",
+  "languages": ["en", "hi", "ta", "te", "mr"],
+  "regulator": "IRDAI",
+  "dispute_process": [
+    {"step": "Insurer grievance cell", "deadline_days": 15, "form": "Grievance letter", "form_fields": ["policy_no", "claim_no", "grounds"]},
+    {"step": "Bima Bharosa complaint", "deadline_days": 30, "form": "Bima Bharosa online complaint", "form_fields": ["policy_no", "insurer", "complaint_type", "details"]},
+    {"step": "Insurance Ombudsman", "deadline_days": 90, "form": "Annexure VI-A", "form_fields": ["complainant", "insurer", "policy_no", "claim_amount", "grounds", "relief_sought"]}
+  ],
+  "rejection_codes": {
+    "SAMPLE-PED": {"meaning": "Pre-existing disease: waiting period not completed", "category": "pre_existing"},
+    "SAMPLE-ROOM": {"meaning": "Room rent above the policy limit", "category": "room_rent"}
+  },
+  "regulations": [
+    {"ref": "IRDAI Master Circular on Health Insurance, 2024", "children": [
+      {"ref": "SAMPLE Section: Pre-existing disease definition", "text": "TODO: paste the checked section text"}
+    ]}
+  ]
+}

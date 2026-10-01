@@ -1,0 +1,66 @@
+# ── Secrets / local config ────────────────────────────────
+.env
+.env.*
+!.env.example
+**/.env
+!**/.env.example
+*.pem
+*.key
+service-account*.json
+*-credentials.json
+.editorconfig
+
+# ── Claude / session notes (local only) ───────────────────
+CLAUDE.md
+claude.md
+**/CLAUDE.md
+session.md
+.claude/
+
+# ── Prototypes, references, docs (never commit) ───────────
+# andromeda = UI prototype, cartwheel = architecture docs + diagrams
+andromeda/
+cartwheel/
+**/prototype/
+**/prototypes/
+**/references/
+**/reference/
+**/docs/
+*.drawio
+*.fig
+
+# ── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+build/
+dist/
+.eggs/
+.venv/
+venv/
+env/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+.coverage.*
+htmlcov/
+.ipynb_checkpoints/
+
+# ── Terraform (triangulum) ────────────────────────────────
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+crash.log
+override.tf
+override.tf.json
+
+# ── OS / editors ──────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
