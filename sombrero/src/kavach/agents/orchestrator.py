@@ -26,8 +26,11 @@ def run_case(case_id: str) -> None:
 
         _progress(case, "Decoding the rejection")
         decoded = code_decoder.decode(case.country, case.facts.tpa, case.facts.rejection_code)
-        if decoded and not case.facts.rejection_reason:
-            case.facts.rejection_reason = decoded.get("meaning")
+        if decoded:
+            # An exact code match beats the model's reading of the letter.
+            case.facts.rejection_category = decoded["category"]
+            if not case.facts.rejection_reason:
+                case.facts.rejection_reason = decoded.get("meaning")
 
         _progress(case, "Finding the rules that apply")
         sections = policy_rules.find_sections(case.country, case.facts.rejection_reason or "")

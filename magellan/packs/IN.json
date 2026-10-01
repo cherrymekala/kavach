@@ -1,20 +1,286 @@
 {
   "country": "IN",
   "currency": "INR",
-  "languages": ["en", "hi", "ta", "te", "mr"],
+  "languages": [
+    "en",
+    "hi",
+    "ta",
+    "te",
+    "mr"
+  ],
   "regulator": "IRDAI",
   "dispute_process": [
-    {"step": "Insurer grievance cell", "deadline_days": 15, "form": "Grievance letter", "form_fields": ["policy_no", "claim_no", "grounds"]},
-    {"step": "Bima Bharosa complaint", "deadline_days": 30, "form": "Bima Bharosa online complaint", "form_fields": ["policy_no", "insurer", "complaint_type", "details"]},
-    {"step": "Insurance Ombudsman", "deadline_days": 90, "form": "Annexure VI-A", "form_fields": ["complainant", "insurer", "policy_no", "claim_amount", "grounds", "relief_sought"]}
+    {
+      "step": "Insurer grievance cell",
+      "deadline_days": 15,
+      "form": "Grievance letter",
+      "form_fields": [
+        "policy_no",
+        "claim_no",
+        "grounds"
+      ]
+    },
+    {
+      "step": "Bima Bharosa complaint",
+      "deadline_days": 30,
+      "form": "Bima Bharosa online complaint",
+      "form_fields": [
+        "policy_no",
+        "insurer",
+        "complaint_type",
+        "details"
+      ]
+    },
+    {
+      "step": "Insurance Ombudsman",
+      "deadline_days": 90,
+      "form": "Annexure VI-A",
+      "form_fields": [
+        "complainant",
+        "insurer",
+        "policy_no",
+        "claim_amount",
+        "grounds",
+        "relief_sought"
+      ]
+    }
   ],
   "rejection_codes": {
-    "SAMPLE-PED": {"meaning": "Pre-existing disease: waiting period not completed", "category": "pre_existing"},
-    "SAMPLE-ROOM": {"meaning": "Room rent above the policy limit", "category": "room_rent"}
+    "claimError-1": {
+      "meaning": "The claimed service is not covered under the policy, and therefore, the amount is deducted.",
+      "category": "excluded_treatment",
+      "source": "NHCX"
+    },
+    "claimError-2": {
+      "meaning": "The claimed amount exceeds the maximum coverage limit, leading to a deduction.",
+      "category": "sub_limit",
+      "source": "NHCX"
+    },
+    "claimError-3": {
+      "meaning": "The same claim has been submitted more than once, resulting in a deduction.",
+      "category": "duplicate_claim",
+      "source": "NHCX"
+    },
+    "claimError-4": {
+      "meaning": "The claim needs to be coordinated with another insurance policy, leading to a deduction.",
+      "category": "other",
+      "source": "NHCX"
+    },
+    "claimError-5": {
+      "meaning": "The claim lacks essential documentation, leading to a partial deduction until proper documents are provided.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "claimError-6": {
+      "meaning": "The claim amount is subject to the policy deductible, leading to a deduction.",
+      "category": "sub_limit",
+      "source": "NHCX"
+    },
+    "claimError-7": {
+      "meaning": "The claimant is responsible for a portion of the service cost due to co-payment or coinsurance.",
+      "category": "sub_limit",
+      "source": "NHCX"
+    },
+    "claimError-8": {
+      "meaning": "There is an error in the claim submission, leading to a deduction until the correct information is provided.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "claimError-9": {
+      "meaning": "The claim is determined to be fraudulent, leading to a complete/partial deduction of the amount.",
+      "category": "fraud",
+      "source": "NHCX"
+    },
+    "claimError-10": {
+      "meaning": "The claimed service is deemed medically unnecessary, leading to a deduction.",
+      "category": "not_medically_necessary",
+      "source": "NHCX"
+    },
+    "claimError-11": {
+      "meaning": "The claimant has reached the maximum benefit limit, resulting in a deduction.",
+      "category": "sub_limit",
+      "source": "NHCX"
+    },
+    "claimError-12": {
+      "meaning": "The claim was not submitted within the required time frame, leading to a deduction.",
+      "category": "late_intimation",
+      "source": "NHCX"
+    },
+    "claimError-13": {
+      "meaning": "The claimed service has already been paid for, leading to a deduction.",
+      "category": "duplicate_claim",
+      "source": "NHCX"
+    },
+    "claimError-14": {
+      "meaning": "Claim has been rejected due to less tha 24 hours of hospitalization",
+      "category": "under_24_hours",
+      "source": "NHCX"
+    },
+    "claimError-15": {
+      "meaning": "Claim has been rejected as the Package is Reserved to Public Hospital.",
+      "category": "hospital_ineligible",
+      "source": "NHCX"
+    },
+    "claimError-16": {
+      "meaning": "Claim has been closed due to Incomplete submission of documents by hospital after multiple queries.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "claimError-17": {
+      "meaning": "Claim has been rejected as there was misrepresentation of bed category booked.",
+      "category": "room_rent",
+      "source": "NHCX"
+    },
+    "claimError-18": {
+      "meaning": "Claim has been rejected due to Outside Scope of cover (Exclusions as per scheme).",
+      "category": "excluded_treatment",
+      "source": "NHCX"
+    },
+    "claimError-19": {
+      "meaning": "Claim has been rejected as the claim was found be False/Fraudulent.",
+      "category": "fraud",
+      "source": "NHCX"
+    },
+    "claimError-20": {
+      "meaning": "Claim has been rejected due to mismatch of package and disease/diagnosis/treatment.",
+      "category": "other",
+      "source": "NHCX"
+    },
+    "claimError-21": {
+      "meaning": "Claim has been rejected due to hospital not empanelled for this specialty.",
+      "category": "hospital_ineligible",
+      "source": "NHCX"
+    },
+    "claimError-22": {
+      "meaning": "Claim has been closed due to non submission of the documents.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "claimError-23": {
+      "meaning": "Claim rejected as the treatment provided does not support the blocked package, request you to book a fresh relevant package.",
+      "category": "other",
+      "source": "NHCX"
+    },
+    "claimError-24": {
+      "meaning": "Claim has been closed as the photo of the operative site is not available.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "claimError-25": {
+      "meaning": "Claim has been rejected due to apparent manipulation in medical record.",
+      "category": "fraud",
+      "source": "NHCX"
+    },
+    "claimError-26": {
+      "meaning": "Claim has been rejected as the hospital expenses have been paid by patient.",
+      "category": "other",
+      "source": "NHCX"
+    },
+    "claimError-27": {
+      "meaning": "Claim has been closed due missing Pre-Auth patient's photo/post operative photo/After discharge photo.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "claimError-28": {
+      "meaning": "Claim has been closed as referral letter mandatory for package selected has not been provided.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "claimError-29": {
+      "meaning": "Claim has been rejected as the need for hospitalization was not justified based on the available documents.",
+      "category": "not_medically_necessary",
+      "source": "NHCX"
+    },
+    "claimError-30": {
+      "meaning": "Claim rejected as the treatment provided does not support the blocked package, request you to book a fresh relevant package.",
+      "category": "other",
+      "source": "NHCX"
+    },
+    "preauthError-1": {
+      "meaning": "Pre-Auth has been rejected as the diagnosis is outside Scope of cover (Exclusions as per scheme).",
+      "category": "excluded_treatment",
+      "source": "NHCX"
+    },
+    "preauthError-2": {
+      "meaning": "Pre-auth has been rejected due to delay in raising enhancement requests.",
+      "category": "late_intimation",
+      "source": "NHCX"
+    },
+    "preauthError-3": {
+      "meaning": "Pre-Auth has been rejected as it was found to be False/Fraudulent.",
+      "category": "fraud",
+      "source": "NHCX"
+    },
+    "preauthError-4": {
+      "meaning": "Pre-Auth has been closed due to delay in preauth Intimation (as per state guidelines).",
+      "category": "late_intimation",
+      "source": "NHCX"
+    },
+    "preauthError-5": {
+      "meaning": "Pre-Auth has been rejected as the Hospital is not empanelled for this specialty.",
+      "category": "hospital_ineligible",
+      "source": "NHCX"
+    },
+    "preauthError-6": {
+      "meaning": "Pre- Auth has been rejected due to mismatch in dialysis records.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "preauthError-7": {
+      "meaning": "Enhancement request rejected as the medical necessity of enhancement request not met.",
+      "category": "not_medically_necessary",
+      "source": "NHCX"
+    },
+    "preauthError-8": {
+      "meaning": "Pre-Auth rejected as the medical necessity of ICU bed category not met.",
+      "category": "not_medically_necessary",
+      "source": "NHCX"
+    },
+    "preauthError-9": {
+      "meaning": "Pre-Auth has been rejected as the package selected is reserved for public hospital.",
+      "category": "hospital_ineligible",
+      "source": "NHCX"
+    },
+    "preauthError-10": {
+      "meaning": "Pre-Auth has been closed due to non submission of mandatory document as per STG.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "preauthError-11": {
+      "meaning": "Pre-Auth has been rejected as the Surgery was done before Pre-auth Approval.",
+      "category": "late_intimation",
+      "source": "NHCX"
+    },
+    "preauthError-12": {
+      "meaning": "Pre-auth enhancement rejected due to missing patient photo to depict bed category.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "Queried": {
+      "meaning": "Product or Service requested is queried for clarification.",
+      "category": "missing_documents",
+      "source": "NHCX"
+    },
+    "other": {
+      "meaning": "Others",
+      "category": "other",
+      "source": "NHCX"
+    }
   },
   "regulations": [
-    {"ref": "IRDAI Master Circular on Health Insurance, 2024", "children": [
-      {"ref": "SAMPLE Section: Pre-existing disease definition", "text": "TODO: paste the checked section text"}
-    ]}
-  ]
+    {
+      "ref": "IRDAI Master Circular on Health Insurance, 2024",
+      "children": [
+        {
+          "ref": "SAMPLE Section: Pre-existing disease definition",
+          "text": "TODO: paste the checked section text"
+        }
+      ]
+    }
+  ],
+  "rejection_codes_source": {
+    "name": "NHCX Adjudication Reason (NRCeS FHIR IG for ABDM)",
+    "version": "6.5.0",
+    "url": "https://nrces.in/ndhm/fhir/r4/CodeSystem/ndhm-adjudication-reason"
+  }
 }

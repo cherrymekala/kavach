@@ -55,6 +55,11 @@ class RejectionCategory(StrEnum):
     EXCLUDED_TREATMENT = "excluded_treatment"
     MISSING_DOCUMENTS = "missing_documents"
     LATE_INTIMATION = "late_intimation"
+    SUB_LIMIT = "sub_limit"  # coverage cap, co-pay, deductible
+    UNDER_24_HOURS = "under_24_hours"
+    HOSPITAL_INELIGIBLE = "hospital_ineligible"
+    DUPLICATE_CLAIM = "duplicate_claim"
+    FRAUD = "fraud"
     OTHER = "other"
 
 

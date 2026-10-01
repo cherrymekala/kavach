@@ -2,7 +2,7 @@
 # Downloads public source PDFs into magellan/sources/ (git-ignored: awards contain real names).
 set -euo pipefail
 cd "$(dirname "$0")/../sources" 2>/dev/null || { mkdir -p "$(dirname "$0")/../sources"; cd "$(dirname "$0")/../sources"; }
-mkdir -p awards/txt policies regulations
+mkdir -p awards/txt policies regulations codes
 
 dl() {
   curl -sfL -A "Mozilla/5.0" --max-time 90 -o "$1" "$2" && file -b "$1" | grep -q PDF \
@@ -21,6 +21,10 @@ dl policies/HDFC_ERGO_Optima_Secure.pdf "https://www.hdfcergo.com/docs/default-s
 dl policies/Niva_Bupa_ReAssure_3.pdf "https://transactions.nivabupa.com/pages/doc/policy_wording/ReAssure30_Policy_Wordings.pdf"
 dl policies/Care_Supreme.pdf "https://s3.ap-south-1.amazonaws.com/ditto-partners/Care_Supreme_Policy_Wording_dd859b2a9f.pdf"
 dl policies/Bajaj_Health_Care_Supreme.pdf "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/Health-PW/Health-Care-Supreme_PW.pdf"
+
+# NHCX claim adjudication reason codes (source of magellan/packs/IN.json rejection_codes).
+curl -sfL --max-time 60 -o codes/ndhm-adjudication-reason.json \
+  https://nrces.in/ndhm/fhir/r4/CodeSystem-ndhm-adjudication-reason.json && echo "ok   codes/ndhm-adjudication-reason.json"
 
 if command -v pdftotext >/dev/null; then
   for f in awards/*.pdf; do pdftotext -layout "$f" "awards/txt/$(basename "${f%.pdf}").txt"; done
