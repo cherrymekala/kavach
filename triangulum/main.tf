@@ -7,11 +7,15 @@ terraform {
 provider "google" {
   project = var.project_id
   region  = var.region
+
+  # Billing Budgets API rejects user ADC without a quota project.
+  billing_project       = var.project_id
+  user_project_override = true
 }
 
 locals {
   apis = [
-    "run.googleapis.com", "aiplatform.googleapis.com", "firestore.googleapis.com",
+    "cloudresourcemanager.googleapis.com", "run.googleapis.com", "aiplatform.googleapis.com", "firestore.googleapis.com",
     "storage.googleapis.com", "discoveryengine.googleapis.com", "bigquery.googleapis.com",
     "cloudscheduler.googleapis.com", "secretmanager.googleapis.com", "cloudbuild.googleapis.com",
     "artifactregistry.googleapis.com", "dlp.googleapis.com", "billingbudgets.googleapis.com",
@@ -64,14 +68,37 @@ resource "google_project_iam_member" "run_roles" {
   member  = "serviceAccount:${google_service_account.run.email}"
 }
 
+resource "google_service_account" "build" {
+  account_id   = "kavach-build"
+  display_name = "Cloud Build deployer for Kavach"
+}
+
+resource "google_project_iam_member" "build_roles" {
+  for_each = toset([
+    # run.admin (not run.developer) so the deploy can set --allow-unauthenticated.
+    "roles/run.admin", "roles/artifactregistry.writer", "roles/logging.logWriter",
+  ])
+  project = var.project_id
+  role    = each.value
+  member  = "serviceAccount:${google_service_account.build.email}"
+}
+
+resource "google_service_account_iam_member" "build_acts_as_run" {
+  service_account_id = google_service_account.run.name
+  role               = "roles/iam.serviceAccountUser"
+  member             = "serviceAccount:${google_service_account.build.email}"
+}
+
+data "google_project" "this" {}
+
 resource "google_billing_budget" "cap" {
   billing_account = var.billing_account
   display_name    = "kavach-budget"
-  budget_filter { projects = ["projects/${var.project_id}"] }
+  budget_filter { projects = ["projects/${data.google_project.this.number}"] }
   amount {
     specified_amount {
-      currency_code = "USD"
-      units         = tostring(var.budget_usd)
+      currency_code = var.budget_currency
+      units         = tostring(var.budget_amount)
     }
   }
   threshold_rules { threshold_percent = 0.5 }
