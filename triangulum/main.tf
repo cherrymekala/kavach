@@ -107,3 +107,31 @@ resource "google_billing_budget" "cap" {
 }
 
 # Cloud Scheduler job for /tracker/tick: add after the first Cloud Run deploy, when the URL exists.
+
+# Past rulings for "similar cases". Vertex AI Search only offers global/us/eu, so it holds
+# public rulings only; patient documents stay in the asia-south1 bucket.
+resource "google_discovery_engine_data_store" "rulings" {
+  location          = "global"
+  data_store_id     = "kavach-rulings"
+  display_name      = "Kavach rulings"
+  industry_vertical = "GENERIC"
+  content_config    = "CONTENT_REQUIRED"
+  solution_types    = ["SOLUTION_TYPE_SEARCH"]
+  depends_on        = [google_project_service.apis]
+}
+
+resource "google_discovery_engine_search_engine" "rulings" {
+  engine_id      = "kavach-rulings"
+  collection_id  = "default_collection"
+  location       = google_discovery_engine_data_store.rulings.location
+  display_name   = "Kavach rulings search"
+  data_store_ids = [google_discovery_engine_data_store.rulings.data_store_id]
+  search_engine_config {
+    search_tier = "SEARCH_TIER_STANDARD"
+  }
+}
+
+output "rulings_engine" {
+  value = google_discovery_engine_search_engine.rulings.engine_id
+}
+

@@ -10,9 +10,18 @@ dl() {
 }
 
 # Insurance Ombudsman health ("mediclaim") award books, 2005-2012, ~2,700 cases.
+# Individual + group mediclaim books (2005-2016, ~3,250 awards). No directory listing exists,
+# so these are the known file-name patterns.
+B=https://www.cioins.co.in/GIC
 for i in $(seq 1 40); do
-  dl "awards/Mediclaim-Book$i.pdf" "https://www.cioins.co.in/GIC/mediclaim/Mediclaim-Book$i.pdf" 2>/dev/null || true
+  dl "awards/Mediclaim-Book$i.pdf" "$B/mediclaim/Mediclaim-Book$i.pdf" 2>/dev/null || true
+  dl "awards/GroupMediclaim-Book$i.pdf" "$B/groupmediclaim/GroupMediclaim-Book$i.pdf" 2>/dev/null || true
 done
+dl awards/Mediclaim_2014-10_to_2015-03.pdf "$B/mediclaim/GENERAL_INSURANCE_MEDICLAIM_AWARDS1-10-2014TO31.3.2015.pdf"
+dl awards/Mediclaim_2015-04_to_2015-09.pdf "$B/mediclaim/GENERAL_INSURANCE_MEDICLAIM_APRIL_2015TOSEPT-2015.pdf"
+dl awards/GroupMediclaim-Gen.pdf "$B/groupmediclaim/Group%20Mediclaim%20Gen.pdf"
+dl awards/GroupMediclaim-General26.pdf "$B/groupmediclaim/Group%20Medi%20Claim%20-%20General26.pdf"
+dl awards/GroupMediclaim-Gen27.pdf "$B/groupmediclaim/Group%20Mediclaim-%20Gen27.pdf"
 
 dl regulations/IRDAI_Health_Master_Circular_2024.pdf "https://irdai.gov.in/documents/37343/365525/%e0%a4%b8%e0%a5%8d%e0%a4%b5%e0%a4%be%e0%a4%b8%e0%a5%8d%e0%a4%a5%e0%a5%8d%e0%a4%af+%e0%a4%ac%e0%a5%80%e0%a4%ae%e0%a4%be+%e0%a4%b5%e0%a5%8d%e0%a4%af%e0%a4%b5%e0%a4%b8%e0%a4%be%e0%a4%af+%e0%a4%aa%e0%a4%b0+%e0%a4%ae%e0%a4%be%e0%a4%b8%e0%a5%8d%e0%a4%9f%e0%a4%b0+%e0%a4%aa%e0%a4%b0%e0%a4%bf%e0%a4%aa%e0%a4%a4%e0%a5%8d%e0%a4%b0+_+Master+Circular++on+Health++Insurance+Business++29052024.pdf/5e707a91-b5de-1ec1-cf18-b66273a6839d?t=1716962621002&version=1.0"
 

@@ -14,7 +14,7 @@ from ..config import get_settings
 def client() -> genai.Client:
     s = get_settings()
     if s.use_vertex:
-        return genai.Client(vertexai=True, project=s.gcp_project, location=s.gcp_region)
+        return genai.Client(vertexai=True, project=s.gcp_project, location=s.gemini_location)
     return genai.Client(api_key=s.google_api_key)
 
 
