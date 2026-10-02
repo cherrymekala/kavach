@@ -1,4 +1,5 @@
 """Similar past rulings from Vertex AI Search (semantic + keyword, filtered by metadata)."""
+
 from functools import lru_cache
 
 from google.api_core.client_options import ClientOptions
@@ -11,12 +12,16 @@ from ..models import CaseFacts
 
 @lru_cache
 def _client() -> de.SearchServiceClient:
-    return de.SearchServiceClient(client_options=ClientOptions(quota_project_id=get_settings().gcp_project))
+    return de.SearchServiceClient(
+        client_options=ClientOptions(quota_project_id=get_settings().gcp_project)
+    )
 
 
-def _query(facts: CaseFacts) -> str:
+def _query(facts: CaseFacts, broad: bool = False) -> str:
     category = facts.rejection_category.replace("_", " ") if facts.rejection_category else None
-    parts = [category, facts.rejection_reason, facts.diagnosis, facts.cited_clause]
+    parts = [category, facts.rejection_reason]
+    if not broad:
+        parts += [facts.diagnosis, facts.cited_clause]
     return " ".join(p for p in parts if p) or "health insurance claim rejection"
 
 
@@ -31,8 +36,20 @@ def search_similar(facts: CaseFacts, country: str, limit: int = 12) -> list[dict
         f"projects/{s.gcp_project}/locations/global/collections/default_collection"
         f"/engines/{s.rulings_engine}/servingConfigs/default_search"
     )
+    hits = _search(serving_config, _query(facts), filters, facts, country, limit)
+    if len(hits) < limit:
+        # Rare terms (a diagnosis, "Excl04") make matching strict; widen to category + reason.
+        seen = {h["id"] for h in hits}
+        broader = _search(serving_config, _query(facts, broad=True), filters, facts, country, limit)
+        hits += [h for h in broader if h["id"] not in seen]
+    return hits[:limit]
+
+
+def _search(
+    serving_config: str, query: str, filters: list[str], facts: CaseFacts, country: str, limit: int
+) -> list[dict]:
     request = de.SearchRequest(
-        serving_config=serving_config, query=_query(facts), filter=" AND ".join(filters), page_size=limit
+        serving_config=serving_config, query=query, filter=" AND ".join(filters), page_size=limit
     )
     try:
         resp = _client().search(request=request)
@@ -40,7 +57,10 @@ def search_similar(facts: CaseFacts, country: str, limit: int = 12) -> list[dict
     except InvalidArgument:
         # Filterable fields only work once Vertex AI Search finishes reindexing after a schema change.
         request.filter, request.page_size = "", 50
-        hits = [{"id": r.document.id, **dict(r.document.struct_data)} for r in _client().search(request=request).results]
+        hits = [
+            {"id": r.document.id, **dict(r.document.struct_data)}
+            for r in _client().search(request=request).results
+        ]
         hits = [h for h in hits if h.get("country") == country.upper()]
         if facts.rejection_category:
             hits = [h for h in hits if h.get("category") == facts.rejection_category]
