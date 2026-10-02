@@ -12,6 +12,7 @@ python3 magellan/ingest/split_awards.py                   # 2. books -> sources/
 USE_VERTEX=true \
   sombrero/.venv/bin/python magellan/ingest/label_rulings.py   # 3. Gemini labels: decision, category, diagnosis, summary
 sombrero/.venv/bin/python magellan/ingest/load_rulings.py      # 4. import into Vertex AI Search (needs terraform apply)
+python3 magellan/ingest/build_in_regulations.py              # regulations outline -> packs/IN.json
 ```
 
 Step 3 is resumable and costs well under $1 on Vertex; the free AI Studio tier is too slow (~7 h).

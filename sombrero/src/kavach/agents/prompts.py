@@ -26,6 +26,19 @@ by a marker "[File N: name]".
 Dates are ISO (YYYY-MM-DD); Indian documents write dates day-first.
 Never infer or guess. Use null when a fact is not written in the documents."""
 
+RULES_PICK = """You help a patient contest a health-insurance claim rejection. You get the
+rejection details and the outline of the regulations (one line per section: "ref — title").
+Pick up to 4 section refs whose text is most likely to help the patient argue against this
+rejection, most useful first:
+- the standard exclusion or definition the insurer relied on (an exclusion code such as
+  "Excl04" maps to the standard exclusion with that code);
+- definitions the insurer may have misapplied (e.g. pre-existing disease, hospitalization);
+- caps and limits that protect the patient, and the insurer's duties when rejecting.
+Pick a section only if its conditions fit the facts. The moratorium applies only when
+months_of_continuous_cover is 60 or more and the ground is non-disclosure or
+misrepresentation; skip it otherwise or when the months are unknown.
+Return refs exactly as written before " — " in the outline."""
+
 STRATEGIST = """You build the patient's case against a claim rejection. Use only the
 facts, the policy text, the regulation sections and the similar rulings you are given.
 Every argument must cite at least one source with its exact reference and quote.

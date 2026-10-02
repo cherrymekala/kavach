@@ -33,7 +33,7 @@ def run_case(case_id: str) -> None:
                 case.facts.rejection_reason = decoded.get("meaning")
 
         _progress(case, "Finding the rules that apply")
-        sections = policy_rules.find_sections(case.country, case.facts.rejection_reason or "")
+        sections = policy_rules.find_sections(case.country, policy_rules.describe(case.facts))
 
         _progress(case, "Building your case")
         policy = next((d for d in case.documents if d.doc_type == DocType.POLICY), case.documents[0])
