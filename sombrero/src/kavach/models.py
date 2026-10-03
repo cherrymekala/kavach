@@ -97,6 +97,12 @@ class IntakeResult(BaseModel):
     facts: CaseFacts
 
 
+DISCLAIMER = (
+    "Kavach prepares documents from your files and public rules to help you raise a dispute. "
+    "It is not legal advice. Check every detail before you sign or send anything."
+)
+
+
 class Assessment(BaseModel):
     strength: str  # strong | medium | weak
     score: float = Field(ge=0, le=1)
@@ -104,6 +110,7 @@ class Assessment(BaseModel):
     similar_cases_won: int = 0
     similar_cases_total: int = 0
     missing_documents: list[str] = []
+    disclaimer: str = DISCLAIMER
 
 
 class Letter(BaseModel):

@@ -18,7 +18,7 @@ locals {
     "cloudresourcemanager.googleapis.com", "run.googleapis.com", "aiplatform.googleapis.com", "firestore.googleapis.com",
     "storage.googleapis.com", "discoveryengine.googleapis.com", "bigquery.googleapis.com",
     "cloudscheduler.googleapis.com", "secretmanager.googleapis.com", "cloudbuild.googleapis.com",
-    "artifactregistry.googleapis.com", "dlp.googleapis.com", "billingbudgets.googleapis.com",
+    "artifactregistry.googleapis.com", "dlp.googleapis.com", "billingbudgets.googleapis.com", "firebaserules.googleapis.com",
   ]
 }
 
@@ -171,4 +171,22 @@ resource "google_cloud_scheduler_job" "tracker" {
     }
   }
   depends_on = [google_project_service.apis]
+}
+
+# Firestore security rules: owners can read their own case; no client writes.
+resource "google_firebaserules_ruleset" "firestore" {
+  project = var.project_id
+  source {
+    files {
+      name    = "firestore.rules"
+      content = file("${path.module}/firestore.rules")
+    }
+  }
+  depends_on = [google_firestore_database.default, google_project_service.apis]
+}
+
+resource "google_firebaserules_release" "firestore" {
+  project      = var.project_id
+  name         = "cloud.firestore"
+  ruleset_name = google_firebaserules_ruleset.firestore.name
 }

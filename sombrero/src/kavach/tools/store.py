@@ -39,3 +39,10 @@ def open_cases() -> list[Case]:
         return [c for c in _memory.values() if c.status in OPEN]
     q = _db().collection("cases").where("status", "in", list(OPEN))
     return [Case.model_validate(s.to_dict()) for s in q.stream()]
+
+
+def delete_case(case_id: str) -> None:
+    if _local():
+        _memory.pop(case_id, None)
+        return
+    _db().collection("cases").document(case_id).delete()

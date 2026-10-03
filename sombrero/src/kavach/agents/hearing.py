@@ -27,6 +27,8 @@ LANGUAGES = {
     "ms": "Malay",
 }
 MAX_QUESTIONS = 5
+# The Live model runs in us-central1; it does not need to know who the patient is.
+IDENTIFYING = {"patient_name", "policy_number", "claim_number", "hospital"}
 KEY_FACTS = (
     "insurer",
     "policy_start",
@@ -102,7 +104,7 @@ def instructions(case: Case) -> str:
     known = case.facts.model_dump(mode="json") if case.facts else {}
     # Spell out gaps: given only the known facts, the Live model invented e.g. a policy start date.
     facts = {k: (known.get(k) if known.get(k) is not None else "unknown") for k in KEY_FACTS}
-    facts.update({k: v for k, v in known.items() if v is not None})
+    facts.update({k: v for k, v in known.items() if v is not None and k not in IDENTIFYING})
     arguments = _arguments(case)
     body = _dispute_body(case)
     language = LANGUAGES.get(case.language, "English")
@@ -128,6 +130,8 @@ Messages in square brackets, like [session started], are cues from the app, not 
 Facts marked "unknown" are unknown to everyone, including the insurer. Never state or assume
 a value for them (no invented dates, amounts or records); either role may ASK the patient about
 them instead.
+
+Address the patient as "the complainant" (you are not told their name).
 
 Stay realistic and fair: never invent facts beyond the case below, never promise an outcome,
 and never give legal advice outside the role-play.
