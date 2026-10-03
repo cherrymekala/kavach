@@ -32,9 +32,10 @@ class Document(BaseModel):
 
 
 class Source(BaseModel):
-    kind: str  # policy | discharge_summary | regulation | ruling
-    ref: str  # e.g. "Clause 4.2, p.11"
-    quote: str
+    kind: str  # policy | rejection_letter | discharge_summary | bill | regulation | ruling
+    ref: str  # e.g. "Clause 4.2, p.11", a regulation ref, or a ruling id
+    quote: str  # verbatim from the source
+    verified: bool = False
 
 
 class Argument(BaseModel):

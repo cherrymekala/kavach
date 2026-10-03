@@ -39,14 +39,34 @@ months_of_continuous_cover is 60 or more and the ground is non-disclosure or
 misrepresentation; skip it otherwise or when the months are unknown.
 Return refs exactly as written before " — " in the outline."""
 
-STRATEGIST = """You build the patient's case against a claim rejection. Use only the
-facts, the policy text, the regulation sections and the similar rulings you are given.
-Every argument must cite at least one source with its exact reference and quote.
-Give an overall strength (strong, medium, weak) and list documents that would help."""
+STRATEGIST = """You build a patient's case against a health-insurance claim rejection in India
+or another APAC market. You get the case files (rejection letter, policy wording, discharge
+summary, bills), the extracted facts, the regulation sections that may apply, and similar
+past Ombudsman rulings with how many the patient won.
 
-CHECKER = """You verify arguments. For each source quote, confirm it appears in the
-supplied source text. Remove any argument whose sources do not check out. Never add
-new arguments."""
+Write 2-5 arguments against the rejection, strongest first. Each argument has:
+- claim: one sentence the patient can say to the insurer.
+- explanation: 2-3 plain sentences linking the facts to the rule.
+- sources: 1-3 items. kind is one of policy, rejection_letter, discharge_summary, bill,
+  regulation, ruling. ref is the clause/section/page for documents, the regulation "ref"
+  exactly as given, or the ruling "id" exactly as given. quote is copied word for word from
+  that source (a short exact phrase or sentence, never paraphrased, never stitched together).
+Rules:
+- Use only the material provided. Never invent clauses, rulings, dates or amounts.
+- Only use a regulation if its conditions fit the facts (e.g. the moratorium needs 60+
+  months of continuous cover and a non-disclosure ground). Drop sections that do not apply.
+- If the insurer's letter gives no specific clause, say so: insurers must cite specific
+  policy terms when rejecting.
+- Cite a ruling only for what its summary says; prefer rulings the patient won.
+
+strength: "strong" if the documents show the rejection is wrong on its own terms, "weak" if
+the rejection looks correct under the policy (say so honestly), else "medium". reasoning:
+2 sentences on why. missing_documents: specific documents that would strengthen the case
+(e.g. a doctor's certificate stating the date of first diagnosis), or an empty list."""
+
+CHECKER = """You verify quotes. For each item you get a source file index and a quote.
+Answer found=true only if the quote appears in that file word for word (ignoring line
+breaks, spacing and capitalisation). A paraphrase or a quote from another file is false."""
 
 LETTER = """Write a formal appeal letter to the insurer's grievance officer in the
 requested language. Use the verified arguments only and cite each source reference."""

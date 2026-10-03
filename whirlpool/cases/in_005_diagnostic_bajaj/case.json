@@ -2,7 +2,7 @@
   "id": "in_005_diagnostic_bajaj",
   "country": "IN",
   "synthetic": true,
-  "note": "IV treatment given, so not purely diagnostic; medium because MRI dominated the bill.",
+  "note": "3 days of IV treatment in the discharge summary make Excl04 (diagnostics only) a weak ground. Was 'medium' until 2026-10-02, which assumed an MRI-heavy bill the case never contained.",
   "documents": [
     "rejection_letter.txt",
     "discharge_summary.txt",
@@ -27,6 +27,6 @@
     "rejection_code": "MA-R-117",
     "rejection_category": "diagnostic_only",
     "cited_clause": "Excl04",
-    "strength": "medium"
+    "strength": "strong"
   }
 }

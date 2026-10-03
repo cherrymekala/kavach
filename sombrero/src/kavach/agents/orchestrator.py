@@ -1,53 +1,76 @@
 """Runs the pipeline for one case and writes progress to Firestore as it goes.
 
-Kept as plain Python for the MVP so each step is easy to debug. Week 2: wrap the
-steps as ADK tools under one root agent (see adk_agent.py) for the demo and pitch.
+Plain Python so each step is easy to debug; `analyse` has no storage dependency so the
+whirlpool evals run exactly the same steps as the API.
 """
-from ..models import CaseStatus, DocType
-from ..tools import store
+
+from collections.abc import Callable
+from dataclasses import dataclass
+
+from ..models import Assessment, CaseFacts, CaseStatus, Document
+from ..tools import rulings, store
 from . import checker, code_decoder, filing, intake, policy_rules, strategist
 
 
-def _progress(case, text):
-    case.progress = text
-    store.save_case(case)
+@dataclass
+class Analysis:
+    facts: CaseFacts
+    sections: list[dict]
+    similar: list[dict]
+    draft: Assessment  # before the checker
+    assessment: Assessment  # after the checker
+
+
+def analyse(
+    documents: list[Document], country: str, progress: Callable[[str], None] = lambda _: None
+) -> Analysis:
+    progress("Reading your documents")
+    result = intake.run([d.gcs_uri for d in documents])
+    for label in result.documents:
+        if 0 <= label.index < len(documents):
+            documents[label.index].doc_type = label.doc_type
+            documents[label.index].warning = label.warning
+    facts = result.facts
+
+    progress("Decoding the rejection")
+    decoded = code_decoder.decode(country, facts.tpa, facts.rejection_code)
+    if decoded:
+        # An exact code match beats the model's reading of the letter.
+        facts.rejection_category = decoded["category"]
+        if not facts.rejection_reason:
+            facts.rejection_reason = decoded.get("meaning")
+
+    progress("Finding the rules that apply")
+    sections = policy_rules.find_sections(country, policy_rules.describe(facts))
+
+    progress("Looking up similar past cases")
+    similar = rulings.search_similar(facts, country)
+
+    progress("Building your case")
+    draft = strategist.assess(facts, documents, sections, similar)
+
+    progress("Checking every source")
+    assessment = checker.verify(draft, documents, sections, similar)
+    return Analysis(facts, sections, similar, draft, assessment)
 
 
 def run_case(case_id: str) -> None:
     case = store.load_case(case_id)
+
+    def progress(text: str | None) -> None:
+        case.progress = text
+        store.save_case(case)
+
     try:
-        _progress(case, "Reading your documents")
-        result = intake.run([d.gcs_uri for d in case.documents])
-        for label in result.documents:
-            if 0 <= label.index < len(case.documents):
-                case.documents[label.index].doc_type = label.doc_type
-                case.documents[label.index].warning = label.warning
-        case.facts = result.facts
+        result = analyse(case.documents, case.country, progress)
+        case.facts, case.assessment = result.facts, result.assessment
 
-        _progress(case, "Decoding the rejection")
-        decoded = code_decoder.decode(case.country, case.facts.tpa, case.facts.rejection_code)
-        if decoded:
-            # An exact code match beats the model's reading of the letter.
-            case.facts.rejection_category = decoded["category"]
-            if not case.facts.rejection_reason:
-                case.facts.rejection_reason = decoded.get("meaning")
-
-        _progress(case, "Finding the rules that apply")
-        sections = policy_rules.find_sections(case.country, policy_rules.describe(case.facts))
-
-        _progress(case, "Building your case")
-        policy = next((d for d in case.documents if d.doc_type == DocType.POLICY), case.documents[0])
-        assessment = strategist.assess(case.facts, policy.gcs_uri, sections, case.country)
-
-        _progress(case, "Checking every source")
-        case.assessment = checker.verify(assessment, source_texts={})  # TODO: pass source texts
-
-        _progress(case, "Writing your appeal")
+        progress("Writing your appeal")
         case.letter = filing.draft_letter(case)
 
         case.status = CaseStatus.READY
-        _progress(case, None)
+        progress(None)
     except Exception:
         case.status = CaseStatus.COLLECTING
-        _progress(case, "We couldn't finish the analysis. Please try again.")
+        progress("We couldn't finish the analysis. Please try again.")
         raise
