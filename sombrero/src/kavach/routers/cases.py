@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from ..auth import current_user
 from ..models import Case, CreateCase
-from ..tools import store
+from ..tools import files, store
 
 router = APIRouter(prefix="/cases", tags=["cases"])
 
@@ -22,3 +22,13 @@ def get_case(case_id: str, uid: str = Depends(current_user)) -> Case:
     if not case or case.owner != uid:
         raise HTTPException(404, "Case not found.")
     return case
+
+
+@router.delete("/{case_id}", status_code=204)
+def delete_case(case_id: str, uid: str = Depends(current_user)) -> None:
+    """Erase the case and every uploaded document (DPDP Act / PDPA: people can delete their data)."""
+    case = store.load_case(case_id)
+    if not case or case.owner != uid:
+        raise HTTPException(404, "Case not found.")
+    files.delete_case_files(case.id)
+    store.delete_case(case.id)

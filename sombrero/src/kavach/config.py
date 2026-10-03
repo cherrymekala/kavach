@@ -24,6 +24,11 @@ class Settings(BaseSettings):
     docs_bucket: str = "kavach-510312-docs"
     rulings_engine: str = ""  # Vertex AI Search engine + data store id, e.g. kavach-rulings
     auth_disabled: bool = False
+    # Comma-separated browser origins allowed to call the API.
+    cors_origins: str = (
+        "http://localhost:5173,http://localhost:3000,"
+        "https://kavach-510312.web.app,https://kavach-510312.firebaseapp.com"
+    )
     packs_dir: str = "packs"
 
 
