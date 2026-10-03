@@ -1,4 +1,5 @@
 """Thin wrapper over google-genai so agents don't repeat client setup."""
+
 import json
 import mimetypes
 from functools import lru_cache
@@ -39,7 +40,9 @@ def _parts(uris: list[str], context: dict | None) -> list:
     return parts
 
 
-def structured(system: str, uris: list[str], schema, context: dict | None = None, model: str | None = None):
+def structured(
+    system: str, uris: list[str], schema, context: dict | None = None, model: str | None = None
+):
     s = get_settings()
     resp = client().models.generate_content(
         model=model or s.model_reasoning,
@@ -54,10 +57,10 @@ def structured(system: str, uris: list[str], schema, context: dict | None = None
     return schema.model_validate_json(resp.text)
 
 
-def text(system: str, context: dict) -> str:
+def text(system: str, context: dict, model: str | None = None) -> str:
     s = get_settings()
     resp = client().models.generate_content(
-        model=s.model_fast,
+        model=model or s.model_fast,
         contents=[json.dumps(context, default=str)],
         config=types.GenerateContentConfig(system_instruction=system),
     )

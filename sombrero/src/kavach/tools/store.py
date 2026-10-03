@@ -1,4 +1,5 @@
 """Case storage in Firestore. Falls back to memory when AUTH_DISABLED (local dev)."""
+
 from datetime import datetime
 
 from ..config import get_settings

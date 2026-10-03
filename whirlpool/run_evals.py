@@ -1,9 +1,10 @@
 """Score the intake agent against whirlpool/cases/*/case.json.
 
 Run from the repo root with sombrero's venv:
-    sombrero/.venv/bin/python whirlpool/run_evals.py [case_id ...]
+    sombrero/.venv/bin/python whirlpool/run_evals.py [--full] [case_id ...]\n--full runs the whole pipeline (needs Vertex AI Search) and scores the strength verdict.
 Needs magellan/sources (run magellan/ingest/fetch_sources.sh) and GOOGLE_API_KEY in .env.
 """
+
 import json
 import re
 import sys
@@ -12,13 +13,22 @@ from pathlib import Path
 
 from google.genai.errors import ClientError
 
-from kavach.agents import intake
+from kavach.agents import intake, orchestrator
+from kavach.models import Document
 
 ROOT = Path(__file__).resolve().parents[1]
 CASES = Path(__file__).parent / "cases"
 FACT_FIELDS = [
-    "insurer", "tpa", "policy_start", "admission_date", "first_diagnosis_date",
-    "claim_amount", "currency", "rejection_code", "rejection_category", "cited_clause",
+    "insurer",
+    "tpa",
+    "policy_start",
+    "admission_date",
+    "first_diagnosis_date",
+    "claim_amount",
+    "currency",
+    "rejection_code",
+    "rejection_category",
+    "cited_clause",
 ]
 
 
@@ -44,7 +54,9 @@ def _match(field: str, want, got) -> bool:
 def _files(case_dir: Path, case: dict) -> list[str]:
     files = []
     for d in case["documents"]:
-        files.append(str(ROOT / next(iter(d.values()))) if isinstance(d, dict) else str(case_dir / d))
+        files.append(
+            str(ROOT / next(iter(d.values()))) if isinstance(d, dict) else str(case_dir / d)
+        )
     return files
 
 
@@ -83,9 +95,46 @@ def run_case(case_dir: Path) -> tuple[int, int]:
     return ok, total
 
 
+def run_full(case_dir: Path) -> bool:
+    """Whole pipeline (intake -> checker); scores the strength verdict and prints arguments."""
+    case = json.loads((case_dir / "case.json").read_text())
+    docs = [
+        Document(id=str(i), filename=n, gcs_uri=u)
+        for i, (n, u) in enumerate(zip(_names(case), _files(case_dir, case)))
+    ]
+    out = orchestrator.analyse(docs, case["country"])
+    a, want = out.assessment, case["expected"].get("strength")
+    dropped = sum(len(x.sources) for x in out.draft.arguments) - sum(
+        len(x.sources) for x in a.arguments
+    )
+    mark = "✓" if a.strength == want else "✗"
+    print(
+        f"\n{case['id']}: {mark} strength {a.strength} (expected {want}), "
+        f"similar won {a.similar_cases_won}/{a.similar_cases_total}, "
+        f"arguments {len(a.arguments)}/{len(out.draft.arguments)} kept, {dropped} sources dropped"
+    )
+    for arg in a.arguments:
+        print(f"  • {arg.claim}")
+        for src in arg.sources:
+            print(f'      [{src.kind}] {src.ref}: "{src.quote[:90]}"')
+    if a.missing_documents:
+        print(f"  missing: {'; '.join(a.missing_documents)}")
+    return a.strength == want
+
+
 def main() -> None:
-    wanted = set(sys.argv[1:])
-    dirs = [d for d in sorted(CASES.iterdir()) if (d / "case.json").exists() and (not wanted or d.name in wanted)]
+    args = sys.argv[1:]
+    full = "--full" in args
+    wanted = {x for x in args if x != "--full"}
+    dirs = [
+        d
+        for d in sorted(CASES.iterdir())
+        if (d / "case.json").exists() and (not wanted or d.name in wanted)
+    ]
+    if full:
+        right = sum(run_full(d) for d in dirs)
+        print(f"\nStrength verdicts: {right}/{len(dirs)}")
+        return
     ok = total = 0
     for d in dirs:
         a, b = run_case(d)

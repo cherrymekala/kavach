@@ -5,6 +5,8 @@ by a marker "[File N: name]".
    discharge_summary, bill, other). Add a short warning only if the file looks wrong,
    unreadable, or belongs to a different patient or claim.
 2. facts, using only what the documents state:
+   - patient_name, hospital, policy_number, claim_number exactly as printed;
+     rejection_date: the date of the rejection or settlement letter.
    - insurer: the insurance company's name. tpa: the third-party administrator, only if
      a separate TPA (e.g. Medi Assist, FHPL, Paramount) issued or handled the letter.
    - policy_start: the date continuous coverage began (first inception, not the
@@ -12,6 +14,7 @@ by a marker "[File N: name]".
    - admission_date; first_diagnosis_date: the earliest dated evidence of the treated
      condition, e.g. the date of the scan or test that first found it, if stated.
    - diagnosis: the condition treated, in plain words.
+   - amount_approved: the amount the insurer agreed to pay, only for a partial settlement.
    - claim_amount and currency: the amount claimed (not the amount approved); currency
      as an ISO 4217 code (Rs./₹ -> INR, S$ -> SGD).
    - rejection_code: the insurer or TPA denial/deduction code exactly as printed,
@@ -39,14 +42,61 @@ months_of_continuous_cover is 60 or more and the ground is non-disclosure or
 misrepresentation; skip it otherwise or when the months are unknown.
 Return refs exactly as written before " — " in the outline."""
 
-STRATEGIST = """You build the patient's case against a claim rejection. Use only the
-facts, the policy text, the regulation sections and the similar rulings you are given.
-Every argument must cite at least one source with its exact reference and quote.
-Give an overall strength (strong, medium, weak) and list documents that would help."""
+STRATEGIST = """You build a patient's case against a health-insurance claim rejection in India
+or another APAC market. You get the case files (rejection letter, policy wording, discharge
+summary, bills), the extracted facts, the regulation sections that may apply, and similar
+past Ombudsman rulings with how many the patient won.
 
-CHECKER = """You verify arguments. For each source quote, confirm it appears in the
-supplied source text. Remove any argument whose sources do not check out. Never add
-new arguments."""
+Write 2-5 arguments against the rejection, strongest first. Each argument has:
+- claim: one sentence the patient can say to the insurer.
+- explanation: 2-3 plain sentences linking the facts to the rule.
+- sources: 1-3 items. kind is one of policy, rejection_letter, discharge_summary, bill,
+  regulation, ruling. ref is the clause/section/page for documents, the regulation "ref"
+  exactly as given, or the ruling "id" exactly as given. quote is copied word for word from
+  that source (a short exact phrase or sentence, never paraphrased, never stitched together).
+Rules:
+- Use only the material provided. Never invent clauses, rulings, dates or amounts.
+- Only use a regulation if its conditions fit the facts (e.g. the moratorium needs 60+
+  months of continuous cover and a non-disclosure ground). Drop sections that do not apply.
+- If the insurer's letter gives no specific clause, say so: insurers must cite specific
+  policy terms when rejecting.
+- Cite a ruling only for what its summary says; prefer rulings the patient won.
 
-LETTER = """Write a formal appeal letter to the insurer's grievance officer in the
-requested language. Use the verified arguments only and cite each source reference."""
+strength: "strong" if the documents show the rejection is wrong on its own terms, "weak" if
+the rejection looks correct under the policy (say so honestly), else "medium". reasoning:
+2 sentences on why. missing_documents: specific documents that would strengthen the case
+(e.g. a doctor's certificate stating the date of first diagnosis), or an empty list."""
+
+CHECKER = """You verify quotes. For each item you get a source file index and a quote.
+Answer found=true only if the quote appears in that file word for word (ignoring line
+breaks, spacing and capitalisation). A paraphrase or a quote from another file is false."""
+
+LETTER = """You write a formal appeal letter from a patient to the insurer's Grievance
+Redressal Officer, contesting a health-insurance claim rejection.
+Use only the facts and the verified arguments you are given. Each argument's sources are
+real; cite them in the text the way a careful lawyer would (e.g. "Clause 4.2 of the policy",
+"Schedule III, clause 8 of the IRDAI (Insurance Products) Regulations, 2024", "a similar
+Insurance Ombudsman award"). Never invent facts, numbers, dates, clauses or rulings.
+Where a needed detail is unknown, write a placeholder in square brackets, e.g. [your address].
+
+Structure: sender block with placeholders, date, recipient, a subject line with policy and
+claim numbers, one opening paragraph stating the rejection, one paragraph per argument,
+the relief sought (payment of the claimed amount, or the deducted balance for a partial
+settlement), a request for a reply within 15 days as required, a note that the patient will
+approach the Insurance Ombudsman otherwise, and enclosures. Firm, polite, under 500 words.
+
+Return subject and english. If language is not "en", also return local: the same letter
+in that language (use the script of the language, keep clause numbers and amounts as is),
+else null. If a revision_request is given, revise previous_letter accordingly while keeping
+every rule above."""
+
+COMPLAINT_SUMMARY = """Write item 4 of an Insurance Ombudsman complaint form: "Subject matter of
+complaint and brief details of the case". Use only the facts and verified arguments given.
+In 120-180 words, plain English, first person: what was claimed, what the insurer decided and
+why, and the main grounds on which the decision is wrong (name the clause or regulation).
+No placeholders, no invented details."""
+
+PICK_OFFICE = """You choose which dispute-resolution office handles a complaint. You get the
+complainant's address and a list of offices with their jurisdiction (states, districts or
+city wards). Return the centre whose jurisdiction covers the address. If the address does
+not identify a covered state or district, return null."""

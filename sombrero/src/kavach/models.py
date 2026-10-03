@@ -1,4 +1,5 @@
 """API contract shared with andromeda. Change it here first, then tell the frontend."""
+
 from datetime import date, datetime
 from enum import StrEnum
 
@@ -32,9 +33,10 @@ class Document(BaseModel):
 
 
 class Source(BaseModel):
-    kind: str  # policy | discharge_summary | regulation | ruling
-    ref: str  # e.g. "Clause 4.2, p.11"
-    quote: str
+    kind: str  # policy | rejection_letter | discharge_summary | bill | regulation | ruling
+    ref: str  # e.g. "Clause 4.2, p.11", a regulation ref, or a ruling id
+    quote: str  # verbatim from the source
+    verified: bool = False
 
 
 class Argument(BaseModel):
@@ -66,11 +68,17 @@ class RejectionCategory(StrEnum):
 class CaseFacts(BaseModel):
     insurer: str | None = None
     tpa: str | None = None
+    patient_name: str | None = None
+    hospital: str | None = None
+    policy_number: str | None = None
+    claim_number: str | None = None
+    rejection_date: date | None = None
     policy_start: date | None = None
     admission_date: date | None = None
     first_diagnosis_date: date | None = None
     diagnosis: str | None = None
     claim_amount: float | None = None
+    amount_approved: float | None = None  # partial settlements; None if fully rejected
     currency: str | None = None
     rejection_code: str | None = None
     rejection_category: RejectionCategory | None = None
@@ -98,6 +106,36 @@ class Assessment(BaseModel):
     missing_documents: list[str] = []
 
 
+class Letter(BaseModel):
+    subject: str
+    english: str
+    local: str | None = None  # same letter in Case.language when that is not English
+    language: str = "en"
+
+
+class Complainant(BaseModel):
+    """What only the patient knows; the filing pack leaves blanks for anything missing."""
+
+    name: str | None = None
+    address: str | None = None
+    mobile: str | None = None
+    email: str | None = None
+    relationship_to_insured: str | None = None
+    insurer_office_address: str | None = None
+    grievance_date: date | None = None  # when the patient complained to the insurer
+    grievance_reply_date: date | None = None
+    grievance_outcome: str | None = None
+    court_proceedings: str | None = None
+    ported: bool | None = None
+
+
+class FilingPack(BaseModel):
+    form: str
+    dispute_body: str
+    fields: list[dict]  # [{"label", "value"}] in form order; value "" means fill in by hand
+    missing: list[str]  # labels the patient still has to fill
+
+
 class Case(BaseModel):
     id: str
     owner: str
@@ -107,7 +145,8 @@ class Case(BaseModel):
     documents: list[Document] = []
     facts: CaseFacts | None = None
     assessment: Assessment | None = None
-    letter: str | None = None
+    letter: Letter | None = None
+    complainant: Complainant | None = None
     next_deadline: datetime | None = None
     escalation_step: int = 0
     progress: str | None = None  # shown live in the UI, e.g. "Checking sources"

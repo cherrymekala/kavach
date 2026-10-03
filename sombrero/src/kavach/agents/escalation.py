@@ -1,4 +1,5 @@
 """Escalation tracker: move cases to the next step when a deadline passes."""
+
 from datetime import UTC, datetime
 
 from ..tools import store
