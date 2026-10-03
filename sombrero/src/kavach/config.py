@@ -12,12 +12,16 @@ class Settings(BaseSettings):
 
     google_api_key: str = ""
     use_vertex: bool = False
-    gcp_project: str = "kavach-prod"
+    gcp_project: str = "kavach-510312"
     gcp_region: str = "asia-south1"
     gemini_location: str = "global"  # Gemini 3.x on Vertex is served only from global
-    model_fast: str = "gemini-2.5-flash"
-    model_reasoning: str = "gemini-2.5-pro"
-    docs_bucket: str = "kavach-prod-docs"
+    # Live API: no Gemini 3.x Live model yet; native audio is only served from us-central1.
+    live_model: str = "gemini-live-2.5-flash-native-audio"
+    live_location: str = "us-central1"
+    live_voice: str = "Charon"
+    model_fast: str = "gemini-3.5-flash-lite"
+    model_reasoning: str = "gemini-3.8-flash"
+    docs_bucket: str = "kavach-510312-docs"
     rulings_engine: str = ""  # Vertex AI Search engine + data store id, e.g. kavach-rulings
     auth_disabled: bool = False
     packs_dir: str = "packs"
