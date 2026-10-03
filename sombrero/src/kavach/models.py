@@ -136,6 +136,24 @@ class FilingPack(BaseModel):
     missing: list[str]  # labels the patient still has to fill
 
 
+class CaseEvent(BaseModel):
+    at: datetime
+    kind: str  # filed | reply | escalated | reminder | resolved | warning
+    text: str  # shown on the tracker screen and used for notifications
+    step: int | None = None
+
+
+class FiledRequest(BaseModel):
+    filed_on: date
+    step: int | None = None  # defaults to the case's current step
+
+
+class ReplyRequest(BaseModel):
+    outcome: str  # paid | partly_paid | rejected
+    replied_on: date
+    amount_paid: float | None = None
+
+
 class Case(BaseModel):
     id: str
     owner: str
@@ -149,6 +167,8 @@ class Case(BaseModel):
     complainant: Complainant | None = None
     next_deadline: datetime | None = None
     escalation_step: int = 0
+    events: list[CaseEvent] = []
+    amount_recovered: float | None = None
     progress: str | None = None  # shown live in the UI, e.g. "Checking sources"
 
 

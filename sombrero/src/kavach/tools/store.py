@@ -1,7 +1,5 @@
 """Case storage in Firestore. Falls back to memory when AUTH_DISABLED (local dev)."""
 
-from datetime import datetime
-
 from ..config import get_settings
 from ..models import Case
 
@@ -32,8 +30,12 @@ def load_case(case_id: str) -> Case | None:
     return Case.model_validate(snap.to_dict()) if snap.exists else None
 
 
-def cases_due(now: datetime) -> list[Case]:
+OPEN = ("ready", "filed", "escalated")
+
+
+def open_cases() -> list[Case]:
+    """Cases the daily tracker should look at (small volume, so no composite index needed)."""
     if _local():
-        return [c for c in _memory.values() if c.next_deadline and c.next_deadline <= now]
-    q = _db().collection("cases").where("next_deadline", "<=", now.isoformat())
+        return [c for c in _memory.values() if c.status in OPEN]
+    q = _db().collection("cases").where("status", "in", list(OPEN))
     return [Case.model_validate(s.to_dict()) for s in q.stream()]
