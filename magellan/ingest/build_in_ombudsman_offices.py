@@ -2,6 +2,7 @@
 
 Run from the repo root:  python3 magellan/ingest/build_in_ombudsman_offices.py
 """
+
 import html
 import json
 import re
@@ -15,10 +16,17 @@ URL = "https://www.cioins.co.in/Ombudsman"
 def _text() -> str:
     req = urllib.request.Request(URL, headers={"User-Agent": "Mozilla/5.0"})
     raw = urllib.request.urlopen(req, timeout=30).read().decode("utf-8", errors="ignore")
-    raw = re.sub(r"<script.*?</script>|<style.*?</style>", "", raw, flags=re.S)
+    raw = re.sub(r"<script.*?</script>|<style.*?</style>", "", raw, flags=re.DOTALL)
     raw = re.sub(r"<(br|/tr|/p|/div|/li|/td)[^>]*>", "\n", raw)
     text = html.unescape(re.sub(r"<[^>]+>", " ", raw))
     return "\n".join(line.strip() for line in text.splitlines() if line.strip())
+
+
+def _field(block: list[str], prefix: str) -> str:
+    for line in block:
+        if line.lower().startswith(prefix):
+            return re.sub(rf"(?i)^{prefix}\.?\s*:?\s*", "", line)
+    return ""
 
 
 def offices() -> list[dict]:
@@ -34,14 +42,15 @@ def offices() -> list[dict]:
             if nxt.lower().startswith("jurisdiction"):
                 break
         address = [b for b in block if not re.match(r"(?i)(tel|email|jurisdiction)", b)]
-        get = lambda prefix: next((re.sub(rf"(?i)^{prefix}\.?\s*:?\s*", "", b) for b in block if b.lower().startswith(prefix)), "")  # noqa: E731
-        out.append({
-            "centre": centre,
-            "address": ", ".join(a.rstrip(",") for a in address),
-            "phone": get("tel"),
-            "email": get("email"),
-            "jurisdiction": get("jurisdiction"),
-        })
+        out.append(
+            {
+                "centre": centre,
+                "address": ", ".join(a.rstrip(",") for a in address),
+                "phone": _field(block, "tel"),
+                "email": _field(block, "email"),
+                "jurisdiction": _field(block, "jurisdiction"),
+            }
+        )
     return out
 
 

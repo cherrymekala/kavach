@@ -65,3 +65,14 @@ def test_tick_rejects_callers_without_a_scheduler_token(monkeypatch):
         assert TestClient(app).post("/tracker/tick").status_code == 401
     finally:
         get_settings.cache_clear()
+
+
+def test_singapore_ladder_and_fidrec_time_limit():
+    case = _case(rejection_date=date(2026, 8, 14))
+    case.country = "SG"
+    escalation.mark_filed(case, FiledRequest(filed_on=date(2026, 8, 20)), _at(2026, 8, 20))
+    assert case.next_deadline.date() == date(2026, 9, 17)  # 4 weeks for the insurer
+    assert escalation.tick(case, _at(2026, 9, 18))
+    assert case.escalation_step == 1 and "FIDReC" in case.events[-1].text
+    assert escalation.tick(case, _at(2026, 12, 20))  # 6-month FIDReC limit approaching
+    assert "FIDReC" in case.events[-1].text and case.events[-1].kind == "warning"

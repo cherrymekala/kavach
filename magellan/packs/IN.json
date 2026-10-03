@@ -132,7 +132,8 @@
           "source": "complainant.ported"
         }
       ],
-      "offices": "ombudsman_offices"
+      "offices": "ombudsman_offices",
+      "relief_note": "with interest as per the Insurance Ombudsman Rules, 2017"
     }
   ],
   "rejection_codes": {
@@ -1021,5 +1022,10 @@
       "email": "oio.thane@cioins.co.in",
       "jurisdiction": "Area of Navi Mumbai, Thane District, Raigad District, Palghar District and  wards of Mumbai , M/East, M/West, N, S and T.\""
     }
-  ]
+  ],
+  "limitation": {
+    "days": 365,
+    "body": "Insurance Ombudsman",
+    "from": "the rejection"
+  }
 }

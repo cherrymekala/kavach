@@ -1,0 +1,32 @@
+{
+  "id": "sg_001_nondisclosure_aia",
+  "country": "SG",
+  "synthetic": true,
+  "note": "Policy voided for undisclosed mild eczema (minor, unrelated) on an appendicitis claim. MAS 12 Jan 2022 (material + reasonably expected) and MOH 13 Sep 2021 (minor and unrelated) support the patient; AIA's own voiding clause also requires that the information 'would have affected our decision'.",
+  "documents": [
+    "rejection_letter.txt",
+    "discharge_summary.txt",
+    {
+      "policy.pdf": "magellan/sources/sg/policies/AIA_HealthShield_Gold_Max_2025.pdf"
+    }
+  ],
+  "doc_types": {
+    "rejection_letter.txt": "rejection_letter",
+    "discharge_summary.txt": "discharge_summary",
+    "policy.pdf": "policy"
+  },
+  "expected": {
+    "insurer": "AIA Singapore",
+    "tpa": null,
+    "policy_start": "2023-03-03",
+    "admission_date": "2026-07-02",
+    "first_diagnosis_date": "2026-07-02",
+    "diagnosis": "Acute appendicitis",
+    "claim_amount": 18450,
+    "currency": "SGD",
+    "rejection_code": null,
+    "rejection_category": "non_disclosure",
+    "cited_clause": "Voiding your policy",
+    "strength": "strong"
+  }
+}

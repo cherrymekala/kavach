@@ -9,7 +9,6 @@ from datetime import UTC, date, datetime, time, timedelta
 from ..models import Case, CaseEvent, CaseStatus, FiledRequest, ReplyRequest
 from ..tools import packs
 
-LIMITATION_DAYS = 365  # Ombudsman: complaint within one year of the insurer's final reply
 LIMITATION_WARN_DAYS = 60
 
 
@@ -93,16 +92,18 @@ def tick(case: Case, now: datetime) -> bool:
         step = _steps(case)[case.escalation_step]
         _escalate(case, now, f"No reply from {step['step']} within {step['deadline_days']} days.")
         changed = True
+    limit = packs.load(case.country).get("limitation")
     rejected = case.facts.rejection_date if case.facts else None
-    if rejected and case.status not in (CaseStatus.RESOLVED,):
-        days_left = (rejected + timedelta(days=LIMITATION_DAYS) - now.date()).days
+    if limit and rejected and case.status != CaseStatus.RESOLVED:
+        days_left = (rejected + timedelta(days=limit["days"]) - now.date()).days
         already = any(e.kind == "warning" for e in case.events)
         if 0 <= days_left <= LIMITATION_WARN_DAYS and not already:
             _log(
                 case,
                 now,
                 "warning",
-                f"Only {days_left} days left to approach the Insurance Ombudsman (one year from the rejection).",
+                f"Only {days_left} days left to approach the {limit['body']} "
+                f"(time limit counted from {limit['from']}).",
             )
             changed = True
     return changed

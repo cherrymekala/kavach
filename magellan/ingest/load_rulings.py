@@ -4,6 +4,7 @@ Reads magellan/sources/rulings.jsonl + rulings_labels.jsonl. Rulings without a l
 Run from the repo root after `terraform apply`:
     sombrero/.venv/bin/python magellan/ingest/load_rulings.py
 """
+
 import json
 from pathlib import Path
 
@@ -43,31 +44,39 @@ def _records() -> list[dict]:
         r = json.loads(line)
         label = labels.get(r["id"])
         if label and label["decision"] != "other":
-            out.append({**r, **{k: label[k] for k in ("decision", "category", "diagnosis", "summary")}})
+            out.append(
+                {**r, **{k: label[k] for k in ("decision", "category", "diagnosis", "summary")}}
+            )
     return out
 
 
-def main() -> None:
+def import_records(records: list[dict], update_schema: bool = True) -> None:
+    """Upsert rulings (INCREMENTAL keeps every other document in the data store)."""
     s = get_settings()
     if not s.rulings_engine:
         raise SystemExit("Set RULINGS_ENGINE in .env")
     opts = ClientOptions(quota_project_id=s.gcp_project)
     store = f"projects/{s.gcp_project}/locations/global/collections/default_collection/dataStores/{s.rulings_engine}"
-
-    de.SchemaServiceClient(client_options=opts).update_schema(
-        request=de.UpdateSchemaRequest(schema=de.Schema(name=f"{store}/schemas/default_schema", json_schema=json.dumps(SCHEMA)))
-    ).result(timeout=600)
-    print("schema updated")
+    if update_schema:
+        de.SchemaServiceClient(client_options=opts).update_schema(
+            request=de.UpdateSchemaRequest(
+                schema=de.Schema(
+                    name=f"{store}/schemas/default_schema", json_schema=json.dumps(SCHEMA)
+                )
+            )
+        ).result(timeout=600)
+        print("schema updated")
 
     docs_client = de.DocumentServiceClient(client_options=opts)
     branch = f"{store}/branches/default_branch"
-    records = _records()
     for i in range(0, len(records), BATCH):
         docs = [
             de.Document(
                 id=r["id"],
                 struct_data={k: r[k] for k in SCHEMA["properties"] if r.get(k) is not None},
-                content=de.Document.Content(mime_type="text/plain", raw_bytes=r["text"].encode("utf-8")),
+                content=de.Document.Content(
+                    mime_type="text/plain", raw_bytes=r["text"].encode("utf-8")
+                ),
             )
             for r in records[i : i + BATCH]
         ]
@@ -80,7 +89,14 @@ def main() -> None:
         )
         result = op.result(timeout=900)
         errors = len(result.error_samples)
-        print(f"{min(i + BATCH, len(records))}/{len(records)} imported" + (f", {errors} errors: {result.error_samples[0].message}" if errors else ""))
+        print(
+            f"{min(i + BATCH, len(records))}/{len(records)} imported"
+            + (f", {errors} errors: {result.error_samples[0].message}" if errors else "")
+        )
+
+
+def main() -> None:
+    import_records(_records())
 
 
 if __name__ == "__main__":

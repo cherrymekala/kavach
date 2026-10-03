@@ -5,6 +5,8 @@
 | `country`, `currency`, `languages`, `regulator` | strings | orchestrator, UI |
 | `dispute_process[]` | steps with `dispute_body`, `deadline_days`, `form`, `form_fields[]` = `{label, source}`; source is `facts.<field>`, `complainant.<field>`, `generated.summary`, `computed.loss/relief/enclosures` or `const:<text>` | filing, escalation |
 | `rejection_codes` | map `"TPA:CODE"` or `"CODE"` -> `{meaning, category, source}`; IN uses the 44 NHCX adjudication reasons (`rejection_codes_source`) | code_decoder |
+| `limitation` | `{days, body, from}`: time limit for the final dispute body (IN 365 days to the Ombudsman, SG 183 days to FIDReC) | escalation |
+| `ombudsman_offices` | (IN) offices with jurisdiction; a step's `offices` key points here | filing |
 | `regulations[]` | outline tree: `{ref, text?, children?}` | policy_rules (tree search) |
 
 Adding a country = adding one JSON file. No code changes.

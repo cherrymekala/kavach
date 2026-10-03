@@ -19,10 +19,15 @@ from . import llm, prompts
 
 def _context(case: Case) -> dict:
     arguments = case.assessment.arguments if case.assessment else []
+    steps = packs.load(case.country)["dispute_process"]
     return {
         "facts": case.facts.model_dump(mode="json") if case.facts else {},
         "arguments": [a.model_dump(mode="json") for a in arguments],
         "country": case.country,
+        "recipient": steps[0]["dispute_body"],
+        "reply_days": steps[0]["deadline_days"],
+        "next_dispute_body": steps[1]["step"] if len(steps) > 1 else None,
+        "complaint_to": steps[-1]["dispute_body"],
     }
 
 
@@ -36,8 +41,16 @@ def draft_letter(case: Case, instruction: str | None = None) -> Letter:
         context["revision_request"] = instruction
         context["previous_letter"] = case.letter.english if case.letter else None
     letter = llm.structured(prompts.LETTER, [], Letter, context=context)
+    # Models sometimes return escaped newlines or skip the translation; repair both.
+    letter.english = letter.english.replace("\\n", "\n")
     if case.language == "en":
         letter.local = None
+    elif not (letter.local or "").strip():
+        letter.local = llm.text(
+            prompts.TRANSLATE_LETTER, {"language": case.language, "letter": letter.english}
+        )
+    if letter.local:
+        letter.local = letter.local.replace("\\n", "\n")
     letter.language = case.language
     return letter
 
@@ -63,7 +76,7 @@ def _money(amount: float | None, currency: str | None) -> str:
     return f"{symbol} {amount:,.0f}".strip()
 
 
-def _computed(case: Case, key: str) -> str:
+def _computed(case: Case, key: str, template: dict | None = None) -> str:
     f = case.facts
     if not f:
         return ""
@@ -74,25 +87,22 @@ def _computed(case: Case, key: str) -> str:
         kind = "partially settled" if f.amount_approved else "rejected"
         return f"Claim of {_money(f.claim_amount, f.currency)} {kind}; unpaid {_money(unpaid, f.currency)}"
     if key == "relief":
-        return (
-            f"Payment of {_money(unpaid, f.currency)} with interest as per the Insurance Ombudsman Rules, 2017"
-            if unpaid
-            else ""
-        )
+        note = (template or {}).get("relief_note", "")
+        return f"Payment of {_money(unpaid, f.currency)} {note}".strip() if unpaid else ""
     if key == "enclosures":
         names = [d.filename for d in case.documents]
         return "; ".join(["Appeal letter to the insurer", "Insurer's reply (if any)", *names])
     return ""
 
 
-def _value(case: Case, complainant: Complainant, source: str, summary: str) -> str:
+def _value(case: Case, complainant: Complainant, source: str, summary: str, template: dict) -> str:
     kind, _, key = source.partition(".")
     if source.startswith("const:"):
         return source[6:]
     if kind == "generated":
         return summary
     if kind == "computed":
-        return _computed(case, key)
+        return _computed(case, key, template)
     obj = case.facts if kind == "facts" else complainant
     value = getattr(obj, key, None) if obj else None
     if isinstance(value, bool):
@@ -130,7 +140,10 @@ def filing_pack(case: Case, step: int | None = None) -> FilingPack:
         else ""
     )
     fields = [
-        {"label": f["label"], "value": _value(case, complainant, f["source"], summary).strip()}
+        {
+            "label": f["label"],
+            "value": _value(case, complainant, f["source"], summary, template).strip(),
+        }
         for f in template["form_fields"]
     ]
     body = template.get("dispute_body", template["step"])
@@ -146,7 +159,12 @@ def filing_pack(case: Case, step: int | None = None) -> FilingPack:
 
 
 FONTS = Path(__file__).resolve().parents[1] / "fonts"
-_SCRIPTS = ("NotoSansDevanagari", "NotoSansTamil", "NotoSansTelugu")  # hi/mr, ta, te
+_SCRIPTS = (
+    "NotoSansDevanagari",
+    "NotoSansTamil",
+    "NotoSansTelugu",
+    "NotoSansSC",
+)  # hi/mr, ta, te, zh
 _NOTE = "Prepared with Kavach from your documents. Check every detail before signing. This is not legal advice."
 
 
