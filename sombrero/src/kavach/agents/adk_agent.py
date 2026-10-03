@@ -1,4 +1,5 @@
 """ADK root agent. Run locally with `adk web` from sombrero/src to chat with it."""
+
 from google.adk.agents import Agent
 
 from ..config import get_settings

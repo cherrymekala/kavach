@@ -1,4 +1,5 @@
 """Code decoder: exact lookup of TPA/insurer rejection codes from the country pack."""
+
 from ..tools import packs
 
 

@@ -40,7 +40,17 @@ def quote_in(quote: str, text: str) -> bool:
         return False
     hay = _norm(text)
     # PDF extraction sometimes drops or adds spaces between words, so retry without spaces.
-    return _in_order(parts, hay) or _in_order([p.replace(" ", "") for p in parts], hay.replace(" ", ""))
+    return _in_order(parts, hay) or _in_order(
+        [p.replace(" ", "") for p in parts], hay.replace(" ", "")
+    )
+
+
+def ruling_label(r: dict) -> str:
+    """Human-readable citation; our internal ids mean nothing to an insurer."""
+    year = (r.get("award_date") or "")[:4]
+    detail = ", ".join(x for x in (year, r.get("insurer")) if x)
+    case_no = f", Case No. {r['case_no']}" if r.get("case_no") else ""
+    return f"Insurance Ombudsman award{case_no}" + (f" ({detail})" if detail else "")
 
 
 class _Check(BaseModel):
@@ -92,6 +102,11 @@ def verify(
     confirmed = {key // 100 for key in _gemini_check(pending, documents)}
     for n in confirmed:
         sources[n].verified = True
+
+    by_id = {r["id"]: r for r in similar}
+    for src in sources:
+        if src.kind == "ruling" and src.verified and src.ref in by_id:
+            src.ref = ruling_label(by_id[src.ref])
 
     kept = []
     for arg in assessment.arguments:

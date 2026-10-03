@@ -17,6 +17,8 @@ dependencies = [
   "firebase-admin>=6.5",
   "python-multipart>=0.0.9",
   "pypdf>=5.0",
+  "fpdf2>=2.7",
+  "uharfbuzz>=0.40",
 ]
 
 [project.optional-dependencies]
@@ -28,6 +30,9 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+kavach = ["fonts/*.ttf", "fonts/OFL.txt"]
 
 [tool.ruff]
 line-length = 100

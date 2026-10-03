@@ -26,6 +26,8 @@ google-cloud-bigquery==3.45.2
 
 # Documents
 pypdf==6.19.0
+fpdf2==2.8.9
+uharfbuzz==0.56.2
 
 # Dev / test (not needed in the Docker image)
 pytest==9.1.1

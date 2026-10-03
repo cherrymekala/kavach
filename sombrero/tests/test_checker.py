@@ -56,3 +56,16 @@ def test_verify_drops_unsupported_sources_and_empty_arguments(tmp_path):
     assert [a.claim for a in out.arguments] == ["a", "b"]
     assert [s.quote for s in out.arguments[0].sources] == ["sixty continuous months"]
     assert all(s.verified for a in out.arguments for s in a.sources)
+
+
+def test_ruling_citation_is_human_readable():
+    r = {
+        "id": "in-ombud-abc",
+        "case_no": "GI/160/UII/09",
+        "award_date": "2009-06-01",
+        "insurer": "United India Insurance",
+    }
+    assert (
+        checker.ruling_label(r)
+        == "Insurance Ombudsman award, Case No. GI/160/UII/09 (2009, United India Insurance)"
+    )

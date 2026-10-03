@@ -12,37 +12,127 @@
   "dispute_process": [
     {
       "step": "Insurer grievance cell",
+      "dispute_body": "Grievance Redressal Officer of the insurer",
       "deadline_days": 15,
-      "form": "Grievance letter",
-      "form_fields": [
-        "policy_no",
-        "claim_no",
-        "grounds"
-      ]
+      "form": "Appeal letter",
+      "form_fields": []
     },
     {
       "step": "Bima Bharosa complaint",
+      "dispute_body": "IRDAI Bima Bharosa portal (bimabharosa.irdai.gov.in)",
       "deadline_days": 30,
       "form": "Bima Bharosa online complaint",
       "form_fields": [
-        "policy_no",
-        "insurer",
-        "complaint_type",
-        "details"
+        {
+          "label": "Policy number",
+          "source": "facts.policy_number"
+        },
+        {
+          "label": "Insurance company",
+          "source": "facts.insurer"
+        },
+        {
+          "label": "Complaint type",
+          "source": "const:Health claim rejected / partially settled"
+        },
+        {
+          "label": "Claim number",
+          "source": "facts.claim_number"
+        },
+        {
+          "label": "Complaint details",
+          "source": "generated.summary"
+        }
       ]
     },
     {
       "step": "Insurance Ombudsman",
+      "dispute_body": "Insurance Ombudsman (office for the complainant's district)",
       "deadline_days": 90,
-      "form": "Annexure VI-A",
+      "form": "Annexure VI-A (Insurance Ombudsman Rules, 2017)",
       "form_fields": [
-        "complainant",
-        "insurer",
-        "policy_no",
-        "claim_amount",
-        "grounds",
-        "relief_sought"
-      ]
+        {
+          "label": "Complaint against (insurance company)",
+          "source": "facts.insurer"
+        },
+        {
+          "label": "Policy No.",
+          "source": "facts.policy_number"
+        },
+        {
+          "label": "1. Complainant's full name",
+          "source": "complainant.name"
+        },
+        {
+          "label": "1. Address",
+          "source": "complainant.address"
+        },
+        {
+          "label": "1. Mobile No.",
+          "source": "complainant.mobile"
+        },
+        {
+          "label": "1. Email",
+          "source": "complainant.email"
+        },
+        {
+          "label": "1. Relationship to the insured person",
+          "source": "complainant.relationship_to_insured"
+        },
+        {
+          "label": "2. Name of the insurance company",
+          "source": "facts.insurer"
+        },
+        {
+          "label": "2. Office address / Division / Branch",
+          "source": "complainant.insurer_office_address"
+        },
+        {
+          "label": "3. Policy number",
+          "source": "facts.policy_number"
+        },
+        {
+          "label": "4. Subject matter of complaint and brief details of the case",
+          "source": "generated.summary"
+        },
+        {
+          "label": "5. Date of preferring the claim/complaint to the insurer",
+          "source": "complainant.grievance_date"
+        },
+        {
+          "label": "6. Date of reply of the insurance company",
+          "source": "complainant.grievance_reply_date"
+        },
+        {
+          "label": "7. Proceedings before any court / consumer forum / arbitrator",
+          "source": "complainant.court_proceedings"
+        },
+        {
+          "label": "8. Nature and extent of monetary loss",
+          "source": "computed.loss"
+        },
+        {
+          "label": "9. Quantum of relief sought",
+          "source": "computed.relief"
+        },
+        {
+          "label": "10(a). Representation made to the insurer's grievance cell and outcome",
+          "source": "complainant.grievance_outcome"
+        },
+        {
+          "label": "11(c). Rejection letter date (complaint within one year)",
+          "source": "facts.rejection_date"
+        },
+        {
+          "label": "12. Documents enclosed",
+          "source": "computed.enclosures"
+        },
+        {
+          "label": "Health policy: fresh or ported",
+          "source": "complainant.ported"
+        }
+      ],
+      "offices": "ombudsman_offices"
     }
   ],
   "rejection_codes": {
@@ -803,5 +893,133 @@
     "name": "NHCX Adjudication Reason (NRCeS FHIR IG for ABDM)",
     "version": "6.5.0",
     "url": "https://nrces.in/ndhm/fhir/r4/CodeSystem/ndhm-adjudication-reason"
-  }
+  },
+  "ombudsman_offices": [
+    {
+      "centre": "Ahmedabad",
+      "address": "Office of the Insurance Ombudsman, Jeevan Prakash Building, 6th floor, Tilak Marg, Relief Road, AHMEDABAD – 380 001.",
+      "phone": "079 - 25501201/02",
+      "email": "oio.ahmedabad@cioins.co.in",
+      "jurisdiction": "Gujarat, Dadra & Nagar Haveli, Daman and Diu."
+    },
+    {
+      "centre": "Bengaluru",
+      "address": "Office of the Insurance Ombudsman, Jeevan Soudha Building,PID No. 57-27-N-19, Ground Floor, 19/19, 24th Main Road, JP Nagar, Ist Phase, Bengaluru – 560 078.",
+      "phone": "080 - 26652048 / 26652049",
+      "email": "oio.bengaluru@cioins.co.in",
+      "jurisdiction": "Karnataka."
+    },
+    {
+      "centre": "Bhopal",
+      "address": "Office of the Insurance Ombudsman, 1st floor,\"Jeevan Shikha\", 60-B,Hoshangabad Road, Opp. Gayatri Mandir,Arera Hills, Bhopal – 462 011.",
+      "phone": "0755 - 2769201 / 2769202 / 2769203",
+      "email": "oio.bhopal@cioins.co.in",
+      "jurisdiction": "Madhya Pradesh, Chhattisgarh."
+    },
+    {
+      "centre": "Bhubaneswar",
+      "address": "Office of the Insurance Ombudsman, 62, Forest park, Bhubaneswar – 751 009.",
+      "phone": "0674 - 2596461 /2596455/2596429/2596003",
+      "email": "oio.bhubaneswar@cioins.co.in",
+      "jurisdiction": "Odisha."
+    },
+    {
+      "centre": "Chandigarh",
+      "address": "Office Of The Insurance Ombudsman, Jeevan Deep Building SCO 20-27, Ground Floor Sector- 17 A, Chandigarh – 160 017.",
+      "phone": "0172-2706468",
+      "email": "oio.chandigarh@cioins.co.in",
+      "jurisdiction": "Punjab, Haryana (excluding Gurugram, Faridabad, Sonepat and Bahadurgarh), Himachal Pradesh, Union Territories of Jammu & Kashmir,Ladakh & Chandigarh."
+    },
+    {
+      "centre": "Chennai",
+      "address": "Office of the Insurance Ombudsman, Fatima Akhtar Court, 4th Floor, 453, Anna Salai, Teynampet, CHENNAI – 600 018.",
+      "phone": "044 - 24333668 / 24333678",
+      "email": "oio.chennai@cioins.co.in",
+      "jurisdiction": "Tamil Nadu, PuducherryTown and Karaikal (which are part of Puducherry)."
+    },
+    {
+      "centre": "Delhi",
+      "address": "Office of the Insurance Ombudsman, 2/2 A, Universal Insurance Building, Asaf Ali Road, New Delhi – 110 002.",
+      "phone": "011 - 46013992/23213504/23232481",
+      "email": "oio.delhi@cioins.co.in",
+      "jurisdiction": "Delhi & following Districts of Haryana - Gurugram, Faridabad, Sonepat & Bahadurgarh."
+    },
+    {
+      "centre": "Guwahati",
+      "address": "Office of the Insurance Ombudsman, Jeevan Nivesh, 5th Floor, Near Pan Bazar , S.S. Road, Guwahati – 781001(ASSAM).",
+      "phone": "0361 - 2632204 / 2602205 / 2631307",
+      "email": "oio.guwahati@cioins.co.in",
+      "jurisdiction": "Assam, Meghalaya, Manipur, Mizoram, Arunachal Pradesh, Nagaland and Tripura."
+    },
+    {
+      "centre": "Hyderabad",
+      "address": "Office of the Insurance Ombudsman, 6-2-46, 1st floor, \"Moin Court\", Lane Opp.Hyundai Showroom , A. C. Guards, Lakdi-Ka-Pool, Hyderabad - 500 004.",
+      "phone": "040 - 23312122 / 23376991 / 23376599 / 23328709 / 23325325",
+      "email": "oio.hyderabad@cioins.co.in",
+      "jurisdiction": "Andhra Pradesh, Telangana, Yanam and part of Union Territory of Puducherry."
+    },
+    {
+      "centre": "Jaipur",
+      "address": "Office of the Insurance Ombudsman, Jeevan Nidhi – II Bldg., Gr. Floor, Bhawani Singh Marg, Jaipur - 302 005.",
+      "phone": "0141- 2740363",
+      "email": "oio.jaipur@cioins.co.in",
+      "jurisdiction": "Rajasthan."
+    },
+    {
+      "centre": "Kochi",
+      "address": "Office of the Insurance Ombudsman, 10th Floor,  Jeevan Prakash,LIC Building, Opp to Maharaja's College Ground,M.G.Road, Kochi - 682 011.",
+      "phone": "0484 - 2358759",
+      "email": "oio.ernakulam@cioins.co.in",
+      "jurisdiction": "Kerala, Lakshadweep, Mahe-a part of Union Territory of Puducherry."
+    },
+    {
+      "centre": "Kolkata",
+      "address": "Office of the Insurance Ombudsman, Hindustan Bldg. Annexe, 7th Floor, 4, C.R. Avenue, KOLKATA - 700 072.",
+      "phone": "033 - 22124339 / 22124341",
+      "email": "oio.kolkata@cioins.co.in",
+      "jurisdiction": "West Bengal, Sikkim, Andaman & Nicobar Islands."
+    },
+    {
+      "centre": "Lucknow",
+      "address": "Office of the Insurance Ombudsman, 6th Floor, Jeevan Bhawan, Phase-II, Nawal Kishore Road, Hazratganj, Lucknow - 226 001.",
+      "phone": "0522 - 4002082 / 3500613",
+      "email": "oio.lucknow@cioins.co.in",
+      "jurisdiction": "Districts of Uttar Pradesh : Lalitpur, Jhansi, Mahoba, Hamirpur, Banda, Chitrakoot, Allahabad, Mirzapur, Sonbhabdra, Fatehpur, Pratapgarh, Jaunpur,Varanasi, Gazipur, Jalaun, Kanpur, Lucknow, Unnao, Sitapur, Lakhimpur, Bahraich, Barabanki, Raebareli, Sravasti, Gonda, Faizabad, Amethi, Kaushambi, Balrampur, Basti, Ambedkarnagar, Sultanpur, Maharajgang, Santkabirnagar, Azamgarh, Kushinagar, Gorkhpur, Deoria, Mau, Ghazipur, Chandauli, Ballia, Sidharathnagar."
+    },
+    {
+      "centre": "Mumbai",
+      "address": "Office of the Insurance Ombudsman, 3rd Floor, Jeevan Seva Annexe, S. V. Road, Santacruz (W), Mumbai - 400 054.",
+      "phone": "022 - 69038800/27/29/31/32/33",
+      "email": "oio.mumbai@cioins.co.in",
+      "jurisdiction": "List of wards  under Mumbai"
+    },
+    {
+      "centre": "Noida",
+      "address": "Office of the Insurance Ombudsman, Bhagwan Sahai Palace, 4th Floor, Main Road, Naya Bans, Sector 15, Distt: Gautam Buddh Nagar, U.P-201301.",
+      "phone": "0120-4027589",
+      "email": "oio.noida@cioins.co.in",
+      "jurisdiction": "State of Uttarakhand and the following Districts of Uttar Pradesh: Agra, Aligarh, Bagpat, Bareilly, Bijnor, Budaun, Bulandshehar, Etah, Kannauj, Mainpuri, Mathura, Meerut, Moradabad, Muzaffarnagar, Oraiyya, Pilibhit, Etawah, Farrukhabad, Firozbad, Gautam Buddh nagar, Ghaziabad, Hardoi, Shahjahanpur, Hapur, Shamli, Rampur, Kashganj, Sambhal, Amroha, Hathras, Kanshiramnagar, Saharanpur."
+    },
+    {
+      "centre": "Patna",
+      "address": "Office of the Insurance Ombudsman, 2nd Floor, Lalit Bhawan, Bailey Road, Patna 800 001.",
+      "phone": "0612-2547068",
+      "email": "oio.patna@cioins.co.in",
+      "jurisdiction": "Bihar, Jharkhand."
+    },
+    {
+      "centre": "Pune",
+      "address": "Office of the Insurance Ombudsman, Jeevan Darshan Bldg., 3rd Floor, C.T.S. No.s. 195 to 198, N.C. Kelkar Road, Narayan Peth, Pune – 411 030.",
+      "phone": "020-24471175",
+      "email": "oio.pune@cioins.co.in",
+      "jurisdiction": "State of Goa and State of Maharashtra excluding areas of Navi Mumbai, Thane district,Palghar District, Raigad district & Mumbai Metropolitan Region"
+    },
+    {
+      "centre": "Thane",
+      "address": "Office of the Insurance Ombudsman, Jeevan Chintamani Building, 2nd Floor,Near New RTO Office, Louis Wadi,Vasantrao Naik Mahamarg, Thane (West)- 400604",
+      "phone": "022-20812868/69",
+      "email": "oio.thane@cioins.co.in",
+      "jurisdiction": "Area of Navi Mumbai, Thane District, Raigad District, Palghar District and  wards of Mumbai , M/East, M/West, N, S and T.\""
+    }
+  ]
 }
