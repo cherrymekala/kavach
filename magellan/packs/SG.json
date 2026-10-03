@@ -8,38 +8,130 @@
     "ta"
   ],
   "regulator": "MAS",
+  "rejection_codes": {},
   "dispute_process": [
     {
-      "step": "Insurer grievance cell",
-      "deadline_days": 15,
-      "form": "Grievance letter",
-      "form_fields": [
-        "policy_no",
-        "claim_no",
-        "grounds"
-      ]
+      "step": "Insurer's internal dispute resolution",
+      "dispute_body": "The insurer's customer service / claims appeal team",
+      "deadline_days": 28,
+      "form": "Appeal letter",
+      "form_fields": []
     },
     {
-      "step": "FIDReC dispute",
-      "deadline_days": 90,
-      "form": "FIDReC lodgement (TODO: confirm)",
+      "step": "FIDReC",
+      "dispute_body": "Financial Industry Disputes Resolution Centre (FIDReC), www.fidrec.com.sg",
+      "deadline_days": 180,
+      "form": "FIDReC online complaint",
       "form_fields": [
-        "complainant",
-        "insurer",
-        "policy_no",
-        "claim_amount",
-        "grounds"
+        {
+          "label": "Financial institution complained against",
+          "source": "facts.insurer"
+        },
+        {
+          "label": "Your name",
+          "source": "complainant.name"
+        },
+        {
+          "label": "Contact number",
+          "source": "complainant.mobile"
+        },
+        {
+          "label": "Email",
+          "source": "complainant.email"
+        },
+        {
+          "label": "Address",
+          "source": "complainant.address"
+        },
+        {
+          "label": "Relationship to the insured person",
+          "source": "complainant.relationship_to_insured"
+        },
+        {
+          "label": "Policy number",
+          "source": "facts.policy_number"
+        },
+        {
+          "label": "Claim number",
+          "source": "facts.claim_number"
+        },
+        {
+          "label": "Details of your complaint, including what has happened so far",
+          "source": "generated.summary"
+        },
+        {
+          "label": "Date you complained to the insurer",
+          "source": "complainant.grievance_date"
+        },
+        {
+          "label": "Date of the insurer's final reply",
+          "source": "complainant.grievance_reply_date"
+        },
+        {
+          "label": "Amount claimed (adjudication limit S$150,000)",
+          "source": "computed.relief"
+        },
+        {
+          "label": "Proceedings in court or elsewhere on the same matter",
+          "source": "complainant.court_proceedings"
+        },
+        {
+          "label": "Supporting documents (medical reports, invoices, insurer letters)",
+          "source": "computed.enclosures"
+        }
       ]
     }
   ],
-  "rejection_codes": {},
+  "limitation": {
+    "days": 183,
+    "body": "FIDReC",
+    "from": "the insurer's final reply"
+  },
   "regulations": [
     {
-      "ref": "MAS guidelines (TODO: confirm reference)",
+      "ref": "Singapore health-insurance claim rules (MAS, MOH, FIDReC)",
       "children": [
         {
-          "ref": "SAMPLE Section: Pre-existing disease definition",
-          "text": "TODO: paste the checked section text"
+          "ref": "MAS reply to PQ, 12 Jan 2022, para 1",
+          "title": "MAS: insurers must be fair; no rejection for minor unrelated conditions",
+          "source_url": "https://www.mas.gov.sg/news/parliamentary-replies/2022/reply-to-parliamentary-question-on-complaints-about-unsuccessful-medical-insurance-claims",
+          "text": "MAS expects insurers to be fair and reasonable to all policyholders, including not rejecting health insurance claims on the basis of undeclared minor and unrelated conditions."
+        },
+        {
+          "ref": "MAS reply to PQ, 12 Jan 2022, para 3",
+          "title": "MAS: non-disclosure must be material and reasonably expected",
+          "source_url": "https://www.mas.gov.sg/news/parliamentary-replies/2022/reply-to-parliamentary-question-on-complaints-about-unsuccessful-medical-insurance-claims",
+          "text": "To reject a claim on grounds of non-disclosure of health conditions, insurers must demonstrate that the non-disclosure is material to the underwriting outcome and that the applicant could be reasonably expected to have disclosed the information during the application for the policy."
+        },
+        {
+          "ref": "MAS reply to PQ, 12 Jan 2022, para 4",
+          "title": "Redress: FIDReC and the Clinical Claims Resolution Process",
+          "source_url": "https://www.mas.gov.sg/news/parliamentary-replies/2022/reply-to-parliamentary-question-on-complaints-about-unsuccessful-medical-insurance-claims",
+          "text": "Policyholders who feel their claims have been unfairly rejected and are unable to reach a satisfactory resolution with the insurer may file a claim for mediation or adjudication at the Financial Industry Disputes Resolution Centre (FIDReC). MOH has also established a Clinical Claims Resolution Process (CCRP) for Integrated Shield Plan claim disputes of a clinical nature, such as whether claims were unfairly rejected for medically appropriate treatment or procedures, or whether there was over-charging or over-servicing by medical practitioners."
+        },
+        {
+          "ref": "MOH written answer, 13 Sep 2021",
+          "title": "MOH: MediShield Life covers pre-existing conditions; IP insurers must not reject for minor unrelated conditions",
+          "source_url": "https://www.moh.gov.sg/newsroom/denial-of-medishield-life-claims-due-to-non-disclosure-of-minor-unrelated-health-conditions/",
+          "text": "MediShield Life does not deny claims due to non-disclosure of health conditions. All Singapore Residents receive universal and lifelong protection under MediShield Life, including for pre-existing conditions. The Member may be referring to Integrated Shield Plans (IPs), which are private and optional plans that provide additional coverage on top of MediShield Life. IP claims are assessed by the private insurers based on the contractual terms agreed between the insurer and policyholder. We do not track the number of IP claims denied due to non-disclosure of minor unrelated health conditions. Nevertheless, we expect private insurers to be fair and reasonable to policyholders. Insurers should not reject major illness claims on the basis of undeclared conditions that are minor and unrelated."
+        },
+        {
+          "ref": "FIDReC Consumer's Guide to Life Insurance Disputes, Step 2",
+          "title": "FIDReC: when you can file (after 4 weeks) and mediation",
+          "source_url": "https://www.fidrec.com.sg/knowledgebase/article/KA-01259/en-us",
+          "text": "If you cannot resolve the matter with your insurer after 4 weeks, you may approach the Financial Industry Disputes Resolution Centre (“ FIDReC ”) for mediation. There is no cost to consumers to do so."
+        },
+        {
+          "ref": "FIDReC Consumer's Guide to Life Insurance Disputes, limitations",
+          "title": "FIDReC: S$150,000 adjudication limit and 6-month time limit",
+          "source_url": "https://www.fidrec.com.sg/knowledgebase/article/KA-01259/en-us",
+          "text": "Claims that exceed S$150,000 cannot be referred to adjudication unless the consumer limits their claim or the insurer agrees to the higher limit. You must approach FIDReC within 6 months of receiving the final reply from the insurer to ensure that FIDReC is able to assist you."
+        },
+        {
+          "ref": "FIDReC FAQ Q10",
+          "title": "FIDReC: adjudication jurisdiction per claim",
+          "source_url": "https://www.fidrec.com.sg/knowledgebase/article/KA-01013",
+          "text": "The jurisdiction of FIDReC in adjudicating disputes between consumers and financial institutions is up to S$100,000 per claim (for claims filed before 1 July 2024) or S$150,000 per claim(for claims filed on or after 1 July 2024)."
         }
       ]
     }

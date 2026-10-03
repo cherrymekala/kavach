@@ -4,6 +4,7 @@ Resumable: appends to rulings_labels.jsonl and skips ids already labelled.
 Run from the repo root (Vertex is far faster than the free tier):
     USE_VERTEX=true sombrero/.venv/bin/python magellan/ingest/label_rulings.py
 """
+
 import json
 import os
 import random

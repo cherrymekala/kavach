@@ -35,6 +35,11 @@ dl policies/Niva_Bupa_ReAssure_3.pdf "https://transactions.nivabupa.com/pages/do
 dl policies/Care_Supreme.pdf "https://s3.ap-south-1.amazonaws.com/ditto-partners/Care_Supreme_Policy_Wording_dd859b2a9f.pdf"
 dl policies/Bajaj_Health_Care_Supreme.pdf "https://www.bajajgeneralinsurance.com/download-documents/health-insurance/Health-PW/Health-Care-Supreme_PW.pdf"
 
+# Singapore Integrated Shield plan contracts (published by MOH).
+mkdir -p sg/policies
+dl sg/policies/AIA_HealthShield_Gold_Max_2025.pdf "https://isomer-user-content.by.gov.sg/3/b3641f37-3948-481f-ae58-013608545f14/AIA%20HSG%20Max_202510.PDF"
+dl sg/policies/PRUShield_2026.pdf "https://isomer-user-content.by.gov.sg/3/a3986bc4-5532-41fb-bcfa-2c4434492b73/PRUShield%20V2%20-%20Apr2026.pdf"
+
 # NHCX claim adjudication reason codes (source of magellan/packs/IN.json rejection_codes).
 curl -sfL --max-time 60 -o codes/ndhm-adjudication-reason.json \
   https://nrces.in/ndhm/fhir/r4/CodeSystem-ndhm-adjudication-reason.json && echo "ok   codes/ndhm-adjudication-reason.json"

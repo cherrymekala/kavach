@@ -6,6 +6,7 @@
 
 Only ids missing from rulings_labels.jsonl are sent. Uses USE_VERTEX regardless of .env.
 """
+
 import json
 import os
 import sys
@@ -52,16 +53,32 @@ def submit() -> None:
     todo = [r for r in todo if r["id"] not in done]
     lines = []
     for r in todo:
-        lines.append(json.dumps({
-            "request": {
-                "systemInstruction": {"parts": [{"text": PROMPT}]},
-                "contents": [{"role": "user", "parts": [{"text": f"[ID: {r['id']}]\n{r['text'][:MAX_CHARS]}"}]}],
-                "generationConfig": {"temperature": 0, "responseMimeType": "application/json", "responseSchema": SCHEMA},
-            }
-        }, ensure_ascii=False))
+        lines.append(
+            json.dumps(
+                {
+                    "request": {
+                        "systemInstruction": {"parts": [{"text": PROMPT}]},
+                        "contents": [
+                            {
+                                "role": "user",
+                                "parts": [{"text": f"[ID: {r['id']}]\n{r['text'][:MAX_CHARS]}"}],
+                            }
+                        ],
+                        "generationConfig": {
+                            "temperature": 0,
+                            "responseMimeType": "application/json",
+                            "responseSchema": SCHEMA,
+                        },
+                    }
+                },
+                ensure_ascii=False,
+            )
+        )
     prefix = f"batch/labels-{time.strftime('%Y%m%d-%H%M%S')}"
     bucket = storage.Client(project=s.gcp_project).bucket(s.docs_bucket)
-    bucket.blob(f"{prefix}/input.jsonl").upload_from_string("\n".join(lines) + "\n", content_type="application/jsonl")
+    bucket.blob(f"{prefix}/input.jsonl").upload_from_string(
+        "\n".join(lines) + "\n", content_type="application/jsonl"
+    )
     job = client().batches.create(
         model=s.model_fast,
         src=f"gs://{s.docs_bucket}/{prefix}/input.jsonl",
@@ -106,4 +123,6 @@ def collect() -> None:
 
 
 if __name__ == "__main__":
-    {"submit": submit, "status": status, "collect": collect}[sys.argv[1] if len(sys.argv) > 1 else "status"]()
+    {"submit": submit, "status": status, "collect": collect}[
+        sys.argv[1] if len(sys.argv) > 1 else "status"
+    ]()

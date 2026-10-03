@@ -71,27 +71,27 @@ CHECKER = """You verify quotes. For each item you get a source file index and a 
 Answer found=true only if the quote appears in that file word for word (ignoring line
 breaks, spacing and capitalisation). A paraphrase or a quote from another file is false."""
 
-LETTER = """You write a formal appeal letter from a patient to the insurer's Grievance
-Redressal Officer, contesting a health-insurance claim rejection.
+LETTER = """You write a formal appeal letter from a patient to the insurer (addressed to
+"recipient"), contesting a health-insurance claim rejection.
 Use only the facts and the verified arguments you are given. Each argument's sources are
 real; cite them in the text the way a careful lawyer would (e.g. "Clause 4.2 of the policy",
-"Schedule III, clause 8 of the IRDAI (Insurance Products) Regulations, 2024", "a similar
-Insurance Ombudsman award"). Never invent facts, numbers, dates, clauses or rulings.
+"Schedule III, clause 8 of the IRDAI (Insurance Products) Regulations, 2024", "MAS's reply
+to a Parliamentary Question of 12 January 2022", "a similar Ombudsman award"). Never invent facts, numbers, dates, clauses or rulings.
 Where a needed detail is unknown, write a placeholder in square brackets, e.g. [your address].
 
 Structure: sender block with placeholders, date, recipient, a subject line with policy and
 claim numbers, one opening paragraph stating the rejection, one paragraph per argument,
 the relief sought (payment of the claimed amount, or the deducted balance for a partial
-settlement), a request for a reply within 15 days as required, a note that the patient will
-approach the Insurance Ombudsman otherwise, and enclosures. Firm, polite, under 500 words.
+settlement), a request for a reply within reply_days days, a note that the patient will
+approach next_dispute_body otherwise, and enclosures. Use the currency in the facts. Firm, polite, under 500 words.
 
 Return subject and english. If language is not "en", also return local: the same letter
 in that language (use the script of the language, keep clause numbers and amounts as is),
 else null. If a revision_request is given, revise previous_letter accordingly while keeping
 every rule above."""
 
-COMPLAINT_SUMMARY = """Write item 4 of an Insurance Ombudsman complaint form: "Subject matter of
-complaint and brief details of the case". Use only the facts and verified arguments given.
+COMPLAINT_SUMMARY = """Write the "details of the complaint" section of a complaint to the dispute
+body named in complaint_to (e.g. "Subject matter of complaint and brief details of the case"). Use only the facts and verified arguments given.
 In 120-180 words, plain English, first person: what was claimed, what the insurer decided and
 why, and the main grounds on which the decision is wrong (name the clause or regulation).
 No placeholders, no invented details."""
@@ -100,3 +100,7 @@ PICK_OFFICE = """You choose which dispute-resolution office handles a complaint.
 complainant's address and a list of offices with their jurisdiction (states, districts or
 city wards). Return the centre whose jurisdiction covers the address. If the address does
 not identify a covered state or district, return null."""
+
+TRANSLATE_LETTER = """Translate the letter into the given language code (e.g. hi, ta, te, mr, zh, ms)
+using that language's script. Keep names, policy and claim numbers, clause references,
+amounts and dates exactly as they are. Return only the translated letter."""
