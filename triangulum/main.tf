@@ -106,7 +106,6 @@ resource "google_billing_budget" "cap" {
   threshold_rules { threshold_percent = 1.0 }
 }
 
-# Cloud Scheduler job for /tracker/tick: add after the first Cloud Run deploy, when the URL exists.
 
 # Past rulings for "similar cases". Vertex AI Search only offers global/us/eu, so it holds
 # public rulings only; patient documents stay in the asia-south1 bucket.
@@ -118,6 +117,12 @@ resource "google_discovery_engine_data_store" "rulings" {
   content_config    = "CONTENT_REQUIRED"
   solution_types    = ["SOLUTION_TYPE_SEARCH"]
   depends_on        = [google_project_service.apis]
+  lifecycle {
+    # Google fills in a default parsing config; changing it forces a replace, which would
+    # wipe the 3,120 imported rulings.
+    ignore_changes  = [document_processing_config]
+    prevent_destroy = true
+  }
 }
 
 resource "google_discovery_engine_search_engine" "rulings" {
@@ -135,3 +140,35 @@ output "rulings_engine" {
   value = google_discovery_engine_search_engine.rulings.engine_id
 }
 
+
+# Daily escalation tracker. The API is public, so /tracker/tick only accepts an OIDC token
+# issued to this service account (checked in routers/tracker.py).
+resource "google_service_account" "scheduler" {
+  account_id   = "kavach-scheduler"
+  display_name = "Kavach daily tracker (Cloud Scheduler)"
+}
+
+data "google_cloud_run_v2_service" "sombrero" {
+  name     = "sombrero"
+  location = var.region
+}
+
+resource "google_cloud_scheduler_job" "tracker" {
+  name        = "kavach-tracker-tick"
+  region      = var.region
+  schedule    = "0 9 * * *"
+  time_zone   = "Asia/Kolkata"
+  description = "Escalate cases whose dispute deadline passed; warn on the Ombudsman one-year limit."
+  retry_config {
+    retry_count = 2
+  }
+  http_target {
+    http_method = "POST"
+    uri         = "${data.google_cloud_run_v2_service.sombrero.uri}/tracker/tick"
+    oidc_token {
+      service_account_email = google_service_account.scheduler.email
+      audience              = "${data.google_cloud_run_v2_service.sombrero.uri}/tracker/tick"
+    }
+  }
+  depends_on = [google_project_service.apis]
+}

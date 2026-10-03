@@ -8,6 +8,7 @@ app.include_router(documents.router)
 app.include_router(analysis.router)
 app.include_router(filing.router)
 app.include_router(tracker.router)
+app.include_router(tracker.case_router)
 
 
 @app.get("/health")
