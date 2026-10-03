@@ -43,17 +43,50 @@ class Argument(BaseModel):
     sources: list[Source]
 
 
+class RejectionCategory(StrEnum):
+    PRE_EXISTING = "pre_existing"
+    SPECIFIC_WAITING_PERIOD = "specific_waiting_period"
+    INITIAL_WAITING_PERIOD = "initial_waiting_period"
+    NON_DISCLOSURE = "non_disclosure"
+    ROOM_RENT = "room_rent"
+    REASONABLE_CHARGES = "reasonable_charges"
+    DIAGNOSTIC_ONLY = "diagnostic_only"
+    NOT_MEDICALLY_NECESSARY = "not_medically_necessary"
+    EXCLUDED_TREATMENT = "excluded_treatment"
+    MISSING_DOCUMENTS = "missing_documents"
+    LATE_INTIMATION = "late_intimation"
+    SUB_LIMIT = "sub_limit"  # coverage cap, co-pay, deductible
+    UNDER_24_HOURS = "under_24_hours"
+    HOSPITAL_INELIGIBLE = "hospital_ineligible"
+    DUPLICATE_CLAIM = "duplicate_claim"
+    FRAUD = "fraud"
+    OTHER = "other"
+
+
 class CaseFacts(BaseModel):
     insurer: str | None = None
     tpa: str | None = None
     policy_start: date | None = None
     admission_date: date | None = None
+    first_diagnosis_date: date | None = None
     diagnosis: str | None = None
     claim_amount: float | None = None
     currency: str | None = None
     rejection_code: str | None = None
+    rejection_category: RejectionCategory | None = None
     rejection_reason: str | None = None
     cited_clause: str | None = None
+
+
+class DocLabel(BaseModel):
+    index: int  # position of the file in the request
+    doc_type: DocType
+    warning: str | None = None
+
+
+class IntakeResult(BaseModel):
+    documents: list[DocLabel]
+    facts: CaseFacts
 
 
 class Assessment(BaseModel):

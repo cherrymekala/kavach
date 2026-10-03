@@ -26,6 +26,6 @@ steps:
       - --allow-unauthenticated
       - --min-instances=0
       - --max-instances=3
-      - --set-env-vars=GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},USE_VERTEX=true,DOCS_BUCKET=$PROJECT_ID-docs,MODEL_FAST=${_MODEL_FAST},MODEL_REASONING=${_MODEL_REASONING}
+      - --set-env-vars=GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},USE_VERTEX=true,DOCS_BUCKET=$PROJECT_ID-docs,MODEL_FAST=${_MODEL_FAST},MODEL_REASONING=${_MODEL_REASONING},RULINGS_ENGINE=kavach-rulings
 images:
   - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$SHORT_SHA

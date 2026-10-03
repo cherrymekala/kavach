@@ -1,0 +1,32 @@
+{
+  "id": "in_003_roomrent_care",
+  "country": "IN",
+  "synthetic": true,
+  "note": "Care Supreme room rent is 'No limit' (policy, Conditions for Hospitalization Expenses (ix)).",
+  "documents": [
+    "rejection_letter.txt",
+    "discharge_summary.txt",
+    {
+      "policy.pdf": "magellan/sources/policies/Care_Supreme.pdf"
+    }
+  ],
+  "doc_types": {
+    "rejection_letter.txt": "rejection_letter",
+    "discharge_summary.txt": "discharge_summary",
+    "policy.pdf": "policy"
+  },
+  "expected": {
+    "insurer": "Care Health Insurance",
+    "tpa": null,
+    "policy_start": "2023-01-10",
+    "admission_date": "2026-06-03",
+    "first_diagnosis_date": "2026-06-02",
+    "diagnosis": "Dengue fever with thrombocytopenia",
+    "claim_amount": 112000,
+    "currency": "INR",
+    "rejection_code": "DED-RR-07",
+    "rejection_category": "room_rent",
+    "cited_clause": null,
+    "strength": "strong"
+  }
+}

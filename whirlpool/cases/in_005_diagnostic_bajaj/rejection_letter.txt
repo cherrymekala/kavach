@@ -1,0 +1,12 @@
+MEDI ASSIST INSURANCE TPA PVT. LTD.
+on behalf of Bajaj General Insurance Limited
+
+Date: 14/08/2026
+Claim No: MA-2026-BJ-5521873    Policy: OG-26-1501-8430-00001234 (Health Care Supreme)
+Policy Period from: 01/09/2024
+Patient: Mrs. Gurpreet Kaur (SYNTHETIC)
+DOA: 02/08/2026   DOD: 05/08/2026   Claimed: Rs. 48,700
+
+Denial Code: MA-R-117
+Reason: Admission primarily for investigation and evaluation. Excluded under
+Investigation & Evaluation (Excl04).

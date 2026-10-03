@@ -17,15 +17,23 @@ def run_case(case_id: str) -> None:
     case = store.load_case(case_id)
     try:
         _progress(case, "Reading your documents")
-        case.facts = intake.extract_facts([d.gcs_uri for d in case.documents])
+        result = intake.run([d.gcs_uri for d in case.documents])
+        for label in result.documents:
+            if 0 <= label.index < len(case.documents):
+                case.documents[label.index].doc_type = label.doc_type
+                case.documents[label.index].warning = label.warning
+        case.facts = result.facts
 
         _progress(case, "Decoding the rejection")
         decoded = code_decoder.decode(case.country, case.facts.tpa, case.facts.rejection_code)
-        if decoded and not case.facts.rejection_reason:
-            case.facts.rejection_reason = decoded.get("meaning")
+        if decoded:
+            # An exact code match beats the model's reading of the letter.
+            case.facts.rejection_category = decoded["category"]
+            if not case.facts.rejection_reason:
+                case.facts.rejection_reason = decoded.get("meaning")
 
         _progress(case, "Finding the rules that apply")
-        sections = policy_rules.find_sections(case.country, case.facts.rejection_reason or "")
+        sections = policy_rules.find_sections(case.country, policy_rules.describe(case.facts))
 
         _progress(case, "Building your case")
         policy = next((d for d in case.documents if d.doc_type == DocType.POLICY), case.documents[0])

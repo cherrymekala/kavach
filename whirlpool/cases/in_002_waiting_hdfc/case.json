@@ -1,0 +1,32 @@
+{
+  "id": "in_002_waiting_hdfc",
+  "country": "IN",
+  "synthetic": true,
+  "note": "Genuinely inside the 24-month waiting period; the agent should say weak.",
+  "documents": [
+    "rejection_letter.txt",
+    "discharge_summary.txt",
+    {
+      "policy.pdf": "magellan/sources/policies/HDFC_ERGO_Optima_Secure.pdf"
+    }
+  ],
+  "doc_types": {
+    "rejection_letter.txt": "rejection_letter",
+    "discharge_summary.txt": "discharge_summary",
+    "policy.pdf": "policy"
+  },
+  "expected": {
+    "insurer": "HDFC ERGO General Insurance",
+    "tpa": null,
+    "policy_start": "2025-04-01",
+    "admission_date": "2026-08-20",
+    "first_diagnosis_date": null,
+    "diagnosis": "Senile cataract, right eye",
+    "claim_amount": 62500,
+    "currency": "INR",
+    "rejection_code": null,
+    "rejection_category": "specific_waiting_period",
+    "cited_clause": "Code - Excl02",
+    "strength": "weak"
+  }
+}

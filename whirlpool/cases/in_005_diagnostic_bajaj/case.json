@@ -1,0 +1,32 @@
+{
+  "id": "in_005_diagnostic_bajaj",
+  "country": "IN",
+  "synthetic": true,
+  "note": "IV treatment given, so not purely diagnostic; medium because MRI dominated the bill.",
+  "documents": [
+    "rejection_letter.txt",
+    "discharge_summary.txt",
+    {
+      "policy.pdf": "magellan/sources/policies/Bajaj_Health_Care_Supreme.pdf"
+    }
+  ],
+  "doc_types": {
+    "rejection_letter.txt": "rejection_letter",
+    "discharge_summary.txt": "discharge_summary",
+    "policy.pdf": "policy"
+  },
+  "expected": {
+    "insurer": "Bajaj General Insurance",
+    "tpa": "Medi Assist",
+    "policy_start": "2024-09-01",
+    "admission_date": "2026-08-02",
+    "first_diagnosis_date": null,
+    "diagnosis": "Acute vestibular neuritis",
+    "claim_amount": 48700,
+    "currency": "INR",
+    "rejection_code": "MA-R-117",
+    "rejection_category": "diagnostic_only",
+    "cited_clause": "Excl04",
+    "strength": "medium"
+  }
+}
