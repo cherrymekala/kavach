@@ -16,6 +16,8 @@ def analyse(case_id: str, bg: BackgroundTasks, uid: str = Depends(current_user))
         raise HTTPException(404, "Case not found.")
     if case.status == CaseStatus.ANALYSING:
         raise HTTPException(409, "The analysis is already running.")
+    if case.documents_deleted_at:
+        raise HTTPException(410, "This case's documents were deleted after it was resolved.")
     if not case.documents:
         raise HTTPException(400, "Upload at least the rejection letter and the policy first.")
     case.status = CaseStatus.ANALYSING

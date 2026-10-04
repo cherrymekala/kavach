@@ -76,3 +76,33 @@ def test_singapore_ladder_and_fidrec_time_limit():
     assert case.escalation_step == 1 and "FIDReC" in case.events[-1].text
     assert escalation.tick(case, _at(2026, 12, 20))  # 6-month FIDReC limit approaching
     assert "FIDReC" in case.events[-1].text and case.events[-1].kind == "warning"
+
+
+def test_documents_are_deleted_30_days_after_resolution(monkeypatch, tmp_path):
+    from kavach.models import Document
+    from kavach.tools import store
+
+    monkeypatch.setenv("AUTH_DISABLED", "true")
+    monkeypatch.chdir(tmp_path)
+    get_settings.cache_clear()
+    try:
+        (tmp_path / ".uploads" / "r1").mkdir(parents=True)
+        (tmp_path / ".uploads" / "r1" / "letter.txt").write_text("rejected")
+        case = _case()
+        case.id, case.owner = "r1", "dev-user"
+        case.documents = [Document(id="d", filename="letter.txt", gcs_uri="x")]
+        escalation.record_reply(
+            case, ReplyRequest(outcome="paid", replied_on=date(2026, 7, 9)), _at(2026, 7, 9)
+        )
+        assert not escalation.documents_due_for_deletion(case, _at(2026, 8, 7))  # 29 days
+        assert escalation.documents_due_for_deletion(case, _at(2026, 8, 9))  # 31 days
+
+        store.save_case(case)
+        client = TestClient(app)
+        assert client.post("/tracker/tick").json()["changed"] >= 1
+        saved = store.load_case("r1")
+        assert saved.documents_deleted_at and saved.events[-1].kind == "documents_deleted"
+        assert not (tmp_path / ".uploads" / "r1" / "letter.txt").exists()
+        assert client.post("/cases/r1/analyse").status_code == 410
+    finally:
+        get_settings.cache_clear()

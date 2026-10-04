@@ -16,11 +16,14 @@ claude.md
 **/CLAUDE.md
 session.md
 spec.md
+spec-frontend.md
 .claude/
 
 # ── Prototypes, references, docs (never commit) ───────────
 # andromeda = UI prototype, cartwheel = architecture docs + diagrams
-andromeda/
+andromeda/prototype/
+andromeda/**/node_modules/
+andromeda/**/dist/
 cartwheel/
 **/prototype/
 **/prototypes/

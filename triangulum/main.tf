@@ -40,8 +40,19 @@ resource "google_storage_bucket" "docs" {
   location                    = var.region
   uniform_bucket_level_access = true
   public_access_prevention    = "enforced"
+  # Case documents are deleted by the app 30 days after a case is resolved (or at once when the
+  # patient deletes the case). This is only a backstop for abandoned cases: 18 months covers the
+  # longest dispute path (India: one year to reach the Ombudsman + 90 days for its decision).
   lifecycle_rule {
-    condition { age = 30 }
+    condition { age = 548 }
+    action { type = "Delete" }
+  }
+  # Batch-labelling working files.
+  lifecycle_rule {
+    condition {
+      age            = 30
+      matches_prefix = ["batch/"]
+    }
     action { type = "Delete" }
   }
 }
