@@ -30,7 +30,8 @@ def load_case(case_id: str) -> Case | None:
     return Case.model_validate(snap.to_dict()) if snap.exists else None
 
 
-OPEN = ("ready", "filed", "escalated")
+# Resolved cases stay in the daily scan until their documents are deleted.
+OPEN = ("ready", "filed", "escalated", "resolved")
 
 
 def open_cases() -> list[Case]:

@@ -175,6 +175,7 @@ class Case(BaseModel):
     next_deadline: datetime | None = None
     escalation_step: int = 0
     events: list[CaseEvent] = []
+    documents_deleted_at: datetime | None = None
     amount_recovered: float | None = None
     progress: str | None = None  # shown live in the UI, e.g. "Checking sources"
 

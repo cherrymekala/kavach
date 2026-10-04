@@ -10,6 +10,7 @@ from ..models import Case, CaseEvent, CaseStatus, FiledRequest, ReplyRequest
 from ..tools import packs
 
 LIMITATION_WARN_DAYS = 60
+KEEP_AFTER_RESOLVED_DAYS = 30  # time to download letters/forms before documents are erased
 
 
 def _steps(case: Case) -> list[dict]:
@@ -107,3 +108,20 @@ def tick(case: Case, now: datetime) -> bool:
             )
             changed = True
     return changed
+
+
+def documents_due_for_deletion(case: Case, now: datetime) -> bool:
+    if case.status != CaseStatus.RESOLVED or case.documents_deleted_at or not case.documents:
+        return False
+    resolved = [e.at for e in case.events if e.kind == "resolved"]
+    return bool(resolved) and now - max(resolved) >= timedelta(days=KEEP_AFTER_RESOLVED_DAYS)
+
+
+def mark_documents_deleted(case: Case, now: datetime) -> None:
+    case.documents_deleted_at = now
+    _log(
+        case,
+        now,
+        "documents_deleted",
+        f"Your uploaded documents were deleted {KEEP_AFTER_RESOLVED_DAYS} days after the case was resolved.",
+    )

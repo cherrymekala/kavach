@@ -6,7 +6,7 @@ from ..agents import escalation
 from ..auth import current_user
 from ..config import Settings, get_settings
 from ..models import Case, FiledRequest, ReplyRequest
-from ..tools import store
+from ..tools import files, store
 
 router = APIRouter(prefix="/tracker", tags=["tracker"])
 case_router = APIRouter(prefix="/cases/{case_id}", tags=["tracker"])
@@ -42,7 +42,12 @@ def tick() -> dict:
     now = datetime.now(UTC)
     changed = 0
     for case in store.open_cases():
-        if escalation.tick(case, now):
+        dirty = escalation.tick(case, now)
+        if escalation.documents_due_for_deletion(case, now):
+            files.delete_case_files(case.id)
+            escalation.mark_documents_deleted(case, now)
+            dirty = True
+        if dirty:
             store.save_case(case)
             changed += 1
     return {"changed": changed}
