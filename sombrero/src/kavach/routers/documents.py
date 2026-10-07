@@ -5,7 +5,7 @@ from pathlib import Path
 from fastapi import APIRouter, Depends, HTTPException, UploadFile
 
 from ..auth import current_user
-from ..models import Document
+from ..models import CaseStatus, Document
 from ..tools import files, store
 
 router = APIRouter(prefix="/cases/{case_id}/documents", tags=["documents"])
@@ -43,3 +43,19 @@ async def upload(case_id: str, file: UploadFile, uid: str = Depends(current_user
     case.documents.append(doc)
     store.save_case(case)
     return doc
+
+
+@router.delete("/{doc_id}", status_code=204)
+def delete_document(case_id: str, doc_id: str, uid: str = Depends(current_user)) -> None:
+    """Remove a wrong upload. Only before analysis, so results never cite a missing file."""
+    case = store.load_case(case_id)
+    if not case or case.owner != uid:
+        raise HTTPException(404, "Case not found.")
+    if case.status != CaseStatus.COLLECTING:
+        raise HTTPException(409, "Documents can only be removed before the analysis starts.")
+    doc = next((d for d in case.documents if d.id == doc_id), None)
+    if not doc:
+        raise HTTPException(404, "Document not found.")
+    files.delete(doc.gcs_uri)
+    case.documents = [d for d in case.documents if d.id != doc_id]
+    store.save_case(case)

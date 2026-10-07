@@ -34,3 +34,14 @@ def delete_case_files(case_id: str) -> int:
     for blob in blobs:
         blob.delete()
     return len(blobs)
+
+
+def delete(uri: str) -> None:
+    s = get_settings()
+    if not uri.startswith("gs://"):
+        Path(uri).unlink(missing_ok=True)
+        return
+    from google.cloud import storage
+
+    bucket, _, name = uri[5:].partition("/")
+    storage.Client(project=s.gcp_project).bucket(bucket).blob(name).delete()
