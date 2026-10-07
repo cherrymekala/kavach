@@ -1,0 +1,43 @@
+{
+  "common": {
+    "loading": "Memuatkan…",
+    "back": "Kembali"
+  },
+  "auth": {
+    "kicker": "Insurans kesihatan, di pihak anda",
+    "headline": "Tuntutan ditolak? Mari kita lawan bersama.",
+    "subhead": "Kami membaca dokumen anda, menerangkan sebab penolakan dalam bahasa anda, dan memfailkan rayuan untuk anda.",
+    "language": "Bahasa",
+    "signIn": "Log masuk",
+    "privacy": "Kod sekali guna dihantar ke telefon anda. Kami tidak pernah berkongsi dokumen anda.",
+    "signedInAs": "Log masuk sebagai {{phone}}.",
+    "featureRead": "Membaca surat penolakan dan polisi anda",
+    "featureExplain": "Menerangkan sebab penolakan dalam bahasa anda",
+    "featureFile": "Memfailkan dan menjejak rayuan anda sehingga selesai"
+  },
+  "otp": {
+    "phoneLabel": "Nombor telefon",
+    "phonePlaceholder": "99999 00001",
+    "sendCode": "Hantar kod",
+    "codeLabel": "Masukkan kod 6 digit",
+    "sentTo": "Dihantar ke {{dial}} {{phone}}.",
+    "changeNumber": "Tukar nombor",
+    "verifyCode": "Sahkan kod",
+    "errorSend": "Tidak dapat menghantar kod.",
+    "errorVerify": "Tidak dapat mengesahkan kod."
+  },
+  "start": {
+    "title": "Kavach",
+    "country": "Negara",
+    "countryNote": "Ini mengubah badan pertikaian, borang, mata wang, tarikh akhir dan kod penolakan.",
+    "cta": "Tuntutan saya ditolak",
+    "otherWays": "Cara lain untuk bermula",
+    "whatsapp": "WhatsApp",
+    "whatsappDesc": "Hantar foto dokumen anda",
+    "call": "Hubungi kami",
+    "callDesc": "Bercakap dalam bahasa anda",
+    "comingSoon": "Akan datang",
+    "detected": "dikesan daripada nombor anda",
+    "errorCreate": "Tidak dapat memulakan kes anda."
+  }
+}
