@@ -1,5 +1,11 @@
 import { initializeApp, getApp, getApps, type FirebaseApp } from 'firebase/app'
-import { getAuth, type Auth } from 'firebase/auth'
+import {
+  getAuth,
+  RecaptchaVerifier,
+  signInWithPhoneNumber,
+  type Auth,
+  type ConfirmationResult,
+} from 'firebase/auth'
 import { getFirestore, type Firestore } from 'firebase/firestore'
 
 const config = {
@@ -11,8 +17,15 @@ const config = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
 
+export function isConfigured(): boolean {
+  return Boolean(import.meta.env.VITE_FIREBASE_API_KEY)
+}
+
 export function app(): FirebaseApp {
   if (getApps().length) return getApp()
+  if (!isConfigured()) {
+    throw new Error('Firebase is not configured. Copy .env.example to .env and set VITE_FIREBASE_* values.')
+  }
   return initializeApp(config)
 }
 
@@ -28,4 +41,33 @@ export function db(): Firestore {
 export async function getIdToken(): Promise<string | null> {
   const user = auth().currentUser
   return user ? user.getIdToken() : null
+}
+
+/** Invisible reCAPTCHA verifier — `containerId` must exist in the DOM. */
+export function createRecaptchaVerifier(containerId: string): RecaptchaVerifier {
+  return new RecaptchaVerifier(auth(), containerId, { size: 'invisible' })
+}
+
+/** Send the OTP; resolves with a ConfirmationResult to call `.confirm(code)` on. */
+export async function sendOtp(phone: string, verifier: RecaptchaVerifier): Promise<ConfirmationResult> {
+  return signInWithPhoneNumber(auth(), phone, verifier)
+}
+
+/** Map Firebase auth error codes to user-friendly copy. */
+export function mapAuthError(error: unknown): string {
+  const code = (error as { code?: string })?.code ?? ''
+  switch (code) {
+    case 'auth/invalid-phone-number':
+      return "That phone number doesn't look right."
+    case 'auth/invalid-verification-code':
+      return "That code isn't right. Check it and try again."
+    case 'auth/code-expired':
+      return 'That code expired. Send a new one.'
+    case 'auth/too-many-requests':
+      return 'Too many attempts. Wait a minute and try again.'
+    case 'auth/captcha-check-failed':
+      return 'The safety check failed. Please try again.'
+    default:
+      return 'Could not sign you in. Please try again.'
+  }
 }

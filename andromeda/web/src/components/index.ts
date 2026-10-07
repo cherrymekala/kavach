@@ -110,6 +110,7 @@ export { Meter } from './ui/meter'
 export { LiveIndicator } from './ui/live-indicator'
 
 // ── Feature components ───────────────────────────────────────────────────
+export { ThemeToggle } from './theme-toggle'
 export { AppHeader, type AppHeaderProps } from './app-header'
 export { FooterCTA, type FooterCTAProps } from './footer-cta'
 export { Stepper, type StepperProps } from './stepper'

@@ -17,6 +17,7 @@ import {
   Spinner,
   Stepper,
   Timeline,
+  ThemeToggle,
 } from '@/components'
 
 const SWATCHES: { name: string; className: string; dark?: boolean }[] = [
@@ -36,12 +37,15 @@ const DEMO_DEADLINE = new Date(Date.now() + 9 * 86_400_000).toISOString()
 export function Foundation() {
   return (
     <div className="flex flex-col gap-6">
-      <section>
-        <h1 className="font-display text-2xl font-extrabold text-balance">Foundation ready</h1>
-        <p className="mt-1 text-muted-foreground">
-          Vite + React 19 + Tailwind v4 + shadcn/ui. Dev check, not a screen.
-        </p>
-      </section>
+      <div className="flex items-start justify-between">
+        <section>
+          <h1 className="font-display text-2xl font-extrabold text-balance">Foundation ready</h1>
+          <p className="mt-1 text-muted-foreground">
+            Vite + React 19 + Tailwind v4 + shadcn/ui. Dev check, not a screen.
+          </p>
+        </section>
+        <ThemeToggle />
+      </div>
 
       <section className="flex flex-col gap-2">
         <h2 className="font-display text-lg font-bold">Colour tokens</h2>
