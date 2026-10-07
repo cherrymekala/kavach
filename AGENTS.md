@@ -83,6 +83,49 @@ WhatsApp, Telegram, and a phone voice line are **post-MVP / slides only** (see `
 
 Multi-agent (Google ADK / Agents SDK) skills are **backend's** concern (Sharan owns `sombrero/`); the frontend consumes the API, it does not build agents.
 
+## Frontend build phases & parallel-session rules
+
+The 9 screens split into **phases**. Each phase owns exactly one `src/screens/<name>/` folder and is code-independent (it reads the case id from `useParams()` and uses the frozen API hooks). This is what makes parallel work safe.
+
+### Frozen shared files — DO NOT edit in a phase session
+
+`src/styles/globals.css` · `src/lib/theme.tsx` · `src/lib/cn.ts` · `src/lib/{money,dates,download}.ts` · `src/components/ui/*` · `src/components/*` (feature components) · `src/components/index.ts` · `src/firebase.ts` · `src/auth.tsx` · `src/api/{client,schema,types,hooks,live}.*` · `src/main.tsx` · `src/App.tsx` · `src/router.tsx` · `package.json` · `components.json` · `.oxlintrc.json` · `tsconfig*`.
+
+If a phase needs a shared change (a new primitive, a new hook, a route, a dependency), **stop and do it as a separate coordinated PR** — never silently edit shared files.
+
+### Phases (own only the "Files you own" column)
+
+| Phase | Screen | Route | Files you own | API |
+|---|---|---|---|---|
+| 1 | Start | `/start` | `src/screens/start/` | `POST /cases` |
+| 2 | Upload + Analysing | `/case/:id/upload` | `src/screens/upload/` | `POST /documents`, `POST /analyse`, `useLiveCase` |
+| 3 | Summary | `/case/:id/summary` | `src/screens/summary/` | `GET /cases/{id}` → `facts` |
+| 4 | Chances | `/case/:id/chances` | `src/screens/chances/` | `assessment` |
+| 5 | Letter | `/case/:id/letter` | `src/screens/letter/` | `POST /letter`, `GET /letter.pdf` |
+| 6 | Filing | `/case/:id/filing` | `src/screens/filing/` | `PUT /complainant`, `GET /filing`, `GET /filing.pdf` |
+| 7 | Hearing | `/case/:id/hearing` | `src/screens/hearing/`, `src/audio/` | WebSocket |
+| 8 | Tracker | `/case/:id/tracker` | `src/screens/tracker/` | `POST /filed`, `POST /reply` |
+| 9 | Outcome | `/case/:id/outcome` | `src/screens/outcome/` | `DELETE /cases/{id}` |
+| 10 | Polish | — | `src/i18n/`, e2e, PWA, empty/error states | — |
+
+**Rules for every phase session:**
+1. Edit only your phase's files. Phase-local components live **inside** your screen folder (e.g. `src/screens/chances/SourceSheet.tsx`), imported directly — do **not** touch `components/index.ts`.
+2. Read data via the frozen hooks (`useCase(id)`, `useLiveCase(id)`, `useFiling(id, step)`…) and primitives from `@/components/ui/…`. PDFs: `apiBlob` + `downloadBlob`.
+3. Import components directly (`@/components/ui/button`) or from `@/components` (barrel is frozen and complete).
+4. Commit per screen, repo style ("Added the X screen"), on a branch `feat/<phase>`.
+5. Run `npm run build` and `npm run lint` before committing.
+
+### How to run phases (pick one)
+
+- **Sequential (recommended if new to git):** do one phase at a time, commit, move on. The order 1→9 follows the demo path; 10 last.
+- **Parallel:** one branch per phase. If sessions share one machine, use **git worktrees** so each session has its own directory and branch (never two sessions `git add`/`commit` in the same worktree):
+  ```bash
+  git worktree add ../kavach-phase3 -b feat/summary main
+  ```
+  Each session works in its own directory and only its own files. Merge via PRs.
+
+To see what other sessions are doing: `git branch -a` + `gh pr list`.
+
 ## Commands
 
 Backend (from `sombrero/`):
