@@ -47,3 +47,15 @@ def delete_case(case_id: str) -> None:
         _memory.pop(case_id, None)
         return
     _db().collection("cases").document(case_id).delete()
+
+
+def list_cases(owner: str) -> list[Case]:
+    """Newest first. Equality filter only, so no composite index is needed; sorted here."""
+    if _local():
+        cases = [c for c in _memory.values() if c.owner == owner]
+    else:
+        query = _db().collection("cases").where("owner", "==", owner)
+        cases = [Case.model_validate(s.to_dict()) for s in query.stream()]
+    return sorted(
+        cases, key=lambda c: c.created_at.isoformat() if c.created_at else "", reverse=True
+    )

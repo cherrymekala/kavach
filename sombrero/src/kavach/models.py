@@ -164,6 +164,7 @@ class ReplyRequest(BaseModel):
 class Case(BaseModel):
     id: str
     owner: str
+    created_at: datetime | None = None
     country: str = "IN"
     language: str = "en"
     status: CaseStatus = CaseStatus.COLLECTING
@@ -178,6 +179,61 @@ class Case(BaseModel):
     documents_deleted_at: datetime | None = None
     amount_recovered: float | None = None
     progress: str | None = None  # shown live in the UI, e.g. "Checking sources"
+
+
+class CaseSummary(BaseModel):
+    """One row of the "My cases" list."""
+
+    id: str
+    created_at: datetime | None
+    country: str
+    language: str
+    status: CaseStatus
+    progress: str | None
+    insurer: str | None
+    diagnosis: str | None
+    claim_amount: float | None
+    currency: str | None
+    strength: str | None
+    escalation_step: int
+    next_deadline: datetime | None
+
+    @classmethod
+    def of(cls, case: "Case") -> "CaseSummary":
+        f = case.facts
+        return cls(
+            id=case.id,
+            created_at=case.created_at,
+            country=case.country,
+            language=case.language,
+            status=case.status,
+            progress=case.progress,
+            insurer=f.insurer if f else None,
+            diagnosis=f.diagnosis if f else None,
+            claim_amount=f.claim_amount if f else None,
+            currency=f.currency if f else None,
+            strength=case.assessment.strength if case.assessment else None,
+            escalation_step=case.escalation_step,
+            next_deadline=case.next_deadline,
+        )
+
+
+class LadderStep(BaseModel):
+    step: str
+    dispute_body: str
+    deadline_days: int
+    form: str
+
+
+class PackInfo(BaseModel):
+    """Public part of a country pack, so the UI doesn't hard-code ladders."""
+
+    country: str
+    currency: str
+    languages: list[str]
+    regulator: str
+    ladder: list[LadderStep]
+    limitation: dict | None = None
 
 
 class CreateCase(BaseModel):
