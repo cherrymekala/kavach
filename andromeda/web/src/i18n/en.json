@@ -1,0 +1,43 @@
+{
+  "common": {
+    "loading": "Loading…",
+    "back": "Back"
+  },
+  "auth": {
+    "kicker": "Health insurance, defended",
+    "headline": "Claim rejected? Let's fight it together.",
+    "subhead": "We read your documents, explain the rejection in your language, and file the appeal for you.",
+    "language": "Language",
+    "signIn": "Sign in",
+    "privacy": "A one-time code is sent to your phone. We never share your documents.",
+    "signedInAs": "Signed in as {{phone}}.",
+    "featureRead": "Reads your rejection letter and policy",
+    "featureExplain": "Explains the rejection in your language",
+    "featureFile": "Files and tracks your appeal to resolution"
+  },
+  "otp": {
+    "phoneLabel": "Phone number",
+    "phonePlaceholder": "99999 00001",
+    "sendCode": "Send code",
+    "codeLabel": "Enter the 6-digit code",
+    "sentTo": "Sent to {{dial}} {{phone}}.",
+    "changeNumber": "Change number",
+    "verifyCode": "Verify code",
+    "errorSend": "Could not send the code.",
+    "errorVerify": "Could not verify the code."
+  },
+  "start": {
+    "title": "Kavach",
+    "country": "Country",
+    "countryNote": "This changes the dispute body, forms, currency, deadlines and rejection codes.",
+    "cta": "My claim was rejected",
+    "otherWays": "Other ways to start",
+    "whatsapp": "WhatsApp",
+    "whatsappDesc": "Send photos of your papers",
+    "call": "Call us",
+    "callDesc": "Speak in your language",
+    "comingSoon": "Coming soon",
+    "detected": "detected from your number",
+    "errorCreate": "Could not start your case."
+  }
+}

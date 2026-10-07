@@ -70,14 +70,16 @@ export function useSetComplainant(caseId: string) {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (body: Complainant) =>
-      apiFetch<Case>(`/cases/${caseId}/complainant`, { method: 'PUT', ...jsonBody(body) }),
+      apiFetch<Case>(`/cases/${caseId}/complainant`, { ...jsonBody(body), method: 'PUT' }),
     onSuccess: (c) => qc.setQueryData(caseKey(caseId), c),
   })
 }
 
 export function useRedraftLetter(caseId: string) {
+  const qc = useQueryClient()
   return useMutation({
     mutationFn: (body: LetterRequest) => apiFetch<Letter>(`/cases/${caseId}/letter`, jsonBody(body)),
+    onSuccess: (letter) => qc.setQueryData<Case>(caseKey(caseId), (c) => (c ? { ...c, letter } : c)),
   })
 }
 

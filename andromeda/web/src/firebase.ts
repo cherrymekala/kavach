@@ -12,7 +12,6 @@ const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
   messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 }
@@ -39,8 +38,9 @@ export function db(): Firestore {
 
 /** Current user's Firebase ID token, or null when signed out. */
 export async function getIdToken(): Promise<string | null> {
-  const user = auth().currentUser
-  return user ? user.getIdToken() : null
+  const a = auth()
+  await a.authStateReady()
+  return a.currentUser ? a.currentUser.getIdToken() : null
 }
 
 /** Invisible reCAPTCHA verifier — `containerId` must exist in the DOM. */
@@ -55,6 +55,7 @@ export async function sendOtp(phone: string, verifier: RecaptchaVerifier): Promi
 
 /** Map Firebase auth error codes to user-friendly copy. */
 export function mapAuthError(error: unknown): string {
+  console.error('[auth] sign-in failed', error)
   const code = (error as { code?: string })?.code ?? ''
   switch (code) {
     case 'auth/invalid-phone-number':
@@ -67,6 +68,21 @@ export function mapAuthError(error: unknown): string {
       return 'Too many attempts. Wait a minute and try again.'
     case 'auth/captcha-check-failed':
       return 'The safety check failed. Please try again.'
+    case 'auth/invalid-app-credential':
+      return 'The safety check is not set up yet. Please try again soon.'
+    case 'auth/operation-not-allowed':
+      return 'Phone sign-in is not enabled yet. Please try again soon.'
+    case 'auth/network-request-failed':
+      return 'Network problem. Check your connection and try again.'
+    case 'auth/quota-exceeded':
+      return 'Too many requests today. Try again later.'
+    case 'auth/invalid-verification-id':
+      return 'That verification expired. Send a new code.'
+    case 'auth/missing-verification-code':
+      return 'Please enter the code you received.'
+    case 'auth/provider-already-linked':
+    case 'auth/credential-already-in-use':
+      return 'That number is already linked to an account.'
     default:
       return 'Could not sign you in. Please try again.'
   }

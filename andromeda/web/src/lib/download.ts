@@ -6,5 +6,6 @@ export function downloadBlob(blob: Blob, filename: string): void {
   document.body.appendChild(a)
   a.click()
   a.remove()
-  URL.revokeObjectURL(url)
+  // iOS Safari can kill the download if we revoke immediately after click.
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000)
 }

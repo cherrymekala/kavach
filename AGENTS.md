@@ -24,7 +24,7 @@ The API contract is `sombrero/src/kavach/models.py`. It is published as `/openap
 
 - Auth: every route (except `/health` and `/tracker/tick`) takes `Authorization: Bearer <Firebase ID token>`; `verify_token` in `sombrero/src/kavach/auth.py`. `AUTH_DISABLED=true` only locally.
 - Errors arrive as `{"detail": "..."}` — the text is user-friendly; show it verbatim.
-- Routes (14): `POST /cases`, `GET/DELETE /cases/{id}`, `POST /cases/{id}/documents`, `POST /cases/{id}/analyse`, `PUT /cases/{id}/complainant`, `POST /cases/{id}/letter`, `GET /cases/{id}/filing`, `GET /cases/{id}/filing.pdf`, `GET /cases/{id}/letter.pdf`, `POST /cases/{id}/filed`, `POST /cases/{id}/reply`, `POST /tracker/tick`, `GET /health`.
+- Routes (17): `POST /cases`, `GET /cases`, `GET/DELETE /cases/{id}`, `DELETE /cases/{id}/documents/{doc_id}`, `POST /cases/{id}/documents`, `POST /cases/{id}/analyse`, `PUT /cases/{id}/complainant`, `POST /cases/{id}/letter`, `GET /cases/{id}/filing`, `GET /cases/{id}/filing.pdf`, `GET /cases/{id}/letter.pdf`, `POST /cases/{id}/filed`, `POST /cases/{id}/reply`, `POST /tracker/tick`, `GET /packs/{country}` (no auth), `GET /health`.
 - Case analysis is **async**: `POST /analyse` returns `202`; agents write `case.progress` + `case.status` to Firestore as they run. The UI watches `cases/{id}` with Firestore `onSnapshot` (owners may read their own case per `triangulum/firestore.rules`).
 
 ## Frontend (`andromeda/web/`) — build plan

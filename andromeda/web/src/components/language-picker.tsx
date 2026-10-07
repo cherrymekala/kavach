@@ -8,7 +8,7 @@ export interface LanguagePickerProps {
 
 export function LanguagePicker({ languages, value, onChange }: LanguagePickerProps) {
   return (
-    <div className="grid grid-cols-3 gap-2">
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-4">
       {languages.map((l) => (
         <button
           key={l.code}

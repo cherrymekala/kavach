@@ -2,6 +2,7 @@
 import { lazy } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import { App } from './App'
+import { RequireAuth } from './auth'
 
 // Each route is a self-contained lazy chunk. Screens live in src/screens/<name>/.
 const SignIn = lazy(() => import('./screens/auth/SignIn').then((m) => ({ default: m.SignIn })))
@@ -16,22 +17,30 @@ const Tracker = lazy(() => import('./screens/tracker/Tracker').then((m) => ({ de
 const Outcome = lazy(() => import('./screens/outcome/Outcome').then((m) => ({ default: m.Outcome })))
 const Foundation = lazy(() => import('./screens/dev/Foundation').then((m) => ({ default: m.Foundation })))
 
+// Dev-only foundation page — never shipped to production hosting.
+const devRoutes = import.meta.env.DEV ? [{ path: 'dev', element: <Foundation /> }] : []
+
 export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
     children: [
       { index: true, element: <SignIn /> },
-      { path: 'start', element: <Start /> },
-      { path: 'case/:caseId/upload', element: <Upload /> },
-      { path: 'case/:caseId/summary', element: <Summary /> },
-      { path: 'case/:caseId/chances', element: <Chances /> },
-      { path: 'case/:caseId/letter', element: <Letter /> },
-      { path: 'case/:caseId/filing', element: <Filing /> },
-      { path: 'case/:caseId/hearing', element: <Hearing /> },
-      { path: 'case/:caseId/tracker', element: <Tracker /> },
-      { path: 'case/:caseId/outcome', element: <Outcome /> },
-      { path: 'dev', element: <Foundation /> },
+      {
+        element: <RequireAuth />,
+        children: [
+          { path: 'start', element: <Start /> },
+          { path: 'case/:caseId/upload', element: <Upload /> },
+          { path: 'case/:caseId/summary', element: <Summary /> },
+          { path: 'case/:caseId/chances', element: <Chances /> },
+          { path: 'case/:caseId/letter', element: <Letter /> },
+          { path: 'case/:caseId/filing', element: <Filing /> },
+          { path: 'case/:caseId/hearing', element: <Hearing /> },
+          { path: 'case/:caseId/tracker', element: <Tracker /> },
+          { path: 'case/:caseId/outcome', element: <Outcome /> },
+        ],
+      },
+      ...devRoutes,
     ],
   },
 ])

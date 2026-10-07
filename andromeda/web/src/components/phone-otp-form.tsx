@@ -1,37 +1,22 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp'
 import { Label } from '@/components/ui/label'
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select'
-
-export interface CountryDial {
-  code: string
-  dial: string
-  label: string
-}
+import { CountrySelect } from './country-select'
+import { ALL_DIALS } from '@/lib/dials'
 
 export interface PhoneOTPFormProps {
-  dials?: CountryDial[]
   /** Resolve when the code is sent; reject with an Error to show its message. */
   onSend: (fullPhone: string) => Promise<void>
   /** Resolve on success; reject with an Error to show its message. */
   onVerify: (code: string) => Promise<void>
 }
 
-export const DEFAULT_DIALS: CountryDial[] = [
-  { code: 'IN', dial: '+91', label: '🇮🇳 +91' },
-  { code: 'SG', dial: '+65', label: '🇸🇬 +65' },
-]
-
-export function PhoneOTPForm({ dials = DEFAULT_DIALS, onSend, onVerify }: PhoneOTPFormProps) {
-  const [dial, setDial] = useState(dials[0]?.dial ?? '')
+export function PhoneOTPForm({ onSend, onVerify }: PhoneOTPFormProps) {
+  const { t } = useTranslation()
+  const [dial, setDial] = useState(ALL_DIALS[0]?.dial ?? '+91')
   const [phone, setPhone] = useState('')
   const [code, setCode] = useState('')
   const [stage, setStage] = useState<'phone' | 'otp'>('phone')
@@ -45,7 +30,7 @@ export function PhoneOTPForm({ dials = DEFAULT_DIALS, onSend, onVerify }: PhoneO
       await onSend(`${dial}${phone}`)
       setStage('otp')
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Could not send the code.')
+      setError(e instanceof Error ? e.message : t('otp.errorSend'))
     } finally {
       setBusy(false)
     }
@@ -57,7 +42,7 @@ export function PhoneOTPForm({ dials = DEFAULT_DIALS, onSend, onVerify }: PhoneO
     try {
       await onVerify(code)
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Could not verify the code.')
+      setError(e instanceof Error ? e.message : t('otp.errorVerify'))
     } finally {
       setBusy(false)
     }
@@ -73,7 +58,7 @@ export function PhoneOTPForm({ dials = DEFAULT_DIALS, onSend, onVerify }: PhoneO
         }}
       >
         <div className="flex flex-col gap-2">
-          <Label>Enter the 6-digit code</Label>
+          <Label>{t('otp.codeLabel')}</Label>
           <InputOTP maxLength={6} value={code} onChange={setCode}>
             <InputOTPGroup>
               {Array.from({ length: 6 }).map((_, i) => (
@@ -82,15 +67,15 @@ export function PhoneOTPForm({ dials = DEFAULT_DIALS, onSend, onVerify }: PhoneO
             </InputOTPGroup>
           </InputOTP>
           <p className="text-xs text-muted-foreground">
-            Sent to {dial} {phone}.{' '}
+            {t('otp.sentTo', { dial, phone })}{' '}
             <button type="button" onClick={() => setStage('phone')} className="text-brand underline">
-              Change number
+              {t('otp.changeNumber')}
             </button>
           </p>
         </div>
         {error ? <p className="text-sm text-destructive">{error}</p> : null}
         <Button type="submit" loading={busy} disabled={code.length < 6}>
-          Verify code
+          {t('otp.verifyCode')}
         </Button>
       </form>
     )
@@ -105,25 +90,14 @@ export function PhoneOTPForm({ dials = DEFAULT_DIALS, onSend, onVerify }: PhoneO
       }}
     >
       <div className="flex flex-col gap-2">
-        <Label htmlFor="phone">Phone number</Label>
+        <Label htmlFor="phone">{t('otp.phoneLabel')}</Label>
         <div className="flex gap-2">
-          <Select value={dial} onValueChange={setDial}>
-            <SelectTrigger className="w-[104px] shrink-0" aria-label="Country dial code">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              {dials.map((d) => (
-                <SelectItem key={d.dial} value={d.dial}>
-                  {d.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <CountrySelect value={dial} onChange={setDial} />
           <Input
             id="phone"
             type="tel"
             inputMode="numeric"
-            placeholder="99999 00001"
+            placeholder={t('otp.phonePlaceholder')}
             value={phone}
             onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
             className="flex-1"
@@ -133,7 +107,7 @@ export function PhoneOTPForm({ dials = DEFAULT_DIALS, onSend, onVerify }: PhoneO
       </div>
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
       <Button type="submit" loading={busy} disabled={phone.length < 6}>
-        Send code
+        {t('otp.sendCode')}
       </Button>
     </form>
   )
