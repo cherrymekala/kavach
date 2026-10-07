@@ -47,6 +47,13 @@ resource "google_identity_platform_config" "auth" {
       test_phone_numbers = var.auth_test_phone_numbers
     }
   }
+  # Identity Platform defaulted to "allowlist only" with an empty list, which blocks every
+  # country and surfaces in the app as auth/operation-not-allowed. Allow our launch markets.
+  sms_region_config {
+    allowlist_only {
+      allowed_regions = ["IN", "SG"]
+    }
+  }
   authorized_domains = [
     "localhost",
     "${var.project_id}.firebaseapp.com",
@@ -71,5 +78,7 @@ output "firebase_web_env" {
     VITE_FIREBASE_AUTH_DOMAIN=${data.google_firebase_web_app_config.kavach.auth_domain}
     VITE_FIREBASE_PROJECT_ID=${var.project_id}
     VITE_FIREBASE_APP_ID=${google_firebase_web_app.kavach.app_id}
+    VITE_FIREBASE_MESSAGING_SENDER_ID=${data.google_firebase_web_app_config.kavach.messaging_sender_id}
+    VITE_FIREBASE_STORAGE_BUCKET=${data.google_firebase_web_app_config.kavach.storage_bucket}
   ENV
 }
