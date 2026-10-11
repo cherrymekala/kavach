@@ -6,8 +6,10 @@
  * border-border, …) AND our brand aliases (bg-brand, bg-mint, …) both work and
  * both re-theme when <html data-theme="dark"> flips.
  *
- * Colour source: the prototype's `:root` block (Kavach_Prototype.html) and
- * spec-frontend.md §6.
+ * Direction — "the advocate's desk": warm paper, deep indigo ink, a confident
+ * indigo brand (trust + authority), gold for hope/recovery and deadlines, and a
+ * quiet green reserved for success. Chosen for a patient-facing legal-aid tool —
+ * calm and human, not the teal "health-tech" default.
  * ------------------------------------------------------------------------- */
 
 @import "tailwindcss";
@@ -18,79 +20,79 @@
 
 :root {
   /* shadcn semantic layer (light) */
-  --background: #e7ebef; /* page */
-  --foreground: #14212b; /* ink */
-  --card: #ffffff; /* surface */
-  --card-foreground: #14212b;
-  --popover: #ffffff;
-  --popover-foreground: #14212b;
-  --primary: #0f4c5c; /* brand */
+  --background: #f4f0e8; /* warm paper — page */
+  --foreground: #1c2433; /* indigo ink */
+  --card: #fffdf8; /* surface */
+  --card-foreground: #1c2433;
+  --popover: #fffdf8;
+  --popover-foreground: #1c2433;
+  --primary: #334173; /* brand indigo — trust */
   --primary-foreground: #ffffff;
-  --secondary: #f1f4f6; /* chip */
-  --secondary-foreground: #14212b;
-  --muted: #f1f4f6; /* subtle fill */
-  --muted-foreground: #5b6b78; /* muted text */
-  --accent: #e2eff1; /* brand-soft */
-  --accent-foreground: #0f4c5c;
-  --destructive: #c2413a; /* red */
+  --secondary: #ece8dd; /* chip */
+  --secondary-foreground: #1c2433;
+  --muted: #ece8dd; /* subtle fill */
+  --muted-foreground: #6b6a63; /* muted text */
+  --accent: #e6e9f2; /* brand-soft */
+  --accent-foreground: #334173;
+  --destructive: #b23a33; /* red */
   --destructive-foreground: #ffffff;
-  --border: #dbe2e8; /* line */
-  --input: #dbe2e8;
-  --ring: #1f9e7a; /* mint (focus) */
+  --border: #ddd6c8; /* line */
+  --input: #ddd6c8;
+  --ring: #9c6a0f; /* gold (focus) */
 
   /* brand aliases */
-  --page: #e7ebef;
-  --surface: #ffffff;
-  --ink: #14212b;
-  --line: #dbe2e8;
-  --chip: #f1f4f6;
-  --brand: #0f4c5c;
-  --brand-soft: #e2eff1;
-  --mint: #1f9e7a;
-  --amber: #c98a12;
-  --red: #c2413a;
+  --page: #f4f0e8;
+  --surface: #fffdf8;
+  --ink: #1c2433;
+  --line: #ddd6c8;
+  --chip: #ece8dd;
+  --brand: #334173;
+  --brand-soft: #e6e9f2;
+  --mint: #2b7d54; /* success only */
+  --amber: #9c6a0f; /* hope / deadline */
+  --red: #b23a33;
 
   --radius: 1rem; /* base; rounded-lg = 16px, rounded-md = 14px */
 
-  --float-shadow: 0 30px 60px -20px rgb(20 33 43 / 0.35);
+  --float-shadow: 0 30px 60px -20px rgb(28 36 51 / 0.35);
   --sheet-shadow: 0 -20px 40px -20px rgb(0 0 0 / 0.4);
 
   --font-sans: "Figtree", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Telugu", system-ui, sans-serif;
-  --font-display: "Bricolage Grotesque", "Noto Sans Devanagari", "Noto Sans Tamil", system-ui, sans-serif;
+  --font-display: "Fraunces", "Noto Sans Devanagari", "Noto Sans Tamil", system-ui, serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 [data-theme="dark"] {
-  --background: #0b1116;
-  --foreground: #e6edf2;
-  --card: #131c23;
-  --card-foreground: #e6edf2;
-  --popover: #131c23;
-  --popover-foreground: #e6edf2;
-  --primary: #5fb3c4;
-  --primary-foreground: #0b1116;
-  --secondary: #1b262e;
-  --secondary-foreground: #e6edf2;
-  --muted: #1b262e;
-  --muted-foreground: #93a4b1;
-  --accent: #17303a;
-  --accent-foreground: #5fb3c4;
-  --destructive: #ec6a62;
-  --destructive-foreground: #0b1116;
-  --border: #26333d;
-  --input: #26333d;
-  --ring: #3cc79c;
+  --background: #141a28; /* deep indigo-navy */
+  --foreground: #ede9e0; /* warm off-white ink */
+  --card: #1c2333;
+  --card-foreground: #ede9e0;
+  --popover: #1c2333;
+  --popover-foreground: #ede9e0;
+  --primary: #8b9bd6;
+  --primary-foreground: #141a28;
+  --secondary: #20293c;
+  --secondary-foreground: #ede9e0;
+  --muted: #20293c;
+  --muted-foreground: #94a0b5;
+  --accent: #26304a;
+  --accent-foreground: #aab6e0;
+  --destructive: #ef7a70;
+  --destructive-foreground: #141a28;
+  --border: #2a3550;
+  --input: #2a3550;
+  --ring: #d9a441;
 
-  --page: #0b1116;
-  --surface: #131c23;
-  --ink: #e6edf2;
-  --line: #26333d;
-  --chip: #1b262e;
-  --brand: #5fb3c4;
-  --brand-soft: #17303a;
-  --mint: #3cc79c;
-  --amber: #e3a93a;
-  --red: #ec6a62;
+  --page: #141a28;
+  --surface: #1c2333;
+  --ink: #ede9e0;
+  --line: #2a3550;
+  --chip: #20293c;
+  --brand: #8b9bd6;
+  --brand-soft: #26304a;
+  --mint: #5fd0a0;
+  --amber: #e0b05a;
+  --red: #ef7a70;
 
   --float-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.7);
 
@@ -172,6 +174,7 @@
     font-family: var(--font-sans);
     font-size: 15px;
     line-height: 1.45;
+    overflow-wrap: break-word;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }

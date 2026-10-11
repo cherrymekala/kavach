@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import type { ConfirmationResult } from 'firebase/auth'
 import { RecaptchaVerifier } from 'firebase/auth'
 import { FileTextIcon, LanguagesIcon, SendIcon } from 'lucide-react'
-import { LanguageSwitcher, PhoneOTPForm, ThemeToggle } from '@/components'
+import { PhoneOTPForm } from '@/components'
 import { auth, mapAuthError, sendOtp } from '@/firebase'
 import { useAuth } from '@/auth'
 
@@ -52,44 +52,31 @@ export function SignIn() {
   }
 
   return (
-    <div className="flex flex-col gap-6">
-      <div className="flex justify-end">
-        <ThemeToggle />
-      </div>
+    <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12 lg:pt-6">
+      <section className="flex flex-col gap-3">
+        <p className="font-mono text-xs font-bold uppercase tracking-widest text-brand">{t('auth.kicker')}</p>
+        <h1 className="font-display text-3xl font-extrabold leading-tight text-balance sm:text-4xl">
+          {t('auth.headline')}
+        </h1>
+        <p className="max-w-lg text-muted-foreground sm:text-lg">{t('auth.subhead')}</p>
 
-      <div className="grid items-start gap-6 lg:grid-cols-2 lg:gap-12">
-        <section className="flex flex-col gap-4 rounded-3xl bg-primary p-6 text-primary-foreground sm:p-8 lg:p-10">
-          <span className="font-mono text-xs uppercase tracking-wider opacity-80">{t('auth.kicker')}</span>
-          <h1 className="font-display text-2xl font-extrabold leading-tight text-balance sm:text-3xl lg:text-4xl">
-            {t('auth.headline')}
-          </h1>
-          <p className="text-sm opacity-90 sm:text-base">{t('auth.subhead')}</p>
+        <ul className="mt-2 flex flex-col gap-2.5">
+          {FEATURES.map(({ icon: Icon, key }) => (
+            <li key={key} className="flex items-center gap-3 text-sm">
+              <span className="grid size-8 shrink-0 place-items-center rounded-full bg-accent text-accent-foreground">
+                <Icon className="size-4" aria-hidden />
+              </span>
+              {t(key)}
+            </li>
+          ))}
+        </ul>
+      </section>
 
-          <ul className="mt-2 hidden flex-col gap-3 sm:flex">
-            {FEATURES.map(({ icon: Icon, key }) => (
-              <li key={key} className="flex items-center gap-3 text-sm sm:text-base">
-                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white/10">
-                  <Icon className="size-4" aria-hidden />
-                </span>
-                {t(key)}
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section className="flex flex-col gap-6 lg:pt-2">
-          <section className="flex flex-col gap-2">
-            <h2 className="font-display text-lg font-bold">{t('auth.language')}</h2>
-            <LanguageSwitcher />
-          </section>
-
-          <section className="flex flex-col gap-2">
-            <h2 className="font-display text-lg font-bold">{t('auth.signIn')}</h2>
-            <PhoneOTPForm onSend={handleSend} onVerify={handleVerify} />
-            <p className="text-center text-xs text-muted-foreground">{t('auth.privacy')}</p>
-          </section>
-        </section>
-      </div>
+      <section className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 shadow-xs sm:p-6">
+        <h2 className="font-display text-lg font-bold">{t('auth.signIn')}</h2>
+        <PhoneOTPForm onSend={handleSend} onVerify={handleVerify} />
+        <p className="text-center text-xs text-muted-foreground">{t('auth.privacy')}</p>
+      </section>
 
       <div id="recaptcha-container" />
     </div>

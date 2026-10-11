@@ -113,7 +113,7 @@ If a phase needs a shared change (a new primitive, a new hook, a route, a depend
 2. Read data via the frozen hooks (`useCase(id)`, `useLiveCase(id)`, `useFiling(id, step)`…) and primitives from `@/components/ui/…`. PDFs: `apiBlob` + `downloadBlob`.
 3. Import components directly (`@/components/ui/button`) or from `@/components` (barrel is frozen and complete).
 4. Commit per screen, repo style ("Added the X screen"), on a branch `feat/<phase>`.
-5. Run `npm run build` and `npm run lint` before committing.
+5. Run `pnpm build` and `pnpm lint` before committing.
 
 ### How to run phases (pick one)
 
@@ -139,11 +139,11 @@ ruff check . && ruff format .
 
 Frontend (from `andromeda/web/`, once scaffolded):
 ```bash
-npm install
-npm run dev                            # Vite dev server
-npm run build && firebase deploy --only hosting
-npm run test                           # Vitest
-npx openapi-typescript https://sombrero-urb5ttky3q-el.a.run.app/openapi.json -o src/api/schema.d.ts
+pnpm install
+pnpm dev                                # Vite dev server
+pnpm build && firebase deploy --only hosting
+pnpm test                               # Vitest
+pnpm dlx openapi-typescript https://sombrero-urb5ttky3q-el.a.run.app/openapi.json -o src/api/schema.d.ts
 ```
 
 ## Rules

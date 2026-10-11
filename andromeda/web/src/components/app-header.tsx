@@ -1,5 +1,6 @@
 import { ArrowLeftIcon } from 'lucide-react'
 import type { ReactNode } from 'react'
+import { Badge } from '@/components/ui/badge'
 
 export interface AppHeaderProps {
   title: string
@@ -11,24 +12,20 @@ export interface AppHeaderProps {
 
 export function AppHeader({ title, onBack, right, pack }: AppHeaderProps) {
   return (
-    <header className="sticky top-0 z-10 flex items-center gap-3 border-b border-border bg-background/90 px-4 py-3 backdrop-blur">
+    <div className="flex items-center gap-3">
       {onBack ? (
         <button
           type="button"
           onClick={onBack}
           aria-label="Back"
-          className="grid size-9 shrink-0 place-items-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
+          className="grid size-9 shrink-0 place-items-center rounded-full border border-border text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring"
         >
           <ArrowLeftIcon className="size-5" />
         </button>
       ) : null}
-      <h1 className="min-w-0 flex-1 truncate font-display text-lg font-bold">{title}</h1>
-      {pack ? (
-        <span className="shrink-0 rounded-full bg-accent px-2.5 py-0.5 font-mono text-[11px] font-semibold text-accent-foreground">
-          {pack} pack
-        </span>
-      ) : null}
+      <h1 className="min-w-0 flex-1 truncate font-display text-2xl font-extrabold tracking-tight">{title}</h1>
+      {pack ? <Badge variant="secondary">{pack}</Badge> : null}
       {right}
-    </header>
+    </div>
   )
 }
