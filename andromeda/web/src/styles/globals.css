@@ -1,0 +1,190 @@
+/* ---------------------------------------------------------------------------
+ * Kavach design tokens — Tailwind CSS v4, shadcn/ui convention.
+ *
+ * Raw values live in :root / [data-theme="dark"]; `@theme inline` maps them to
+ * utility names so shadcn's semantic classes (bg-primary, text-muted-foreground,
+ * border-border, …) AND our brand aliases (bg-brand, bg-mint, …) both work and
+ * both re-theme when <html data-theme="dark"> flips.
+ *
+ * Direction — "the advocate's desk": warm paper, deep indigo ink, a confident
+ * indigo brand (trust + authority), gold for hope/recovery and deadlines, and a
+ * quiet green reserved for success. Chosen for a patient-facing legal-aid tool —
+ * calm and human, not the teal "health-tech" default.
+ * ------------------------------------------------------------------------- */
+
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Dark mode is driven by the `data-theme` attribute (see src/lib/theme.tsx). */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+:root {
+  /* shadcn semantic layer (light) */
+  --background: #f4f0e8; /* warm paper — page */
+  --foreground: #1c2433; /* indigo ink */
+  --card: #fffdf8; /* surface */
+  --card-foreground: #1c2433;
+  --popover: #fffdf8;
+  --popover-foreground: #1c2433;
+  --primary: #334173; /* brand indigo — trust */
+  --primary-foreground: #ffffff;
+  --secondary: #ece8dd; /* chip */
+  --secondary-foreground: #1c2433;
+  --muted: #ece8dd; /* subtle fill */
+  --muted-foreground: #6b6a63; /* muted text */
+  --accent: #e6e9f2; /* brand-soft */
+  --accent-foreground: #334173;
+  --destructive: #b23a33; /* red */
+  --destructive-foreground: #ffffff;
+  --border: #ddd6c8; /* line */
+  --input: #ddd6c8;
+  --ring: #9c6a0f; /* gold (focus) */
+
+  /* brand aliases */
+  --page: #f4f0e8;
+  --surface: #fffdf8;
+  --ink: #1c2433;
+  --line: #ddd6c8;
+  --chip: #ece8dd;
+  --brand: #334173;
+  --brand-soft: #e6e9f2;
+  --mint: #2b7d54; /* success only */
+  --amber: #9c6a0f; /* hope / deadline */
+  --red: #b23a33;
+
+  --radius: 1rem; /* base; rounded-lg = 16px, rounded-md = 14px */
+
+  --float-shadow: 0 30px 60px -20px rgb(28 36 51 / 0.35);
+  --sheet-shadow: 0 -20px 40px -20px rgb(0 0 0 / 0.4);
+
+  --font-sans: "Figtree", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Telugu", system-ui, sans-serif;
+  --font-display: "Fraunces", "Noto Sans Devanagari", "Noto Sans Tamil", system-ui, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+[data-theme="dark"] {
+  --background: #141a28; /* deep indigo-navy */
+  --foreground: #ede9e0; /* warm off-white ink */
+  --card: #1c2333;
+  --card-foreground: #ede9e0;
+  --popover: #1c2333;
+  --popover-foreground: #ede9e0;
+  --primary: #8b9bd6;
+  --primary-foreground: #141a28;
+  --secondary: #20293c;
+  --secondary-foreground: #ede9e0;
+  --muted: #20293c;
+  --muted-foreground: #94a0b5;
+  --accent: #26304a;
+  --accent-foreground: #aab6e0;
+  --destructive: #ef7a70;
+  --destructive-foreground: #141a28;
+  --border: #2a3550;
+  --input: #2a3550;
+  --ring: #d9a441;
+
+  --page: #141a28;
+  --surface: #1c2333;
+  --ink: #ede9e0;
+  --line: #2a3550;
+  --chip: #20293c;
+  --brand: #8b9bd6;
+  --brand-soft: #26304a;
+  --mint: #5fd0a0;
+  --amber: #e0b05a;
+  --red: #ef7a70;
+
+  --float-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.7);
+
+  color-scheme: dark;
+}
+
+@theme inline {
+  /* shadcn semantic colours */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* brand aliases (readable for domain code) */
+  --color-page: var(--page);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-line: var(--line);
+  --color-chip: var(--chip);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-mint: var(--mint);
+  --color-amber: var(--amber);
+  --color-red: var(--red);
+
+  /* fonts */
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+  --font-mono: var(--font-mono);
+
+  /* radius scale (base --radius = 1rem) */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  /* shadows */
+  --shadow-float: var(--float-shadow);
+  --shadow-sheet: var(--sheet-shadow);
+
+  /* motion */
+  --animate-pulse-dot: pulse-dot 1.2s infinite;
+}
+
+@keyframes pulse-dot {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.45;
+    overflow-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

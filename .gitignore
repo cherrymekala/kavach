@@ -18,10 +18,14 @@ session.md
 spec.md
 spec-frontend.md
 .claude/
+.agents/
+skills-lock.json
 
 # ── Prototypes, references, docs (never commit) ───────────
 # andromeda = UI prototype, cartwheel = architecture docs + diagrams
 andromeda/prototype/
+Kavach_Prototype.html
+arch_health.jpeg
 andromeda/**/node_modules/
 andromeda/**/dist/
 cartwheel/

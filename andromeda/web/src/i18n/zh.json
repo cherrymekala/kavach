@@ -1,0 +1,43 @@
+{
+  "common": {
+    "loading": "加载中…",
+    "back": "返回"
+  },
+  "auth": {
+    "kicker": "健康保险，为您护航",
+    "headline": "理赔被拒？我们一起申诉。",
+    "subhead": "我们阅读您的文件，用您的语言解释拒赔原因，并为您提交申诉。",
+    "language": "语言",
+    "signIn": "登录",
+    "privacy": "验证码将发送到您的手机。我们绝不分享您的文件。",
+    "signedInAs": "已以 {{phone}} 登录。",
+    "featureRead": "阅读您的拒赔函和保单",
+    "featureExplain": "用您的语言解释拒赔原因",
+    "featureFile": "提交申诉并跟进直至解决"
+  },
+  "otp": {
+    "phoneLabel": "手机号码",
+    "phonePlaceholder": "99999 00001",
+    "sendCode": "发送验证码",
+    "codeLabel": "输入 6 位验证码",
+    "sentTo": "已发送至 {{dial}} {{phone}}。",
+    "changeNumber": "更换号码",
+    "verifyCode": "验证",
+    "errorSend": "无法发送验证码。",
+    "errorVerify": "无法验证。"
+  },
+  "start": {
+    "title": "Kavach",
+    "country": "国家/地区",
+    "countryNote": "这会更改争议机构、表格、货币、期限和拒赔代码。",
+    "cta": "我的理赔被拒了",
+    "otherWays": "其他开始方式",
+    "whatsapp": "WhatsApp",
+    "whatsappDesc": "发送您的文件照片",
+    "call": "致电我们",
+    "callDesc": "用您的语言沟通",
+    "comingSoon": "即将推出",
+    "detected": "根据您的号码识别",
+    "errorCreate": "无法开始您的案件。"
+  }
+}
