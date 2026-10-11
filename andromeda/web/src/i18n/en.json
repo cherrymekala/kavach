@@ -46,18 +46,63 @@
     "errorCreate": "Could not start your case."
   },
   "upload": {
-    "title": "Talk to Kavach",
-    "greeting": "Hi, I'm Kavach. Upload your rejection letter and policy — or tell me what happened — and I'll build your appeal.",
-    "attach": "Attach documents",
-    "inputPlaceholder": "Tell me what happened, or attach documents…",
-    "send": "Send",
-    "voice": "Voice (coming soon)",
-    "thinking": "Thinking…",
-    "needDocs": "I can't read that yet without your papers. Please attach your rejection letter and policy.",
-    "acknowledged": "Got it. Attach your rejection letter and policy whenever you're ready and I'll get to work.",
+    "heading": "Add your claim papers",
+    "sub": "Photos or PDFs are fine. The more we have, the stronger your case.",
+    "wanted": {
+      "rejection_letter": {
+        "label": "Rejection letter",
+        "hint": "Needed — the insurer's letter or email"
+      },
+      "policy": {
+        "label": "Policy document",
+        "hint": "The wording with clauses"
+      },
+      "discharge_summary": {
+        "label": "Discharge summary",
+        "hint": "From the hospital"
+      }
+    },
+    "choose": "Choose files",
+    "photo": "Take a photo",
+    "limits": "PDF · JPG · PNG · WEBP · TXT · up to 20 MB each",
+    "yourFiles_one": "1 file added",
+    "yourFiles_other": "{{count}} files added",
+    "remove": "Remove {{name}}",
     "analyse": "Analyse my case",
-    "done": "Here's what I found: {{reason}}",
-    "seeFull": "See the full breakdown",
+    "retry": "Try again",
+    "seeFull": "See what we found",
+    "analysingHeading": "Building your case",
+    "analysingSub": "Our agents are working through your papers. This takes about a minute — you can leave this page and come back.",
+    "steps": [
+      {
+        "label": "Reading your documents",
+        "detail": "Sorting each file and pulling out dates, amounts and the reason given"
+      },
+      {
+        "label": "Decoding the rejection",
+        "detail": "Matching the insurer's code to the official list"
+      },
+      {
+        "label": "Finding the rules that apply",
+        "detail": "Searching the regulator's rules for the sections that protect you"
+      },
+      {
+        "label": "Looking up similar past cases",
+        "detail": "Searching thousands of past Ombudsman rulings"
+      },
+      {
+        "label": "Building your case",
+        "detail": "Writing arguments from your documents, the rules and the rulings"
+      },
+      {
+        "label": "Checking every source",
+        "detail": "Making sure every quote really appears in its source"
+      },
+      {
+        "label": "Writing your appeal",
+        "detail": "Drafting your letter"
+      }
+    ],
     "errorUpload": "Could not upload that file.",
     "errorAnalyse": "Could not start the analysis."
   },
@@ -65,59 +110,129 @@
     "title": "What happened",
     "notReady": "Still reading your documents",
     "notReadySub": "We're still working through your papers. Check back in a moment.",
-    "reason": "Why it was rejected",
+    "reason": "Their reason, in their words",
     "noReason": "We couldn't find a stated reason in your documents.",
     "amounts": "Money",
     "claimed": "Claimed",
     "approved": "Approved",
-    "details": "Your details",
+    "details": "Policy and claim numbers",
     "patient": "Patient",
     "insurer": "Insurer",
     "hospital": "Hospital",
     "policy": "Policy number",
     "claimNumber": "Claim number",
-    "admission": "Admission",
-    "rejectionDate": "Rejected",
-    "policyStart": "Policy start",
-    "diagnosisDate": "First diagnosis",
-    "timeline": "Timeline",
-    "docs": "Documents to check",
-    "cta": "See your chances"
+    "admission": "Admitted to hospital",
+    "rejectionDate": "Claim rejected",
+    "policyStart": "Policy started",
+    "diagnosisDate": "First diagnosed",
+    "timeline": "What happened when",
+    "docs": "Documents we read",
+    "cta": "See your chances",
+    "headline": "{{insurer}} rejected your {{amount}} claim",
+    "headlinePartial": "{{insurer}} paid {{approved}} of your {{claimed}} claim",
+    "headlineNoAmount": "{{insurer}} rejected your claim",
+    "unpaid": "Unpaid: {{amount}}",
+    "yourInsurer": "Your insurer",
+    "whatItMeans": "What this means",
+    "missing": {
+      "policyStart": "Your policy start date wasn't in your documents. It matters for waiting periods, so add your policy schedule or first policy if you have it."
+    },
+    "read": "Read",
+    "check": "Please check",
+    "category": {
+      "pre_existing": "Pre-existing condition",
+      "specific_waiting_period": "Waiting period",
+      "initial_waiting_period": "First 30 days",
+      "non_disclosure": "Non-disclosure",
+      "room_rent": "Room rent limit",
+      "reasonable_charges": "Charges cut",
+      "diagnostic_only": "Tests only",
+      "not_medically_necessary": "Not medically necessary",
+      "excluded_treatment": "Excluded treatment",
+      "missing_documents": "Missing documents",
+      "late_intimation": "Late notice",
+      "sub_limit": "Limit reached",
+      "under_24_hours": "Under 24 hours",
+      "hospital_ineligible": "Hospital not eligible",
+      "duplicate_claim": "Duplicate claim",
+      "fraud": "Suspected fraud",
+      "other": "Other"
+    },
+    "meaning": {
+      "pre_existing": "The insurer says you had this illness before your policy began, and that it is still inside the waiting period for such illnesses. What counts is when it was first diagnosed or treated, so dates matter most.",
+      "specific_waiting_period": "Some treatments are only covered after a fixed time with the insurer (for example 2 years for cataract). The insurer says that time hadn't passed yet.",
+      "initial_waiting_period": "Most policies don't cover illness in the first 30 days, except accidents. The insurer says your claim falls in that window.",
+      "non_disclosure": "The insurer says something about your health wasn't declared when you bought the policy. Insurers must show it actually mattered, and after 5 years of cover they usually can't use this reason at all.",
+      "room_rent": "The insurer says your room cost more than your policy allows, so it cut your claim. Check your policy: many plans have no room limit.",
+      "reasonable_charges": "The insurer says the hospital charged more than is usual and paid only part.",
+      "diagnostic_only": "The insurer says you were admitted only for tests, which isn't covered. If you received treatment, that matters.",
+      "not_medically_necessary": "The insurer says the hospital stay wasn't needed. Your doctor's notes are the key evidence.",
+      "excluded_treatment": "The insurer says your policy excludes this treatment. The exact wording of the exclusion matters.",
+      "missing_documents": "The insurer says it didn't get all the papers it needed. This is often the easiest to fix.",
+      "late_intimation": "The insurer says it was told about the hospital stay too late. Delays for good reasons are often accepted.",
+      "sub_limit": "The insurer says a limit in your policy was reached, so it paid only part.",
+      "under_24_hours": "The insurer says your stay was under 24 hours. Many day-care procedures are still covered."
+    }
   },
   "chances": {
     "title": "Your chances",
     "notReady": "Assessment not ready",
     "notReadySub": "We haven't assessed your case yet.",
-    "score": "Strength",
     "strength": {
       "strong": "Strong case",
       "medium": "Reasonable case",
       "weak": "Weak case"
     },
-    "won": "Won {{won}} of {{total}} similar cases",
-    "arguments": "Your arguments",
+    "won": "Patients won {{won}} of {{total}} similar cases",
     "noArguments": "No arguments yet.",
     "missing": "Documents you may still need",
     "noMissing": "You have everything you need.",
-    "cta": "Write the appeal letter"
+    "cta": "Write the appeal letter",
+    "verdict": "Our assessment",
+    "strengthHint": {
+      "strong": "Your documents and the rules point to the rejection being wrong.",
+      "medium": "You have real arguments, but the outcome could go either way.",
+      "weak": "The rejection may be correct under your policy. You can still ask for a review."
+    },
+    "precedents": "similar cases at the {{body}} went the patient's way",
+    "disputeBody": "Ombudsman",
+    "arguments_one": "Your argument",
+    "arguments_other": "Your {{count}} arguments",
+    "checked": "Every quote checked against its source",
+    "verified": "Quote verified",
+    "why": "Why this matters",
+    "kind": {
+      "policy": "Your policy",
+      "rejection_letter": "Rejection letter",
+      "discharge_summary": "Discharge summary",
+      "bill": "Hospital bill",
+      "regulation": "Regulation",
+      "ruling": "Past ruling",
+      "other": "Document"
+    }
   },
   "letter": {
     "title": "Appeal letter",
     "notReady": "Letter not ready",
     "notReadySub": "We haven't drafted your appeal yet.",
-    "english": "English",
-    "local": "Local language",
     "download": "PDF",
-    "tone": "Tone",
     "toneOptions": {
-      "friendly": "Friendly",
-      "firm": "Firm",
-      "concise": "Concise",
-      "detailed": "Detailed"
+      "firm": "Firmer",
+      "friendly": "Softer",
+      "concise": "Shorter",
+      "detailed": "More detail"
     },
     "errorRedraft": "Could not redraft the letter.",
     "errorDownload": "Could not download the letter.",
-    "cta": "Prepare the filing pack"
+    "cta": "Prepare the filing pack",
+    "copy": "Copy",
+    "copied": "Copied",
+    "subject": "Subject:",
+    "askPlaceholder": "Ask for a change, e.g. “mention the hospital was in-network”",
+    "askSend": "Rewrite",
+    "fillIn_one": "Fill in 1 detail before sending",
+    "fillIn_other": "Fill in {{count}} details before sending",
+    "rewriting": "Rewriting your letter…"
   },
   "filing": {
     "title": "Filing pack",
@@ -175,17 +290,51 @@
   },
   "tracker": {
     "title": "Case tracker",
-    "step": "Current step",
-    "actions": "Actions",
-    "markFiled": "I've filed this step",
-    "recordReply": "Record insurer reply",
-    "replySub": "What did the insurer or dispute body say?",
-    "outcome": "Outcome",
+    "whatNow": "What to do now",
+    "daysLeft_one": "day left for their reply",
+    "daysLeft_other": "days left for their reply",
+    "now": {
+      "send": {
+        "title": "Send your appeal to the insurer",
+        "body": "Email or post your appeal letter to the {{body}}. They have {{days}} days to reply. Tell us once it's sent and we'll track the deadline.",
+        "cta": "I've sent it",
+        "open": "Open my letter"
+      },
+      "waiting": {
+        "title": "Waiting for a reply from: {{body}}",
+        "body": "They should reply by {{date}}. If they don't, we'll tell you what to do next.",
+        "overdue": "The reply is overdue. We'll move your case to the next step automatically.",
+        "cta": "They replied"
+      },
+      "next": {
+        "title": "Next: {{body}}",
+        "body": "Your {{form}} is ready. File it with the {{body}}, then tell us the date.",
+        "cta": "I've filed it",
+        "open": "Open the filing pack"
+      },
+      "resolved": {
+        "title": "Your case is resolved",
+        "body": "See what you recovered and download your papers.",
+        "cta": "See the outcome"
+      }
+    },
+    "lastStep": "This is the last step. If you hear nothing, contact them directly.",
+    "ladder": "The steps",
+    "replyWithin": "Reply within {{days}} days",
+    "history": "What has happened",
+    "filedTitle": "When did you file with: {{body}}?",
+    "filedSub": "We'll count the reply deadline from this date.",
+    "replyTitle": "What did they say?",
+    "replySub": "Record the reply so we can plan the next step.",
+    "outcomes": {
+      "paid": "They paid in full",
+      "partly_paid": "They paid part of it",
+      "rejected": "They rejected it again"
+    },
     "amountPaid": "Amount paid",
-    "history": "History",
-    "errorFiled": "Could not record the filing.",
-    "errorReply": "Could not record the reply.",
-    "cta": "See the outcome"
+    "filedOn": "Date filed",
+    "repliedOn": "Date of their reply",
+    "errorSave": "Could not save that. Please try again."
   },
   "outcome": {
     "title": "Outcome",

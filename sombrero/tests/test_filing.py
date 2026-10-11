@@ -17,3 +17,14 @@ def test_letter_pdf_renders_indic_scripts():
     )
     pdf = filing.render_letter_pdf(letter, local=True)
     assert pdf.startswith(b"%PDF") and b"NotoSansDevanagari" in pdf
+
+
+def test_letter_context_has_formatted_amounts():
+    from kavach.models import Case, CaseFacts
+
+    case = Case(
+        id="c",
+        owner="u",
+        facts=CaseFacts(claim_amount=184000, amount_approved=None, currency="INR"),
+    )
+    assert filing._context(case)["amounts"] == {"claimed": "Rs. 1,84,000", "unpaid": "Rs. 1,84,000"}
