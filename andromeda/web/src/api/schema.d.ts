@@ -11,7 +11,11 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        /**
+         * List Cases
+         * @description The signed-in user's cases, newest first.
+         */
+        get: operations["list_cases_cases_get"];
         put?: never;
         /** Create Case */
         post: operations["create_case_cases_post"];
@@ -54,6 +58,26 @@ export interface paths {
         /** Upload */
         post: operations["upload_cases__case_id__documents_post"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/documents/{doc_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * Delete Document
+         * @description Remove a wrong upload. Only before analysis, so results never cite a missing file.
+         */
+        delete: operations["delete_document_cases__case_id__documents__doc_id__delete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -156,6 +180,26 @@ export interface paths {
         };
         /** Get Letter Pdf */
         get: operations["get_letter_pdf_cases__case_id__letter_pdf_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/packs/{country}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Pack
+         * @description Public: languages, dispute ladder and time limit for a country. No case data.
+         */
+        get: operations["get_pack_packs__country__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -297,6 +341,8 @@ export interface components {
             id: string;
             /** Owner */
             owner: string;
+            /** Created At */
+            created_at?: string | null;
             /**
              * Country
              * @default IN
@@ -395,6 +441,37 @@ export interface components {
          */
         CaseStatus: "collecting" | "analysing" | "ready" | "filed" | "escalated" | "resolved";
         /**
+         * CaseSummary
+         * @description One row of the "My cases" list.
+         */
+        CaseSummary: {
+            /** Id */
+            id: string;
+            /** Created At */
+            created_at: string | null;
+            /** Country */
+            country: string;
+            /** Language */
+            language: string;
+            status: components["schemas"]["CaseStatus"];
+            /** Progress */
+            progress: string | null;
+            /** Insurer */
+            insurer: string | null;
+            /** Diagnosis */
+            diagnosis: string | null;
+            /** Claim Amount */
+            claim_amount: number | null;
+            /** Currency */
+            currency: string | null;
+            /** Strength */
+            strength: string | null;
+            /** Escalation Step */
+            escalation_step: number;
+            /** Next Deadline */
+            next_deadline: string | null;
+        };
+        /**
          * Complainant
          * @description What only the patient knows; the filing pack leaves blanks for anything missing.
          */
@@ -483,6 +560,17 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
+        /** LadderStep */
+        LadderStep: {
+            /** Step */
+            step: string;
+            /** Dispute Body */
+            dispute_body: string;
+            /** Deadline Days */
+            deadline_days: number;
+            /** Form */
+            form: string;
+        };
         /** Letter */
         Letter: {
             /** Subject */
@@ -501,6 +589,26 @@ export interface components {
         LetterRequest: {
             /** Instruction */
             instruction?: string | null;
+        };
+        /**
+         * PackInfo
+         * @description Public part of a country pack, so the UI doesn't hard-code ladders.
+         */
+        PackInfo: {
+            /** Country */
+            country: string;
+            /** Currency */
+            currency: string;
+            /** Languages */
+            languages: string[];
+            /** Regulator */
+            regulator: string;
+            /** Ladder */
+            ladder: components["schemas"]["LadderStep"][];
+            /** Limitation */
+            limitation?: {
+                [key: string]: unknown;
+            } | null;
         };
         /**
          * RejectionCategory
@@ -555,6 +663,37 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+    list_cases_cases_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CaseSummary"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     create_case_cases_post: {
         parameters: {
             query?: never;
@@ -679,6 +818,38 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["Document"];
                 };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    delete_document_cases__case_id__documents__doc_id__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Validation Error */
             422: {
@@ -892,6 +1063,37 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_pack_packs__country__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                country: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PackInfo"];
                 };
             };
             /** @description Validation Error */

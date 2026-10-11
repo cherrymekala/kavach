@@ -36,8 +36,13 @@ export function Upload() {
   const fileRef = useRef<HTMLInputElement>(null)
   const seenProgress = useRef<string[]>([])
   const readyAppended = useRef(false)
+  const analysingRef = useRef(false)
+  const sawAnalysingRef = useRef(false)
 
   const status = live.data?.status ?? kase?.status
+  const docs = live.data?.documents ?? kase?.documents ?? []
+  const hasDocs = docs.length > 0
+  const inProgress = analysing || status === 'analysing'
 
   function append(msg: Omit<ChatMsg, 'id'>) {
     idRef.current += 1
@@ -54,23 +59,36 @@ export function Upload() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [live.data?.progress])
 
-  // Analysis finished → one closing message.
+  // Lifecycle: mark analysing seen, finish on ready, stop the spinner on failure.
   useEffect(() => {
-    if (status === 'ready' && !readyAppended.current) {
-      readyAppended.current = true
+    if (status === 'analysing') {
+      sawAnalysingRef.current = true
+    } else if (status === 'ready') {
+      if (!readyAppended.current) {
+        readyAppended.current = true
+        analysingRef.current = false
+        setAnalysing(false)
+        const reason = live.data?.facts?.rejection_reason ?? kase?.facts?.rejection_reason ?? ''
+        append({ role: 'ai', text: t('upload.done', { reason }) })
+      }
+    } else if (status === 'collecting' && sawAnalysingRef.current && analysingRef.current) {
+      // The backend reset to `collecting` after a failed run — stop and offer a retry.
+      analysingRef.current = false
+      sawAnalysingRef.current = false
       setAnalysing(false)
-      const reason = live.data?.facts?.rejection_reason ?? kase?.facts?.rejection_reason ?? ''
-      append({ role: 'ai', text: t('upload.done', { reason }) })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status])
 
   async function startAnalyse() {
     setAnalysing(true)
+    analysingRef.current = true
+    sawAnalysingRef.current = false
     setError(null)
     try {
       await analyse.mutateAsync()
     } catch (e) {
+      analysingRef.current = false
       setAnalysing(false)
       setError(e instanceof Error ? e.message : t('upload.errorAnalyse'))
     }
@@ -83,7 +101,6 @@ export function Upload() {
     try {
       for (const f of files) await upload.mutateAsync(f)
       queryClient.invalidateQueries({ queryKey: caseKey(caseId) })
-      if (status !== 'ready') await startAnalyse()
     } catch (e) {
       append({ role: 'ai', text: e instanceof Error ? e.message : t('upload.errorUpload') })
     }
@@ -94,9 +111,10 @@ export function Upload() {
     if (!text) return
     append({ role: 'me', text })
     setDraft('')
-    const hasDocs = Boolean(kase?.documents.length)
     append({ role: 'ai', text: hasDocs ? t('upload.acknowledged') : t('upload.needDocs') })
   }
+
+  const canAnalyse = hasDocs && !inProgress && status === 'collecting'
 
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 pb-20">
@@ -117,7 +135,7 @@ export function Upload() {
           </ChatBubble>
         ))}
 
-        {analysing ? (
+        {inProgress ? (
           <ChatBubble role="ai">
             <span className="flex items-center gap-2 text-muted-foreground">
               <Spinner />
@@ -127,6 +145,12 @@ export function Upload() {
         ) : null}
 
         {error ? <p className="text-sm text-destructive">{error}</p> : null}
+
+        {canAnalyse ? (
+          <Button className="self-start" onClick={startAnalyse} loading={analyse.isPending}>
+            {t('upload.analyse')}
+          </Button>
+        ) : null}
 
         {status === 'ready' ? (
           <Button className="self-start" onClick={() => navigate(`/case/${caseId}/summary`)}>
@@ -149,7 +173,10 @@ export function Upload() {
             multiple
             accept="image/*,application/pdf,.txt"
             className="sr-only"
-            onChange={(e) => handleFiles(Array.from(e.target.files ?? []))}
+            onChange={(e) => {
+              handleFiles(Array.from(e.target.files ?? []))
+              e.target.value = ''
+            }}
           />
           <Button
             type="button"

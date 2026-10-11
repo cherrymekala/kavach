@@ -9,6 +9,7 @@ import type {
   FilingPack,
   Letter,
   LetterRequest,
+  PackInfo,
   ReplyRequest,
 } from './types'
 
@@ -107,5 +108,16 @@ export function useRecordReply(caseId: string) {
   return useMutation({
     mutationFn: (body: ReplyRequest) => apiFetch<Case>(`/cases/${caseId}/reply`, jsonBody(body)),
     onSuccess: (c) => qc.setQueryData(caseKey(caseId), c),
+  })
+}
+
+// ── Packs ─────────────────────────────────────────────────────────────────
+
+export function usePack(country: string | undefined) {
+  return useQuery({
+    queryKey: ['pack', country],
+    queryFn: () => apiFetch<PackInfo>(`/packs/${country}`),
+    enabled: Boolean(country),
+    staleTime: Infinity,
   })
 }

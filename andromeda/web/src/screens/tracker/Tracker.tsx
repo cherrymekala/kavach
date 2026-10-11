@@ -2,13 +2,8 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { AppHeader, Button, Countdown, Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, FooterCTA, Input, Label, Stepper, Timeline } from '@/components'
-import { useCase, useMarkFiled, useRecordReply } from '@/api/hooks'
+import { useCase, useMarkFiled, usePack, useRecordReply } from '@/api/hooks'
 import { formatDate } from '@/lib/dates'
-
-const LADDERS: Record<string, string[]> = {
-  IN: ['Insurer', 'Insurance Ombudsman', 'Consumer Court'],
-  SG: ['Insurer', 'FIDReC', 'Courts'],
-}
 
 function todayISO(): string {
   const d = new Date()
@@ -22,6 +17,7 @@ export function Tracker() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { data: kase, isLoading } = useCase(caseId)
+  const { data: pack } = usePack(kase?.country)
   const markFiled = useMarkFiled(caseId ?? '')
   const recordReply = useRecordReply(caseId ?? '')
   const [replyOpen, setReplyOpen] = useState(false)
@@ -33,10 +29,9 @@ export function Tracker() {
     return <div className="py-16 text-center text-sm text-muted-foreground">{t('common.loading')}</div>
   }
 
-  const ladder = LADDERS[kase?.country ?? 'IN'] ?? LADDERS.IN
-  const steps = ladder.map((label, i) => ({
-    label,
-    detail: i === (kase?.escalation_step ?? 0) && kase?.next_deadline ? formatDate(kase.next_deadline) : undefined,
+  const steps = (pack?.ladder ?? []).map((s) => ({
+    label: s.step,
+    detail: s.dispute_body,
   }))
 
   const events = (kase?.events ?? []).map((e, i, arr) => ({

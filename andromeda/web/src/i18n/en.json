@@ -55,6 +55,7 @@
     "thinking": "Thinking…",
     "needDocs": "I can't read that yet without your papers. Please attach your rejection letter and policy.",
     "acknowledged": "Got it. Attach your rejection letter and policy whenever you're ready and I'll get to work.",
+    "analyse": "Analyse my case",
     "done": "Here's what I found: {{reason}}",
     "seeFull": "See the full breakdown",
     "errorUpload": "Could not upload that file.",
