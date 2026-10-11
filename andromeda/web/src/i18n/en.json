@@ -142,14 +142,35 @@
   },
   "hearing": {
     "title": "Hearing rehearsal",
-    "intro": "Practise the questions you'll face",
-    "introSub": "A live voice coach will listen and give you feedback in real time.",
-    "voiceComingSoon": "Voice rehearsal coming soon",
+    "intro": "Practise your {{body}} hearing",
+    "introSub": "A live voice rehearsal with your real case. You'll get a score and a better answer after each reply.",
+    "disputeBody": "Ombudsman",
+    "roleBody": "asks neutral, focused questions",
+    "insurerRep": "Insurer's representative",
+    "roleInsurer": "defends the rejection and pushes back",
+    "needAnalysis": "Finish the case analysis first, so the rehearsal can use your facts.",
     "tips": "Before you speak",
     "tip1": "Use the exact dates on your documents. Don't guess.",
     "tip2": "Stick to facts. If you don't know, say \"I don't know\".",
     "tip3": "Keep answers short — one or two sentences.",
-    "practice": "Likely questions",
+    "start": "Start rehearsal",
+    "skip": "Skip",
+    "connecting": "Connecting…",
+    "live": "Live",
+    "wrappingUp": "Writing your debrief…",
+    "yourTurn": "Your turn",
+    "micOn": "Tap to answer",
+    "micOff": "Mute",
+    "typeInstead": "Type instead",
+    "typePlaceholder": "Type your answer",
+    "send": "Send",
+    "end": "End rehearsal",
+    "coach": "Coach",
+    "tryThis": "Try saying",
+    "scoring": "Scoring your answer…",
+    "debrief": "Your rehearsal",
+    "tipsForReal": "For the real hearing",
+    "again": "Rehearse again",
     "cta": "Track your case"
   },
   "tracker": {
@@ -180,5 +201,24 @@
     "errorDownload": "Could not download.",
     "errorDelete": "Could not delete your data.",
     "cta": "Start a new claim"
+  },
+  "cases": {
+    "title": "My cases",
+    "new": "Start a new case",
+    "untitled": "New case",
+    "noDetails": "Waiting for your documents",
+    "status": {
+      "collecting": "Uploading",
+      "analysing": "Analysing",
+      "ready": "Ready",
+      "filed": "Filed",
+      "escalated": "Next step ready",
+      "resolved": "Resolved"
+    },
+    "strength": {
+      "strong": "Strong case",
+      "medium": "Medium case",
+      "weak": "Weak case"
+    }
   }
 }

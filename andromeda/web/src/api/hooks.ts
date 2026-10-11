@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { apiFetch } from './client'
 import type {
   Case,
+  CaseSummary,
   Complainant,
   CreateCase,
   Document,
@@ -33,6 +34,10 @@ export function useCreateCase() {
     mutationFn: (body: CreateCase) => apiFetch<Case>('/cases', jsonBody(body)),
     onSuccess: (c) => qc.setQueryData(caseKey(c.id), c),
   })
+}
+
+export function useCases() {
+  return useQuery({ queryKey: ['cases'], queryFn: () => apiFetch<CaseSummary[]>('/cases') })
 }
 
 export function useCase(id: string | undefined) {
