@@ -64,6 +64,15 @@ export function useUploadDocument(caseId: string) {
   })
 }
 
+export function useDeleteDocument(caseId: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (docId: string) =>
+      apiFetch<void>(`/cases/${caseId}/documents/${docId}`, { method: 'DELETE' }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: caseKey(caseId) }),
+  })
+}
+
 export function useAnalyse(caseId: string) {
   return useMutation({
     mutationFn: () => apiFetch<Record<string, unknown>>(`/cases/${caseId}/analyse`, { method: 'POST' }),

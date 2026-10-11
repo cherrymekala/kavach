@@ -2,16 +2,75 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from '@tanstack/react-query'
-import { MicIcon, PaperclipIcon, SendIcon } from 'lucide-react'
-import { Button, ChatBubble, Input, Spinner } from '@/components'
-import { caseKey, useAnalyse, useCase, useUploadDocument } from '@/api/hooks'
+import {
+  AlertTriangleIcon,
+  CameraIcon,
+  CheckIcon,
+  CircleIcon,
+  FileIcon,
+  LoaderCircleIcon,
+  UploadIcon,
+  XIcon,
+} from 'lucide-react'
+import { AppHeader, FooterCTA, SourceKindIcon } from '@/components'
+import { caseKey, useAnalyse, useCase, useDeleteDocument, useUploadDocument } from '@/api/hooks'
 import { useLiveCase } from '@/api/live'
+import { cn } from '@/lib/cn'
 
-interface ChatMsg {
-  id: string
-  role: 'ai' | 'me'
-  text?: string
-  files?: string[]
+/** The pipeline's progress messages, in order (sombrero/src/kavach/agents/orchestrator.py). */
+const STEPS = [
+  'Reading your documents',
+  'Decoding the rejection',
+  'Finding the rules that apply',
+  'Looking up similar past cases',
+  'Building your case',
+  'Checking every source',
+  'Writing your appeal',
+] as const
+
+const WANTED = ['rejection_letter', 'policy', 'discharge_summary'] as const
+const ACCEPT = 'image/*,application/pdf,.txt'
+
+function Steps({ current }: { current: string | null | undefined }) {
+  const { t } = useTranslation()
+  const at = current ? STEPS.indexOf(current as (typeof STEPS)[number]) : 0
+  return (
+    <ol className="flex flex-col">
+      {STEPS.map((step, i) => {
+        const done = i < at
+        const active = i === Math.max(at, 0)
+        return (
+          <li key={step} className="flex gap-3">
+            <div className="flex flex-col items-center">
+              <span
+                className={cn(
+                  'grid size-7 place-items-center rounded-full border-2',
+                  done && 'border-mint bg-mint text-white',
+                  active && 'border-brand text-brand',
+                  !done && !active && 'border-border text-muted-foreground',
+                )}
+              >
+                {done ? (
+                  <CheckIcon className="size-4" aria-hidden />
+                ) : active ? (
+                  <LoaderCircleIcon className="size-4 animate-spin" aria-hidden />
+                ) : (
+                  <CircleIcon className="size-2 fill-current" aria-hidden />
+                )}
+              </span>
+              {i < STEPS.length - 1 ? (
+                <span className={cn('my-1 w-0.5 flex-1', done ? 'bg-mint' : 'bg-border')} />
+              ) : null}
+            </div>
+            <div className={cn('pb-5 pt-0.5', !done && !active && 'text-muted-foreground')}>
+              <p className={cn('text-sm', active && 'font-semibold')}>{t(`upload.steps.${i}.label`)}</p>
+              {active ? <p className="text-xs text-muted-foreground">{t(`upload.steps.${i}.detail`)}</p> : null}
+            </div>
+          </li>
+        )
+      })}
+    </ol>
+  )
 }
 
 export function Upload() {
@@ -19,203 +78,204 @@ export function Upload() {
   const navigate = useNavigate()
   const { t } = useTranslation()
   const queryClient = useQueryClient()
-
   const { data: kase } = useCase(caseId)
   const live = useLiveCase(caseId)
   const upload = useUploadDocument(caseId ?? '')
+  const remove = useDeleteDocument(caseId ?? '')
   const analyse = useAnalyse(caseId ?? '')
 
-  const [messages, setMessages] = useState<ChatMsg[]>(() => [
-    { id: 'welcome', role: 'ai', text: t('upload.greeting') },
-  ])
-  const [draft, setDraft] = useState('')
-  const [analysing, setAnalysing] = useState(false)
+  const [uploading, setUploading] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
-
-  const idRef = useRef(0)
+  const [started, setStarted] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
-  const seenProgress = useRef<string[]>([])
-  const readyAppended = useRef(false)
-  const analysingRef = useRef(false)
-  const sawAnalysingRef = useRef(false)
+  const cameraRef = useRef<HTMLInputElement>(null)
+  const [over, setOver] = useState(false)
 
-  const status = live.data?.status ?? kase?.status
-  const docs = live.data?.documents ?? kase?.documents ?? []
-  const hasDocs = docs.length > 0
-  const inProgress = analysing || status === 'analysing'
+  const current = live.data ?? kase
+  const status = current?.status
+  const progress = current?.progress
+  const docs = current?.documents ?? []
+  const analysing = status === 'analysing' || (started && status === 'collecting' && !progress)
+  // A run that ends back in `collecting` with a message failed (e.g. no rejection letter found).
+  const failed = status === 'collecting' && Boolean(progress) && !STEPS.includes(progress as (typeof STEPS)[number])
 
-  function append(msg: Omit<ChatMsg, 'id'>) {
-    idRef.current += 1
-    setMessages((m) => [...m, { ...msg, id: String(idRef.current) }])
+  useEffect(() => {
+    if (status === 'ready' && started) navigate(`/case/${caseId}/summary`)
+  }, [status, started, caseId, navigate])
+
+  async function addFiles(files: File[]) {
+    if (!files.length) return
+    setError(null)
+    setUploading(files.map((f) => f.name))
+    try {
+      for (const f of files) await upload.mutateAsync(f)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : t('upload.errorUpload'))
+    } finally {
+      setUploading([])
+      queryClient.invalidateQueries({ queryKey: caseKey(caseId) })
+    }
   }
 
-  // Each backend progress step arrives as a new assistant bubble ("live writing").
-  useEffect(() => {
-    const p = live.data?.progress
-    if (p && !seenProgress.current.includes(p)) {
-      seenProgress.current.push(p)
-      append({ role: 'ai', text: p })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [live.data?.progress])
-
-  // Lifecycle: mark analysing seen, finish on ready, stop the spinner on failure.
-  useEffect(() => {
-    if (status === 'analysing') {
-      sawAnalysingRef.current = true
-    } else if (status === 'ready') {
-      if (!readyAppended.current) {
-        readyAppended.current = true
-        analysingRef.current = false
-        setAnalysing(false)
-        const reason = live.data?.facts?.rejection_reason ?? kase?.facts?.rejection_reason ?? ''
-        append({ role: 'ai', text: t('upload.done', { reason }) })
-      }
-    } else if (status === 'collecting' && sawAnalysingRef.current && analysingRef.current) {
-      // The backend reset to `collecting` after a failed run — stop and offer a retry.
-      analysingRef.current = false
-      sawAnalysingRef.current = false
-      setAnalysing(false)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [status])
-
-  async function startAnalyse() {
-    setAnalysing(true)
-    analysingRef.current = true
-    sawAnalysingRef.current = false
+  async function start() {
     setError(null)
+    setStarted(true)
     try {
       await analyse.mutateAsync()
+      queryClient.invalidateQueries({ queryKey: caseKey(caseId) })
     } catch (e) {
-      analysingRef.current = false
-      setAnalysing(false)
+      setStarted(false)
       setError(e instanceof Error ? e.message : t('upload.errorAnalyse'))
     }
   }
 
-  async function handleFiles(files: File[]) {
-    if (!files.length) return
-    append({ role: 'me', files: files.map((f) => f.name) })
-    setError(null)
-    try {
-      for (const f of files) await upload.mutateAsync(f)
-      queryClient.invalidateQueries({ queryKey: caseKey(caseId) })
-    } catch (e) {
-      append({ role: 'ai', text: e instanceof Error ? e.message : t('upload.errorUpload') })
-    }
+  if (analysing) {
+    return (
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 pb-12">
+        <AppHeader title={t('upload.analysingHeading')} />
+        <p className="-mt-3 text-sm text-muted-foreground">{t('upload.analysingSub')}</p>
+        <section className="rounded-2xl border border-border bg-card p-5">
+          <Steps current={progress} />
+        </section>
+      </div>
+    )
   }
 
-  function handleSend() {
-    const text = draft.trim()
-    if (!text) return
-    append({ role: 'me', text })
-    setDraft('')
-    append({ role: 'ai', text: hasDocs ? t('upload.acknowledged') : t('upload.needDocs') })
-  }
-
-  const canAnalyse = hasDocs && !inProgress && status === 'collecting'
+  const canAnalyse = docs.length > 0 && uploading.length === 0 && status === 'collecting'
 
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 pb-20">
-      <div className="flex flex-col gap-3">
-        {messages.map((m) => (
-          <ChatBubble key={m.id} role={m.role}>
-            {m.files ? (
-              <ul className="flex flex-col gap-1">
-                {m.files.map((f) => (
-                  <li key={f} className="font-mono text-xs">
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              m.text
-            )}
-          </ChatBubble>
-        ))}
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 pb-24">
+      <AppHeader title={t('upload.heading')} />
+      <p className="-mt-3 text-sm text-muted-foreground">{t('upload.sub')}</p>
 
-        {inProgress ? (
-          <ChatBubble role="ai">
-            <span className="flex items-center gap-2 text-muted-foreground">
-              <Spinner />
-              {t('upload.thinking')}
+      {failed ? (
+        <div className="flex gap-3 rounded-xl border border-amber/50 bg-amber/10 p-4 text-sm">
+          <AlertTriangleIcon className="mt-0.5 size-5 shrink-0 text-amber" aria-hidden />
+          <p>{progress}</p>
+        </div>
+      ) : null}
+
+      <ul className="grid gap-2 sm:grid-cols-3">
+        {WANTED.map((kind) => (
+          <li key={kind} className="flex items-center gap-3 rounded-xl border border-border bg-card p-3">
+            <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-accent text-accent-foreground">
+              <SourceKindIcon kind={kind} />
             </span>
-          </ChatBubble>
-        ) : null}
+            <div className="min-w-0">
+              <p className="text-sm font-semibold">{t(`upload.wanted.${kind}.label`)}</p>
+              <p className="text-xs text-muted-foreground">{t(`upload.wanted.${kind}.hint`)}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
 
-        {error ? <p className="text-sm text-destructive">{error}</p> : null}
-
-        {canAnalyse ? (
-          <Button className="self-start" onClick={startAnalyse} loading={analyse.isPending}>
-            {t('upload.analyse')}
-          </Button>
-        ) : null}
-
-        {status === 'ready' ? (
-          <Button className="self-start" onClick={() => navigate(`/case/${caseId}/summary`)}>
-            {t('upload.seeFull')}
-          </Button>
-        ) : null}
-      </div>
-
-      <div className="fixed inset-x-0 bottom-4 z-30 px-4">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-            handleSend()
-          }}
-          className="mx-auto flex w-full max-w-3xl items-center gap-1 rounded-full border border-border bg-card p-1.5 shadow-lg"
-        >
-          <input
-            ref={fileRef}
-            type="file"
-            multiple
-            accept="image/*,application/pdf,.txt"
-            className="sr-only"
-            onChange={(e) => {
-              handleFiles(Array.from(e.target.files ?? []))
-              e.target.value = ''
-            }}
-          />
-          <Button
+      <div
+        onDragOver={(e) => {
+          e.preventDefault()
+          setOver(true)
+        }}
+        onDragLeave={() => setOver(false)}
+        onDrop={(e) => {
+          e.preventDefault()
+          setOver(false)
+          addFiles(Array.from(e.dataTransfer.files))
+        }}
+        className={cn(
+          'flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-border p-6 text-center',
+          over && 'border-brand bg-accent/50',
+        )}
+      >
+        <UploadIcon className="size-7 text-muted-foreground" aria-hidden />
+        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row">
+          <button
             type="button"
-            variant="ghost"
-            size="icon"
-            disabled
-            className="rounded-full"
-            aria-label={t('upload.voice')}
-            title={t('upload.voice')}
-          >
-            <MicIcon className="size-5" />
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            className="rounded-full"
-            aria-label={t('upload.attach')}
             onClick={() => fileRef.current?.click()}
+            className="flex h-11 items-center justify-center gap-2 rounded-full bg-primary px-5 text-sm font-semibold text-primary-foreground"
           >
-            <PaperclipIcon className="size-5" />
-          </Button>
-          <Input
-            value={draft}
-            onChange={(e) => setDraft(e.target.value)}
-            placeholder={t('upload.inputPlaceholder')}
-            className="h-9 flex-1 border-0 bg-transparent px-2 shadow-none focus-visible:ring-0 dark:bg-transparent"
-          />
-          <Button
-            type="submit"
-            size="icon"
-            className="rounded-full"
-            disabled={!draft.trim()}
-            aria-label={t('upload.send')}
+            <FileIcon className="size-4" aria-hidden />
+            {t('upload.choose')}
+          </button>
+          <button
+            type="button"
+            onClick={() => cameraRef.current?.click()}
+            className="flex h-11 items-center justify-center gap-2 rounded-full border border-border bg-card px-5 text-sm font-semibold"
           >
-            <SendIcon className="size-5" />
-          </Button>
-        </form>
+            <CameraIcon className="size-4" aria-hidden />
+            {t('upload.photo')}
+          </button>
+        </div>
+        <p className="font-mono text-xs text-muted-foreground">{t('upload.limits')}</p>
+        <input
+          ref={fileRef}
+          type="file"
+          multiple
+          accept={ACCEPT}
+          className="sr-only"
+          onChange={(e) => {
+            addFiles(Array.from(e.target.files ?? []))
+            e.target.value = ''
+          }}
+        />
+        <input
+          ref={cameraRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="sr-only"
+          onChange={(e) => {
+            addFiles(Array.from(e.target.files ?? []))
+            e.target.value = ''
+          }}
+        />
       </div>
+
+      {error ? <p className="text-sm text-destructive">{error}</p> : null}
+
+      {docs.length || uploading.length ? (
+        <section className="flex flex-col gap-2">
+          <h3 className="font-display text-base font-bold">{t('upload.yourFiles', { count: docs.length })}</h3>
+          <ul className="flex flex-col gap-2">
+            {docs.map((d) => (
+              <li key={d.id} className="flex items-center gap-3 rounded-xl border border-border bg-card p-3">
+                <SourceKindIcon kind={d.doc_type ?? 'other'} className="size-5 text-muted-foreground" />
+                <span className="min-w-0 flex-1 truncate text-sm">{d.filename}</span>
+                {status === 'collecting' ? (
+                  <button
+                    type="button"
+                    onClick={() => remove.mutate(d.id)}
+                    aria-label={t('upload.remove', { name: d.filename })}
+                    className="grid size-8 place-items-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground"
+                  >
+                    <XIcon className="size-4" aria-hidden />
+                  </button>
+                ) : null}
+              </li>
+            ))}
+            {uploading.map((name) => (
+              <li
+                key={`up-${name}`}
+                className="flex items-center gap-3 rounded-xl border border-dashed border-border p-3 text-muted-foreground"
+              >
+                <LoaderCircleIcon className="size-5 animate-spin" aria-hidden />
+                <span className="min-w-0 flex-1 truncate text-sm">{name}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
+      <FooterCTA
+        primary={
+          status === 'ready'
+            ? { label: t('upload.seeFull'), onClick: () => navigate(`/case/${caseId}/summary`) }
+            : {
+                label: failed ? t('upload.retry') : t('upload.analyse'),
+                onClick: start,
+                disabled: !canAnalyse,
+                loading: analyse.isPending,
+              }
+        }
+      />
     </div>
   )
 }

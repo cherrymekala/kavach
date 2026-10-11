@@ -28,7 +28,19 @@ def _context(case: Case) -> dict:
         "reply_days": steps[0]["deadline_days"],
         "next_dispute_body": steps[1]["step"] if len(steps) > 1 else None,
         "complaint_to": steps[-1]["dispute_body"],
+        # Write money exactly like this; raw floats came out as "INR 184,000.0".
+        "amounts": _amounts(case),
+        "complainant": case.complainant.model_dump(mode="json", exclude_none=True) if case.complainant else {},
     }
+
+
+def _amounts(case: Case) -> dict:
+    f = case.facts
+    if not f:
+        return {}
+    unpaid = (f.claim_amount or 0) - (f.amount_approved or 0) if f.claim_amount else None
+    values = {"claimed": f.claim_amount, "approved": f.amount_approved, "unpaid": unpaid}
+    return {k: _money(v, f.currency) for k, v in values.items() if v}
 
 
 def draft_letter(case: Case, instruction: str | None = None) -> Letter:

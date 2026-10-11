@@ -19,7 +19,23 @@ const Outcome = lazy(() => import('./screens/outcome/Outcome').then((m) => ({ de
 const Foundation = lazy(() => import('./screens/dev/Foundation').then((m) => ({ default: m.Foundation })))
 
 // Dev-only foundation page — never shipped to production hosting.
-const devRoutes = import.meta.env.DEV ? [{ path: 'dev', element: <Foundation /> }] : []
+// /preview/case/demo/<screen> renders a screen with dev/demo-case.json and no sign-in (design work).
+const caseScreens = [
+  ['upload', Upload],
+  ['summary', Summary],
+  ['chances', Chances],
+  ['letter', Letter],
+  ['filing', Filing],
+  ['hearing', Hearing],
+  ['tracker', Tracker],
+  ['outcome', Outcome],
+] as const
+const devRoutes = import.meta.env.DEV
+  ? [
+      { path: 'dev', element: <Foundation /> },
+      ...caseScreens.map(([name, Screen]) => ({ path: `preview/case/:caseId/${name}`, element: <Screen /> })),
+    ]
+  : []
 
 export const router = createBrowserRouter([
   {

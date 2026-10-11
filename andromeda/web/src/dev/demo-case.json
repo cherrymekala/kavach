@@ -1,0 +1,153 @@
+{
+  "id": "demo",
+  "owner": "dev",
+  "created_at": "2026-10-11T11:24:19.308259Z",
+  "country": "IN",
+  "language": "hi",
+  "status": "ready",
+  "documents": [
+    {
+      "id": "0",
+      "filename": "rejection_letter.txt",
+      "gcs_uri": "gs://demo/rejection_letter.txt",
+      "doc_type": "rejection_letter",
+      "pages": null,
+      "warning": null
+    },
+    {
+      "id": "1",
+      "filename": "discharge_summary.txt",
+      "gcs_uri": "gs://demo/discharge_summary.txt",
+      "doc_type": "discharge_summary",
+      "pages": null,
+      "warning": null
+    },
+    {
+      "id": "2",
+      "filename": "policy.pdf",
+      "gcs_uri": "gs://demo/policy.pdf",
+      "doc_type": "policy",
+      "pages": null,
+      "warning": null
+    }
+  ],
+  "facts": {
+    "insurer": "STAR HEALTH AND ALLIED INSURANCE CO. LTD.",
+    "tpa": null,
+    "patient_name": "Mrs. Lakshmi Iyer (SYNTHETIC)",
+    "hospital": "Sri Sai Multispeciality Hospital, Chennai",
+    "policy_number": "P/161100/01/2026/004521",
+    "claim_number": "CLI/2026/161100/0412387",
+    "rejection_date": "2026-07-28",
+    "policy_start": null,
+    "admission_date": "2026-07-12",
+    "first_diagnosis_date": "2026-07-05",
+    "diagnosis": "Cholelithiasis with chronic cholecystitis",
+    "claim_amount": 184000.0,
+    "amount_approved": null,
+    "currency": "INR",
+    "rejection_code": null,
+    "rejection_category": "pre_existing",
+    "rejection_reason": "The insured was a known case of gall stone disease prior to the commencement of the policy.",
+    "cited_clause": "Exclusion No.1 - Pre-Existing Diseases (Code Excl 01)"
+  },
+  "assessment": {
+    "strength": "strong",
+    "score": 0.8,
+    "arguments": [
+      {
+        "claim": "The hospital discharge summary explicitly records that there was no prior diagnosis of gall stone disease.",
+        "explanation": "The treating surgeon noted that the patient presented with abdominal pain of only two weeks duration and that the calculi were first identified via ultrasound on 05/07/2026. The discharge summary explicitly records that there was no prior diagnosis of gall stone disease, which directly refutes the insurer's assertion. Vague reports of occasional dyspepsia do not establish a diagnosed gallstone condition.",
+        "sources": [
+          {
+            "kind": "discharge_summary",
+            "ref": "discharge_summary.txt",
+            "quote": "No prior diagnosis of gall stone disease.",
+            "verified": true
+          },
+          {
+            "kind": "discharge_summary",
+            "ref": "discharge_summary.txt",
+            "quote": "Ultrasound on 05/07/2026 showed multiple gall bladder calculi.",
+            "verified": true
+          },
+          {
+            "kind": "ruling",
+            "ref": "Insurance Ombudsman award, Case No. 11-008-0022/07-08 (2007, Royal Sundaram)",
+            "quote": "The insurer repudiated the claim for gallbladder stones on the grounds that the condition was pre-existing, but the Ombudsman allowed the complaint because the treating surgeon certified it was not pre-existing.",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "claim": "The ailment does not meet the contractual or regulatory definition of a pre-existing disease.",
+        "explanation": "Under the policy wording and IRDAI regulations, a condition is only pre-existing if it was diagnosed by a physician or if medical advice or treatment was recommended or received prior to inception. The patient had neither received advice nor been diagnosed for gallstones prior to the policy start date. Therefore, the exclusion for pre-existing disease cannot be invoked.",
+        "sources": [
+          {
+            "kind": "policy",
+            "ref": "page 6",
+            "quote": "that is/are diagnosed by a physician not more than 36 months prior to the date of commencement of the policy issued by the insurer",
+            "verified": true
+          },
+          {
+            "kind": "regulation",
+            "ref": "Products Regulations 2024, Sch. III, cl. 1.6",
+            "quote": "that is/are diagnosed by a physician not more than 36 months prior to the date of commencement of the policy issued by the insurer",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "claim": "The insurer has rejected the claim based on mere assumption without any documentary proof.",
+        "explanation": "The insurer asserted that the patient was a known case of gall stone disease prior to policy commencement, but failed to provide any clinical evidence, hospital records, or prescriptions to support this allegation. Insurance Ombudsman rulings have repeatedly held that repudiations based on presumed pre-existence without documentary proof cannot stand.",
+        "sources": [
+          {
+            "kind": "rejection_letter",
+            "ref": "rejection_letter.txt",
+            "quote": "As per the records, the insured was a known case of gall stone disease prior to the commencement of the policy.",
+            "verified": true
+          },
+          {
+            "kind": "ruling",
+            "ref": "Insurance Ombudsman award, Case No. 11.08.1240/2006-2007 (2006, New India Assurance)",
+            "quote": "The insurer rejected the claim for Cholelithiasis based on the assumption that the condition was pre-existing due to the size of the gall stone and chronic nature, but the Ombudsman allowed the claim as there was no documentary evidence to prove the pre-existence of the disease prior to the policy inception.",
+            "verified": true
+          },
+          {
+            "kind": "ruling",
+            "ref": "Insurance Ombudsman award, Case No. GIC/345/UII/11/07 (2007, United India Insurance)",
+            "quote": "The insurer rejected the claim for Cholelithiasis citing a pre-existing condition based on a panel doctor's opinion, but the Ombudsman held that pre-existence was not proven and ordered the insurer to pay the admissible claim amount.",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "similar_cases_won": 8,
+    "similar_cases_total": 12,
+    "missing_documents": [
+      "A certificate from Dr. R. Venkatesh certifying that the gall stone disease was acute and diagnosed for the first time on 05/07/2026.",
+      "The complete ultrasound report dated 05/07/2026 from the diagnostic center."
+    ],
+    "disclaimer": "Kavach prepares documents from your files and public rules to help you raise a dispute. It is not legal advice. Check every detail before you sign or send anything."
+  },
+  "letter": {
+    "subject": "Appeal against Rejection of Claim No. CLI/2026/161100/0412387 under Policy No. P/161100/01/2026/004521",
+    "english": "[Your Name / Mrs. Lakshmi Iyer]\n[Your Address]\n[Chennai, Tamil Nadu]\n[Email Address] | [Phone Number]\n\n11 October 2026\n\nTo,\nThe Grievance Redressal Officer,\nStar Health and Allied Insurance Co. Ltd.,\n[Insurer's Address]\n\nSubject: Appeal against repudiation of Claim No. CLI/2026/161100/0412387 under Policy No. P/161100/01/2026/004521\n\nDear Sir/Madam,\n\nI am writing to formally contest the repudiation letter dated 28/07/2026 concerning my claim for INR 184,000.0, submitted for hospitalization and treatment of Cholelithiasis with chronic cholecystitis at Sri Sai Multispeciality Hospital, Chennai (admission date: 12/07/2026). The claim was rejected under Exclusion No.1 - Pre-Existing Diseases (Code Excl 01), alleging that I was a known case of gall stone disease prior to policy commencement. This rejection is factually incorrect and unsustainable.\n\nFirst, the medical records explicitly refute the insurer's assertion. The treating surgeon noted abdominal pain of only two weeks' duration, with gall bladder calculi first detected via ultrasound on 05/07/2026. Crucially, the hospital discharge summary explicitly records that there was \"No prior diagnosis of gall stone disease.\" In a similar ruling, an Insurance Ombudsman award, Case No. 11-008-0022/07-08 (2007, Royal Sundaram), set aside the repudiation of a gallstone claim because the treating surgeon certified the condition was not pre-existing.\n\nSecond, the condition does not satisfy the contractual or regulatory definition of a pre-existing disease. Under page 6 of the policy wording as well as Schedule III, clause 1.6 of the IRDAI (Insurance Products) Regulations, 2024, a pre-existing disease requires a condition \"that is/are diagnosed by a physician not more than 36 months prior to the date of commencement of the policy issued by the insurer\". As I neither sought medical advice nor received a diagnosis or treatment for gallstones prior to the policy start date, Exclusion No. 1 cannot be invoked.\n\nThird, the repudiation rests entirely on mere assumption without any documentary evidence. Your office has cited no clinical proof, medical history, or prior prescription. In Insurance Ombudsman award, Case No. 11.08.1240/2006-2007 (2006, New India Assurance), the Ombudsman held that cholelithiasis claims cannot be rejected on presumptive chronicity without documentary evidence. Likewise, in Insurance Ombudsman award, Case No. GIC/345/UII/11/07 (2007, United India Insurance), an unproven allegation of pre-existence was overturned and payment directed.\n\nI therefore request you to review this matter and disburse the full claim amount of INR 184,000.0. Please communicate your decision within 15 days of receiving this letter. Should this matter remain unresolved, I will escalate the dispute by lodging a Bima Bharosa complaint and approaching the Insurance Ombudsman.\n\nYours faithfully,\n\n[Mrs. Lakshmi Iyer]\n\nEnclosures:\n1. Copy of Rejection Letter dated 28/07/2026\n2. Discharge Summary from Sri Sai Multispeciality Hospital\n3. Ultrasound Report dated 05/07/2026\n4. Final Hospital Bill and Receipts",
+    "local": "[आपका नाम / श्रीमती लक्ष्मी अय्यर]\n[आपका पता]\n[चेन्नई, तमिलनाडु]\n[ईमेल पता] | [फ़ोन नंबर]\n\n11 अक्टूबर 2026\n\nसेवा में,\nशिकायत निवारण अधिकारी (Grievance Redressal Officer),\nस्टार हेल्थ एंड अलाइड इंश्योरेंस कंपनी लिमिटेड,\n[बीमाकर्ता का पता]\n\nविषय: पॉलिसी संख्या P/161100/01/2026/004521 के अंतर्गत दावा संख्या CLI/2026/161100/0412387 की अस्वीकृति के विरुद्ध अपील\n\nमहोदय/महोदया,\n\nमैं श्री साई मल्टीस्पेशलिटी हॉस्पिटल, चेन्नई में कोलेलिथियासिस एवं क्रॉनिक कोलेसिस्टाइटिस (भर्ती तिथि: 12/07/2026) के उपचार हेतु प्रस्तुत किए गए INR 184,000.0 के दावे को खारिज करने वाले पत्र दिनांक 28/07/2026 के विरुद्ध यह अपील प्रस्तुत कर रही हूँ। इस दावे को Exclusion No.1 - Pre-Existing Diseases (Code Excl 01) के तहत यह कहकर अस्वीकार किया गया है कि पॉलिसी शुरू होने से पूर्व मैं पित्त की पथरी की ज्ञात मरीज थी। यह निर्णय तथ्यात्मक रूप से निराधार है।\n\nसर्वप्रथम, अस्पताल का डिस्चार्ज सारांश स्पष्ट रूप से दर्ज करता है कि \"No prior diagnosis of gall stone disease\" (पित्त पथरी का कोई पूर्व निदान नहीं था)। उपचार करने वाले सर्जन ने केवल दो सप्ताह के पेट दर्द का उल्लेख किया था और 05/07/2026 के अल्ट्रासाउंड में पहली बार पित्त की पथरी का पता चला था। इसी प्रकार के मामले में Insurance Ombudsman award, Case No. 11-008-0022/07-08 (2007, Royal Sundaram) में लोकपाल ने दावे की अस्वीकृति को निरस्त किया था क्योंकि सर्जन ने प्रमाणित किया था कि यह रोग पूर्व-विद्यमान नहीं था।\n\nदूसरा, यह बीमारी पूर्व-विद्यमान बीमारी (PED) की संविदात्मक या विनियामक परिभाषा में नहीं आती है। पॉलिसी के पृष्ठ 6 तथा Products Regulations 2024, Sch. III, cl. 1.6 के अनुसार, पूर्व-विद्यमान रोग वह है \"that is/are diagnosed by a physician not more than 36 months prior to the date of commencement of the policy issued by the insurer\"। चूँकि पॉलिसी प्रारंभ होने से पूर्व मुझे कभी कोई चिकित्सीय परामर्श या निदान प्राप्त नहीं हुआ था, अतः इस बहिष्करण को लागू नहीं किया जा सकता।\n\nतीसरा, बीमाकर्ता द्वारा दावा केवल अनुमान के आधार पर बिना किसी दस्तावेजी साक्ष्य के खारिज किया गया है। Insurance Ombudsman award, Case No. 11.08.1240/2006-2007 (2006, New India Assurance) में निर्णय दिया गया था कि दस्तावेजी साक्ष्य के अभाव में पथरी के आकार या क्रॉनिक प्रकृति के आधार पर पूर्व-विद्यमान मानकर दावा निरस्त नहीं किया जा सकता। इसी तरह Insurance Ombudsman award, Case No. GIC/345/UII/11/07 (2007, United India Insurance) में भी पूर्व-विद्यमानता सिद्ध न होने पर दावे के भुगतान का आदेश दिया गया था।\n\nअतः आपसे अनुरोध है कि मामले की पुनः समीक्षा कर संपूर्ण दावा राशि INR 184,000.0 का भुगतान स्वीकृत करें। कृपया 15 दिनों के भीतर अपना उत्तर प्रेषित करें; अन्यथा मैं Bima Bharosa complaint दर्ज करने तथा बीमा लोकपाल (Insurance Ombudsman) के समक्ष जाने के लिए बाध्य होऊँगी।\n\nभवदीया,\n\n[श्रीमती लक्ष्मी अय्यर]\n\nसंलग्नक:\n1. अस्वीकृति पत्र दिनांक 28/07/2026 की प्रति\n2. श्री साई मल्टीस्पेशलिटी हॉस्पिटल का डिस्चार्ज सारांश\n3. अल्ट्रासाउंड रिपोर्ट दिनांक 05/07/2026\n4. अस्पताल का अंतिम बिल एवं भुगतान रसीदें",
+    "language": "hi"
+  },
+  "complainant": null,
+  "next_deadline": "2026-10-25T23:59:00Z",
+  "escalation_step": 0,
+  "events": [
+    {
+      "at": "2026-10-11T11:24:33.166186Z",
+      "kind": "filed",
+      "text": "Filed with Insurer grievance cell on 10 Oct 2026. Reply due by 25 Oct 2026.",
+      "step": 0
+    }
+  ],
+  "documents_deleted_at": null,
+  "amount_recovered": null,
+  "progress": null
+}

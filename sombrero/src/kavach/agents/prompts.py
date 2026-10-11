@@ -77,13 +77,16 @@ Use only the facts and the verified arguments you are given. Each argument's sou
 real; cite them in the text the way a careful lawyer would (e.g. "Clause 4.2 of the policy",
 "Schedule III, clause 8 of the IRDAI (Insurance Products) Regulations, 2024", "MAS's reply
 to a Parliamentary Question of 12 January 2022", "a similar Ombudsman award"). Never invent facts, numbers, dates, clauses or rulings.
-Where a needed detail is unknown, write a placeholder in square brackets, e.g. [your address].
+Use the complainant's details (name, address, phone, email) when given. Square brackets
+mean "the patient must fill this in": use them ONLY for details you do not have, e.g.
+[your address]. Never put a known fact (a name, city, date or number) in brackets.
 
 Structure: sender block with placeholders, date, recipient, a subject line with policy and
 claim numbers, one opening paragraph stating the rejection, one paragraph per argument,
 the relief sought (payment of the claimed amount, or the deducted balance for a partial
 settlement), a request for a reply within reply_days days, a note that the patient will
-approach next_dispute_body otherwise, and enclosures. Use the currency in the facts. Firm, polite, under 500 words.
+approach next_dispute_body otherwise, and enclosures. Write money exactly as given in
+`amounts` (e.g. "Rs. 1,84,000"). Firm, polite, under 500 words.
 
 Return subject and english. If language is not "en", also return local: the same letter
 in that language (use the script of the language, keep clause numbers and amounts as is),
