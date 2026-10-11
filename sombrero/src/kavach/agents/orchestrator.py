@@ -7,9 +7,18 @@ whirlpool evals run exactly the same steps as the API.
 from collections.abc import Callable
 from dataclasses import dataclass
 
-from ..models import Assessment, CaseFacts, CaseStatus, Document
+from ..models import Assessment, CaseFacts, CaseStatus, DocType, Document
 from ..tools import rulings, store
 from . import checker, code_decoder, filing, intake, policy_rules, strategist
+
+NO_REJECTION = (
+    "We couldn't find a claim rejection letter in your files. "
+    "Please upload the letter or email from your insurer that rejected or cut the claim."
+)
+
+
+class NotARejection(Exception):
+    """The uploads don't contain a rejection; stop before the expensive steps."""
 
 
 @dataclass
@@ -31,6 +40,9 @@ def analyse(
             documents[label.index].doc_type = label.doc_type
             documents[label.index].warning = label.warning
     facts = result.facts
+    has_letter = any(d.doc_type == DocType.REJECTION_LETTER for d in documents)
+    if not has_letter and not facts.rejection_reason:
+        raise NotARejection(NO_REJECTION)
 
     progress("Decoding the rejection")
     decoded = code_decoder.decode(country, facts.tpa, facts.rejection_code)
@@ -70,6 +82,9 @@ def run_case(case_id: str) -> None:
 
         case.status = CaseStatus.READY
         progress(None)
+    except NotARejection as exc:
+        case.status = CaseStatus.COLLECTING
+        progress(str(exc))
     except Exception:
         case.status = CaseStatus.COLLECTING
         progress("We couldn't finish the analysis. Please try again.")

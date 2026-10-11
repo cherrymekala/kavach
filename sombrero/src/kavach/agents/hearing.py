@@ -89,6 +89,14 @@ FINISH = types.FunctionDeclaration(
 )
 
 
+MIN_ANSWER_WORDS = 3
+
+
+def is_answer(text: str) -> bool:
+    """Fillers like "um", "okay", "yeah sure" are not scored or counted as answers."""
+    return len(text.split()) >= MIN_ANSWER_WORDS
+
+
 def _dispute_body(case: Case) -> str:
     return packs.load(case.country)["dispute_process"][-1]["step"]
 
@@ -140,13 +148,33 @@ CASE FACTS: {json.dumps(facts, ensure_ascii=False)}
 PATIENT'S VERIFIED ARGUMENTS: {json.dumps(arguments, ensure_ascii=False)}"""
 
 
+# BCP-47 codes for speech recognition. English is always included: patients mix languages.
+SPEECH_CODES = {
+    "hi": "hi-IN",
+    "ta": "ta-IN",
+    "te": "te-IN",
+    "mr": "mr-IN",
+    "zh": "cmn-CN",
+    "ms": "ms-MY",
+}
+
+
+def speech_languages(case: Case) -> list[str]:
+    english = "en-SG" if case.country == "SG" else "en-IN"
+    local = SPEECH_CODES.get(case.language)
+    return [english, local] if local else [english]
+
+
 def live_config(case: Case) -> types.LiveConnectConfig:
     s = get_settings()
     return types.LiveConnectConfig(
         response_modalities=["AUDIO"],
         system_instruction=instructions(case),
         tools=[types.Tool(function_declarations=[FINISH])],
-        input_audio_transcription=types.AudioTranscriptionConfig(),
+        # Without hints the recogniser guesses per utterance ("Yeah, sure" came back as "Ja da").
+        input_audio_transcription=types.AudioTranscriptionConfig(
+            language_codes=speech_languages(case)
+        ),
         output_audio_transcription=types.AudioTranscriptionConfig(),
         speech_config=types.SpeechConfig(
             voice_config=types.VoiceConfig(

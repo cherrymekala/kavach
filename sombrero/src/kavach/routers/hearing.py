@@ -87,7 +87,7 @@ async def _from_gemini(ws: WebSocket, session, case: Case, turns: _Turns) -> dic
                     {"transcript": {"who": "you", "text": content.input_transcription.text}}
                 )
             if content and content.output_transcription and content.output_transcription.text:
-                if turns.answer.strip() and turns.question:
+                if hearing.is_answer(turns.answer) and turns.question:
                     # The AI started its next turn, so the patient's answer is complete.
                     turns.answers += 1
                     task = asyncio.create_task(
@@ -163,7 +163,7 @@ async def hearing_socket(ws: WebSocket, case_id: str) -> None:
                 await upstream
 
     if result is not None:
-        if turns.answer.strip() and turns.question:  # the closing statement
+        if hearing.is_answer(turns.answer) and turns.question:  # the closing statement
             await _coach(ws, case, turns, turns.question, turns.answer.strip())
         await asyncio.gather(*turns.tasks, return_exceptions=True)
         if turns.coaching:

@@ -6,6 +6,7 @@ import { RequireAuth } from './auth'
 
 // Each route is a self-contained lazy chunk. Screens live in src/screens/<name>/.
 const SignIn = lazy(() => import('./screens/auth/SignIn').then((m) => ({ default: m.SignIn })))
+const MyCases = lazy(() => import('./screens/cases/MyCases').then((m) => ({ default: m.MyCases })))
 const Start = lazy(() => import('./screens/start/Start').then((m) => ({ default: m.Start })))
 const Upload = lazy(() => import('./screens/upload/Upload').then((m) => ({ default: m.Upload })))
 const Summary = lazy(() => import('./screens/summary/Summary').then((m) => ({ default: m.Summary })))
@@ -29,6 +30,7 @@ export const router = createBrowserRouter([
       {
         element: <RequireAuth />,
         children: [
+          { path: 'cases', element: <MyCases /> },
           { path: 'start', element: <Start /> },
           { path: 'case/:caseId/upload', element: <Upload /> },
           { path: 'case/:caseId/summary', element: <Summary /> },

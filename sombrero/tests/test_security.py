@@ -80,3 +80,21 @@ def test_hearing_prompt_leaves_out_identifying_details():
     for secret in ("Lakshmi", "P/161100/01", "CLI/2026/1", "Sri Sai"):
         assert secret not in text
     assert "Star Health" in text
+
+
+def test_analyses_are_capped_per_user_per_day(client, monkeypatch):
+    from kavach.routers import analysis
+
+    monkeypatch.setenv("ANALYSES_PER_DAY", "2")
+    get_settings.cache_clear()
+    monkeypatch.setattr(analysis, "run_case", lambda case_id: None)
+    store._quota.clear()
+    case_id = _new_case(client)
+    client.post(f"/cases/{case_id}/documents", files={"file": ("letter.txt", b"rejected")})
+    for _ in range(2):
+        assert client.post(f"/cases/{case_id}/analyse").status_code == 202
+        case = store.load_case(case_id)
+        case.status = CaseStatus.COLLECTING
+        store.save_case(case)
+    third = client.post(f"/cases/{case_id}/analyse")
+    assert third.status_code == 429 and "2 analyses a day" in third.json()["detail"]

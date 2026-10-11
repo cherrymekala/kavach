@@ -48,3 +48,17 @@ def test_hearing_socket_rejects_missing_token(monkeypatch):
 def test_unknown_facts_are_marked_so_the_model_does_not_invent_them():
     text = hearing.instructions(_case("IN"))
     assert '"policy_start": "unknown"' in text and "Never state or assume" in text
+
+
+def test_speech_recognition_is_told_which_languages_to_expect():
+    assert hearing.speech_languages(_case("IN", "hi")) == ["en-IN", "hi-IN"]
+    assert hearing.speech_languages(_case("SG", "zh")) == ["en-SG", "cmn-CN"]
+    assert hearing.speech_languages(_case("IN")) == ["en-IN"]
+    config = hearing.live_config(_case("IN", "ta"))
+    assert config.input_audio_transcription.language_codes == ["en-IN", "ta-IN"]
+
+
+def test_fillers_are_not_scored_as_answers():
+    assert not hearing.is_answer("Yeah, sure.")
+    assert not hearing.is_answer("  um  ")
+    assert hearing.is_answer("I was diagnosed in July 2026.")

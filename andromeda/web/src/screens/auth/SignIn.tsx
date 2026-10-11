@@ -37,7 +37,7 @@ export function SignIn() {
     try {
       await confirmation.confirm(code)
       verifierRef.current?.clear()
-      navigate('/start')
+      navigate('/cases')
     } catch (e) {
       throw new Error(mapAuthError(e))
     }
@@ -48,7 +48,7 @@ export function SignIn() {
   }
 
   if (user) {
-    return <Navigate to="/start" replace />
+    return <Navigate to="/cases" replace />
   }
 
   return (

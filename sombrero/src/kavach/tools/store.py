@@ -59,3 +59,29 @@ def list_cases(owner: str) -> list[Case]:
     return sorted(
         cases, key=lambda c: c.created_at.isoformat() if c.created_at else "", reverse=True
     )
+
+
+_quota: dict[str, int] = {}
+
+
+def take_quota(key: str, limit: int) -> bool:
+    """Atomically count one use of `key`; False once `limit` is reached."""
+    if _local():
+        if _quota.get(key, 0) >= limit:
+            return False
+        _quota[key] = _quota.get(key, 0) + 1
+        return True
+    from google.cloud import firestore
+
+    db = _db()
+    ref = db.collection("quotas").document(key)
+
+    @firestore.transactional
+    def bump(tx) -> bool:
+        used = (ref.get(transaction=tx).to_dict() or {}).get("used", 0)
+        if used >= limit:
+            return False
+        tx.set(ref, {"used": used + 1})
+        return True
+
+    return bump(db.transaction())
