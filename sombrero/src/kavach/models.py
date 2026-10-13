@@ -165,6 +165,7 @@ class Case(BaseModel):
     id: str
     owner: str
     created_at: datetime | None = None
+    title: str | None = None
     country: str = "IN"
     language: str = "en"
     status: CaseStatus = CaseStatus.COLLECTING
@@ -186,6 +187,7 @@ class CaseSummary(BaseModel):
 
     id: str
     created_at: datetime | None
+    title: str | None
     country: str
     language: str
     status: CaseStatus
@@ -204,6 +206,7 @@ class CaseSummary(BaseModel):
         return cls(
             id=case.id,
             created_at=case.created_at,
+            title=case.title,
             country=case.country,
             language=case.language,
             status=case.status,
@@ -234,6 +237,22 @@ class PackInfo(BaseModel):
     regulator: str
     ladder: list[LadderStep]
     limitation: dict | None = None
+
+
+class TitleRequest(BaseModel):
+    title: str = Field(min_length=1, max_length=120)
+
+
+class NoteRequest(BaseModel):
+    text: str = Field(min_length=1, max_length=4000)
+
+
+class AskRequest(BaseModel):
+    question: str = Field(min_length=1, max_length=1000)
+
+
+class AskAnswer(BaseModel):
+    answer: str
 
 
 class CreateCase(BaseModel):

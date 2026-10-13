@@ -48,6 +48,7 @@ dist/
 .venv/
 venv/
 env/
+.uploads/
 .pytest_cache/
 .ruff_cache/
 .mypy_cache/

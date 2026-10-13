@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     rulings_engine: str = ""  # Vertex AI Search engine + data store id, e.g. kavach-rulings
     auth_disabled: bool = False
     analyses_per_day: int = 10  # per user; protects Gemini/Vertex credits on the public demo
+    questions_per_day: int = 50  # per user; caps /ask spend
     # Comma-separated browser origins allowed to call the API.
     cors_origins: str = (
         "http://localhost:5173,http://localhost:3000,"

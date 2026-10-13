@@ -1,13 +1,12 @@
 // oxlint-disable react/only-export-components -- a router file exports config, not components
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import { App } from './App'
 import { RequireAuth } from './auth'
+import { Workspace } from './screens/workspace/Workspace'
 
-// Each route is a self-contained lazy chunk. Screens live in src/screens/<name>/.
+// Legacy case screens (kept for dev previews only). Screens live in src/screens/<name>/.
 const SignIn = lazy(() => import('./screens/auth/SignIn').then((m) => ({ default: m.SignIn })))
-const MyCases = lazy(() => import('./screens/cases/MyCases').then((m) => ({ default: m.MyCases })))
-const Start = lazy(() => import('./screens/start/Start').then((m) => ({ default: m.Start })))
 const Upload = lazy(() => import('./screens/upload/Upload').then((m) => ({ default: m.Upload })))
 const Summary = lazy(() => import('./screens/summary/Summary').then((m) => ({ default: m.Summary })))
 const Chances = lazy(() => import('./screens/chances/Chances').then((m) => ({ default: m.Chances })))
@@ -41,24 +40,21 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    children: [{ index: true, element: <SignIn /> }, ...devRoutes],
+  },
+  {
+    element: <RequireAuth />,
     children: [
-      { index: true, element: <SignIn /> },
+      { path: '/app', element: <Workspace /> },
+      { path: '/case/:caseId', element: <Workspace /> },
       {
-        element: <RequireAuth />,
-        children: [
-          { path: 'cases', element: <MyCases /> },
-          { path: 'start', element: <Start /> },
-          { path: 'case/:caseId/upload', element: <Upload /> },
-          { path: 'case/:caseId/summary', element: <Summary /> },
-          { path: 'case/:caseId/chances', element: <Chances /> },
-          { path: 'case/:caseId/letter', element: <Letter /> },
-          { path: 'case/:caseId/filing', element: <Filing /> },
-          { path: 'case/:caseId/hearing', element: <Hearing /> },
-          { path: 'case/:caseId/tracker', element: <Tracker /> },
-          { path: 'case/:caseId/outcome', element: <Outcome /> },
-        ],
+        path: '/case/:caseId/hearing',
+        element: (
+          <Suspense fallback={<div className="py-16 text-center text-sm text-muted-foreground">Loading…</div>}>
+            <Hearing />
+          </Suspense>
+        ),
       },
-      ...devRoutes,
     ],
   },
 ])

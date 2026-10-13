@@ -45,3 +45,14 @@ def delete(uri: str) -> None:
 
     bucket, _, name = uri[5:].partition("/")
     storage.Client(project=s.gcp_project).bucket(bucket).blob(name).delete()
+
+
+def read(uri: str) -> bytes:
+    """Return the raw bytes of a stored document (for previews)."""
+    s = get_settings()
+    if not uri.startswith("gs://"):
+        return Path(uri).read_bytes()
+    from google.cloud import storage
+
+    bucket, _, name = uri[5:].partition("/")
+    return storage.Client(project=s.gcp_project).bucket(bucket).blob(name).download_as_bytes()

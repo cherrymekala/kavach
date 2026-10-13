@@ -6,10 +6,10 @@
  * border-border, …) AND our brand aliases (bg-brand, bg-mint, …) both work and
  * both re-theme when <html data-theme="dark"> flips.
  *
- * Direction — "the advocate's desk": warm paper, deep indigo ink, a confident
- * indigo brand (trust + authority), gold for hope/recovery and deadlines, and a
+ * Direction — "the advocate's desk": warm paper, near-black ink, a confident
+ * evergreen brand (trust + authority), gold for hope/recovery and deadlines, and a
  * quiet green reserved for success. Chosen for a patient-facing legal-aid tool —
- * calm and human, not the teal "health-tech" default.
+ * calm and human, no indigo/violet, no gradients.
  * ------------------------------------------------------------------------- */
 
 @import "tailwindcss";
@@ -20,41 +20,46 @@
 
 :root {
   /* shadcn semantic layer (light) */
-  --background: #f4f0e8; /* warm paper — page */
-  --foreground: #1c2433; /* indigo ink */
-  --card: #fffdf8; /* surface */
-  --card-foreground: #1c2433;
-  --popover: #fffdf8;
-  --popover-foreground: #1c2433;
-  --primary: #334173; /* brand indigo — trust */
+  --background: #f6f4ee; /* warm paper — page */
+  --foreground: #21201c; /* warm near-black ink */
+  --card: #fdfcf8; /* surface */
+  --card-foreground: #21201c;
+  --popover: #fdfcf8;
+  --popover-foreground: #21201c;
+  --primary: #1d5c4d; /* deep evergreen — trust */
   --primary-foreground: #ffffff;
-  --secondary: #ece8dd; /* chip */
-  --secondary-foreground: #1c2433;
-  --muted: #ece8dd; /* subtle fill */
-  --muted-foreground: #6b6a63; /* muted text */
-  --accent: #e6e9f2; /* brand-soft */
-  --accent-foreground: #334173;
+  --secondary: #ebe8dd; /* chip */
+  --secondary-foreground: #21201c;
+  --muted: #ebe8dd; /* subtle fill */
+  --muted-foreground: #6e6c62; /* muted text */
+  --accent: #e6ece7; /* evergreen-soft */
+  --accent-foreground: #1d5c4d;
   --destructive: #b23a33; /* red */
   --destructive-foreground: #ffffff;
-  --border: #ddd6c8; /* line */
-  --input: #ddd6c8;
-  --ring: #9c6a0f; /* gold (focus) */
+  --border: #dcd8cb; /* line */
+  --input: #dcd8cb;
+  --ring: #1d5c4d; /* evergreen (focus) */
 
   /* brand aliases */
-  --page: #f4f0e8;
-  --surface: #fffdf8;
-  --ink: #1c2433;
-  --line: #ddd6c8;
-  --chip: #ece8dd;
-  --brand: #334173;
-  --brand-soft: #e6e9f2;
-  --mint: #2b7d54; /* success only */
-  --amber: #9c6a0f; /* hope / deadline */
+  --page: #f6f4ee;
+  --surface: #fdfcf8;
+  --ink: #21201c;
+  --line: #dcd8cb;
+  --chip: #ebe8dd;
+  --brand: #1d5c4d;
+  --brand-soft: #e6ece7;
+  --mint: #2f7d58; /* success only */
+  --amber: #a8691f; /* hope / deadline */
   --red: #b23a33;
+
+  /* workspace surfaces */
+  --rail: #232320; /* docket spine (deep charcoal) */
+  --rail-foreground: #e9e6dc;
+  --rule: #e3ded1; /* hairline between document sections */
 
   --radius: 1rem; /* base; rounded-lg = 16px, rounded-md = 14px */
 
-  --float-shadow: 0 30px 60px -20px rgb(28 36 51 / 0.35);
+  --float-shadow: 0 30px 60px -20px rgb(28 28 24 / 0.35);
   --sheet-shadow: 0 -20px 40px -20px rgb(0 0 0 / 0.4);
 
   --font-sans: "Figtree", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Telugu", system-ui, sans-serif;
@@ -63,36 +68,40 @@
 }
 
 [data-theme="dark"] {
-  --background: #141a28; /* deep indigo-navy */
-  --foreground: #ede9e0; /* warm off-white ink */
-  --card: #1c2333;
-  --card-foreground: #ede9e0;
-  --popover: #1c2333;
-  --popover-foreground: #ede9e0;
-  --primary: #8b9bd6;
-  --primary-foreground: #141a28;
-  --secondary: #20293c;
-  --secondary-foreground: #ede9e0;
-  --muted: #20293c;
-  --muted-foreground: #94a0b5;
-  --accent: #26304a;
-  --accent-foreground: #aab6e0;
+  --background: #161614; /* warm near-black */
+  --foreground: #ece9df; /* warm off-white ink */
+  --card: #1f1f1c;
+  --card-foreground: #ece9df;
+  --popover: #1f1f1c;
+  --popover-foreground: #ece9df;
+  --primary: #57a183;
+  --primary-foreground: #101310;
+  --secondary: #262723;
+  --secondary-foreground: #ece9df;
+  --muted: #262723;
+  --muted-foreground: #9c9a90;
+  --accent: #24352d;
+  --accent-foreground: #a9d6c3;
   --destructive: #ef7a70;
-  --destructive-foreground: #141a28;
-  --border: #2a3550;
-  --input: #2a3550;
-  --ring: #d9a441;
+  --destructive-foreground: #161614;
+  --border: #2f2f2b;
+  --input: #2f2f2b;
+  --ring: #57a183;
 
-  --page: #141a28;
-  --surface: #1c2333;
-  --ink: #ede9e0;
-  --line: #2a3550;
-  --chip: #20293c;
-  --brand: #8b9bd6;
-  --brand-soft: #26304a;
+  --page: #161614;
+  --surface: #1f1f1c;
+  --ink: #ece9df;
+  --line: #2f2f2b;
+  --chip: #262723;
+  --brand: #57a183;
+  --brand-soft: #24352d;
   --mint: #5fd0a0;
-  --amber: #e0b05a;
+  --amber: #d9a441;
   --red: #ef7a70;
+
+  --rail: #101010;
+  --rail-foreground: #d8d5cb;
+  --rule: #292926;
 
   --float-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.7);
 
@@ -132,6 +141,11 @@
   --color-mint: var(--mint);
   --color-amber: var(--amber);
   --color-red: var(--red);
+
+  /* workspace surfaces */
+  --color-rail: var(--rail);
+  --color-rail-foreground: var(--rail-foreground);
+  --color-rule: var(--rule);
 
   /* fonts */
   --font-sans: var(--font-sans);

@@ -4,12 +4,17 @@ Plain Python so each step is easy to debug; `analyse` has no storage dependency 
 whirlpool evals run exactly the same steps as the API.
 """
 
+import logging
 from collections.abc import Callable
 from dataclasses import dataclass
+from datetime import UTC, datetime
 
-from ..models import Assessment, CaseFacts, CaseStatus, DocType, Document
+from ..config import get_settings
+from ..models import Assessment, CaseEvent, CaseFacts, CaseStatus, DocType, Document
 from ..tools import rulings, store
 from . import checker, code_decoder, filing, intake, policy_rules, strategist
+
+log = logging.getLogger("kavach.orchestrator")
 
 NO_REJECTION = (
     "We couldn't find a claim rejection letter in your files. "
@@ -77,6 +82,9 @@ def run_case(case_id: str) -> None:
         result = analyse(case.documents, case.country, progress)
         case.facts, case.assessment = result.facts, result.assessment
 
+        if not case.title and case.facts:
+            case.title = _default_title(case.facts)
+
         progress("Writing your appeal")
         case.letter = filing.draft_letter(case)
 
@@ -84,8 +92,22 @@ def run_case(case_id: str) -> None:
         progress(None)
     except NotARejection as exc:
         case.status = CaseStatus.COLLECTING
-        progress(str(exc))
-    except Exception:
+        case.progress = str(exc)
+        case.events.append(CaseEvent(at=datetime.now(UTC), kind="analysis_failed", text=str(exc)))
+        store.save_case(case)
+    except Exception as exc:
+        log.exception("Analysis failed for case %s", case_id)
         case.status = CaseStatus.COLLECTING
-        progress("We couldn't finish the analysis. Please try again.")
+        msg = "We couldn't finish the analysis. Please try again."
+        # In local dev surface the real reason so it's self-serve to debug; keep prod copy clean.
+        if get_settings().auth_disabled and str(exc):
+            msg = f"{msg}\n{exc!s}"
+        case.progress = msg
+        case.events.append(CaseEvent(at=datetime.now(UTC), kind="analysis_failed", text=msg))
+        store.save_case(case)
         raise
+
+
+def _default_title(facts: CaseFacts) -> str:
+    parts = [p for p in (facts.insurer, facts.diagnosis) if p]
+    return " · ".join(parts) if parts else "Claim"
