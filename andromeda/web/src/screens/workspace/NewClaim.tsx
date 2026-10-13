@@ -7,7 +7,8 @@ import { Button, Input } from '@/components'
 import { apiFetch } from '@/api/client'
 import { caseKey, useCreateCase } from '@/api/hooks'
 import { useAuth } from '@/auth'
-import { countryFromPhone } from '@/lib/country'
+import { COUNTRIES, countryFromPhone, type CountryCode } from '@/lib/country'
+import { cn } from '@/lib/cn'
 
 /** The "new claim" composer shown when no case is selected — creates a case on first action. */
 export function NewClaim() {
@@ -17,6 +18,7 @@ export function NewClaim() {
   const createCase = useCreateCase()
   const queryClient = useQueryClient()
 
+  const [country, setCountry] = useState<CountryCode>(countryFromPhone(user?.phoneNumber))
   const [text, setText] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -26,10 +28,7 @@ export function NewClaim() {
     setError(null)
     setBusy(true)
     try {
-      const c = await createCase.mutateAsync({
-        country: countryFromPhone(user?.phoneNumber),
-        language: i18n.language,
-      })
+      const c = await createCase.mutateAsync({ country, language: i18n.language })
       await run(c.id)
       // Drop the cached (empty) case so the dossier fetches the note/files we just added.
       queryClient.removeQueries({ queryKey: caseKey(c.id) })
@@ -71,6 +70,23 @@ export function NewClaim() {
       <div>
         <h2 className="font-display text-2xl font-bold tracking-tight">{t('workspace.composer.heroTitle')}</h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">{t('workspace.composer.heroSub')}</p>
+      </div>
+
+      <div className="flex items-center gap-1 rounded-full border border-line bg-surface p-0.5" role="group" aria-label="Country">
+        {COUNTRIES.map((c) => (
+          <button
+            key={c.code}
+            type="button"
+            onClick={() => setCountry(c.code)}
+            aria-pressed={country === c.code}
+            className={cn(
+              'rounded-full px-3 py-1 text-sm font-semibold',
+              country === c.code ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground',
+            )}
+          >
+            {c.name}
+          </button>
+        ))}
       </div>
 
       <form

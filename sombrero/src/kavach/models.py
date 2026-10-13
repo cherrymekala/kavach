@@ -240,15 +240,15 @@ class PackInfo(BaseModel):
 
 
 class TitleRequest(BaseModel):
-    title: str
+    title: str = Field(min_length=1, max_length=120)
 
 
 class NoteRequest(BaseModel):
-    text: str
+    text: str = Field(min_length=1, max_length=4000)
 
 
 class AskRequest(BaseModel):
-    question: str
+    question: str = Field(min_length=1, max_length=1000)
 
 
 class AskAnswer(BaseModel):

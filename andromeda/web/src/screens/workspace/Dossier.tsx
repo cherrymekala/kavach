@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from '@tanstack/react-query'
-import { AlertTriangleIcon, XIcon } from 'lucide-react'
+import { AlertTriangleIcon, MicIcon, XIcon } from 'lucide-react'
 import { Button, ErrorState, LanguageSwitcher, SourceKindIcon, Spinner, ThemeToggle } from '@/components'
 import { apiBlob } from '@/api/client'
 import { caseKey, useAnalyse, useCase, useDeleteDocument } from '@/api/hooks'
@@ -139,6 +139,7 @@ function QaFeed({ entries }: { entries: CaseEvent[] }) {
 
 export function Dossier() {
   const { caseId } = useParams()
+  const navigate = useNavigate()
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const { data: kase, error } = useCase(caseId)
@@ -249,6 +250,20 @@ export function Dossier() {
             {current?.letter ? <LetterPanel caseId={caseId} kase={current} /> : null}
             {hasAssessment && current ? <FilingPanel caseId={caseId} kase={current} /> : null}
             {hasAssessment && current ? <TrackerPanel caseId={caseId} kase={current} /> : null}
+
+            {hasAssessment && status !== 'resolved' ? (
+              <section className="flex flex-wrap items-center justify-between gap-3 border-t border-rule pt-4">
+                <div className="min-w-0">
+                  <h2 className="font-display text-base font-bold">{t('hearing.title')}</h2>
+                  <p className="text-sm text-muted-foreground">{t('hearing.introSub')}</p>
+                </div>
+                <Button variant="outline" onClick={() => navigate(`/case/${caseId}/hearing`)}>
+                  <MicIcon className="size-4" aria-hidden />
+                  {t('hearing.start')}
+                </Button>
+              </section>
+            ) : null}
+
             {status === 'resolved' && current ? <OutcomePanel caseId={caseId} kase={current} /> : null}
 
             <QaFeed entries={qa} />

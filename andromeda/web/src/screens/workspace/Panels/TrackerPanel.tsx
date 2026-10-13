@@ -51,8 +51,22 @@ const EVENT_TONE: Record<string, string> = {
   escalated: 'bg-amber/15 text-amber',
 }
 
+const TRACKER_KINDS = new Set([
+  'filed',
+  'reply',
+  'escalated',
+  'reminder',
+  'warning',
+  'resolved',
+  'rehearsal',
+  'documents_deleted',
+])
+
 function History({ events }: { events: CaseEvent[] }) {
-  const items = [...events].sort((a, b) => String(b.at).localeCompare(String(a.at)))
+  const items = events
+    .filter((e) => TRACKER_KINDS.has(e.kind))
+    .sort((a, b) => String(b.at).localeCompare(String(a.at)))
+  if (!items.length) return null
   return (
     <ol className="flex flex-col gap-4">
       {items.map((e, i) => {

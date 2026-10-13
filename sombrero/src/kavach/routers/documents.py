@@ -60,12 +60,15 @@ def get_file(case_id: str, doc_id: str, uid: str = Depends(current_user)) -> Res
     case = store.load_case(case_id)
     if not case or case.owner != uid:
         raise HTTPException(404, "Case not found.")
+    if case.documents_deleted_at:
+        raise HTTPException(410, "These documents were deleted.")
     doc = next((d for d in case.documents if d.id == doc_id), None)
     if not doc:
         raise HTTPException(404, "Document not found.")
     return Response(
         content=files.read(doc.gcs_uri),
         media_type=_MIME.get(Path(doc.filename).suffix.lower(), "application/octet-stream"),
+        headers={"X-Content-Type-Options": "nosniff"},
     )
 
 

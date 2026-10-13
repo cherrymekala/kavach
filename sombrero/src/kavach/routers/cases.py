@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends, HTTPException
 
 from ..agents import assistant
 from ..auth import current_user
+from ..config import get_settings
 from ..models import (
     AskAnswer,
     AskRequest,
@@ -62,7 +63,10 @@ def set_title(case_id: str, body: TitleRequest, uid: str = Depends(current_user)
     case = store.load_case(case_id)
     if not case or case.owner != uid:
         raise HTTPException(404, "Case not found.")
-    case.title = body.title.strip()
+    title = body.title.strip()
+    if not title:
+        raise HTTPException(400, "Title can't be empty.")
+    case.title = title
     store.save_case(case)
     return case
 
@@ -73,7 +77,10 @@ def add_note(case_id: str, body: NoteRequest, uid: str = Depends(current_user)) 
     case = store.load_case(case_id)
     if not case or case.owner != uid:
         raise HTTPException(404, "Case not found.")
-    case.events.append(CaseEvent(at=datetime.now(UTC), kind="message", text=body.text.strip()))
+    text = body.text.strip()
+    if not text:
+        raise HTTPException(400, "The note can't be empty.")
+    case.events.append(CaseEvent(at=datetime.now(UTC), kind="message", text=text))
     store.save_case(case)
     return case
 
@@ -86,9 +93,15 @@ def ask(case_id: str, body: AskRequest, uid: str = Depends(current_user)) -> Ask
         raise HTTPException(404, "Case not found.")
     if not case.assessment:
         raise HTTPException(409, "Run the analysis before asking about the case.")
-    answer = assistant.answer(case, body.question.strip())
+    question = body.question.strip()
+    if not question:
+        raise HTTPException(400, "Ask a question first.")
+    limit = get_settings().questions_per_day
+    if not store.take_quota(f"ask-{uid}-{datetime.now(UTC):%Y%m%d}", limit):
+        raise HTTPException(429, f"You can ask up to {limit} questions a day.")
+    answer = assistant.answer(case, question)
     now = datetime.now(UTC)
-    case.events.append(CaseEvent(at=now, kind="message", text=body.question.strip()))
+    case.events.append(CaseEvent(at=now, kind="message", text=question))
     case.events.append(CaseEvent(at=now, kind="ask", text=answer))
     store.save_case(case)
     return AskAnswer(answer=answer)

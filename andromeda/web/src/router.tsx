@@ -1,5 +1,5 @@
 // oxlint-disable react/only-export-components -- a router file exports config, not components
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 import { createBrowserRouter } from 'react-router-dom'
 import { App } from './App'
 import { RequireAuth } from './auth'
@@ -47,6 +47,14 @@ export const router = createBrowserRouter([
     children: [
       { path: '/app', element: <Workspace /> },
       { path: '/case/:caseId', element: <Workspace /> },
+      {
+        path: '/case/:caseId/hearing',
+        element: (
+          <Suspense fallback={<div className="py-16 text-center text-sm text-muted-foreground">Loading…</div>}>
+            <Hearing />
+          </Suspense>
+        ),
+      },
     ],
   },
 ])

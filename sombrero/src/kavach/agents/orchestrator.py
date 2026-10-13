@@ -76,8 +76,6 @@ def run_case(case_id: str) -> None:
 
     def progress(text: str | None) -> None:
         case.progress = text
-        if text:
-            case.events.append(CaseEvent(at=datetime.now(UTC), kind="progress", text=text))
         store.save_case(case)
 
     try:
@@ -95,7 +93,7 @@ def run_case(case_id: str) -> None:
     except NotARejection as exc:
         case.status = CaseStatus.COLLECTING
         case.progress = str(exc)
-        case.events.append(CaseEvent(at=datetime.now(UTC), kind="warning", text=str(exc)))
+        case.events.append(CaseEvent(at=datetime.now(UTC), kind="analysis_failed", text=str(exc)))
         store.save_case(case)
     except Exception as exc:
         log.exception("Analysis failed for case %s", case_id)
@@ -105,7 +103,7 @@ def run_case(case_id: str) -> None:
         if get_settings().auth_disabled and str(exc):
             msg = f"{msg}\n{exc!s}"
         case.progress = msg
-        case.events.append(CaseEvent(at=datetime.now(UTC), kind="warning", text=msg))
+        case.events.append(CaseEvent(at=datetime.now(UTC), kind="analysis_failed", text=msg))
         store.save_case(case)
         raise
 
