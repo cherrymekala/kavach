@@ -2,7 +2,7 @@ import re
 import uuid
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, HTTPException, Response, UploadFile
 
 from ..auth import current_user
 from ..models import CaseStatus, Document
@@ -13,6 +13,15 @@ router = APIRouter(prefix="/cases/{case_id}/documents", tags=["documents"])
 MAX_BYTES = 20 * 1024 * 1024
 MAX_DOCUMENTS = 15
 ALLOWED = {".pdf", ".jpg", ".jpeg", ".png", ".webp", ".txt"}
+
+_MIME = {
+    ".pdf": "application/pdf",
+    ".jpg": "image/jpeg",
+    ".jpeg": "image/jpeg",
+    ".png": "image/png",
+    ".webp": "image/webp",
+    ".txt": "text/plain",
+}
 
 
 def safe_name(name: str | None) -> str:
@@ -43,6 +52,21 @@ async def upload(case_id: str, file: UploadFile, uid: str = Depends(current_user
     case.documents.append(doc)
     store.save_case(case)
     return doc
+
+
+@router.get("/{doc_id}/file")
+def get_file(case_id: str, doc_id: str, uid: str = Depends(current_user)) -> Response:
+    """Serve a document's bytes for an inline preview."""
+    case = store.load_case(case_id)
+    if not case or case.owner != uid:
+        raise HTTPException(404, "Case not found.")
+    doc = next((d for d in case.documents if d.id == doc_id), None)
+    if not doc:
+        raise HTTPException(404, "Document not found.")
+    return Response(
+        content=files.read(doc.gcs_uri),
+        media_type=_MIME.get(Path(doc.filename).suffix.lower(), "application/octet-stream"),
+    )
 
 
 @router.delete("/{doc_id}", status_code=204)

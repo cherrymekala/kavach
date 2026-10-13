@@ -21,3 +21,26 @@ export type RejectionCategory = components['schemas']['RejectionCategory']
 export type CaseSummary = components['schemas']['CaseSummary']
 export type PackInfo = components['schemas']['PackInfo']
 export type LadderStep = components['schemas']['LadderStep']
+
+// Endpoints added after the last openapi-typescript run — regenerate schema.d.ts
+// from /openapi.json once the backend with `title` / `ask` / `notes` deploys.
+export interface AskAnswer {
+  answer: string
+}
+
+export interface AskRequest {
+  question: string
+}
+
+export interface NoteRequest {
+  text: string
+}
+
+export interface TitleRequest {
+  title: string
+}
+
+/** A case (or summary) carrying the new `title` field. */
+export interface WithTitle {
+  title: string | null
+}

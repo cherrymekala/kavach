@@ -369,5 +369,39 @@
       "medium": "Medium case",
       "weak": "Weak case"
     }
+  },
+  "workspace": {
+    "newCase": "New case",
+    "yourCases": "Your cases",
+    "untitled": "Untitled claim",
+    "noCases": "No cases yet",
+    "loadError": "Couldn't reach Kavach",
+    "history": "History",
+    "status": {
+      "collecting": "Collecting",
+      "analysing": "Analysing",
+      "ready": "Ready",
+      "filed": "Filed",
+      "escalated": "Next step ready",
+      "resolved": "Resolved"
+    },
+    "ask": {
+      "title": "Ask about this case",
+      "placeholder": "E.g. why was my claim rejected?",
+      "send": "Send",
+      "thinking": "Thinking…",
+      "error": "Could not get an answer."
+    },
+    "composer": {
+      "heroTitle": "Fight the rejection",
+      "heroSub": "Attach your rejection letter, policy and discharge summary — or describe what happened.",
+      "placeholder": "Ask about your case, or describe what happened…",
+      "attach": "Attach a file",
+      "mic": "Voice input is coming soon",
+      "send": "Send"
+    },
+    "files": "Files",
+    "you": "You",
+    "conversation": "Conversation"
   }
 }

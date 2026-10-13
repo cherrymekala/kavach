@@ -1,6 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { apiFetch } from './client'
 import type {
+  AskAnswer,
+  AskRequest,
   Case,
   CaseSummary,
   Complainant,
@@ -10,8 +12,10 @@ import type {
   FilingPack,
   Letter,
   LetterRequest,
+  NoteRequest,
   PackInfo,
   ReplyRequest,
+  TitleRequest,
 } from './types'
 
 export function caseKey(id?: string): unknown[] {
@@ -45,6 +49,8 @@ export function useCase(id: string | undefined) {
     queryKey: caseKey(id),
     queryFn: () => apiFetch<Case>(`/cases/${id}`),
     enabled: Boolean(id),
+    // Local dev has no Firestore, so poll while the pipeline runs.
+    refetchInterval: (query) => (query.state.data?.status === 'analysing' ? 1500 : false),
   })
 }
 
@@ -133,5 +139,35 @@ export function usePack(country: string | undefined) {
     queryFn: () => apiFetch<PackInfo>(`/packs/${country}`),
     enabled: Boolean(country),
     staleTime: Infinity,
+  })
+}
+
+// ── Case title, notes & questions ─────────────────────────────────────────
+
+export function useSetTitle(caseId: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (body: TitleRequest) =>
+      apiFetch<Case>(`/cases/${caseId}/title`, { ...jsonBody(body), method: 'PUT' }),
+    onSuccess: (c) => {
+      qc.setQueryData(caseKey(caseId), c)
+      qc.invalidateQueries({ queryKey: ['cases'] })
+    },
+  })
+}
+
+export function useAddNote(caseId: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (body: NoteRequest) => apiFetch<Case>(`/cases/${caseId}/notes`, jsonBody(body)),
+    onSuccess: (c) => qc.setQueryData(caseKey(caseId), c),
+  })
+}
+
+export function useAsk(caseId: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (body: AskRequest) => apiFetch<AskAnswer>(`/cases/${caseId}/ask`, jsonBody(body)),
+    onSuccess: () => qc.invalidateQueries({ queryKey: caseKey(caseId) }),
   })
 }

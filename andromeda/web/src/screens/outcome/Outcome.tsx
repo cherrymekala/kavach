@@ -48,7 +48,7 @@ export function Outcome() {
     setError(null)
     try {
       await deleteCase.mutateAsync(caseId ?? '')
-      navigate('/start', { replace: true })
+      navigate('/app', { replace: true })
     } catch (e) {
       setError(e instanceof Error ? e.message : t('outcome.errorDelete'))
       setConfirmOpen(false)
@@ -99,7 +99,7 @@ export function Outcome() {
       </section>
 
       <FooterCTA
-        primary={{ label: t('outcome.cta'), onClick: () => navigate('/start') }}
+        primary={{ label: t('outcome.cta'), onClick: () => navigate('/app') }}
       />
 
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
