@@ -32,6 +32,10 @@ class Settings(BaseSettings):
         "https://kavach-510312.web.app,https://kavach-510312.firebaseapp.com"
     )
     packs_dir: str = "packs"
+    # Phone line (Twilio). The auth token signs webhooks and our media-stream parameters.
+    twilio_account_sid: str = ""
+    twilio_auth_token: str = ""
+    public_url: str = ""  # e.g. https://sombrero-....run.app; Twilio signs this exact URL
 
 
 @lru_cache
