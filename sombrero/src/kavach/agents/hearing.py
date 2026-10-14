@@ -160,7 +160,7 @@ SPEECH_CODES = {
 
 
 def speech_languages(case: Case) -> list[str]:
-    english = "en-SG" if case.country == "SG" else "en-IN"
+    english = {"SG": "en-SG", "MY": "en-MY"}.get(case.country, "en-IN")
     local = SPEECH_CODES.get(case.language)
     return [english, local] if local else [english]
 

@@ -9,6 +9,8 @@ sombrero/.venv/bin/python whirlpool/run_evals.py # all cases, or pass case ids
 
 Scored today (intake agent): document types, insurer, TPA, policy start, admission and first-diagnosis dates, claim amount, currency, rejection code, rejection category, cited clause.
 
+`discharge/` holds pre-discharge cases (policy, policy schedule, draft discharge summary, interim bill); `run_evals.py --discharge` checks the verdict and that the expected risks are found.
+
 Later: strength verdict (`expected.strength`, strategist) and checker pass rate.
 
 The free AI Studio tier allows 250k input tokens per minute, and each policy is about 50k tokens, so the runner waits and retries on 429 errors. Run before every demo build. Target: 10 cases by week 1, 20 by week 2.

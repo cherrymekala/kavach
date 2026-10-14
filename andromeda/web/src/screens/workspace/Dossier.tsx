@@ -7,12 +7,13 @@ import { Button, ErrorState, LanguageSwitcher, SourceKindIcon, Spinner, ThemeTog
 import { apiBlob } from '@/api/client'
 import { caseKey, useAnalyse, useCase, useDeleteDocument } from '@/api/hooks'
 import { useLiveCase } from '@/api/live'
-import type { Case, CaseEvent, Document, WithTitle } from '@/api/types'
+import type { Case, CaseEvent, Document, WithDischarge, WithTitle } from '@/api/types'
 import { cn } from '@/lib/cn'
 import { Composer } from './Composer'
 import { NewClaim } from './NewClaim'
 import { AnalysingPanel } from './Panels/AnalysingPanel'
 import { ChancesPanel } from './Panels/ChancesPanel'
+import { DischargePanel } from './Panels/DischargePanel'
 import { FilingPanel } from './Panels/FilingPanel'
 import { LetterPanel } from './Panels/LetterPanel'
 import { OutcomePanel } from './Panels/OutcomePanel'
@@ -162,7 +163,7 @@ export function Dossier() {
     )
   }
 
-  const current = ((live.data ?? kase) as (Case & WithTitle) | undefined) ?? undefined
+  const current = ((live.data ?? kase) as (Case & WithTitle & WithDischarge) | undefined) ?? undefined
   if (!current) {
     if (error) {
       return (
@@ -182,7 +183,8 @@ export function Dossier() {
   const docs = current?.documents ?? []
   const title = current?.title || current?.facts?.insurer || t('workspace.untitled')
   const hasAssessment = Boolean(current?.assessment)
-  const hasReport = Boolean(current?.facts)
+  const discharge = current?.kind === 'pre_discharge'
+  const hasReport = Boolean(current?.facts) && !discharge
   const failed = status === 'collecting' && Boolean(current?.progress)
   const qa = (current?.events ?? []).filter((e) => e.kind === 'message' || e.kind === 'ask')
   const empty = status === 'collecting' && docs.length === 0 && qa.length === 0 && !failed
@@ -245,6 +247,7 @@ export function Dossier() {
 
             {status === 'analysing' && current ? <AnalysingPanel kase={current} /> : null}
 
+            {current?.discharge_check ? <DischargePanel check={current.discharge_check} /> : null}
             {hasReport && current ? <SummaryPanel kase={current} /> : null}
             {hasAssessment && current ? <ChancesPanel kase={current} /> : null}
             {current?.letter ? <LetterPanel caseId={caseId} kase={current} /> : null}

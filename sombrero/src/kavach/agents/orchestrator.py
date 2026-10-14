@@ -10,9 +10,9 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 
 from ..config import get_settings
-from ..models import Assessment, CaseEvent, CaseFacts, CaseStatus, DocType, Document
+from ..models import Assessment, CaseEvent, CaseFacts, CaseKind, CaseStatus, DocType, Document
 from ..tools import rulings, store
-from . import checker, code_decoder, filing, intake, policy_rules, strategist
+from . import checker, code_decoder, discharge, filing, intake, policy_rules, strategist
 
 log = logging.getLogger("kavach.orchestrator")
 
@@ -79,6 +79,18 @@ def run_case(case_id: str) -> None:
         store.save_case(case)
 
     try:
+        if case.kind == CaseKind.PRE_DISCHARGE:
+            case.facts, case.discharge_check = discharge.check(
+                case.documents, case.country, progress
+            )
+            if not case.title:
+                case.title = "Discharge check · " + (
+                    case.facts.hospital or case.facts.diagnosis or ""
+                )
+                case.title = case.title.rstrip(" ·")
+            case.status = CaseStatus.READY
+            progress(None)
+            return
         result = analyse(case.documents, case.country, progress)
         case.facts, case.assessment = result.facts, result.assessment
 
@@ -90,7 +102,7 @@ def run_case(case_id: str) -> None:
 
         case.status = CaseStatus.READY
         progress(None)
-    except NotARejection as exc:
+    except (NotARejection, discharge.NotEnoughDocuments) as exc:
         case.status = CaseStatus.COLLECTING
         case.progress = str(exc)
         case.events.append(CaseEvent(at=datetime.now(UTC), kind="analysis_failed", text=str(exc)))

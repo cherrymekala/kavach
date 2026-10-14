@@ -1,0 +1,10 @@
+SYNTHETIC - FOR TESTING ONLY
+SUNWAY MEDICAL CENTRE, BANDAR SUNWAY - DISCHARGE SUMMARY
+Patient: Nur Aisyah binti Rahman, 31 F    MRN: SMC-26-449120
+Date of admission: 16/06/2026 (via Emergency Department)    Date of discharge: 20/06/2026
+Diagnosis: Dengue fever with warning signs (NS1 antigen positive 16/06/2026).
+Presenting complaint: Fever for 3 days, abdominal pain, vomiting. Platelets 52,000 on admission.
+Past history: Nil significant. No previous admissions.
+Treatment: IV fluids, serial platelet and haematocrit monitoring. Platelets 148,000 at discharge.
+Total bill: RM 9,860.00
+Attending: Dr. Lim Wei Ming, MD (Internal Medicine)

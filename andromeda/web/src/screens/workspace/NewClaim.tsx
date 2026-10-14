@@ -6,6 +6,7 @@ import { MicIcon, PaperclipIcon, SendIcon } from 'lucide-react'
 import { Button, Input } from '@/components'
 import { apiFetch } from '@/api/client'
 import { caseKey, useCreateCase } from '@/api/hooks'
+import type { CaseKind, CreateCase } from '@/api/types'
 import { useAuth } from '@/auth'
 import { COUNTRIES, countryFromPhone, type CountryCode } from '@/lib/country'
 import { cn } from '@/lib/cn'
@@ -19,6 +20,7 @@ export function NewClaim() {
   const queryClient = useQueryClient()
 
   const [country, setCountry] = useState<CountryCode>(countryFromPhone(user?.phoneNumber))
+  const [kind, setKind] = useState<CaseKind>('dispute')
   const [text, setText] = useState('')
   const [error, setError] = useState<string | null>(null)
   const [busy, setBusy] = useState(false)
@@ -28,7 +30,9 @@ export function NewClaim() {
     setError(null)
     setBusy(true)
     try {
-      const c = await createCase.mutateAsync({ country, language: i18n.language })
+      // `kind` is newer than the generated CreateCase type.
+      const body = { country, language: i18n.language, kind } as CreateCase
+      const c = await createCase.mutateAsync(body)
       await run(c.id)
       // Drop the cached (empty) case so the dossier fetches the note/files we just added.
       queryClient.removeQueries({ queryKey: caseKey(c.id) })
@@ -68,8 +72,29 @@ export function NewClaim() {
   return (
     <div className="flex w-full flex-col items-center gap-6 text-center">
       <div>
-        <h2 className="font-display text-2xl font-bold tracking-tight">{t('workspace.composer.heroTitle')}</h2>
-        <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">{t('workspace.composer.heroSub')}</p>
+        <h2 className="font-display text-2xl font-bold tracking-tight">
+          {t(kind === 'dispute' ? 'workspace.composer.heroTitle' : 'discharge.heroTitle')}
+        </h2>
+        <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+          {t(kind === 'dispute' ? 'workspace.composer.heroSub' : 'discharge.heroSub')}
+        </p>
+      </div>
+
+      <div className="flex items-center gap-1 rounded-full border border-line bg-surface p-0.5" role="group" aria-label={t('discharge.modeLabel')}>
+        {(['dispute', 'pre_discharge'] as const).map((k) => (
+          <button
+            key={k}
+            type="button"
+            onClick={() => setKind(k)}
+            aria-pressed={kind === k}
+            className={cn(
+              'rounded-full px-3 py-1 text-sm font-semibold',
+              kind === k ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground',
+            )}
+          >
+            {t(`discharge.mode.${k}`)}
+          </button>
+        ))}
       </div>
 
       <div className="flex items-center gap-1 rounded-full border border-line bg-surface p-0.5" role="group" aria-label="Country">

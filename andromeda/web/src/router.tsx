@@ -15,6 +15,8 @@ const Filing = lazy(() => import('./screens/filing/Filing').then((m) => ({ defau
 const Hearing = lazy(() => import('./screens/hearing/Hearing').then((m) => ({ default: m.Hearing })))
 const Tracker = lazy(() => import('./screens/tracker/Tracker').then((m) => ({ default: m.Tracker })))
 const Outcome = lazy(() => import('./screens/outcome/Outcome').then((m) => ({ default: m.Outcome })))
+const Insights = lazy(() => import('./screens/insights/Insights').then((m) => ({ default: m.Insights })))
+const DischargePreview = lazy(() => import('./dev/DischargePreview').then((m) => ({ default: m.DischargePreview })))
 const Foundation = lazy(() => import('./screens/dev/Foundation').then((m) => ({ default: m.Foundation })))
 
 // Dev-only foundation page — never shipped to production hosting.
@@ -32,6 +34,7 @@ const caseScreens = [
 const devRoutes = import.meta.env.DEV
   ? [
       { path: 'dev', element: <Foundation /> },
+      { path: 'preview/discharge', element: <DischargePreview /> },
       ...caseScreens.map(([name, Screen]) => ({ path: `preview/case/:caseId/${name}`, element: <Screen /> })),
     ]
   : []
@@ -40,7 +43,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    children: [{ index: true, element: <SignIn /> }, ...devRoutes],
+    children: [{ index: true, element: <SignIn /> }, { path: 'insights', element: <Insights /> }, ...devRoutes],
   },
   {
     element: <RequireAuth />,

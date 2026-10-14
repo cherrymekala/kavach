@@ -18,6 +18,7 @@ import { useCase, useDeleteCase } from '@/api/hooks'
 import { apiBlob } from '@/api/client'
 import { downloadBlob } from '@/lib/download'
 import { formatMoney } from '@/lib/money'
+import { currencyFor } from '@/lib/country'
 
 export function Outcome() {
   const { caseId } = useParams()
@@ -33,7 +34,7 @@ export function Outcome() {
   }
 
   const recovered = kase?.amount_recovered
-  const currency = kase?.country === 'SG' ? 'SGD' : 'INR'
+  const currency = currencyFor(kase?.country)
 
   async function handleDownload(path: string, name: string) {
     try {

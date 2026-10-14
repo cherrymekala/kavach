@@ -1,0 +1,10 @@
+YASHODA HOSPITALS, SECUNDERABAD - DRAFT DISCHARGE SUMMARY (NOT YET SIGNED)
+Patient: Mr. Ravi Kumar Varma (SYNTHETIC), 46 M   UHID: YH-2026-88213
+DOA: 06/07/2026 22:40   Expected DOD: 11/07/2026
+Room category: Single Private AC (Deluxe)
+Final diagnosis: Dengue fever with thrombocytopenia.
+History: Fever for 3 days. Known case of hypertension.
+Investigations: NS1 antigen positive (06/07/2026); platelets 41,000 on admission, 1,12,000 on 10/07/2026.
+Treatment: IV fluids, platelet monitoring, antipyretics, antihypertensives continued.
+Condition at discharge: stable.
+Treating doctor: Dr. S. Prasad, MD (General Medicine)

@@ -209,3 +209,14 @@ resource "google_firebaserules_release" "firestore" {
   name         = "cloud.firestore"
   ruleset_name = google_firebaserules_ruleset.firestore.name
 }
+
+# Phone line (Twilio). Values are added outside Terraform so they never reach the state file:
+#   printf %s "$TWILIO_AUTH_TOKEN" | gcloud secrets versions add twilio-auth-token --data-file=-
+resource "google_secret_manager_secret" "twilio" {
+  for_each  = toset(["twilio-account-sid", "twilio-auth-token"])
+  secret_id = each.key
+  replication {
+    auto {}
+  }
+  depends_on = [google_project_service.apis]
+}

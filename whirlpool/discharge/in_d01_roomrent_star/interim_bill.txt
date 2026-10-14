@@ -1,0 +1,11 @@
+YASHODA HOSPITALS, SECUNDERABAD - INTERIM BILL (SYNTHETIC)   Date: 10/07/2026
+Patient: Mr. Ravi Kumar Varma   UHID: YH-2026-88213   Payer: Star Health (cashless requested)
+Room rent - Single Private AC (Deluxe) @ Rs. 8,500 x 5 days ........ 42,500
+Nursing charges @ Rs. 1,500 x 5 days ................................. 7,500
+Consultation - Dr. S. Prasad (daily visits) .......................... 12,000
+Laboratory investigations (CBC x 6, NS1, LFT, RFT) ................... 9,800
+Pharmacy - medicines and IV fluids ................................... 18,400
+Consumables - gloves, masks, PPE kit, thermometer .................... 3,900
+Admission and registration charges ................................... 1,500
+Food and beverages - attendant ....................................... 2,800
+Total (estimated at discharge) .................................. Rs. 98,400

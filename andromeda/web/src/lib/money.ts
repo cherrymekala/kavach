@@ -10,5 +10,6 @@ export function formatMoney(amount: number, currency: string): string {
   const n = Number(amount) || 0
   if (currency === 'INR') return `₹${indianGroup(n)}`
   if (currency === 'SGD') return `S$${n.toLocaleString('en-SG')}`
+  if (currency === 'MYR') return `RM${n.toLocaleString('en-MY')}`
   return `${n.toLocaleString('en-SG')} ${currency}`
 }

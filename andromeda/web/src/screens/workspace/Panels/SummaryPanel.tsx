@@ -3,6 +3,7 @@ import { Badge, FileTile } from '@/components'
 import type { Case } from '@/api/types'
 import { formatDate } from '@/lib/dates'
 import { formatMoney } from '@/lib/money'
+import { currencyFor } from '@/lib/country'
 
 const CATEGORY: Record<string, string> = {
   pre_existing: 'Pre-existing condition',
@@ -38,7 +39,7 @@ export function SummaryPanel({ kase }: { kase: Case }) {
   const facts = kase.facts
   if (!facts) return null
 
-  const currency = facts.currency ?? (kase.country === 'SG' ? 'SGD' : 'INR')
+  const currency = facts.currency ?? currencyFor(kase.country)
 
   const rows = [
     { key: t('summary.patient'), value: facts.patient_name },

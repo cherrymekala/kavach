@@ -1,7 +1,9 @@
 """Score the intake agent against whirlpool/cases/*/case.json.
 
 Run from the repo root with sombrero's venv:
-    sombrero/.venv/bin/python whirlpool/run_evals.py [--full] [case_id ...]\n--full runs the whole pipeline (needs Vertex AI Search) and scores the strength verdict.
+    sombrero/.venv/bin/python whirlpool/run_evals.py [--full | --discharge] [case_id ...]
+--full runs the whole pipeline (needs Vertex AI Search) and scores the strength verdict.
+--discharge runs the pre-discharge check on whirlpool/discharge/ and scores the risks found.
 Needs magellan/sources (run magellan/ingest/fetch_sources.sh) and GOOGLE_API_KEY in .env.
 """
 
@@ -13,11 +15,12 @@ from pathlib import Path
 
 from google.genai.errors import ClientError
 
-from kavach.agents import intake, orchestrator
+from kavach.agents import discharge, intake, orchestrator
 from kavach.models import Document
 
 ROOT = Path(__file__).resolve().parents[1]
 CASES = Path(__file__).parent / "cases"
+DISCHARGE = Path(__file__).parent / "discharge"
 FACT_FIELDS = [
     "insurer",
     "tpa",
@@ -122,15 +125,40 @@ def run_full(case_dir: Path) -> bool:
     return a.strength == want
 
 
+def run_discharge(case_dir: Path) -> bool:
+    """Pre-discharge check; passes if the verdict is not the excluded one and every expected
+    keyword appears in some verified risk title."""
+    case = json.loads((case_dir / "case.json").read_text())
+    docs = [
+        Document(id=str(i), filename=n, gcs_uri=u)
+        for i, (n, u) in enumerate(zip(_names(case), _files(case_dir, case)))
+    ]
+    _, check = discharge.check(docs, case["country"])
+    exp = case["expected"]
+    titles = " ".join(r.title.lower() for r in check.risks)
+    good = check.verdict != exp.get("verdict_not") and all(
+        k in titles for k in exp.get("risk_keywords", [])
+    )
+    print(f"\n{case['id']}: {'✓' if good else '✗'} {check.verdict}, {len(check.risks)} risks")
+    for r in check.risks:
+        print(f"  [{r.severity}] {r.title}\n      fix: {r.fix}")
+    return good
+
+
 def main() -> None:
     args = sys.argv[1:]
     full = "--full" in args
-    wanted = {x for x in args if x != "--full"}
+    pre = "--discharge" in args
+    wanted = {x for x in args if not x.startswith("--")}
     dirs = [
         d
-        for d in sorted(CASES.iterdir())
+        for d in sorted((DISCHARGE if pre else CASES).iterdir())
         if (d / "case.json").exists() and (not wanted or d.name in wanted)
     ]
+    if pre:
+        right = sum(run_discharge(d) for d in dirs)
+        print(f"\nDischarge checks: {right}/{len(dirs)}")
+        return
     if full:
         right = sum(run_full(d) for d in dirs)
         print(f"\nStrength verdicts: {right}/{len(dirs)}")

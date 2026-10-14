@@ -27,6 +27,7 @@ def create_case(body: CreateCase, uid: str = Depends(current_user)) -> Case:
         id=uuid.uuid4().hex,
         owner=uid,
         created_at=datetime.now(UTC),
+        kind=body.kind,
         country=body.country,
         language=body.language,
     )
@@ -91,7 +92,7 @@ def ask(case_id: str, body: AskRequest, uid: str = Depends(current_user)) -> Ask
     case = store.load_case(case_id)
     if not case or case.owner != uid:
         raise HTTPException(404, "Case not found.")
-    if not case.assessment:
+    if not case.assessment and not case.discharge_check:
         raise HTTPException(409, "Run the analysis before asking about the case.")
     question = body.question.strip()
     if not question:
