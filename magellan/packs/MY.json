@@ -1,0 +1,146 @@
+{
+  "country": "MY",
+  "currency": "MYR",
+  "languages": [
+    "en",
+    "ms",
+    "zh",
+    "ta"
+  ],
+  "regulator": "BNM",
+  "rejection_codes": {},
+  "dispute_process": [
+    {
+      "step": "Insurer's complaints unit",
+      "dispute_body": "The insurer's or takaful operator's complaints unit",
+      "deadline_days": 60,
+      "form": "Appeal letter",
+      "form_fields": []
+    },
+    {
+      "step": "FMOS",
+      "dispute_body": "Financial Markets Ombudsman Service (FMOS), www.fmos.org.my",
+      "deadline_days": 180,
+      "form": "FMOS dispute form",
+      "form_fields": [
+        {
+          "label": "Financial service provider (insurer or takaful operator)",
+          "source": "facts.insurer"
+        },
+        {
+          "label": "Your name",
+          "source": "complainant.name"
+        },
+        {
+          "label": "Contact number",
+          "source": "complainant.mobile"
+        },
+        {
+          "label": "Email",
+          "source": "complainant.email"
+        },
+        {
+          "label": "Address",
+          "source": "complainant.address"
+        },
+        {
+          "label": "Relationship to the insured person",
+          "source": "complainant.relationship_to_insured"
+        },
+        {
+          "label": "Policy / certificate number",
+          "source": "facts.policy_number"
+        },
+        {
+          "label": "Claim number",
+          "source": "facts.claim_number"
+        },
+        {
+          "label": "Details of the dispute",
+          "source": "generated.summary"
+        },
+        {
+          "label": "Date you complained to the insurer",
+          "source": "complainant.grievance_date"
+        },
+        {
+          "label": "Date of the insurer's final decision",
+          "source": "complainant.grievance_reply_date"
+        },
+        {
+          "label": "Amount in dispute (FMOS limit RM250,000)",
+          "source": "computed.relief"
+        },
+        {
+          "label": "Proceedings in court or arbitration on the same matter",
+          "source": "complainant.court_proceedings"
+        },
+        {
+          "label": "Supporting documents (insurer's letters, medical reports, bills)",
+          "source": "computed.enclosures"
+        }
+      ],
+      "relief_note": "(FMOS can award up to RM250,000)"
+    }
+  ],
+  "limitation": {
+    "days": 183,
+    "body": "FMOS",
+    "from": "the insurer's final decision"
+  },
+  "regulations": [
+    {
+      "ref": "Malaysia medical-insurance claim rules (BNM PD MHIT, FMOS)",
+      "children": [
+        {
+          "ref": "BNM PD MHIT para 9.6(a)",
+          "title": "General (initial) waiting period for all illnesses: at most 30 days; none for accidents",
+          "source_url": "https://www.bnm.gov.my/documents/20124/938039/pd_mhit_dec25.pdf",
+          "text": "(a) The general waiting period shall not: i) exceed 30 calendar days from the effective date of the MHIT policy/takaful certificate; or ii) apply in cases where emergency treatment is sought for an insured/person covered arising from an accident;"
+        },
+        {
+          "ref": "BNM PD MHIT para 9.6(b)",
+          "title": "Other waiting periods: only for illnesses listed in the Glossary of Terms, at most 120 days",
+          "source_url": "https://www.bnm.gov.my/documents/20124/938039/pd_mhit_dec25.pdf",
+          "text": "(b) Imposition of any additional waiting period shall be limited to those illnesses specified in GOT, as a risk mitigation measure against anti-selection and shall not exceed 120 calendar days from the effective date of the MHIT policy/takaful certificate;"
+        },
+        {
+          "ref": "BNM PD MHIT para 9.6(c)",
+          "title": "Pre-existing conditions: only those existing before cover that the patient could reasonably have known about; the insurer must prove it",
+          "source_url": "https://www.bnm.gov.my/documents/20124/938039/pd_mhit_dec25.pdf",
+          "text": "(c) Any coverage exclusions or limitations for pre-existing condition(s) shall be limited to those that existed prior to the effective date of cover under the policy/takaful certificate and of which the policy owner/takaful participant could have reasonably been aware of. A licensed ITO is responsible to prove that the policy owner/takaful participant either had knowledge or was reasonably aware of the pre-existing condition(s) in the event the licensed ITO denies a claim of an excluded pre-existing condition;"
+        },
+        {
+          "ref": "BNM PD MHIT para 9.6(c), footnote 14",
+          "title": "When a patient is considered to have been reasonably aware of a pre-existing condition",
+          "source_url": "https://www.bnm.gov.my/documents/20124/938039/pd_mhit_dec25.pdf",
+          "text": "A policy owner/takaful participant may be considered to have reasonably been aware of a pre-existing condition where the condition is one for which:- a) the policy owner/takaful participant had received or is receiving treatment; b) medical advice, diagnosis, care or treatment has been recommended; c) clear and distinct symptoms are or were evident; or d) its existence would have been apparent to a reasonable person in the circumstances."
+        },
+        {
+          "ref": "BNM PD MHIT para 13.8",
+          "title": "Exclusions and limitations must be set out in the policy",
+          "source_url": "https://www.bnm.gov.my/documents/20124/938039/pd_mhit_dec25.pdf",
+          "text": "13.8 A licensed ITO shall provide complete information of a MHIT product in the policy/takaful certificate that must include but is not limited to, the following: (a) Policy/takaful certificate benefits; (b) Premium/takaful contribution rates; (c) Fees and charges; (d) Exclusions and limitations; and (e) All contractual rights and obligations of policy owners/takaful participants, including policy/takaful certificate renewals and switching of products or plans."
+        },
+        {
+          "ref": "FMOS FAQ Q4",
+          "title": "FMOS: when you can file (6 months from the final decision, or no reply in 60 days)",
+          "source_url": "https://www.fmos.org.my/en/faq/",
+          "text": "You must file an official complaint against the FMOS Members. If you are dissatisfied with the outcome of your complaint, you may submit your dispute with FMOS: Within 6 months from the date of receiving the Member’s final decision; or If the Member fails to respond within 60 days from the date the complaint was first submitted to the Member concerned."
+        },
+        {
+          "ref": "FMOS FAQ Q5-Q6",
+          "title": "FMOS: free of charge; medical claims up to RM250,000",
+          "source_url": "https://www.fmos.org.my/en/faq/",
+          "text": "No. Our service is provided free of charge to financial consumers and investors. 6. What types of disputes can FMOS handle? FMOS accepts disputes involving direct financial losses up to RM 250,000.00 on: Banking complaints on loans and advances, Islamic finances, misselling, unauthorised transactions via ATM, Debit/Credit card, internet banking or e-money. Insurance/takaful claims on life, medical, motor, general non-motor, travel, and third-party property damage claims."
+        },
+        {
+          "ref": "FMOS FAQ Q19",
+          "title": "FMOS: the Ombudsman's decision binds the insurer, not the patient",
+          "source_url": "https://www.fmos.org.my/en/faq/",
+          "text": "The Ombudsman’s Decision is binding only on FMOS Members. If the complainant is unhappy with the Decision, they can explore other avenues to resolve their dispute."
+        }
+      ]
+    }
+  ]
+}

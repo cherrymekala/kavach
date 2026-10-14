@@ -24,7 +24,7 @@ function nameFor(iso: string): string {
   }
 }
 
-const PREFERRED = ['IN', 'SG']
+const PREFERRED = ['IN', 'SG', 'MY']
 
 function buildDials(): CountryDial[] {
   return getCountries()

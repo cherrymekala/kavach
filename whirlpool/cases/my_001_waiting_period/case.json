@@ -1,0 +1,25 @@
+{
+  "id": "my_001_waiting_period",
+  "country": "MY",
+  "synthetic": true,
+  "note": "BNM PD MHIT para 9.6(a) caps the general waiting period at 30 days; 9.6(b) allows longer waiting periods only for illnesses listed in the Glossary of Terms (max 120 days). A 90-day waiting period for all illnesses breaches 9.6(a). No policy wording: the insurer is fictional.",
+  "documents": ["rejection_letter.txt", "discharge_summary.txt"],
+  "doc_types": {
+    "rejection_letter.txt": "rejection_letter",
+    "discharge_summary.txt": "discharge_summary"
+  },
+  "expected": {
+    "insurer": "Prudentia Life Assurance (Malaysia) Berhad",
+    "tpa": null,
+    "policy_start": "2026-05-01",
+    "admission_date": "2026-06-16",
+    "first_diagnosis_date": "2026-06-16",
+    "diagnosis": "Dengue fever with warning signs",
+    "claim_amount": 9860,
+    "currency": "MYR",
+    "rejection_code": null,
+    "rejection_category": "initial_waiting_period",
+    "cited_clause": "Clause 4.2",
+    "strength": "strong"
+  }
+}

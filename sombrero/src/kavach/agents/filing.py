@@ -84,7 +84,7 @@ def _money(amount: float | None, currency: str | None) -> str:
         return ""
     if currency == "INR":
         return f"Rs. {_indian(round(amount))}"
-    symbol = {"SGD": "S$"}.get(currency or "", currency or "")
+    symbol = {"SGD": "S$", "MYR": "RM"}.get(currency or "", currency or "")
     return f"{symbol} {amount:,.0f}".strip()
 
 

@@ -17,6 +17,7 @@ import { apiBlob } from '@/api/client'
 import { downloadBlob } from '@/lib/download'
 import { formatMoney } from '@/lib/money'
 import type { Case } from '@/api/types'
+import { currencyFor } from '@/lib/country'
 
 export function OutcomePanel({ caseId, kase }: { caseId: string; kase: Case }) {
   const navigate = useNavigate()
@@ -26,7 +27,7 @@ export function OutcomePanel({ caseId, kase }: { caseId: string; kase: Case }) {
   const [error, setError] = useState<string | null>(null)
 
   const recovered = kase.amount_recovered
-  const currency = kase.country === 'SG' ? 'SGD' : 'INR'
+  const currency = currencyFor(kase.country)
 
   async function handleDownload(path: string, name: string) {
     try {

@@ -6,6 +6,7 @@ import { useCase } from '@/api/hooks'
 import { formatMoney } from '@/lib/money'
 import { formatDate } from '@/lib/dates'
 import { cn } from '@/lib/cn'
+import { currencyFor } from '@/lib/country'
 
 /** Insurer names often arrive in capitals from letterheads. */
 function tidy(name: string): string {
@@ -58,7 +59,7 @@ export function Summary() {
     )
   }
 
-  const currency = facts.currency ?? (kase?.country === 'SG' ? 'SGD' : 'INR')
+  const currency = facts.currency ?? currencyFor(kase?.country)
   const money = (n: number | null | undefined) => (n != null ? formatMoney(n, currency) : null)
   const insurer = facts.insurer ? shortInsurer(facts.insurer) : t('summary.yourInsurer')
   const claimed = money(facts.claim_amount)

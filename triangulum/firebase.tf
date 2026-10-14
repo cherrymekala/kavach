@@ -51,7 +51,7 @@ resource "google_identity_platform_config" "auth" {
   # country and surfaces in the app as auth/operation-not-allowed. Allow our launch markets.
   sms_region_config {
     allowlist_only {
-      allowed_regions = ["IN", "SG"]
+      allowed_regions = ["IN", "SG", "MY"]
     }
   }
   authorized_domains = [

@@ -4,7 +4,7 @@ from ..models import LadderStep, PackInfo
 from ..tools import packs
 
 router = APIRouter(prefix="/packs", tags=["packs"])
-COUNTRIES = ("IN", "SG")
+COUNTRIES = ("IN", "SG", "MY")
 
 
 @router.get("/{country}", response_model=PackInfo)
