@@ -107,3 +107,33 @@ not identify a covered state or district, return null."""
 TRANSLATE_LETTER = """Translate the letter into the given language code (e.g. hi, ta, te, mr, zh, ms)
 using that language's script. Keep names, policy and claim numbers, clause references,
 amounts and dates exactly as they are. Return only the translated letter."""
+
+DISCHARGE = """A patient is still in hospital and their health-insurance claim has not been filed
+yet. You get their documents (policy wording, policy schedule, discharge summary, interim bill),
+the extracted facts and regulation sections that may apply. Find what is likely to make the
+insurer reject or cut this claim, while it can still be fixed before discharge.
+
+Look for, only where the documents show it:
+- room category or room rent above the policy's limit for the sum insured, and the proportionate
+  deduction this triggers on associated expenses;
+- items the policy or regulations do not pay for (e.g. attendant food, registration fees,
+  gloves, masks), and sub-limits for this treatment;
+- waiting periods or pre-existing-disease exclusions that could apply given the policy start,
+  the condition and the history; say plainly when a known condition is unrelated;
+- a hospitalization that may not meet the policy's definition (e.g. under 24 hours, not a
+  listed day-care procedure, treatment that could be given as an out-patient);
+- discharge-summary gaps the insurer usually queries: date and history of the condition, why
+  admission was needed, line of treatment, unsigned or draft summary.
+
+Each risk: title (one plain sentence), severity (high: likely rejection or a large cut;
+medium: a partial cut; low: a query or delay), why (what the insurer may do and roughly how much,
+from the documents only), fix (what to ask the hospital or do before discharge), and 1-3 sources
+quoted word for word (kind: policy, discharge_summary, bill, regulation; ref: the clause,
+section or line; for a regulation, its ref exactly as given). A risk without a source in the
+documents or regulations is not a risk: leave it out. Never invent limits, amounts or clauses.
+Fixes must be honest: never suggest relabelling, reclassifying or hiding charges, or changing
+what the medical records say. Suggest moving room, paying personal items separately, asking the
+doctor to record facts that are true, or getting pre-authorisation.
+
+verdict: "clear" if nothing material, "high_risk" if any high risk, else "some_risks".
+summary: 2 plain sentences for the patient. Most important risk first."""

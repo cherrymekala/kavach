@@ -1,0 +1,17 @@
+{
+  "id": "in_d01_roomrent_star",
+  "kind": "pre_discharge",
+  "country": "IN",
+  "synthetic": true,
+  "note": "Sum insured Rs 3 lakh -> room rent up to Rs 5,000/day (Star FHO, In-patient Treatment i); room is Rs 8,500/day, so proportionate deduction on associated expenses. Attendant food, registration and gloves/masks are typically non-payable. Hypertension is unrelated to dengue.",
+  "documents": [
+    "policy_schedule.txt",
+    "discharge_summary.txt",
+    "interim_bill.txt",
+    {"policy.pdf": "magellan/sources/policies/Star_Family_Health_Optima_V21.pdf"}
+  ],
+  "expected": {
+    "risk_keywords": ["room"],
+    "verdict_not": "clear"
+  }
+}

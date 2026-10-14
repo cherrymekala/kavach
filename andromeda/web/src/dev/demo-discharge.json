@@ -1,0 +1,99 @@
+{
+  "verdict": "high_risk",
+  "summary": "Your room rent of Rs. 8,500 per day significantly exceeds your policy limit of Rs. 5,000 per day, which will trigger substantial direct deductions and proportionate cuts across your doctor consultations and nursing fees. Before discharge, you should request an immediate room downgrade, settle personal non-medical expenses separately, and ensure the hospital provides a final doctor-signed discharge summary.",
+  "risks": [
+    {
+      "title": "Room rent exceeds the policy daily limit of Rs. 5,000, triggering substantial cuts and proportionate deductions on associated medical expenses.",
+      "severity": "high",
+      "why": "For a Sum Insured of Rs. 3,00,000, the policy caps room, boarding, and nursing expenses at Rs. 5,000 per day. The hospital is billing Rs. 8,500 per day for room rent plus Rs. 1,500 per day for nursing (total Rs. 10,000 per day). Beyond disallowing the excess Rs. 5,000 per day on room and nursing (a cut of Rs. 25,000 over 5 days), the insurer will apply a proportionate deduction of around 50% on associated expenses, including the Rs. 12,000 consultation fees.",
+      "fix": "Request the hospital administration to shift the patient to a standard room within the eligible limit of Rs. 5,000 per day before discharge to minimize further deductions, and verify if the hospital applies differential billing for doctor visits.",
+      "sources": [
+        {
+          "kind": "policy",
+          "ref": "Page 10, Section II.1.i",
+          "quote": "Up to 5,000/- per day",
+          "verified": true
+        },
+        {
+          "kind": "policy",
+          "ref": "Page 10, Section II.1 Note",
+          "quote": "Expenses relating to Associated medical expenses will be considered in proportion to the eligible room rent/room category stated in the policy schedule or actuals whichever is less.",
+          "verified": true
+        },
+        {
+          "kind": "bill",
+          "ref": "Interim Bill, Room rent entry",
+          "quote": "Room rent - Single Private AC (Deluxe) @ Rs. 8,500 x 5 days ........ 42,500",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "title": "Attendant food, admission charges, and routine consumables are excluded from coverage and will be disallowed.",
+      "severity": "medium",
+      "why": "The policy specifically excludes hospital registration and admission charges under Code Excl 34, while attendant meals and routine consumables are non-payable personal or subsumed items. The insurer will disallow Rs. 1,500 for admission/registration, Rs. 2,800 for attendant food, and up to Rs. 3,900 for consumables, totaling up to Rs. 8,200.",
+      "fix": "Pay attendant food and non-medical personal expenses directly at the hospital counter, and ask the billing desk to itemize and review consumable charges against admissible inpatient supplies.",
+      "sources": [
+        {
+          "kind": "policy",
+          "ref": "Page 32, Section III.31 (Code Excl 34)",
+          "quote": "Hospital registration charges, admission charges, record charges, telephone charges and such other charges - Code Excl 34",
+          "verified": true
+        },
+        {
+          "kind": "bill",
+          "ref": "Interim Bill, Admission charges",
+          "quote": "Admission and registration charges ................................... 1,500",
+          "verified": true
+        },
+        {
+          "kind": "bill",
+          "ref": "Interim Bill, Food and beverages",
+          "quote": "Food and beverages - attendant ....................................... 2,800",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "title": "The discharge summary is currently an unsigned draft, which will lead to verification queries or cashless delay.",
+      "severity": "low",
+      "why": "Insurers require a complete, original, and duly signed discharge summary to approve cashless discharge or settle a claim. Submitting a draft summary marked as not yet signed will cause delays or denial of cashless settlement at the desk.",
+      "fix": "Ensure that the hospital provides the final discharge summary duly signed and stamped by the treating doctor, Dr. S. Prasad, before the claim papers are dispatched.",
+      "sources": [
+        {
+          "kind": "discharge_summary",
+          "ref": "Header",
+          "quote": "YASHODA HOSPITALS, SECUNDERABAD - DRAFT DISCHARGE SUMMARY (NOT YET SIGNED)",
+          "verified": true
+        },
+        {
+          "kind": "policy",
+          "ref": "Page 34, Section IV.2.E.c",
+          "quote": "Discharge Summary in original from the hospital",
+          "verified": true
+        }
+      ]
+    },
+    {
+      "title": "Insurer may raise queries regarding the history of hypertension, although Dengue fever is an acute unrelated condition.",
+      "severity": "low",
+      "why": "The policy has run for 23 continuous months against a 36-month pre-existing disease waiting period. Dengue fever with thrombocytopenia is an acute viral infection that is completely unrelated to the patient's declared hypertension, but noting hypertension and continuation of antihypertensives in the discharge summary may trigger unnecessary medical history queries.",
+      "fix": "Ask the treating physician to explicitly state in the final discharge summary that the current hospitalization and thrombocytopenia are solely attributable to acute Dengue fever and not related to pre-existing hypertension.",
+      "sources": [
+        {
+          "kind": "policy",
+          "ref": "Page 28, Section III.1.a",
+          "quote": "Expenses related to the treatment of a Pre-Existing Disease (PED) and its direct complications shall be excluded until the expiry of 36 months of continuous coverage after the date of inception of the first policy with insurer",
+          "verified": true
+        },
+        {
+          "kind": "discharge_summary",
+          "ref": "History",
+          "quote": "Known case of hypertension.",
+          "verified": true
+        }
+      ]
+    }
+  ],
+  "disclaimer": "Kavach prepares documents from your files and public rules to help you raise a dispute. It is not legal advice. Check every detail before you sign or send anything."
+}
