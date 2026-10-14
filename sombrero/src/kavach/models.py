@@ -14,6 +14,11 @@ class DocType(StrEnum):
     OTHER = "other"
 
 
+class CaseKind(StrEnum):
+    DISPUTE = "dispute"  # the claim was rejected or cut
+    PRE_DISCHARGE = "pre_discharge"  # still in hospital: check the claim before it is filed
+
+
 class CaseStatus(StrEnum):
     COLLECTING = "collecting"
     ANALYSING = "analysing"
@@ -113,6 +118,21 @@ class Assessment(BaseModel):
     disclaimer: str = DISCLAIMER
 
 
+class Risk(BaseModel):
+    title: str  # e.g. "Your room costs more than the policy's room-rent limit"
+    severity: str  # high | medium | low
+    why: str  # what the insurer is likely to deduct or reject, in plain words
+    fix: str  # what to do before discharge
+    sources: list[Source]
+
+
+class DischargeCheck(BaseModel):
+    verdict: str  # clear | some_risks | high_risk
+    summary: str
+    risks: list[Risk] = []
+    disclaimer: str = DISCLAIMER
+
+
 class Letter(BaseModel):
     subject: str
     english: str
@@ -166,12 +186,14 @@ class Case(BaseModel):
     owner: str
     created_at: datetime | None = None
     title: str | None = None
+    kind: CaseKind = CaseKind.DISPUTE
     country: str = "IN"
     language: str = "en"
     status: CaseStatus = CaseStatus.COLLECTING
     documents: list[Document] = []
     facts: CaseFacts | None = None
     assessment: Assessment | None = None
+    discharge_check: DischargeCheck | None = None
     letter: Letter | None = None
     complainant: Complainant | None = None
     next_deadline: datetime | None = None
@@ -188,6 +210,7 @@ class CaseSummary(BaseModel):
     id: str
     created_at: datetime | None
     title: str | None
+    kind: CaseKind = CaseKind.DISPUTE
     country: str
     language: str
     status: CaseStatus
@@ -207,6 +230,7 @@ class CaseSummary(BaseModel):
             id=case.id,
             created_at=case.created_at,
             title=case.title,
+            kind=case.kind,
             country=case.country,
             language=case.language,
             status=case.status,
@@ -239,6 +263,28 @@ class PackInfo(BaseModel):
     limitation: dict | None = None
 
 
+class InsightRow(BaseModel):
+    key: str  # rejection category, insurer or year
+    total: int
+    allowed: int
+    partly_allowed: int
+    dismissed: int
+    won_pct: int  # allowed + partly allowed
+
+
+class Insights(BaseModel):
+    """Public rejection-pattern report built from published dispute-body rulings."""
+
+    country: str
+    source: str
+    period: dict
+    overall: InsightRow
+    by_category: list[InsightRow]
+    by_insurer: list[InsightRow]
+    by_year: list[InsightRow]
+    note: str
+
+
 class TitleRequest(BaseModel):
     title: str = Field(min_length=1, max_length=120)
 
@@ -256,5 +302,6 @@ class AskAnswer(BaseModel):
 
 
 class CreateCase(BaseModel):
+    kind: CaseKind = CaseKind.DISPUTE
     country: str = "IN"
     language: str = "en"

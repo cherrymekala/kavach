@@ -10,6 +10,7 @@ import type {
   Document,
   FiledRequest,
   FilingPack,
+  Insights,
   Letter,
   LetterRequest,
   NoteRequest,
@@ -169,5 +170,14 @@ export function useAsk(caseId: string) {
   return useMutation({
     mutationFn: (body: AskRequest) => apiFetch<AskAnswer>(`/cases/${caseId}/ask`, jsonBody(body)),
     onSuccess: () => qc.invalidateQueries({ queryKey: caseKey(caseId) }),
+  })
+}
+
+export function useInsights(country: string) {
+  return useQuery({
+    queryKey: ['insights', country],
+    queryFn: () => apiFetch<Insights>(`/insights/${country}`),
+    staleTime: Infinity,
+    retry: false,
   })
 }

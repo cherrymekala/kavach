@@ -1,0 +1,287 @@
+{
+  "country": "IN",
+  "source": "Insurance Ombudsman award synopses (health and group mediclaim), published by the Council for Insurance Ombudsmen",
+  "period": {
+    "from": "2005",
+    "to": "2017"
+  },
+  "overall": {
+    "key": "all",
+    "total": 3120,
+    "allowed": 1281,
+    "partly_allowed": 693,
+    "dismissed": 1146,
+    "won_pct": 63
+  },
+  "by_category": [
+    {
+      "key": "room_rent",
+      "total": 40,
+      "allowed": 12,
+      "partly_allowed": 26,
+      "dismissed": 2,
+      "won_pct": 95
+    },
+    {
+      "key": "missing_documents",
+      "total": 108,
+      "allowed": 66,
+      "partly_allowed": 27,
+      "dismissed": 15,
+      "won_pct": 86
+    },
+    {
+      "key": "reasonable_charges",
+      "total": 159,
+      "allowed": 30,
+      "partly_allowed": 106,
+      "dismissed": 23,
+      "won_pct": 86
+    },
+    {
+      "key": "hospital_ineligible",
+      "total": 86,
+      "allowed": 57,
+      "partly_allowed": 9,
+      "dismissed": 20,
+      "won_pct": 77
+    },
+    {
+      "key": "late_intimation",
+      "total": 173,
+      "allowed": 105,
+      "partly_allowed": 26,
+      "dismissed": 42,
+      "won_pct": 76
+    },
+    {
+      "key": "not_medically_necessary",
+      "total": 261,
+      "allowed": 136,
+      "partly_allowed": 53,
+      "dismissed": 72,
+      "won_pct": 72
+    },
+    {
+      "key": "sub_limit",
+      "total": 125,
+      "allowed": 12,
+      "partly_allowed": 72,
+      "dismissed": 41,
+      "won_pct": 67
+    },
+    {
+      "key": "pre_existing",
+      "total": 948,
+      "allowed": 418,
+      "partly_allowed": 160,
+      "dismissed": 370,
+      "won_pct": 61
+    },
+    {
+      "key": "under_24_hours",
+      "total": 85,
+      "allowed": 34,
+      "partly_allowed": 13,
+      "dismissed": 38,
+      "won_pct": 55
+    },
+    {
+      "key": "initial_waiting_period",
+      "total": 41,
+      "allowed": 20,
+      "partly_allowed": 2,
+      "dismissed": 19,
+      "won_pct": 54
+    },
+    {
+      "key": "fraud",
+      "total": 29,
+      "allowed": 10,
+      "partly_allowed": 5,
+      "dismissed": 14,
+      "won_pct": 52
+    },
+    {
+      "key": "specific_waiting_period",
+      "total": 196,
+      "allowed": 75,
+      "partly_allowed": 24,
+      "dismissed": 97,
+      "won_pct": 51
+    },
+    {
+      "key": "excluded_treatment",
+      "total": 380,
+      "allowed": 125,
+      "partly_allowed": 59,
+      "dismissed": 196,
+      "won_pct": 48
+    },
+    {
+      "key": "diagnostic_only",
+      "total": 158,
+      "allowed": 53,
+      "partly_allowed": 23,
+      "dismissed": 82,
+      "won_pct": 48
+    },
+    {
+      "key": "non_disclosure",
+      "total": 103,
+      "allowed": 20,
+      "partly_allowed": 14,
+      "dismissed": 69,
+      "won_pct": 33
+    }
+  ],
+  "by_insurer": [
+    {
+      "key": "New India Assurance",
+      "total": 1139,
+      "allowed": 381,
+      "partly_allowed": 271,
+      "dismissed": 487,
+      "won_pct": 57
+    },
+    {
+      "key": "United India Insurance",
+      "total": 676,
+      "allowed": 301,
+      "partly_allowed": 154,
+      "dismissed": 221,
+      "won_pct": 67
+    },
+    {
+      "key": "Oriental Insurance",
+      "total": 473,
+      "allowed": 204,
+      "partly_allowed": 103,
+      "dismissed": 166,
+      "won_pct": 65
+    },
+    {
+      "key": "National Insurance",
+      "total": 428,
+      "allowed": 208,
+      "partly_allowed": 93,
+      "dismissed": 127,
+      "won_pct": 70
+    },
+    {
+      "key": "Reliance General",
+      "total": 73,
+      "allowed": 44,
+      "partly_allowed": 13,
+      "dismissed": 16,
+      "won_pct": 78
+    },
+    {
+      "key": "Royal Sundaram",
+      "total": 64,
+      "allowed": 30,
+      "partly_allowed": 8,
+      "dismissed": 26,
+      "won_pct": 59
+    },
+    {
+      "key": "Star Health",
+      "total": 40,
+      "allowed": 16,
+      "partly_allowed": 18,
+      "dismissed": 6,
+      "won_pct": 85
+    },
+    {
+      "key": "ICICI Lombard",
+      "total": 35,
+      "allowed": 17,
+      "partly_allowed": 4,
+      "dismissed": 14,
+      "won_pct": 60
+    }
+  ],
+  "by_year": [
+    {
+      "key": "2005",
+      "total": 418,
+      "allowed": 129,
+      "partly_allowed": 85,
+      "dismissed": 204,
+      "won_pct": 51
+    },
+    {
+      "key": "2006",
+      "total": 385,
+      "allowed": 125,
+      "partly_allowed": 77,
+      "dismissed": 183,
+      "won_pct": 52
+    },
+    {
+      "key": "2007",
+      "total": 570,
+      "allowed": 226,
+      "partly_allowed": 130,
+      "dismissed": 214,
+      "won_pct": 62
+    },
+    {
+      "key": "2008",
+      "total": 388,
+      "allowed": 153,
+      "partly_allowed": 88,
+      "dismissed": 147,
+      "won_pct": 62
+    },
+    {
+      "key": "2009",
+      "total": 310,
+      "allowed": 155,
+      "partly_allowed": 55,
+      "dismissed": 100,
+      "won_pct": 68
+    },
+    {
+      "key": "2010",
+      "total": 381,
+      "allowed": 180,
+      "partly_allowed": 84,
+      "dismissed": 117,
+      "won_pct": 69
+    },
+    {
+      "key": "2011",
+      "total": 108,
+      "allowed": 76,
+      "partly_allowed": 27,
+      "dismissed": 5,
+      "won_pct": 95
+    },
+    {
+      "key": "2012",
+      "total": 100,
+      "allowed": 63,
+      "partly_allowed": 33,
+      "dismissed": 4,
+      "won_pct": 96
+    },
+    {
+      "key": "2013",
+      "total": 126,
+      "allowed": 52,
+      "partly_allowed": 26,
+      "dismissed": 48,
+      "won_pct": 62
+    },
+    {
+      "key": "2015",
+      "total": 40,
+      "allowed": 14,
+      "partly_allowed": 14,
+      "dismissed": 12,
+      "won_pct": 70
+    }
+  ],
+  "note": "Published awards only, mostly 2005-2013; complaints settled earlier never reach an award. Rates show how disputes that reached the Ombudsman ended, not how often insurers reject claims."
+}

@@ -403,5 +403,71 @@
     "files": "Files",
     "you": "You",
     "conversation": "Conversation"
+  },
+  "insights": {
+    "kicker": "Rejection patterns · India",
+    "title": "When patients take a rejected health claim to the Insurance Ombudsman, most of them win",
+    "sub": "{{total}} published Ombudsman awards, {{from}}–{{to}}, read and labelled by Kavach.",
+    "overall": "of disputes ended with the claim paid in full or in part",
+    "best": "won when the insurer cited {{ground}}",
+    "worst": "won when the insurer cited {{ground}}: the hardest ground",
+    "chartTitle": "How often patients won",
+    "won": "Share of awards where the claim was paid in full or in part. Grounds with fewer than 20 awards are left out.",
+    "by": {
+      "category": "Ground",
+      "insurer": "Insurer",
+      "year": "Year"
+    },
+    "rowDetail": "{{total}} awards: {{allowed}} paid in full, {{partly}} in part, {{dismissed}} dismissed",
+    "table": "Show the numbers",
+    "col": {
+      "total": "Awards",
+      "allowed": "Paid",
+      "partly": "Part paid",
+      "dismissed": "Dismissed"
+    },
+    "unavailable": "This report isn't available right now."
+  },
+  "discharge": {
+    "mode": {
+      "dispute": "My claim was rejected",
+      "pre_discharge": "I'm still in hospital"
+    },
+    "modeLabel": "What do you need?",
+    "heroTitle": "Check your claim before you leave hospital",
+    "heroSub": "Attach your policy, the draft discharge summary and the interim bill. We'll flag what the insurer is likely to cut while you can still fix it.",
+    "title": "Before you're discharged",
+    "verdict": {
+      "clear": "Looks clear",
+      "some_risks": "A few things to fix",
+      "high_risk": "Fix these before you leave"
+    },
+    "risks_one": "{{count}} thing to check",
+    "risks_other": "{{count}} things to check",
+    "severity": {
+      "high": "Likely rejection or a big cut",
+      "medium": "Likely partial cut",
+      "low": "May cause a query or delay"
+    },
+    "fix": "Before you leave",
+    "noRisks": "We found nothing in your documents that the insurer is likely to cut.",
+    "steps": [
+      {
+        "label": "Reading your documents",
+        "detail": "Sorting each file and pulling out dates, amounts and the room you're in"
+      },
+      {
+        "label": "Finding the rules that apply",
+        "detail": "Searching the regulator's rules for limits and what must be paid"
+      },
+      {
+        "label": "Checking your bill against the policy",
+        "detail": "Comparing room rent, items and waiting periods with your policy"
+      },
+      {
+        "label": "Checking every source",
+        "detail": "Making sure every quote really appears in its source"
+      }
+    ]
   }
 }
