@@ -187,6 +187,7 @@ class Case(BaseModel):
     owner: str
     created_at: datetime | None = None
     title: str | None = None
+    title_auto: bool = False  # True when the title was derived, not typed by the patient
     kind: CaseKind = CaseKind.DISPUTE
     country: str = "IN"
     language: str = "en"

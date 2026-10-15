@@ -83,19 +83,21 @@ def run_case(case_id: str) -> None:
             case.facts, case.discharge_check = discharge.check(
                 case.documents, case.country, progress
             )
-            if not case.title:
+            if not case.title or case.title_auto:
                 case.title = "Discharge check · " + (
                     case.facts.hospital or case.facts.diagnosis or ""
                 )
                 case.title = case.title.rstrip(" ·")
+                case.title_auto = False
             case.status = CaseStatus.READY
             progress(None)
             return
         result = analyse(case.documents, case.country, progress)
         case.facts, case.assessment = result.facts, result.assessment
 
-        if not case.title and case.facts:
+        if (not case.title or case.title_auto) and case.facts:
             case.title = _default_title(case.facts)
+            case.title_auto = False
 
         progress("Writing your appeal")
         case.letter = filing.draft_letter(case)

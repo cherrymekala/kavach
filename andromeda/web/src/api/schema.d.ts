@@ -503,6 +503,11 @@ export interface components {
             created_at?: string | null;
             /** Title */
             title?: string | null;
+            /**
+             * Title Auto
+             * @default false
+             */
+            title_auto: boolean;
             /** @default dispute */
             kind: components["schemas"]["CaseKind"];
             /**
