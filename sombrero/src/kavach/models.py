@@ -35,6 +35,7 @@ class Document(BaseModel):
     doc_type: DocType = DocType.OTHER
     pages: int | None = None
     warning: str | None = None
+    uploaded_at: datetime | None = None
 
 
 class Source(BaseModel):
@@ -186,6 +187,7 @@ class Case(BaseModel):
     owner: str
     created_at: datetime | None = None
     title: str | None = None
+    title_auto: bool = False  # True when the title was derived, not typed by the patient
     kind: CaseKind = CaseKind.DISPUTE
     country: str = "IN"
     language: str = "en"
@@ -222,10 +224,19 @@ class CaseSummary(BaseModel):
     strength: str | None
     escalation_step: int
     next_deadline: datetime | None
+    last_message: str | None = None
+    last_message_at: datetime | None = None
 
     @classmethod
     def of(cls, case: "Case") -> "CaseSummary":
         f = case.facts
+        last_message = None
+        last_message_at = None
+        for e in reversed(case.events):
+            if e.kind in ("message", "ask"):
+                last_message = e.text
+                last_message_at = e.at
+                break
         return cls(
             id=case.id,
             created_at=case.created_at,
@@ -242,6 +253,8 @@ class CaseSummary(BaseModel):
             strength=case.assessment.strength if case.assessment else None,
             escalation_step=case.escalation_step,
             next_deadline=case.next_deadline,
+            last_message=last_message,
+            last_message_at=last_message_at,
         )
 
 

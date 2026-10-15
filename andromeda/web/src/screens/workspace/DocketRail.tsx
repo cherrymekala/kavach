@@ -1,14 +1,14 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { signOut } from 'firebase/auth'
-import { LogOutIcon, MenuIcon, PlusIcon, ShieldCheckIcon } from 'lucide-react'
+import { MenuIcon, PlusIcon, ShieldCheckIcon } from 'lucide-react'
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
-import { auth } from '@/firebase'
 import { useCases } from '@/api/hooks'
-import type { CaseSummary, WithTitle } from '@/api/types'
+import type { CaseSummary } from '@/api/types'
 import { formatMoney } from '@/lib/money'
+import { timeAgo } from '@/lib/dates'
 import { cn } from '@/lib/cn'
+import { AccountStrip } from './AccountStrip'
 
 const DOT: Record<string, string> = {
   ready: 'bg-mint',
@@ -24,10 +24,20 @@ function CaseList() {
   const { caseId } = useParams()
   const { t } = useTranslation()
   const { data, error } = useCases()
-  const cases = (data ?? []) as (CaseSummary & WithTitle)[]
+  const cases = data ?? []
 
-  function title(c: CaseSummary & WithTitle): string {
+  function title(c: CaseSummary): string {
     return c.title || c.insurer || t('workspace.untitled')
+  }
+
+  function lastLine(c: CaseSummary): string {
+    if (c.last_message) return c.last_message
+    return [
+      c.diagnosis,
+      c.claim_amount != null && c.currency ? formatMoney(c.claim_amount, c.currency) : null,
+    ]
+      .filter(Boolean)
+      .join(' — ')
   }
 
   return (
@@ -74,12 +84,14 @@ function CaseList() {
                   >
                     <span className="flex items-center gap-2">
                       <span className={cn('size-1.5 shrink-0 rounded-full', DOT[c.status] ?? 'bg-rail-foreground/30')} />
-                      <span className="truncate text-sm font-semibold text-rail-foreground">{title(c)}</span>
+                      <span className="min-w-0 flex-1 truncate text-sm font-semibold text-rail-foreground">{title(c)}</span>
+                      <span className="shrink-0 rounded border border-rail-foreground/20 px-1.5 py-px font-mono text-[10px] font-semibold text-rail-foreground/60">
+                        {c.country}
+                      </span>
                     </span>
-                    <span className="truncate pl-3.5 text-xs text-rail-foreground/50">
-                      {[c.diagnosis, c.claim_amount != null && c.currency ? formatMoney(c.claim_amount, c.currency) : null]
-                        .filter(Boolean)
-                        .join(' — ') || c.country}
+                    <span className="flex items-center gap-2 pl-3.5 text-xs text-rail-foreground/50">
+                      <span className="min-w-0 flex-1 truncate">{lastLine(c)}</span>
+                      {c.last_message_at ? <span className="shrink-0">{timeAgo(c.last_message_at)}</span> : null}
                     </span>
                   </button>
                 </li>
@@ -91,15 +103,8 @@ function CaseList() {
         )}
       </nav>
 
-      <div className="flex items-center gap-1 border-t border-rail-foreground/10 px-3 py-3">
-        <button
-          type="button"
-          onClick={() => void signOut(auth())}
-          className="ml-auto flex items-center gap-2 rounded-md px-2 py-1.5 text-sm text-rail-foreground/70 hover:bg-rail-foreground/10 hover:text-rail-foreground"
-        >
-          <LogOutIcon className="size-4" aria-hidden />
-          Sign out
-        </button>
+      <div className="border-t border-rail-foreground/10 px-3 py-2">
+        <AccountStrip />
       </div>
     </div>
   )

@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import { Stepper } from '@/components'
-import type { Case, WithDischarge } from '@/api/types'
+import type { Case } from '@/api/types'
 
 /** The analysis progress, in order (sombrero/src/kavach/agents/orchestrator.py). */
 const STEPS = [
@@ -23,7 +23,7 @@ const DISCHARGE_STEPS = [
 
 export function AnalysingPanel({ kase }: { kase: Case }) {
   const { t } = useTranslation()
-  const discharge = (kase as Case & WithDischarge).kind === 'pre_discharge'
+  const discharge = kase.kind === 'pre_discharge'
   const steps: readonly string[] = discharge ? DISCHARGE_STEPS : STEPS
   const prefix = discharge ? 'discharge.steps' : 'upload.steps'
   const at = steps.indexOf(kase.progress ?? steps[0])

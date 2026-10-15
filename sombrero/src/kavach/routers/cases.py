@@ -20,6 +20,41 @@ from ..tools import files, store
 
 router = APIRouter(prefix="/cases", tags=["cases"])
 
+_ABBREVIATIONS = {
+    "co", "corp", "dept", "dr", "est", "etc", "fig", "govt", "inc", "jr",
+    "ltd", "mr", "mrs", "ms", "no", "prof", "rs", "sr", "st", "vs",
+}
+
+
+def _auto_title(text: str) -> str:
+    """Derive a short case name from the patient's first message.
+
+    ``.`` is only treated as a sentence end when it is followed by whitespace
+    and an uppercase letter (or the end of the text) and isn't a common
+    abbreviation, so ``Rs. 1,000`` and ``Dr. Rao`` aren't chopped mid-word.
+    """
+    t = " ".join(text.split())
+    for i, ch in enumerate(t):
+        if ch in "?!।":
+            return t[: i + 1].strip()
+        if ch != ".":
+            continue
+        nxt = i + 1
+        if nxt >= len(t):
+            return t[: i + 1].strip()
+        j = nxt
+        while j < len(t) and t[j].isspace():
+            j += 1
+        if j >= len(t) or not t[j].isupper():
+            continue
+        start = i
+        while start > 0 and (t[start - 1].isalnum() or t[start - 1] == "&"):
+            start -= 1
+        if t[start:i].lower() in _ABBREVIATIONS:
+            continue
+        return t[: i + 1].strip()
+    return t[:120].rstrip()
+
 
 @router.post("", response_model=Case)
 def create_case(body: CreateCase, uid: str = Depends(current_user)) -> Case:
@@ -68,6 +103,7 @@ def set_title(case_id: str, body: TitleRequest, uid: str = Depends(current_user)
     if not title:
         raise HTTPException(400, "Title can't be empty.")
     case.title = title
+    case.title_auto = False
     store.save_case(case)
     return case
 
@@ -82,6 +118,9 @@ def add_note(case_id: str, body: NoteRequest, uid: str = Depends(current_user)) 
     if not text:
         raise HTTPException(400, "The note can't be empty.")
     case.events.append(CaseEvent(at=datetime.now(UTC), kind="message", text=text))
+    if not case.title:
+        case.title = _auto_title(text)
+        case.title_auto = True
     store.save_case(case)
     return case
 
@@ -104,5 +143,8 @@ def ask(case_id: str, body: AskRequest, uid: str = Depends(current_user)) -> Ask
     now = datetime.now(UTC)
     case.events.append(CaseEvent(at=now, kind="message", text=question))
     case.events.append(CaseEvent(at=now, kind="ask", text=answer))
+    if not case.title:
+        case.title = _auto_title(question)
+        case.title_auto = True
     store.save_case(case)
     return AskAnswer(answer=answer)

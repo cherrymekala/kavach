@@ -1,5 +1,6 @@
 import re
 import uuid
+from datetime import UTC, datetime
 from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, Response, UploadFile
@@ -48,7 +49,7 @@ async def upload(case_id: str, file: UploadFile, uid: str = Depends(current_user
         raise HTTPException(400, "The file is empty.")
     doc_id = uuid.uuid4().hex
     uri = files.put(f"{case_id}/{doc_id}-{name}", data, file.content_type)
-    doc = Document(id=doc_id, filename=name, gcs_uri=uri)
+    doc = Document(id=doc_id, filename=name, gcs_uri=uri, uploaded_at=datetime.now(UTC))
     case.documents.append(doc)
     store.save_case(case)
     return doc

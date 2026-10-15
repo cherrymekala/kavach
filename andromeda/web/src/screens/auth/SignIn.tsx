@@ -3,8 +3,8 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { ConfirmationResult } from 'firebase/auth'
 import { RecaptchaVerifier } from 'firebase/auth'
-import { FileTextIcon, LanguagesIcon, MessageCircleIcon, PhoneIcon, SendIcon, ShieldCheckIcon } from 'lucide-react'
-import { Badge, LanguageSwitcher, PhoneOTPForm } from '@/components'
+import { FileTextIcon, LanguagesIcon, SendIcon, ShieldCheckIcon } from 'lucide-react'
+import { LanguageSwitcher, PhoneOTPForm } from '@/components'
 import { auth, mapAuthError, sendOtp } from '@/firebase'
 import { useAuth } from '@/auth'
 
@@ -52,67 +52,79 @@ export function SignIn() {
   }
 
   return (
-    <div className="flex min-h-dvh flex-col bg-page">
-      <header className="mx-auto flex w-full max-w-5xl items-center justify-between px-5 py-4 sm:px-6">
+    <div className="min-h-dvh lg:grid lg:grid-cols-2">
+      {/* Evergreen brand panel — desktop only */}
+      <div className="hidden flex-col justify-between bg-brand px-12 py-12 text-white lg:flex">
         <div className="flex items-center gap-2.5">
-          <span className="grid size-8 place-items-center rounded-lg bg-brand text-white">
+          <span className="grid size-9 place-items-center rounded-lg bg-white/10">
             <ShieldCheckIcon className="size-5" aria-hidden />
           </span>
           <span className="font-display text-lg font-bold tracking-tight">Kavach</span>
         </div>
-        <LanguageSwitcher />
-      </header>
 
-      <main className="mx-auto grid w-full max-w-5xl flex-1 items-start gap-8 px-5 pb-12 sm:px-6 lg:grid-cols-2 lg:gap-12 lg:pt-6">
-        <section className="flex flex-col gap-3">
-          <p className="font-mono text-xs font-bold uppercase tracking-widest text-brand">{t('auth.kicker')}</p>
-          <h1 className="font-display text-3xl font-extrabold leading-tight text-balance sm:text-4xl">{t('auth.headline')}</h1>
-          <p className="max-w-lg text-muted-foreground sm:text-lg">{t('auth.subhead')}</p>
+        <div className="max-w-md">
+          <p className="font-mono text-xs font-bold uppercase tracking-widest text-white/60">{t('auth.kicker')}</p>
+          <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight text-balance">{t('auth.headline')}</h1>
+          <p className="mt-4 text-lg text-white/70">{t('auth.subhead')}</p>
 
-          <ul className="mt-2 flex flex-col gap-2.5">
+          <ul className="mt-10 flex flex-col gap-4">
             {FEATURES.map(({ icon: Icon, key }) => (
-              <li key={key} className="flex items-center gap-3 text-sm">
-                <span className="grid size-8 shrink-0 place-items-center rounded-full bg-accent text-accent-foreground">
+              <li key={key} className="flex items-center gap-3">
+                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white/10">
                   <Icon className="size-4" aria-hidden />
                 </span>
-                {t(key)}
+                <span className="text-white/90">{t(key)}</span>
               </li>
             ))}
           </ul>
-        </section>
+        </div>
 
-        <section className="flex flex-col gap-4">
-          <div className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5 shadow-xs sm:p-6">
-            <h2 className="font-display text-lg font-bold">{t('auth.signIn')}</h2>
-            <PhoneOTPForm onSend={handleSend} onVerify={handleVerify} />
-            <p className="text-center text-xs text-muted-foreground">{t('auth.privacy')}</p>
+        <p className="text-xs text-white/50">{t('auth.privacy')}</p>
+      </div>
+
+      {/* Form panel */}
+      <div className="flex min-h-dvh flex-col bg-page">
+        <header className="flex items-center justify-between px-5 py-4 sm:px-8">
+          <div className="flex items-center gap-2.5 lg:hidden">
+            <span className="grid size-8 place-items-center rounded-lg bg-brand text-white">
+              <ShieldCheckIcon className="size-5" aria-hidden />
+            </span>
+            <span className="font-display text-lg font-bold tracking-tight">Kavach</span>
           </div>
+          <LanguageSwitcher />
+        </header>
 
-          <div className="flex flex-col gap-2">
-            <h3 className="font-display text-base font-bold">{t('start.otherWays')}</h3>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="flex flex-col gap-1 rounded-xl border border-border bg-card p-4">
-                <MessageCircleIcon className="size-5 text-muted-foreground" aria-hidden />
-                <p className="mt-2 font-semibold">{t('start.whatsapp')}</p>
-                <p className="text-xs text-muted-foreground">{t('start.whatsappDesc')}</p>
-                <Badge variant="secondary" className="mt-2 self-start">
-                  {t('start.comingSoon')}
-                </Badge>
-              </div>
-              <div className="flex flex-col gap-1 rounded-xl border border-border bg-card p-4">
-                <PhoneIcon className="size-5 text-muted-foreground" aria-hidden />
-                <p className="mt-2 font-semibold">{t('start.call')}</p>
-                <p className="text-xs text-muted-foreground">{t('start.callDesc')}</p>
-                <Badge variant="secondary" className="mt-2 self-start">
-                  {t('start.comingSoon')}
-                </Badge>
+        <main className="flex flex-1 items-center justify-center px-5 pb-10 sm:px-8">
+          <div className="w-full max-w-md">
+            <div className="mb-6 lg:hidden">
+              <p className="font-mono text-xs font-bold uppercase tracking-widest text-brand">{t('auth.kicker')}</p>
+              <h1 className="mt-3 font-display text-3xl font-extrabold leading-tight text-balance">{t('auth.headline')}</h1>
+              <p className="mt-3 text-muted-foreground">{t('auth.subhead')}</p>
+            </div>
+
+            <div className="rounded-2xl border border-line bg-card p-6 shadow-sm sm:p-8">
+              <h2 className="font-display text-lg font-bold">{t('auth.signIn')}</h2>
+              <p className="mt-1 text-sm text-muted-foreground">{t('auth.privacy')}</p>
+              <div className="mt-5">
+                <PhoneOTPForm onSend={handleSend} onVerify={handleVerify} />
               </div>
             </div>
-          </div>
-        </section>
-      </main>
 
-      <div id="recaptcha-container" />
+            <ul className="mt-6 flex flex-col gap-2.5 lg:hidden">
+              {FEATURES.map(({ icon: Icon, key }) => (
+                <li key={key} className="flex items-center gap-3 text-sm text-muted-foreground">
+                  <span className="grid size-8 shrink-0 place-items-center rounded-full bg-brand-soft text-brand">
+                    <Icon className="size-4" aria-hidden />
+                  </span>
+                  {t(key)}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </main>
+
+        <div id="recaptcha-container" />
+      </div>
     </div>
   )
 }

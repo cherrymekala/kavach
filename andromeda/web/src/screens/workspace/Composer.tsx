@@ -11,10 +11,12 @@ interface ComposerProps {
   caseId: string
   kase: Case
   variant?: 'hero' | 'dock'
+  /** Extra classes for the dock wrapper (positioning, animation). */
+  className?: string
 }
 
 /** The single input for everything: attach files, ask a question, or add a note. */
-export function Composer({ caseId, kase, variant = 'dock' }: ComposerProps) {
+export function Composer({ caseId, kase, variant = 'dock', className }: ComposerProps) {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const upload = useUploadDocument(caseId)
@@ -132,7 +134,7 @@ export function Composer({ caseId, kase, variant = 'dock' }: ComposerProps) {
   }
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn('flex flex-col gap-2', className)}>
       {input}
       {uploading.length ? <p className="px-2 text-xs text-muted-foreground">Uploading {uploading.join(', ')}…</p> : null}
       {error ? <p className="px-2 text-sm text-destructive">{error}</p> : null}
