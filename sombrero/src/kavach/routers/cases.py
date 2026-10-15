@@ -21,6 +21,17 @@ from ..tools import files, store
 router = APIRouter(prefix="/cases", tags=["cases"])
 
 
+def _auto_title(text: str) -> str:
+    """Derive a short case name from the patient's first message."""
+    t = " ".join(text.split())
+    for end in (".", "?", "!", "।"):
+        i = t.find(end)
+        if i >= 0:
+            t = t[: i + 1].strip()
+            break
+    return t[:120].rstrip()
+
+
 @router.post("", response_model=Case)
 def create_case(body: CreateCase, uid: str = Depends(current_user)) -> Case:
     case = Case(
@@ -82,6 +93,8 @@ def add_note(case_id: str, body: NoteRequest, uid: str = Depends(current_user)) 
     if not text:
         raise HTTPException(400, "The note can't be empty.")
     case.events.append(CaseEvent(at=datetime.now(UTC), kind="message", text=text))
+    if not case.title:
+        case.title = _auto_title(text)
     store.save_case(case)
     return case
 
@@ -104,5 +117,7 @@ def ask(case_id: str, body: AskRequest, uid: str = Depends(current_user)) -> Ask
     now = datetime.now(UTC)
     case.events.append(CaseEvent(at=now, kind="message", text=question))
     case.events.append(CaseEvent(at=now, kind="ask", text=answer))
+    if not case.title:
+        case.title = _auto_title(question)
     store.save_case(case)
     return AskAnswer(answer=answer)

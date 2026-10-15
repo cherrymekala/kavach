@@ -46,6 +46,63 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cases/{case_id}/title": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        /** Set Title */
+        put: operations["set_title_cases__case_id__title_put"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/notes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Add Note
+         * @description Append the patient's own text to the case history.
+         */
+        post: operations["add_note_cases__case_id__notes_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/ask": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Ask
+         * @description Answer a free-text question about the case, grounded in its facts and assessment.
+         */
+        post: operations["ask_cases__case_id__ask_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/cases/{case_id}/documents": {
         parameters: {
             query?: never;
@@ -57,6 +114,26 @@ export interface paths {
         put?: never;
         /** Upload */
         post: operations["upload_cases__case_id__documents_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/documents/{doc_id}/file": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get File
+         * @description Serve a document's bytes for an inline preview.
+         */
+        get: operations["get_file_cases__case_id__documents__doc_id__file_get"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -208,6 +285,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/insights/{country}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Insights
+         * @description Public: how disputes that reached the dispute body ended, by ground, insurer and year.
+         */
+        get: operations["get_insights_insights__country__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tracker/tick": {
         parameters: {
             query?: never;
@@ -268,6 +365,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/voice/incoming": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Incoming */
+        post: operations["incoming_voice_incoming_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/voice/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Verify */
+        post: operations["verify_voice_verify_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/voice/menu": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Menu */
+        post: operations["menu_voice_menu_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -297,6 +445,16 @@ export interface components {
             explanation: string;
             /** Sources */
             sources: components["schemas"]["Source"][];
+        };
+        /** AskAnswer */
+        AskAnswer: {
+            /** Answer */
+            answer: string;
+        };
+        /** AskRequest */
+        AskRequest: {
+            /** Question */
+            question: string;
         };
         /** Assessment */
         Assessment: {
@@ -343,6 +501,10 @@ export interface components {
             owner: string;
             /** Created At */
             created_at?: string | null;
+            /** Title */
+            title?: string | null;
+            /** @default dispute */
+            kind: components["schemas"]["CaseKind"];
             /**
              * Country
              * @default IN
@@ -362,6 +524,7 @@ export interface components {
             documents: components["schemas"]["Document"][];
             facts?: components["schemas"]["CaseFacts"] | null;
             assessment?: components["schemas"]["Assessment"] | null;
+            discharge_check?: components["schemas"]["DischargeCheck"] | null;
             letter?: components["schemas"]["Letter"] | null;
             complainant?: components["schemas"]["Complainant"] | null;
             /** Next Deadline */
@@ -436,6 +599,11 @@ export interface components {
             cited_clause?: string | null;
         };
         /**
+         * CaseKind
+         * @enum {string}
+         */
+        CaseKind: "dispute" | "pre_discharge";
+        /**
          * CaseStatus
          * @enum {string}
          */
@@ -449,6 +617,10 @@ export interface components {
             id: string;
             /** Created At */
             created_at: string | null;
+            /** Title */
+            title: string | null;
+            /** @default dispute */
+            kind: components["schemas"]["CaseKind"];
             /** Country */
             country: string;
             /** Language */
@@ -470,6 +642,10 @@ export interface components {
             escalation_step: number;
             /** Next Deadline */
             next_deadline: string | null;
+            /** Last Message */
+            last_message?: string | null;
+            /** Last Message At */
+            last_message_at?: string | null;
         };
         /**
          * Complainant
@@ -501,6 +677,8 @@ export interface components {
         };
         /** CreateCase */
         CreateCase: {
+            /** @default dispute */
+            kind: components["schemas"]["CaseKind"];
             /**
              * Country
              * @default IN
@@ -511,6 +689,23 @@ export interface components {
              * @default en
              */
             language: string;
+        };
+        /** DischargeCheck */
+        DischargeCheck: {
+            /** Verdict */
+            verdict: string;
+            /** Summary */
+            summary: string;
+            /**
+             * Risks
+             * @default []
+             */
+            risks: components["schemas"]["Risk"][];
+            /**
+             * Disclaimer
+             * @default Kavach prepares documents from your files and public rules to help you raise a dispute. It is not legal advice. Check every detail before you sign or send anything.
+             */
+            disclaimer: string;
         };
         /**
          * DocType
@@ -531,6 +726,8 @@ export interface components {
             pages?: number | null;
             /** Warning */
             warning?: string | null;
+            /** Uploaded At */
+            uploaded_at?: string | null;
         };
         /** FiledRequest */
         FiledRequest: {
@@ -559,6 +756,44 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** InsightRow */
+        InsightRow: {
+            /** Key */
+            key: string;
+            /** Total */
+            total: number;
+            /** Allowed */
+            allowed: number;
+            /** Partly Allowed */
+            partly_allowed: number;
+            /** Dismissed */
+            dismissed: number;
+            /** Won Pct */
+            won_pct: number;
+        };
+        /**
+         * Insights
+         * @description Public rejection-pattern report built from published dispute-body rulings.
+         */
+        Insights: {
+            /** Country */
+            country: string;
+            /** Source */
+            source: string;
+            /** Period */
+            period: {
+                [key: string]: unknown;
+            };
+            overall: components["schemas"]["InsightRow"];
+            /** By Category */
+            by_category: components["schemas"]["InsightRow"][];
+            /** By Insurer */
+            by_insurer: components["schemas"]["InsightRow"][];
+            /** By Year */
+            by_year: components["schemas"]["InsightRow"][];
+            /** Note */
+            note: string;
         };
         /** LadderStep */
         LadderStep: {
@@ -589,6 +824,11 @@ export interface components {
         LetterRequest: {
             /** Instruction */
             instruction?: string | null;
+        };
+        /** NoteRequest */
+        NoteRequest: {
+            /** Text */
+            text: string;
         };
         /**
          * PackInfo
@@ -627,6 +867,19 @@ export interface components {
             /** Amount Paid */
             amount_paid?: number | null;
         };
+        /** Risk */
+        Risk: {
+            /** Title */
+            title: string;
+            /** Severity */
+            severity: string;
+            /** Why */
+            why: string;
+            /** Fix */
+            fix: string;
+            /** Sources */
+            sources: components["schemas"]["Source"][];
+        };
         /** Source */
         Source: {
             /** Kind */
@@ -640,6 +893,11 @@ export interface components {
              * @default false
              */
             verified: boolean;
+        };
+        /** TitleRequest */
+        TitleRequest: {
+            /** Title */
+            title: string;
         };
         /** ValidationError */
         ValidationError: {
@@ -793,6 +1051,117 @@ export interface operations {
             };
         };
     };
+    set_title_cases__case_id__title_put: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TitleRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Case"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    add_note_cases__case_id__notes_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NoteRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Case"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    ask_cases__case_id__ask_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AskRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AskAnswer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     upload_cases__case_id__documents_post: {
         parameters: {
             query?: never;
@@ -817,6 +1186,40 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Document"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_file_cases__case_id__documents__doc_id__file_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+                doc_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */
@@ -1107,6 +1510,37 @@ export interface operations {
             };
         };
     };
+    get_insights_insights__country__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                country: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Insights"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     tick_tracker_tick_post: {
         parameters: {
             query?: never;
@@ -1201,6 +1635,91 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Case"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    incoming_voice_incoming_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    verify_voice_verify_post: {
+        parameters: {
+            query: {
+                case: string;
+                tries: number;
+                sig: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    menu_voice_menu_post: {
+        parameters: {
+            query: {
+                case: string;
+                sig: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */

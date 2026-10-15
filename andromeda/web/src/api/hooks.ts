@@ -161,7 +161,10 @@ export function useAddNote(caseId: string) {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (body: NoteRequest) => apiFetch<Case>(`/cases/${caseId}/notes`, jsonBody(body)),
-    onSuccess: (c) => qc.setQueryData(caseKey(caseId), c),
+    onSuccess: (c) => {
+      qc.setQueryData(caseKey(caseId), c)
+      qc.invalidateQueries({ queryKey: ['cases'] })
+    },
   })
 }
 
@@ -169,7 +172,10 @@ export function useAsk(caseId: string) {
   const qc = useQueryClient()
   return useMutation({
     mutationFn: (body: AskRequest) => apiFetch<AskAnswer>(`/cases/${caseId}/ask`, jsonBody(body)),
-    onSuccess: () => qc.invalidateQueries({ queryKey: caseKey(caseId) }),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: caseKey(caseId) })
+      qc.invalidateQueries({ queryKey: ['cases'] })
+    },
   })
 }
 

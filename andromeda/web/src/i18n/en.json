@@ -402,7 +402,14 @@
     },
     "files": "Files",
     "you": "You",
-    "conversation": "Conversation"
+"conversation": "Conversation",
+    "downloadFile": "Download {{name}}",
+    "sections": "Sections",
+    "sectionsHint": "Jump to a section",
+    "chat": {
+      "open": "Message Kavach",
+      "close": "Close messages"
+    }
   },
   "insights": {
     "kicker": "Rejection patterns · India",
@@ -469,5 +476,11 @@
         "detail": "Making sure every quote really appears in its source"
       }
     ]
+  },
+  "account": {
+    "title": "Account",
+    "signedInAs": "Signed in",
+    "placeholder": "Kavach account",
+    "signOut": "Sign out"
   }
 }

@@ -21,70 +21,12 @@ export type RejectionCategory = components['schemas']['RejectionCategory']
 export type CaseSummary = components['schemas']['CaseSummary']
 export type PackInfo = components['schemas']['PackInfo']
 export type LadderStep = components['schemas']['LadderStep']
-
-// Endpoints added after the last openapi-typescript run — regenerate schema.d.ts
-// from /openapi.json once the backend with `title` / `ask` / `notes` deploys.
-export interface AskAnswer {
-  answer: string
-}
-
-export interface AskRequest {
-  question: string
-}
-
-export interface NoteRequest {
-  text: string
-}
-
-export interface TitleRequest {
-  title: string
-}
-
-/** A case (or summary) carrying the new `title` field. */
-export interface WithTitle {
-  title: string | null
-}
-// GET /insights/{country} — regenerate schema.d.ts after the backend deploys.
-export interface InsightRow {
-  key: string
-  total: number
-  allowed: number
-  partly_allowed: number
-  dismissed: number
-  won_pct: number
-}
-
-export interface Insights {
-  country: string
-  source: string
-  period: { from: string; to: string }
-  overall: InsightRow
-  by_category: InsightRow[]
-  by_insurer: InsightRow[]
-  by_year: InsightRow[]
-  note: string
-}
-
-// Pre-discharge check (Case.kind / Case.discharge_check) — regenerate schema.d.ts after deploy.
-export type CaseKind = 'dispute' | 'pre_discharge'
-
-export interface Risk {
-  title: string
-  severity: 'high' | 'medium' | 'low' | string
-  why: string
-  fix: string
-  sources: { kind: string; ref: string; quote: string; verified?: boolean }[]
-}
-
-export interface DischargeCheck {
-  verdict: 'clear' | 'some_risks' | 'high_risk' | string
-  summary: string
-  risks: Risk[]
-  disclaimer: string
-}
-
-/** A case carrying the pre-discharge fields. */
-export interface WithDischarge {
-  kind?: CaseKind
-  discharge_check?: DischargeCheck | null
-}
+export type AskAnswer = components['schemas']['AskAnswer']
+export type AskRequest = components['schemas']['AskRequest']
+export type NoteRequest = components['schemas']['NoteRequest']
+export type TitleRequest = components['schemas']['TitleRequest']
+export type CaseKind = components['schemas']['CaseKind']
+export type Risk = components['schemas']['Risk']
+export type DischargeCheck = components['schemas']['DischargeCheck']
+export type InsightRow = components['schemas']['InsightRow']
+export type Insights = components['schemas']['Insights']

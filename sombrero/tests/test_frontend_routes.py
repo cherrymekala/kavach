@@ -50,3 +50,29 @@ def test_pack_info_exposes_the_ladder_without_auth(client):
     india = client.get("/packs/IN").json()
     assert len(india["ladder"]) == 3 and india["limitation"]["days"] == 365
     assert client.get("/packs/xx").status_code == 404
+
+
+def test_note_auto_titles_the_case(client):
+    case_id = client.post("/cases", json={"country": "IN"}).json()["id"]
+    case = client.post(
+        f"/cases/{case_id}/notes",
+        json={"text": "My claim was rejected by Star Health."},
+    ).json()
+    assert case["title"] == "My claim was rejected by Star Health."
+
+
+def test_document_records_upload_time(client):
+    case_id = client.post("/cases", json={"country": "IN"}).json()["id"]
+    doc = client.post(
+        f"/cases/{case_id}/documents", files={"file": ("letter.txt", b"rejected")}
+    ).json()
+    assert doc["uploaded_at"] is not None
+
+
+def test_summary_carries_last_message(client):
+    case_id = client.post("/cases", json={"country": "IN"}).json()["id"]
+    client.post(f"/cases/{case_id}/notes", json={"text": "hello there"})
+    rows = client.get("/cases").json()
+    assert rows[0]["title"] == "hello there"
+    assert rows[0]["last_message"] == "hello there"
+    assert rows[0]["last_message_at"] is not None

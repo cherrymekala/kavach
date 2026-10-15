@@ -36,6 +36,7 @@ export function NewClaim() {
       await run(c.id)
       // Drop the cached (empty) case so the dossier fetches the note/files we just added.
       queryClient.removeQueries({ queryKey: caseKey(c.id) })
+      queryClient.invalidateQueries({ queryKey: ['cases'] })
       navigate(`/case/${c.id}`)
     } catch (e) {
       setError(e instanceof Error ? e.message : t('start.errorCreate'))
