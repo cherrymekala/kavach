@@ -416,6 +416,64 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cases/{case_id}/checkout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Checkout
+         * @description Start paying for the appeal pack. India: a Razorpay order for the in-page checkout.
+         *     Singapore/Malaysia: a Stripe Checkout URL to redirect to.
+         */
+        post: operations["checkout_cases__case_id__checkout_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/payment/razorpay": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Razorpay Paid
+         * @description Razorpay Checkout's success handler posts here; we check the signature ourselves.
+         */
+        post: operations["razorpay_paid_cases__case_id__payment_razorpay_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/payments/stripe/webhook": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Stripe Webhook */
+        post: operations["stripe_webhook_payments_stripe_webhook_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -548,6 +606,10 @@ export interface components {
             documents_deleted_at?: string | null;
             /** Amount Recovered */
             amount_recovered?: number | null;
+            /** Paid At */
+            paid_at?: string | null;
+            /** Payment Ref */
+            payment_ref?: string | null;
             /** Progress */
             progress?: string | null;
         };
@@ -854,6 +916,21 @@ export interface components {
             limitation?: {
                 [key: string]: unknown;
             } | null;
+            /** Price Amount */
+            price_amount?: number | null;
+            /** Price Currency */
+            price_currency?: string | null;
+            /** Payment Provider */
+            payment_provider?: string | null;
+        };
+        /** RazorpayPaid */
+        RazorpayPaid: {
+            /** Order Id */
+            order_id: string;
+            /** Payment Id */
+            payment_id: string;
+            /** Signature */
+            signature: string;
         };
         /**
          * RejectionCategory
@@ -1725,6 +1802,111 @@ export interface operations {
                 };
                 content: {
                     "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    checkout_cases__case_id__checkout_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    razorpay_paid_cases__case_id__payment_razorpay_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RazorpayPaid"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Case"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    stripe_webhook_payments_stripe_webhook_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "stripe-signature"?: string;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
                 };
             };
             /** @description Validation Error */

@@ -21,7 +21,7 @@ import {
 } from 'lucide-react'
 import { Button, ErrorState, LanguageSwitcher, SourceKindIcon, Spinner, ThemeToggle } from '@/components'
 import { apiBlob } from '@/api/client'
-import { caseKey, useAnalyse, useCase, useDeleteDocument } from '@/api/hooks'
+import { caseKey, useAnalyse, useCase, useDeleteDocument, usePack } from '@/api/hooks'
 import { useLiveCase } from '@/api/live'
 import type { CaseEvent, Document } from '@/api/types'
 import { cn } from '@/lib/cn'
@@ -37,6 +37,7 @@ import { LetterPanel } from './Panels/LetterPanel'
 import { OutcomePanel } from './Panels/OutcomePanel'
 import { SummaryPanel } from './Panels/SummaryPanel'
 import { TrackerPanel } from './Panels/TrackerPanel'
+import { UnlockPanel } from './Panels/UnlockPanel'
 import { SectionDock, SectionList, type Section } from './SectionNav'
 
 const DOT: Record<string, string> = {
@@ -190,15 +191,17 @@ function AnalyseBlock({
   )
 }
 
-function HearingBlock({ onStart }: { onStart: () => void }) {
+function HearingBlock({ onStart, locked }: { onStart: () => void; locked: boolean }) {
   const { t } = useTranslation()
   return (
     <section className="flex flex-wrap items-center justify-between gap-3">
       <div className="min-w-0">
         <h2 className="font-display text-base font-bold">{t('hearing.title')}</h2>
-        <p className="text-sm text-muted-foreground">{t('hearing.introSub')}</p>
+        <p className="text-sm text-muted-foreground">
+          {locked ? t('unlock.rehearsalLocked') : t('hearing.introSub')}
+        </p>
       </div>
-      <Button variant="outline" onClick={onStart}>
+      <Button variant="outline" disabled={locked} onClick={onStart}>
         <MicIcon className="size-4" aria-hidden />
         {t('hearing.start')}
       </Button>
@@ -232,6 +235,7 @@ export function Dossier() {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const { data: kase, error } = useCase(caseId)
+  const { data: pack } = usePack(kase?.country)
   const live = useLiveCase(caseId)
   const analyse = useAnalyse(caseId ?? '')
   const remove = useDeleteDocument(caseId ?? '')
@@ -282,6 +286,9 @@ if (!current) {
 const docs = current.documents ?? []
   const title = current.title || current.facts?.insurer || t('workspace.untitled')
   const hasAssessment = Boolean(current.assessment)
+  // Payments on (the pack has a price) and this case not paid yet: PDFs and rehearsal are locked.
+  const locked = Boolean(pack?.price_amount) && !current.paid_at
+  const unlock = locked && pack ? <UnlockPanel caseId={caseId} price={pack} /> : null
   const discharge = current.kind === 'pre_discharge'
   const hasReport = Boolean(current.facts) && !discharge
   const failed = status === 'collecting' && Boolean(current.progress)
@@ -379,13 +386,28 @@ const docs = current.documents ?? []
       case 'chances':
         return <ChancesPanel kase={current} />
       case 'letter':
-        return <LetterPanel caseId={caseId} kase={current} />
+        return (
+          <>
+            {unlock}
+            <LetterPanel caseId={caseId} kase={current} />
+          </>
+        )
       case 'filing':
-        return <FilingPanel caseId={caseId} kase={current} />
+        return (
+          <>
+            {unlock}
+            <FilingPanel caseId={caseId} kase={current} />
+          </>
+        )
       case 'tracker':
         return <TrackerPanel caseId={caseId} kase={current} />
       case 'hearing':
-        return <HearingBlock onStart={() => navigate(`/case/${caseId}/hearing`)} />
+        return (
+          <>
+            {unlock}
+            <HearingBlock locked={locked} onStart={() => navigate(`/case/${caseId}/hearing`)} />
+          </>
+        )
       case 'outcome':
         return <OutcomePanel caseId={caseId} kase={current} />
       case 'conversation':

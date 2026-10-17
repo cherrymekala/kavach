@@ -2,7 +2,18 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from .config import get_settings
-from .routers import analysis, cases, documents, filing, hearing, insights, packs, tracker, voice
+from .routers import (
+    analysis,
+    cases,
+    documents,
+    filing,
+    hearing,
+    insights,
+    packs,
+    payments,
+    tracker,
+    voice,
+)
 
 app = FastAPI(title="Kavach API", version="0.1.0")
 app.add_middleware(
@@ -21,6 +32,7 @@ app.include_router(insights.router)
 app.include_router(tracker.router)
 app.include_router(tracker.case_router)
 app.include_router(voice.router)
+app.include_router(payments.router)
 
 
 @app.get("/health")

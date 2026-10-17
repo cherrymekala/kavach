@@ -1,7 +1,8 @@
 from fastapi import APIRouter, HTTPException
 
+from ..config import get_settings
 from ..models import LadderStep, PackInfo
-from ..tools import packs
+from ..tools import packs, payments
 
 router = APIRouter(prefix="/packs", tags=["packs"])
 COUNTRIES = ("IN", "SG", "MY")
@@ -14,6 +15,8 @@ def get_pack(country: str) -> PackInfo:
     if code not in COUNTRIES:
         raise HTTPException(404, f"No country pack for {country}.")
     pack = packs.load(code)
+    currency, amount = payments.price(code) or (None, None)
+    on = get_settings().payments_enabled and amount is not None
     return PackInfo(
         country=code,
         currency=pack["currency"],
@@ -29,4 +32,7 @@ def get_pack(country: str) -> PackInfo:
             for s in pack["dispute_process"]
         ],
         limitation=pack.get("limitation"),
+        price_amount=amount if on else None,
+        price_currency=currency if on else None,
+        payment_provider=payments.provider(code) if on else None,
     )

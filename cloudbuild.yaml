@@ -6,6 +6,8 @@ substitutions:
   _MODEL_FAST: gemini-3.5-flash-lite
   _MODEL_REASONING: gemini-3.8-flash
   _PUBLIC_URL: https://sombrero-urb5ttky3q-el.a.run.app
+  # Set to true (trigger substitution) to charge for the appeal pack; false = everything free.
+  _PAYMENTS_ENABLED: "false"
 options:
   # Required when the trigger runs as a user-managed service account.
   logging: CLOUD_LOGGING_ONLY
@@ -29,8 +31,8 @@ steps:
       - --max-instances=3
       # Hearing rehearsals are WebSocket sessions; the 5-minute default would cut them off.
       - --timeout=3600
-      - --set-env-vars=GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},USE_VERTEX=true,DOCS_BUCKET=$PROJECT_ID-docs,MODEL_FAST=${_MODEL_FAST},MODEL_REASONING=${_MODEL_REASONING},RULINGS_ENGINE=kavach-rulings,PUBLIC_URL=${_PUBLIC_URL}
+      - --set-env-vars=GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},USE_VERTEX=true,DOCS_BUCKET=$PROJECT_ID-docs,MODEL_FAST=${_MODEL_FAST},MODEL_REASONING=${_MODEL_REASONING},RULINGS_ENGINE=kavach-rulings,PUBLIC_URL=${_PUBLIC_URL},PAYMENTS_ENABLED=${_PAYMENTS_ENABLED}
       # Phone line: Twilio signs webhooks with the auth token (secrets live in Secret Manager).
-      - --update-secrets=TWILIO_ACCOUNT_SID=twilio-account-sid:latest,TWILIO_AUTH_TOKEN=twilio-auth-token:latest
+      - --update-secrets=TWILIO_ACCOUNT_SID=twilio-account-sid:latest,TWILIO_AUTH_TOKEN=twilio-auth-token:latest,RAZORPAY_KEY_ID=razorpay-key-id:latest,RAZORPAY_KEY_SECRET=razorpay-key-secret:latest,STRIPE_SECRET_KEY=stripe-secret-key:latest,STRIPE_WEBHOOK_SECRET=stripe-webhook-secret:latest
 images:
   - ${_REGION}-docker.pkg.dev/$PROJECT_ID/${_REPO}/${_SERVICE}:$SHORT_SHA

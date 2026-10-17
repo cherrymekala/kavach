@@ -30,3 +30,8 @@ export type Risk = components['schemas']['Risk']
 export type DischargeCheck = components['schemas']['DischargeCheck']
 export type InsightRow = components['schemas']['InsightRow']
 export type Insights = components['schemas']['Insights']
+
+/** POST /cases/{id}/checkout (an untyped dict in the backend). */
+export type Checkout =
+  | { provider: 'razorpay'; key_id: string; order_id: string; amount: number; currency: string; name: string }
+  | { provider: 'stripe'; url: string; amount: number; currency: string }

@@ -21,7 +21,7 @@ from ..agents import hearing
 from ..auth import verify_token
 from ..config import get_settings
 from ..models import Case, CaseEvent
-from ..tools import store
+from ..tools import payments, store
 
 router = APIRouter(tags=["hearing"])
 MIN_ANSWERS = 3  # the Live model sometimes calls `finish` before the hearing has happened
@@ -130,6 +130,8 @@ def _authorise(first: dict, case_id: str) -> Case:
         raise HTTPException(404, "Case not found.")
     if not case.assessment:
         raise HTTPException(409, "Run the analysis first.")
+    if not payments.is_unlocked(case):
+        raise HTTPException(402, "Unlock the appeal pack to rehearse your hearing.")
     return case
 
 
