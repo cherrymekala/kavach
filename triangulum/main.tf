@@ -213,7 +213,11 @@ resource "google_firebaserules_release" "firestore" {
 # Phone line (Twilio). Values are added outside Terraform so they never reach the state file:
 #   printf %s "$TWILIO_AUTH_TOKEN" | gcloud secrets versions add twilio-auth-token --data-file=-
 resource "google_secret_manager_secret" "twilio" {
-  for_each  = toset(["twilio-account-sid", "twilio-auth-token"])
+  for_each = toset([
+    "twilio-account-sid", "twilio-auth-token",
+    # Payments (appeal pack): Razorpay for India, Stripe for Singapore/Malaysia.
+    "razorpay-key-id", "razorpay-key-secret", "stripe-secret-key", "stripe-webhook-secret",
+  ])
   secret_id = each.key
   replication {
     auto {}

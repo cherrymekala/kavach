@@ -4,7 +4,7 @@ from pydantic import BaseModel
 from ..agents import filing
 from ..auth import current_user
 from ..models import Case, Complainant, FilingPack, Letter
-from ..tools import store
+from ..tools import payments, store
 
 router = APIRouter(prefix="/cases/{case_id}", tags=["filing"])
 
@@ -15,6 +15,12 @@ def _ready_case(case_id: str, uid: str) -> Case:
         raise HTTPException(404, "Case not found.")
     if not case.assessment:
         raise HTTPException(409, "Run the analysis first.")
+    return case
+
+
+def _unlocked(case: Case) -> Case:
+    if not payments.is_unlocked(case):
+        raise HTTPException(402, "Unlock the appeal pack to download this.")
     return case
 
 
@@ -51,7 +57,7 @@ def get_filing(
 def get_filing_pdf(
     case_id: str, step: int | None = None, uid: str = Depends(current_user)
 ) -> Response:
-    case = _ready_case(case_id, uid)
+    case = _unlocked(_ready_case(case_id, uid))
     pdf = filing.render_pdf(filing.filing_pack(case, step), case)
     return Response(
         pdf,
@@ -62,7 +68,7 @@ def get_filing_pdf(
 
 @router.get("/letter.pdf")
 def get_letter_pdf(case_id: str, local: bool = False, uid: str = Depends(current_user)) -> Response:
-    case = _ready_case(case_id, uid)
+    case = _unlocked(_ready_case(case_id, uid))
     if not case.letter:
         raise HTTPException(409, "No letter yet.")
     return Response(

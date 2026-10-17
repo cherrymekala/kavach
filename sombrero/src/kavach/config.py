@@ -36,6 +36,13 @@ class Settings(BaseSettings):
     twilio_account_sid: str = ""
     twilio_auth_token: str = ""
     public_url: str = ""  # e.g. https://sombrero-....run.app; Twilio signs this exact URL
+    # Payments: the "appeal pack" (letter/form PDFs + hearing rehearsal). Off = everything free.
+    payments_enabled: bool = False
+    razorpay_key_id: str = ""  # India (INR)
+    razorpay_key_secret: str = ""
+    stripe_secret_key: str = ""  # Singapore, Malaysia
+    stripe_webhook_secret: str = ""
+    app_url: str = "https://kavach-510312.web.app"  # where Stripe sends the patient back
 
 
 @lru_cache

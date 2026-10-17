@@ -203,6 +203,8 @@ class Case(BaseModel):
     events: list[CaseEvent] = []
     documents_deleted_at: datetime | None = None
     amount_recovered: float | None = None
+    paid_at: datetime | None = None  # appeal pack unlocked (payments_enabled only)
+    payment_ref: str | None = None  # Razorpay payment id or Stripe checkout session id
     progress: str | None = None  # shown live in the UI, e.g. "Checking sources"
 
 
@@ -274,6 +276,10 @@ class PackInfo(BaseModel):
     regulator: str
     ladder: list[LadderStep]
     limitation: dict | None = None
+    # Appeal-pack price in the smallest unit (paise/cents); None when payments are switched off.
+    price_amount: int | None = None
+    price_currency: str | None = None
+    payment_provider: str | None = None  # razorpay | stripe
 
 
 class InsightRow(BaseModel):

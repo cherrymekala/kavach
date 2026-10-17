@@ -17,6 +17,7 @@ const Tracker = lazy(() => import('./screens/tracker/Tracker').then((m) => ({ de
 const Outcome = lazy(() => import('./screens/outcome/Outcome').then((m) => ({ default: m.Outcome })))
 const Insights = lazy(() => import('./screens/insights/Insights').then((m) => ({ default: m.Insights })))
 const DischargePreview = lazy(() => import('./dev/DischargePreview').then((m) => ({ default: m.DischargePreview })))
+const UnlockPreview = lazy(() => import('./dev/UnlockPreview').then((m) => ({ default: m.UnlockPreview })))
 const Foundation = lazy(() => import('./screens/dev/Foundation').then((m) => ({ default: m.Foundation })))
 
 // Dev-only foundation page — never shipped to production hosting.
@@ -35,6 +36,7 @@ const devRoutes = import.meta.env.DEV
   ? [
       { path: 'dev', element: <Foundation /> },
       { path: 'preview/discharge', element: <DischargePreview /> },
+      { path: 'preview/unlock/:country/:caseId', element: <UnlockPreview /> },
       ...caseScreens.map(([name, Screen]) => ({ path: `preview/case/:caseId/${name}`, element: <Screen /> })),
     ]
   : []

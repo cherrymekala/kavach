@@ -402,7 +402,7 @@
     },
     "files": "Files",
     "you": "You",
-"conversation": "Conversation",
+    "conversation": "Conversation",
     "downloadFile": "Download {{name}}",
     "sections": "Sections",
     "sectionsHint": "Jump to a section",
@@ -482,5 +482,18 @@
     "signedInAs": "Signed in",
     "placeholder": "Kavach account",
     "signOut": "Sign out"
+  },
+  "unlock": {
+    "title": "Unlock your appeal pack",
+    "sub": "Your analysis stays free. The pack has everything you need to file and follow through.",
+    "items": {
+      "letter": "Appeal letter as a PDF, in English and your language",
+      "form": "The official complaint form, filled in from your documents",
+      "rehearsal": "Hearing rehearsal with live coaching"
+    },
+    "cta": "Unlock for {{amount}}",
+    "note": "One-time payment for this case.",
+    "error": "The payment didn't go through. Please try again.",
+    "rehearsalLocked": "Included in the appeal pack. Unlock it above to rehearse."
   }
 }

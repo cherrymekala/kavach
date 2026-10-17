@@ -28,7 +28,7 @@ from google.genai import types
 from ..agents import hearing, voice
 from ..config import get_settings
 from ..models import Case, CaseEvent
-from ..tools import audio, store
+from ..tools import audio, payments, store
 
 router = APIRouter(prefix="/voice", tags=["voice"])
 VOICE = "Polly.Joanna"  # Twilio's TTS for the short menu prompts before Gemini takes over
@@ -126,7 +126,8 @@ def _pin(case: Case) -> str | None:
 
 def _menu(case: Case) -> str:
     sig = _sign("menu", case.id)
-    rehearse = " Press 2 to practise your hearing." if case.assessment else ""
+    can_rehearse = case.assessment and payments.is_unlocked(case)
+    rehearse = " Press 2 to practise your hearing." if can_rehearse else ""
     return _gather(
         _action("/voice/menu", case=case.id, sig=sig),
         f"Press 1 to hear where your case stands and what to do next.{rehearse}",
