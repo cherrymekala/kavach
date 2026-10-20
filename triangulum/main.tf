@@ -72,6 +72,17 @@ resource "google_firestore_database" "default" {
   depends_on  = [google_project_service.apis]
 }
 
+# Webhook redelivery markers (store.claim_once). One document per inbound WhatsApp message, so
+# without a TTL this collection grows forever. Meta retries within minutes of the original send,
+# so a week is generous; Firestore deletes the document once `expire_at` is in the past.
+resource "google_firestore_field" "seen_ttl" {
+  project    = var.project_id
+  database   = google_firestore_database.default.name
+  collection = "seen"
+  field      = "expire_at"
+  ttl_config {}
+}
+
 resource "google_service_account" "run" {
   account_id   = "sombrero-run"
   display_name = "Kavach API on Cloud Run"
@@ -218,6 +229,20 @@ resource "google_secret_manager_secret" "twilio" {
     # Payments (appeal pack): Razorpay for India, Stripe for Singapore/Malaysia.
     "razorpay-key-id", "razorpay-key-secret", "stripe-secret-key", "stripe-webhook-secret",
   ])
+  secret_id = each.key
+  replication {
+    auto {}
+  }
+  depends_on = [google_project_service.apis]
+}
+
+# WhatsApp (Meta Cloud API). The app secret verifies every webhook; the access token sends
+# replies, so both stay in Secret Manager and are injected by Cloud Run:
+#   printf %s "$WHATSAPP_ACCESS_TOKEN" | gcloud secrets versions add whatsapp-access-token --data-file=-
+#   printf %s "$WHATSAPP_APP_SECRET"   | gcloud secrets versions add whatsapp-app-secret   --data-file=-
+# The phone number id and verify token are not secrets; cloudbuild.yaml passes them as env vars.
+resource "google_secret_manager_secret" "whatsapp" {
+  for_each  = toset(["whatsapp-access-token", "whatsapp-app-secret"])
   secret_id = each.key
   replication {
     auto {}

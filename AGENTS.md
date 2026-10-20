@@ -22,9 +22,10 @@ A multi-agent assistant that helps patients fight health-insurance claim rejecti
 
 The API contract is `sombrero/src/kavach/models.py`. It is published as `/openapi.json` on the live API (`https://sombrero-urb5ttky3q-el.a.run.app`). **Any change to `models.py` changes the API** — update the frontend types (`openapi-typescript`) in the same PR and ping the frontend owner.
 
-- Auth: every route (except `/health` and `/tracker/tick`) takes `Authorization: Bearer <Firebase ID token>`; `verify_token` in `sombrero/src/kavach/auth.py`. `AUTH_DISABLED=true` only locally.
+- Auth: HTTP routes take `Authorization: Bearer <Firebase ID token>`; `verify_token` in `sombrero/src/kavach/auth.py`. `AUTH_DISABLED=true` only locally. The exceptions: `/health`, `/packs/{country}` and `/insights/{country}` are open public data; `/tracker/tick` requires a Cloud Scheduler OIDC token (`scheduler_only`); and the inbound integrations authenticate as themselves — `/voice/*` by Twilio's `X-Twilio-Signature`, `/whatsapp/webhook` by Meta's `X-Hub-Signature-256`, `/payments/stripe/webhook` by Stripe's `Stripe-Signature`.
+- **A webhook that unlocks a case must refuse when its signing secret is unset.** HMAC-SHA256 with an empty key is computable by anyone, so a missing `STRIPE_WEBHOOK_SECRET` would otherwise turn the Stripe endpoint into a free-unlock button for every case. Same reasoning for `WHATSAPP_APP_SECRET` (which gates account access) and `RAZORPAY_KEY_SECRET`.
 - Errors arrive as `{"detail": "..."}` — the text is user-friendly; show it verbatim.
-- Routes (17): `POST /cases`, `GET /cases`, `GET/DELETE /cases/{id}`, `DELETE /cases/{id}/documents/{doc_id}`, `POST /cases/{id}/documents`, `POST /cases/{id}/analyse`, `PUT /cases/{id}/complainant`, `POST /cases/{id}/letter`, `GET /cases/{id}/filing`, `GET /cases/{id}/filing.pdf`, `GET /cases/{id}/letter.pdf`, `POST /cases/{id}/filed`, `POST /cases/{id}/reply`, `POST /tracker/tick`, `GET /packs/{country}` (no auth), `GET /health`.
+- Routes (27 paths): `POST/GET /cases`, `GET/DELETE /cases/{id}`, `PUT /cases/{id}/title`, `POST /cases/{id}/notes`, `POST /cases/{id}/ask`, `POST /cases/{id}/documents`, `GET /cases/{id}/documents/{doc_id}/file`, `DELETE /cases/{id}/documents/{doc_id}`, `POST /cases/{id}/analyse`, `PUT /cases/{id}/complainant`, `POST /cases/{id}/letter`, `GET /cases/{id}/filing`, `GET /cases/{id}/filing.pdf`, `GET /cases/{id}/letter.pdf`, `POST /cases/{id}/checkout`, `POST /cases/{id}/payment/razorpay`, `POST /payments/stripe/webhook`, `POST /cases/{id}/filed`, `POST /cases/{id}/reply`, `POST /tracker/tick`, `GET /packs/{country}`, `GET /insights/{country}`, `GET/POST /whatsapp/webhook`, `POST /voice/incoming`, `POST /voice/verify`, `POST /voice/menu`, `GET /health`. Two WebSockets never appear in `/openapi.json`: `/cases/{id}/hearing` and `/voice/stream`. Treat this list as a hint — regenerate `src/api/schema.d.ts` from the live `/openapi.json`.
 - Case analysis is **async**: `POST /analyse` returns `202`; agents write `case.progress` + `case.status` to Firestore as they run. The UI watches `cases/{id}` with Firestore `onSnapshot` (owners may read their own case per `triangulum/firestore.rules`).
 
 ## Frontend (`andromeda/web/`) — build plan
@@ -61,9 +62,13 @@ Screens map 1:1 to the 9-step flow and to API routes — see `spec-frontend.md` 
 9. **Tracker** (`/case/:id/tracker`) — `POST /filed`, `POST /reply`, stepper, deadline countdown, event timeline.
 10. **Outcome** (`/case/:id/outcome`) — `amount_recovered`, celebration, "download letters/forms now", "Delete my data" (`DELETE /cases/{id}`).
 
-### Channels — what is NOT built now
+### Channels — what exists
 
-WhatsApp, Telegram, and a phone voice line are **post-MVP / slides only** (see `spec.md` §2, §5). The prototype shows "WhatsApp"/"Call us" tiles as *coming soon*. The only "connections" we build are: **Firebase Auth (phone OTP) → Kavach REST API → Firestore (read-only) + WebSocket (hearing)**, all served from **Firebase Hosting**. No Twilio/WhatsApp Business/Telegram Bot API work this cycle.
+Built and deployed: **Twilio phone line** (`routers/voice.py` — PIN check, case status, Gemini Live hearing rehearsal over a media stream) and **WhatsApp** (`routers/whatsapp.py` — text Q&A grounded in the case, document/photo intake into the same pipeline, the full journey in chat: `STATUS`/`ANALYSE`/`LETTER`/`FORM`/`FILED`/`REPLY`/`PREDISCHARGE`/`DELETE`/`STOP`, read receipts on every inbound message, and deadline reminders from the daily tracker).
+
+Both identify the patient by the number they call or message from (`tools/accounts.py`), because sign-in is Firebase phone OTP — so no linking step and no second password. WhatsApp is webhook-driven: verify Meta's `X-Hub-Signature-256` against the **raw** body, return 200 immediately, work in a background task (Meta retries anything slow, and a retry means a duplicate reply — `store.claim_once` guards that). Free-form replies are only allowed inside Meta's 24-hour window; outside it the tracker uses the pre-approved `WHATSAPP_TEMPLATE`, and logs instead of silently dropping when none is set. See `sombrero/README.md` for setup.
+
+Still **post-MVP / slides only**: Telegram, and WhatsApp *Business-initiated* marketing. The prototype's "coming soon" tiles should now point at the real WhatsApp and phone numbers.
 
 ## Skills (installed in `.agents/skills/`, git-ignored)
 
@@ -128,13 +133,15 @@ To see what other sessions are doing: `git branch -a` + `gh pr list`.
 
 ## Commands
 
-Backend (from `sombrero/`):
+Backend (from `sombrero/`, or the repo root — the pack path must be set):
 ```bash
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt && pip install -e .
 uvicorn kavach.main:app --reload      # http://localhost:8080/docs
-pytest                                 # 24 tests
+pytest sombrero/tests                  # 125 tests; conftest.py supplies PACKS_DIR
 ruff check . && ruff format .
+python sombrero/scripts/whatsapp_smoke.py   # WhatsApp conversation, no credentials needed
+python sombrero/scripts/whatsapp_check.py   # is the Meta setup correct? --live / --webhook
 ```
 
 Frontend (from `andromeda/web/`, once scaffolded):

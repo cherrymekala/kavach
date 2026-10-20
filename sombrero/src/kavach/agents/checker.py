@@ -14,6 +14,7 @@ from ..config import get_settings
 from ..models import Assessment, Document
 from ..tools import texts
 from . import llm, prompts
+from .strategist import SCORE
 
 DOC_KINDS = {"policy", "rejection_letter", "discharge_summary", "bill"}
 _PUNCT = str.maketrans({"‘": "'", "’": "'", "“": '"', "”": '"', "–": "-", "—": "-", " ": " "})
@@ -113,4 +114,26 @@ def verify(
         good = [s for s in arg.sources if s.verified]
         if good:
             kept.append(arg.model_copy(update={"sources": good}))
-    return assessment.model_copy(update={"arguments": kept})
+    return assessment.model_copy(
+        update={
+            "arguments": kept,
+            **_reconcile(assessment.strength, kept=len(kept), drafted=len(assessment.arguments)),
+        }
+    )
+
+
+# One band down when any drafted argument lost its support: the verdict has to describe what
+# survived, not what the strategist hoped for.
+_DOWN_ONE = {"strong": "medium", "medium": "weak", "weak": "weak"}
+
+
+def _reconcile(strength: str, kept: int, drafted: int) -> dict:
+    """Keep the verdict honest after arguments are dropped.
+
+    Without this a case can read "strong" while every claim behind it failed verification —
+    the one thing the checker exists to prevent.
+    """
+    if kept == drafted:
+        return {}
+    band = "weak" if kept == 0 else _DOWN_ONE.get(strength, "medium")
+    return {"strength": band, "score": SCORE[band]}
