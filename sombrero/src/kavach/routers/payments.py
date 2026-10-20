@@ -66,7 +66,14 @@ def razorpay_paid(case_id: str, body: RazorpayPaid, uid: str = Depends(current_u
     case = _own(case_id, uid)
     if not payments.razorpay_signature_ok(body.order_id, body.payment_id, body.signature):
         raise HTTPException(400, "We couldn't verify that payment.")
-    if payments.razorpay_order_case(body.order_id) != case.id:
+    try:
+        order_case = payments.razorpay_order_case(body.order_id)
+    except payments.PaymentError as exc:
+        # The patient has probably paid; don't tell them the payment was for another case.
+        raise HTTPException(
+            502, "We couldn't confirm the payment just now. Please try again in a moment."
+        ) from exc
+    if order_case != case.id:
         raise HTTPException(400, "That payment was for a different case.")
     _mark_paid(case, body.payment_id)
     return case
