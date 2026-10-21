@@ -21,8 +21,26 @@ from ..tools import files, store
 router = APIRouter(prefix="/cases", tags=["cases"])
 
 _ABBREVIATIONS = {
-    "co", "corp", "dept", "dr", "est", "etc", "fig", "govt", "inc", "jr",
-    "ltd", "mr", "mrs", "ms", "no", "prof", "rs", "sr", "st", "vs",
+    "co",
+    "corp",
+    "dept",
+    "dr",
+    "est",
+    "etc",
+    "fig",
+    "govt",
+    "inc",
+    "jr",
+    "ltd",
+    "mr",
+    "mrs",
+    "ms",
+    "no",
+    "prof",
+    "rs",
+    "sr",
+    "st",
+    "vs",
 }
 
 

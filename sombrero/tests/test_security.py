@@ -62,9 +62,7 @@ def test_a_dead_analysis_is_taken_over_instead_of_blocking_for_ever(client, monk
     case = store.load_case(case_id)
     case.status = CaseStatus.ANALYSING
     # The documents guard runs before anything else; give it something to analyse.
-    case.documents.append(
-        Document(id="d1", filename="letter.pdf", gcs_uri="/tmp/letter.pdf")
-    )
+    case.documents.append(Document(id="d1", filename="letter.pdf", gcs_uri="/tmp/letter.pdf"))
     store.save_case(case)
 
     monkeypatch.setattr(store, "seconds_since_update", lambda _id: 3600.0)
