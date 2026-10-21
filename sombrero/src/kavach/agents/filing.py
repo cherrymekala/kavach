@@ -30,7 +30,9 @@ def _context(case: Case) -> dict:
         "complaint_to": steps[-1]["dispute_body"],
         # Write money exactly like this; raw floats came out as "INR 184,000.0".
         "amounts": _amounts(case),
-        "complainant": case.complainant.model_dump(mode="json", exclude_none=True) if case.complainant else {},
+        "complainant": case.complainant.model_dump(mode="json", exclude_none=True)
+        if case.complainant
+        else {},
     }
 
 
