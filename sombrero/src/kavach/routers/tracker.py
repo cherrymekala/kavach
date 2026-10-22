@@ -7,9 +7,13 @@ from ..auth import current_user
 from ..config import Settings, get_settings
 from ..models import Case, FiledRequest, ReplyRequest
 from ..tools import files, store
+from . import whatsapp
 
 router = APIRouter(prefix="/tracker", tags=["tracker"])
 case_router = APIRouter(prefix="/cases/{case_id}", tags=["tracker"])
+
+# Events the daily tick creates that are worth a WhatsApp nudge.
+NOTIFY_KINDS = ("reminder", "escalated", "warning")
 
 
 def scheduler_only(
@@ -41,7 +45,9 @@ def tick() -> dict:
     """Called daily by Cloud Scheduler."""
     now = datetime.now(UTC)
     changed = 0
+    notified = 0
     for case in store.open_cases():
+        seen = len(case.events)
         dirty = escalation.tick(case, now)
         if escalation.documents_due_for_deletion(case, now):
             files.delete_case_files(case.id)
@@ -50,7 +56,11 @@ def tick() -> dict:
         if dirty:
             store.save_case(case)
             changed += 1
-    return {"changed": changed}
+            # Nudge on WhatsApp too: a deadline is only useful if the patient hears about it.
+            for event in case.events[seen:]:
+                if event.kind in NOTIFY_KINDS:
+                    notified += whatsapp.notify_case(case, event.text)
+    return {"changed": changed, "notified": notified}
 
 
 def _own(case_id: str, uid: str) -> Case:

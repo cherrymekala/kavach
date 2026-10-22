@@ -19,6 +19,9 @@ dependencies = [
   "pypdf>=5.0",
   "fpdf2>=2.7",
   "uharfbuzz>=0.40",
+  # WhatsApp Cloud API calls (tools/whatsapp.py). google-genai already pulls httpx in, but we
+  # import it directly, so it belongs here rather than riding along transitively.
+  "httpx>=0.27",
 ]
 
 [project.optional-dependencies]

@@ -14,7 +14,11 @@ from pydantic import BaseModel
 from ..config import get_settings
 from ..models import Case, Complainant, FilingPack, Letter
 from ..tools import packs
+from ..tools.money import indian as _indian  # noqa: F401  (kept importable as filing._indian)
+from ..tools.money import money as _money
 from . import llm, prompts
+
+__all__ = ["draft_letter", "filing_pack", "pick_office", "render_letter_pdf", "render_pdf"]
 
 
 def _context(case: Case) -> dict:
@@ -30,7 +34,9 @@ def _context(case: Case) -> dict:
         "complaint_to": steps[-1]["dispute_body"],
         # Write money exactly like this; raw floats came out as "INR 184,000.0".
         "amounts": _amounts(case),
-        "complainant": case.complainant.model_dump(mode="json", exclude_none=True) if case.complainant else {},
+        "complainant": case.complainant.model_dump(mode="json", exclude_none=True)
+        if case.complainant
+        else {},
     }
 
 
@@ -65,27 +71,6 @@ def draft_letter(case: Case, instruction: str | None = None) -> Letter:
         letter.local = letter.local.replace("\\n", "\n")
     letter.language = case.language
     return letter
-
-
-def _indian(n: int) -> str:
-    s = str(n)
-    if len(s) <= 3:
-        return s
-    head, tail = s[:-3], s[-3:]
-    groups = []
-    while len(head) > 2:
-        groups.insert(0, head[-2:])
-        head = head[:-2]
-    return ",".join([head, *groups, tail]) if head else ",".join([*groups, tail])
-
-
-def _money(amount: float | None, currency: str | None) -> str:
-    if amount is None:
-        return ""
-    if currency == "INR":
-        return f"Rs. {_indian(round(amount))}"
-    symbol = {"SGD": "S$", "MYR": "RM"}.get(currency or "", currency or "")
-    return f"{symbol} {amount:,.0f}".strip()
 
 
 def _computed(case: Case, key: str, template: dict | None = None) -> str:

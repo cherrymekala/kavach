@@ -36,6 +36,17 @@ class Settings(BaseSettings):
     twilio_account_sid: str = ""
     twilio_auth_token: str = ""
     public_url: str = ""  # e.g. https://sombrero-....run.app; Twilio signs this exact URL
+    # WhatsApp channel (Meta Cloud API, not the On-Premises API).
+    whatsapp_phone_number_id: str = ""  # sender id from WhatsApp → API Setup
+    whatsapp_access_token: str = ""  # permanent token from a Business system user
+    whatsapp_app_secret: str = ""  # verifies X-Hub-Signature-256 on every webhook
+    whatsapp_verify_token: str = "kavach-verify"  # echoes Meta's GET challenge
+    whatsapp_api_version: str = "v21.0"
+    # Out-of-window reminders need a pre-approved template; the name comes from Meta.
+    whatsapp_template: str = ""
+    whatsapp_template_language: str = "en"
+    # Log outbound messages instead of calling Meta (local dev with no credentials).
+    whatsapp_dry_run: bool = False
     # Payments: the "appeal pack" (letter/form PDFs + hearing rehearsal). Off = everything free.
     payments_enabled: bool = False
     razorpay_key_id: str = ""  # India (INR)

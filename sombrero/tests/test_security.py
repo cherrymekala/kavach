@@ -4,7 +4,7 @@ from fastapi.testclient import TestClient
 from kavach.agents import hearing
 from kavach.config import get_settings
 from kavach.main import app
-from kavach.models import Assessment, Case, CaseFacts, CaseStatus
+from kavach.models import Assessment, Case, CaseFacts, CaseStatus, Document
 from kavach.routers.documents import MAX_BYTES, safe_name
 from kavach.tools import store
 
@@ -52,6 +52,38 @@ def test_analysis_cannot_be_started_twice(client):
     case = store.load_case(case_id)
     case.status = CaseStatus.ANALYSING
     store.save_case(case)
+    # Local mode cannot tell how long the document has been idle, so it stays conservative.
+    assert client.post(f"/cases/{case_id}/analyse").status_code == 409
+
+
+def test_a_dead_analysis_is_taken_over_instead_of_blocking_for_ever(client, monkeypatch):
+    """A recycled instance used to leave the case stuck at `analysing` with a 409 for ever."""
+    case_id = _new_case(client)
+    case = store.load_case(case_id)
+    case.status = CaseStatus.ANALYSING
+    # The documents guard runs before anything else; give it something to analyse.
+    case.documents.append(Document(id="d1", filename="letter.pdf", gcs_uri="/tmp/letter.pdf"))
+    store.save_case(case)
+
+    monkeypatch.setattr(store, "seconds_since_update", lambda _id: 3600.0)
+    started = []
+    monkeypatch.setattr("kavach.routers.analysis.run_case", started.append)
+
+    assert client.post(f"/cases/{case_id}/analyse").status_code == 202
+    assert started == [case_id]
+
+
+def test_a_run_that_is_still_reporting_progress_is_left_alone(client, monkeypatch):
+    case_id = _new_case(client)
+    case = store.load_case(case_id)
+    case.status = CaseStatus.ANALYSING
+    store.save_case(case)
+
+    monkeypatch.setattr(store, "seconds_since_update", lambda _id: 30.0)
+    monkeypatch.setattr(
+        "kavach.routers.analysis.run_case",
+        lambda _id: pytest.fail("must not start a second run while one is alive"),
+    )
     assert client.post(f"/cases/{case_id}/analyse").status_code == 409
 
 

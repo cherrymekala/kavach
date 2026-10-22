@@ -28,7 +28,7 @@ from google.genai import types
 from ..agents import hearing, voice
 from ..config import get_settings
 from ..models import Case, CaseEvent
-from ..tools import audio, payments, store
+from ..tools import accounts, audio, payments, store
 
 router = APIRouter(prefix="/voice", tags=["voice"])
 VOICE = "Polly.Joanna"  # Twilio's TTS for the short menu prompts before Gemini takes over
@@ -95,21 +95,6 @@ def _action(path: str, **params: str) -> str:
 # ── Who is calling ────────────────────────────────────────────────────────────────────
 
 
-def _uid_for_phone(phone: str) -> str | None:
-    if get_settings().auth_disabled:
-        return "dev-user"
-    from firebase_admin import auth, get_app, initialize_app
-
-    try:
-        get_app()
-    except ValueError:
-        initialize_app()
-    try:
-        return auth.get_user_by_phone_number(phone).uid
-    except (auth.UserNotFoundError, ValueError):  # ValueError: not an E.164 number
-        return None
-
-
 def _latest_case(uid: str) -> Case | None:
     """Newest case that has results to talk about."""
     return next((c for c in store.list_cases(uid) if c.assessment or c.discharge_check), None)
@@ -138,7 +123,7 @@ def _menu(case: Case) -> str:
 @router.post("/incoming")
 async def incoming(request: Request) -> Response:
     form = await _twilio_form(request)
-    uid = _uid_for_phone(form.get("From", ""))
+    uid = accounts.uid_for_phone(form.get("From", ""))
     case = _latest_case(uid) if uid else None
     if not case:
         return _twiml(

@@ -29,8 +29,13 @@ sombrero (Cloud Run, FastAPI + ADK)
    ├── Firestore (cases)      ├── Cloud Storage (documents)
    ├── Vertex AI Search (rulings)   └── BigQuery (anonymised outcomes)
    ▲
-   └── Cloud Scheduler: daily /tracker/tick
-magellan ─► country packs (IN, SG) + rulings loaded into Vertex AI Search
+   └── Cloud Scheduler: daily /tracker/tick  ─► WhatsApp deadline reminders
+
+Channels (same pipeline, same cases):
+   WhatsApp (Meta Cloud API) ─► /whatsapp/webhook ─┐
+   Phone line (Twilio)       ─► /voice/*         ─┼─► accounts.uid_for_phone(number)
+                                                   ┘   = the Firebase uid that signed in
+magellan ─► country packs (IN, SG, MY) + rulings loaded into Vertex AI Search
 ```
 
 ## Quick start (backend)
@@ -43,6 +48,20 @@ cp .env.example .env        # add GOOGLE_API_KEY from AI Studio for local dev
 uvicorn kavach.main:app --reload
 # http://localhost:8080/docs
 ```
+
+## Channels
+
+Patients reach Kavach three ways: the web app, a **WhatsApp** chat, and a **phone line**. All
+three run the same agents on the same cases. Because sign-in is Firebase phone OTP, the number
+someone messages or calls from already identifies their account.
+
+- WhatsApp: `sombrero/src/kavach/routers/whatsapp.py` — send photos/PDFs of the papers, get the
+  analysis back, ask questions, download the appeal letter, `DELETE` your data. Deadline
+  reminders come from the daily tracker. Setup: `sombrero/README.md`.
+- Phone line: `sombrero/src/kavach/routers/voice.py` (Twilio) — case status and a voice hearing
+  rehearsal.
+- No Meta or Twilio account needed to try the WhatsApp flow locally:
+  `python sombrero/scripts/whatsapp_smoke.py`
 
 ## Deadlines
 
