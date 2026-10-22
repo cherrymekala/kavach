@@ -39,5 +39,21 @@
     "comingSoon": "即将推出",
     "detected": "根据您的号码识别",
     "errorCreate": "无法开始您的案件。"
+  },
+  "unlock": {
+    "title": "解锁申诉资料包",
+    "sub": "分析始终免费。资料包包含提交和跟进所需的全部内容。",
+    "items": {
+      "letter": "申诉信 PDF，含英文和您的语言版本",
+      "form": "官方投诉表格，已根据您的文件填写",
+      "rehearsal": "带实时指导的听证演练"
+    },
+    "cta": "支付 {{amount}} 解锁",
+    "note": "本案件一次性付费。",
+    "error": "支付未成功，请重试。",
+    "rehearsalLocked": "包含在申诉资料包中。请在上方解锁后演练。",
+    "confirmingTitle": "正在确认付款",
+    "confirmingSub": "需要几秒钟，请保持此页面打开。",
+    "downloadLocked": "包含在申诉资料包中。请在上方解锁后下载。"
   }
 }

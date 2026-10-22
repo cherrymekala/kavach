@@ -494,6 +494,9 @@
     "cta": "Unlock for {{amount}}",
     "note": "One-time payment for this case.",
     "error": "The payment didn't go through. Please try again.",
-    "rehearsalLocked": "Included in the appeal pack. Unlock it above to rehearse."
+    "rehearsalLocked": "Included in the appeal pack. Unlock it above to rehearse.",
+    "confirmingTitle": "Confirming your payment",
+    "confirmingSub": "This takes a few seconds. Keep this page open — the case unlocks the moment Stripe confirms.",
+    "downloadLocked": "Included in the appeal pack. Unlock it above to download."
   }
 }

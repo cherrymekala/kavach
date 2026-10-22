@@ -41,7 +41,16 @@ function Body({ text }: { text: string }) {
   )
 }
 
-export function LetterPanel({ caseId, kase }: { caseId: string; kase: Case }) {
+export function LetterPanel({
+  caseId,
+  kase,
+  locked = false,
+}: {
+  caseId: string
+  kase: Case
+  /** Payments are on and the appeal pack is unpaid: the PDF is not ours to download yet. */
+  locked?: boolean
+}) {
   const { t } = useTranslation()
   const redraft = useRedraftLetter(caseId)
   const letter = kase.letter
@@ -97,7 +106,13 @@ export function LetterPanel({ caseId, kase }: { caseId: string; kase: Case }) {
             {copied ? <CheckIcon className="size-4 text-mint" /> : <CopyIcon className="size-4" />}
             <span className="hidden sm:inline">{copied ? t('letter.copied') : t('letter.copy')}</span>
           </Button>
-          <Button size="sm" variant="outline" onClick={download}>
+          <Button
+            size="sm"
+            variant="outline"
+            disabled={locked}
+            title={locked ? t('unlock.downloadLocked') : undefined}
+            onClick={download}
+          >
             <DownloadIcon className="size-4" aria-hidden />
             {t('letter.download')}
           </Button>
