@@ -31,6 +31,7 @@ import { Composer } from './Composer'
 import { NewClaim } from './NewClaim'
 import { AnalysingPanel } from './Panels/AnalysingPanel'
 import { ChancesPanel } from './Panels/ChancesPanel'
+import { ConfirmingPayment } from './Panels/ConfirmingPayment'
 import { DischargePanel } from './Panels/DischargePanel'
 import { FilingPanel } from './Panels/FilingPanel'
 import { LetterPanel } from './Panels/LetterPanel'
@@ -39,6 +40,7 @@ import { SummaryPanel } from './Panels/SummaryPanel'
 import { TrackerPanel } from './Panels/TrackerPanel'
 import { UnlockPanel } from './Panels/UnlockPanel'
 import { SectionDock, SectionList, type Section } from './SectionNav'
+import { usePaymentReturn } from './usePaymentReturn'
 
 const DOT: Record<string, string> = {
   ready: 'bg-mint',
@@ -246,6 +248,9 @@ export function Dossier() {
 
   const current = (live.data ?? kase) ?? undefined
   const status = current?.status ?? 'collecting'
+  // Stripe redirects back with ?paid=1 while its webhook is still landing. Show a confirming
+  // state until paid_at appears, instead of asking the patient to pay a second time.
+  const confirmingPayment = usePaymentReturn(caseId, Boolean(current?.paid_at))
 
   useEffect(() => {
     const prev = prevStatus.current
@@ -268,7 +273,7 @@ export function Dossier() {
     )
   }
 
-if (!current) {
+  if (!current) {
     if (error) {
       return (
         <div className="grid h-full place-items-center px-6">
@@ -283,12 +288,19 @@ if (!current) {
     )
   }
 
-const docs = current.documents ?? []
+  const docs = current.documents ?? []
   const title = current.title || current.facts?.insurer || t('workspace.untitled')
   const hasAssessment = Boolean(current.assessment)
   // Payments on (the pack has a price) and this case not paid yet: PDFs and rehearsal are locked.
   const locked = Boolean(pack?.price_amount) && !current.paid_at
-  const unlock = locked && pack ? <UnlockPanel caseId={caseId} price={pack} /> : null
+  const unlock =
+    locked && pack ? (
+      confirmingPayment ? (
+        <ConfirmingPayment />
+      ) : (
+        <UnlockPanel caseId={caseId} price={pack} />
+      )
+    ) : null
   const discharge = current.kind === 'pre_discharge'
   const hasReport = Boolean(current.facts) && !discharge
   const failed = status === 'collecting' && Boolean(current.progress)
@@ -389,14 +401,14 @@ const docs = current.documents ?? []
         return (
           <>
             {unlock}
-            <LetterPanel caseId={caseId} kase={current} />
+            <LetterPanel caseId={caseId} kase={current} locked={locked} />
           </>
         )
       case 'filing':
         return (
           <>
             {unlock}
-            <FilingPanel caseId={caseId} kase={current} />
+            <FilingPanel caseId={caseId} kase={current} locked={locked} />
           </>
         )
       case 'tracker':

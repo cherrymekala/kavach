@@ -39,5 +39,21 @@
     "comingSoon": "Akan datang",
     "detected": "dikesan daripada nombor anda",
     "errorCreate": "Tidak dapat memulakan kes anda."
+  },
+  "unlock": {
+    "title": "Buka pakej rayuan anda",
+    "sub": "Analisis anda kekal percuma. Pakej ini mengandungi semua yang perlu untuk memfail dan mengikutinya.",
+    "items": {
+      "letter": "Surat rayuan sebagai PDF, dalam bahasa Inggeris dan bahasa anda",
+      "form": "Borang aduan rasmi, diisi daripada dokumen anda",
+      "rehearsal": "Latihan pendengaran dengan bimbingan langsung"
+    },
+    "cta": "Buka untuk {{amount}}",
+    "note": "Bayaran sekali untuk kes ini.",
+    "error": "Bayaran tidak berjaya. Sila cuba lagi.",
+    "rehearsalLocked": "Termasuk dalam pakej rayuan. Buka di atas untuk berlatih.",
+    "confirmingTitle": "Mengesahkan pembayaran",
+    "confirmingSub": "Ini mengambil beberapa saat. Biarkan halaman ini terbuka.",
+    "downloadLocked": "Termasuk dalam pakej rayuan. Buka di atas untuk memuat turun."
   }
 }

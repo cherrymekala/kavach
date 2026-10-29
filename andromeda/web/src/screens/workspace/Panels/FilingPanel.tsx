@@ -9,7 +9,16 @@ import type { Case } from '@/api/types'
 
 const EMPTY_FORM = { name: '', mobile: '', email: '', address: '', relationship: '' }
 
-export function FilingPanel({ caseId, kase }: { caseId: string; kase: Case }) {
+export function FilingPanel({
+  caseId,
+  kase,
+  locked = false,
+}: {
+  caseId: string
+  kase: Case
+  /** Payments are on and the appeal pack is unpaid: the form PDF is not ours to download yet. */
+  locked?: boolean
+}) {
   const { t } = useTranslation()
   const setComplainant = useSetComplainant(caseId)
   const { data: filing } = useFiling(caseId, kase?.escalation_step)
@@ -99,7 +108,13 @@ export function FilingPanel({ caseId, kase }: { caseId: string; kase: Case }) {
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
             <h3 className="font-display text-base font-bold">{t('filing.pack')}</h3>
-            <Button size="sm" variant="outline" onClick={handleDownload}>
+            <Button
+              size="sm"
+              variant="outline"
+              disabled={locked}
+              title={locked ? t('unlock.downloadLocked') : undefined}
+              onClick={handleDownload}
+            >
               <DownloadIcon className="size-4" aria-hidden />
               {t('filing.download')}
             </Button>
