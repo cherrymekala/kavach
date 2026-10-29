@@ -89,7 +89,7 @@ pnpm dev                               # http://localhost:5173
 ## Tests
 
 ```bash
-cd sombrero && pytest                  # backend (about 110 tests)
+cd sombrero && pytest                  # backend (about 125 tests)
 cd andromeda/web && pnpm test          # frontend
 python whirlpool/run_evals.py          # intake accuracy on the sample cases
 python whirlpool/run_evals.py --full   # full pipeline: strength verdicts
