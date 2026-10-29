@@ -228,6 +228,8 @@ resource "google_secret_manager_secret" "twilio" {
     "twilio-account-sid", "twilio-auth-token",
     # Payments (appeal pack): Razorpay for India, Stripe for Singapore/Malaysia.
     "razorpay-key-id", "razorpay-key-secret", "stripe-secret-key", "stripe-webhook-secret",
+    # WhatsApp Cloud API: access token and app secret (verifies Meta's webhook signature).
+    "whatsapp-access-token", "whatsapp-app-secret",
   ])
   secret_id = each.key
   replication {
