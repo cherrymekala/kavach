@@ -2,7 +2,7 @@
 
 An AI assistant that helps patients fight health-insurance claim rejections. It decodes the insurer's reason, builds a case from the patient's own papers and the published rules, drafts the appeal, prepares the official complaint form and tracks the deadlines until the claim is settled.
 
-Works in **India, Singapore and Malaysia**, in English plus several local languages. Built for the AI Builder Cup 2026 on Google Cloud (Gemini, Cloud Run, Firebase).
+Works in **India, Singapore and Malaysia**, in English plus several local languages.
 
 ## What it does
 
