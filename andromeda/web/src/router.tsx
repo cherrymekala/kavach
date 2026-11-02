@@ -18,6 +18,8 @@ const Outcome = lazy(() => import('./screens/outcome/Outcome').then((m) => ({ de
 const Insights = lazy(() => import('./screens/insights/Insights').then((m) => ({ default: m.Insights })))
 const DischargePreview = lazy(() => import('./dev/DischargePreview').then((m) => ({ default: m.DischargePreview })))
 const UnlockPreview = lazy(() => import('./dev/UnlockPreview').then((m) => ({ default: m.UnlockPreview })))
+const WorkspacePreview = lazy(() => import('./screens/workspace/Workspace').then((m) => ({ default: m.Workspace })))
+const Dossier = lazy(() => import('./screens/workspace/Dossier').then((m) => ({ default: m.Dossier })))
 const Foundation = lazy(() => import('./screens/dev/Foundation').then((m) => ({ default: m.Foundation })))
 
 // Dev-only foundation page — never shipped to production hosting.
@@ -36,6 +38,9 @@ const devRoutes = import.meta.env.DEV
   ? [
       { path: 'dev', element: <Foundation /> },
       { path: 'preview/discharge', element: <DischargePreview /> },
+      // /preview/dossier/demo?section=chances renders the real workspace panel with the demo case.
+      { path: 'preview/dossier/:caseId', element: <div className="h-dvh"><Dossier /></div> },
+      { path: 'preview/workspace/:caseId', element: <WorkspacePreview /> },
       { path: 'preview/unlock/:country/:caseId', element: <UnlockPreview /> },
       ...caseScreens.map(([name, Screen]) => ({ path: `preview/case/:caseId/${name}`, element: <Screen /> })),
     ]

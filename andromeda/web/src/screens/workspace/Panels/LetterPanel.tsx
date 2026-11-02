@@ -100,7 +100,7 @@ export function LetterPanel({
   return (
     <section className="flex flex-col gap-4">
       <header className="flex items-center gap-2">
-        <h2 className="font-display text-xl font-bold">{t('letter.title')}</h2>
+        <h2 className="text-2xl font-extrabold tracking-tight">{t('letter.title')}</h2>
         <div className="ml-auto flex gap-1">
           <Button size="sm" variant="ghost" onClick={copy} aria-label={t('letter.copy')}>
             {copied ? <CheckIcon className="size-4 text-mint" /> : <CopyIcon className="size-4" />}

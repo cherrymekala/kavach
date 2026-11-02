@@ -73,7 +73,7 @@ export function NewClaim() {
   return (
     <div className="flex w-full flex-col items-center gap-6 text-center">
       <div>
-        <h2 className="font-display text-2xl font-bold tracking-tight">
+        <h2 className="text-2xl font-bold tracking-tight">
           {t(kind === 'dispute' ? 'workspace.composer.heroTitle' : 'discharge.heroTitle')}
         </h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
@@ -169,7 +169,7 @@ export function NewClaim() {
         </Button>
       </form>
 
-      <p className="font-mono text-xs text-muted-foreground">{t('upload.limits')}</p>
+      <p className="text-xs text-muted-foreground">{t('upload.limits')}</p>
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
     </div>
   )

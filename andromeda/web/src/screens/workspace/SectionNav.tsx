@@ -76,7 +76,7 @@ export function SectionDock({ sections, active, onSelect, lifted = false }: Sect
           <SheetTitle className="sr-only">{t('workspace.sections')}</SheetTitle>
           <SheetDescription className="sr-only">{t('workspace.sectionsHint')}</SheetDescription>
           <div className="px-4 pt-3 pb-4">
-            <p className="px-3 pb-2 font-display text-sm font-bold text-muted-foreground">{t('workspace.sections')}</p>
+            <p className="px-3 pb-2 text-sm font-bold text-muted-foreground">{t('workspace.sections')}</p>
             <SectionList
               sections={sections}
               active={active}

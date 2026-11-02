@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { CheckCircle2Icon, DownloadIcon, Trash2Icon } from 'lucide-react'
+import { DownloadIcon, Trash2Icon } from 'lucide-react'
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -11,6 +11,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   Button,
+  ShieldHero
 } from '@/components'
 import { useDeleteCase } from '@/api/hooks'
 import { apiBlob } from '@/api/client'
@@ -50,23 +51,15 @@ export function OutcomePanel({ caseId, kase }: { caseId: string; kase: Case }) {
 
   return (
     <section className="flex flex-col gap-6">
-      <div className="flex flex-col items-center gap-3 border-y border-rule py-8 text-center">
-        <span className="grid size-14 place-items-center rounded-full bg-mint/15 text-mint">
-          <CheckCircle2Icon className="size-7" aria-hidden />
-        </span>
-        <h2 className="font-display text-2xl font-extrabold">{t('outcome.congrats')}</h2>
-        {recovered != null ? (
-          <div className="mt-1">
-            <p className="text-sm text-muted-foreground">{t('outcome.recovered')}</p>
-            <p className="font-display text-3xl font-extrabold text-mint tabular-nums">{formatMoney(recovered, currency)}</p>
-          </div>
-        ) : (
-          <p className="text-sm text-muted-foreground">{t('outcome.sub')}</p>
-        )}
-      </div>
+      <ShieldHero
+        eyebrow={t('outcome.congrats')}
+        footer={recovered != null ? t('outcome.recovered') : t('outcome.sub')}
+      >
+        {recovered != null ? <span className="text-5xl tabular-nums">{formatMoney(recovered, currency)}</span> : t('outcome.congrats')}
+      </ShieldHero>
 
       <div className="flex flex-col gap-3">
-        <h3 className="font-display text-base font-bold">{t('outcome.download')}</h3>
+        <h3 className="text-xl font-extrabold tracking-tight">{t('outcome.download')}</h3>
         <div className="flex flex-wrap gap-2">
           <Button variant="outline" onClick={() => handleDownload(`/cases/${caseId}/letter.pdf`, 'appeal-letter.pdf')}>
             <DownloadIcon className="size-4" aria-hidden />
@@ -81,7 +74,7 @@ export function OutcomePanel({ caseId, kase }: { caseId: string; kase: Case }) {
       </div>
 
       <div className="flex flex-col gap-3 rounded-lg border border-destructive/30 bg-destructive/5 p-5">
-        <h3 className="font-display text-base font-bold text-destructive">{t('outcome.deleteTitle')}</h3>
+        <h3 className="text-xl font-extrabold tracking-tight text-destructive">{t('outcome.deleteTitle')}</h3>
         <p className="text-sm text-muted-foreground">{t('outcome.deleteSub')}</p>
         <Button variant="destructive" className="self-start" onClick={() => setConfirmOpen(true)}>
           <Trash2Icon className="size-4" aria-hidden />

@@ -118,7 +118,7 @@ export function Foundation() {
 
       <section className="flex flex-col gap-3">
         <h2 className="font-display text-lg font-bold">Argument & sources</h2>
-        <Argument
+        <Argument index={0}
           claim="The waiting period was already over."
           explanation="Policy began Mar 2022; the 36-month period ended Mar 2025, before admission."
           sources={[

@@ -23,7 +23,7 @@ function Bar({ label, row }: { label: string; row: InsightRow }) {
       <span className="relative h-3 rounded-full bg-muted" aria-hidden>
         <span className="absolute inset-y-0 left-0 rounded-full bg-mint" style={{ width: `${row.won_pct}%` }} />
       </span>
-      <span className="text-right font-mono text-sm font-semibold tabular-nums">{row.won_pct}%</span>
+      <span className="text-right text-sm font-semibold tabular-nums">{row.won_pct}%</span>
       <span className="col-span-3 hidden text-xs text-muted-foreground group-hover:block group-focus-within:block">
         {detail}
       </span>
@@ -51,14 +51,14 @@ export function Insights() {
         <span className="grid size-8 place-items-center rounded-lg bg-brand text-primary-foreground">
           <ShieldCheckIcon className="size-5" aria-hidden />
         </span>
-        <Link to="/" className="font-display text-lg font-bold">
+        <Link to="/" className="text-lg font-bold">
           Kavach
         </Link>
         <span className="ml-auto text-xs text-muted-foreground">{t('insights.kicker')}</span>
       </header>
 
       <section className="flex flex-col gap-2">
-        <h1 className="font-display text-2xl font-extrabold text-balance">{t('insights.title')}</h1>
+        <h1 className="text-2xl font-extrabold text-balance">{t('insights.title')}</h1>
         <p className="text-sm text-muted-foreground">
           {t('insights.sub', { total: data.overall.total.toLocaleString('en-IN'), from: data.period.from, to: data.period.to })}
         </p>
@@ -66,18 +66,18 @@ export function Insights() {
 
       <section className="grid gap-3 sm:grid-cols-3">
         <div className="rounded-2xl bg-primary p-5 text-primary-foreground">
-          <p className="font-display text-4xl font-extrabold">{data.overall.won_pct}%</p>
+          <p className="text-4xl font-extrabold">{data.overall.won_pct}%</p>
           <p className="text-sm opacity-85">{t('insights.overall')}</p>
         </div>
         {best ? (
           <div className="rounded-2xl border border-border bg-card p-5">
-            <p className="font-display text-4xl font-extrabold">{best.won_pct}%</p>
+            <p className="text-4xl font-extrabold">{best.won_pct}%</p>
             <p className="text-sm text-muted-foreground">{t('insights.best', { ground: label(best.key) })}</p>
           </div>
         ) : null}
         {worst ? (
           <div className="rounded-2xl border border-border bg-card p-5">
-            <p className="font-display text-4xl font-extrabold">{worst.won_pct}%</p>
+            <p className="text-4xl font-extrabold">{worst.won_pct}%</p>
             <p className="text-sm text-muted-foreground">{t('insights.worst', { ground: label(worst.key) })}</p>
           </div>
         ) : null}
@@ -85,7 +85,7 @@ export function Insights() {
 
       <section className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h2 className="font-display text-base font-bold">{t('insights.chartTitle')}</h2>
+          <h2 className="text-xl font-extrabold tracking-tight">{t('insights.chartTitle')}</h2>
           <div role="tablist" className="flex rounded-full bg-muted p-1 text-sm">
             {(['category', 'insurer', 'year'] as const).map((v) => (
               <button
@@ -109,7 +109,7 @@ export function Insights() {
         </ul>
         <details className="text-sm">
           <summary className="cursor-pointer font-semibold text-brand">{t('insights.table')}</summary>
-          <table className="mt-3 w-full text-left font-mono text-xs tabular-nums">
+          <table className="mt-3 w-full text-left text-xs tabular-nums">
             <thead className="text-muted-foreground">
               <tr>
                 <th className="py-1 font-normal">{t(`insights.by.${view}`)}</th>

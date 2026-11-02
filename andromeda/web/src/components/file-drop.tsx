@@ -42,7 +42,7 @@ export function FileDrop({ onFiles, accept = 'image/*,application/pdf,.txt', max
           onChange={(e) => onFiles(Array.from(e.target.files ?? []))}
         />
       </label>
-      <p className="font-mono text-xs text-muted-foreground">
+      <p className="text-xs text-muted-foreground">
         PDF / JPG / PNG / WEBP / TXT · up to {Math.round(maxBytes / 1_000_000)} MB
       </p>
     </div>

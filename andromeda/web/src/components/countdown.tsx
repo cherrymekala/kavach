@@ -8,7 +8,7 @@ export function Countdown({ deadline, className }: { deadline: string | null | u
   return (
     <span
       className={cn(
-        'font-mono text-sm font-semibold tabular-nums',
+        'text-sm font-semibold tabular-nums',
         urgent ? 'text-amber' : 'text-muted-foreground',
         className,
       )}
