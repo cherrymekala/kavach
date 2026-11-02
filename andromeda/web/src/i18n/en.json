@@ -209,7 +209,8 @@
       "regulation": "Regulation",
       "ruling": "Past ruling",
       "other": "Document"
-    }
+    },
+    "peopleWon": "{{won}} of {{total}} people with a case like yours got paid after a complaint to the {{body}}."
   },
   "letter": {
     "title": "Appeal letter",

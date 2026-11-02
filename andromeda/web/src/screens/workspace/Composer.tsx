@@ -122,11 +122,11 @@ export function Composer({ caseId, kase, variant = 'dock', className }: Composer
     return (
       <div className="flex w-full flex-col items-center gap-6 text-center">
         <div>
-          <h2 className="font-display text-2xl font-bold tracking-tight">{t('workspace.composer.heroTitle')}</h2>
+          <h2 className="text-2xl font-bold tracking-tight">{t('workspace.composer.heroTitle')}</h2>
           <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">{t('workspace.composer.heroSub')}</p>
         </div>
         <div className="w-full max-w-xl">{input}</div>
-        <p className="font-mono text-xs text-muted-foreground">{t('upload.limits')}</p>
+        <p className="text-xs text-muted-foreground">{t('upload.limits')}</p>
         {uploading.length ? <p className="text-sm text-muted-foreground">{uploading.join(', ')}…</p> : null}
         {error ? <p className="text-sm text-destructive">{error}</p> : null}
       </div>

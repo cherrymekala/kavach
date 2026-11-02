@@ -16,7 +16,7 @@ export function ConfirmingPayment() {
     >
       <Spinner className="mt-0.5 size-5 shrink-0" />
       <div className="min-w-0">
-        <h2 className="font-display text-lg font-bold">{t('unlock.confirmingTitle')}</h2>
+        <h2 className="text-lg font-bold">{t('unlock.confirmingTitle')}</h2>
         <p className="text-sm text-muted-foreground">{t('unlock.confirmingSub')}</p>
       </div>
     </section>

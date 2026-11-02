@@ -23,6 +23,7 @@ import {
   DialogTitle,
   Input,
   Label,
+  ShieldHero,
   Stepper,
 } from '@/components'
 import { useMarkFiled, usePack, useRecordReply } from '@/api/hooks'
@@ -78,7 +79,7 @@ function History({ events }: { events: CaseEvent[] }) {
             </span>
             <div className="min-w-0">
               <p className="text-sm">{e.text}</p>
-              <p className="font-mono text-xs text-muted-foreground">{formatDate(e.at)}</p>
+              <p className="text-xs text-muted-foreground">{formatDate(e.at)}</p>
             </div>
           </li>
         )
@@ -136,17 +137,15 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
     }
   }
 
-  let now: { tone: string; title: string; body: string; actions: React.ReactNode }
+  let now: { title: string; body: string; actions: React.ReactNode }
   if (status === 'resolved') {
     now = {
-      tone: 'border-mint/50 bg-mint/10',
       title: t('tracker.now.resolved.title'),
       body: t('tracker.now.resolved.body'),
       actions: null,
     }
   } else if (status === 'filed') {
     now = {
-      tone: 'border-line bg-surface',
       title: t('tracker.now.waiting.title', { body: stepName }),
       body:
         days !== null && days < 0
@@ -157,7 +156,6 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
   } else {
     const first = stepIndex === 0
     now = {
-      tone: 'border-brand/40 bg-accent/40',
       title: first ? t('tracker.now.send.title') : t('tracker.now.next.title', { body: stepName }),
       body: first
         ? t('tracker.now.send.body', { body: step?.dispute_body ?? '', days: step?.deadline_days ?? '' })
@@ -168,22 +166,23 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
 
   return (
     <section className="flex flex-col gap-5">
-      <header>
-        <h2 className="font-display text-xl font-bold">{t('tracker.title')}</h2>
-      </header>
-
-      <div className={cn('flex flex-col gap-3 rounded-lg border p-5', now.tone)}>
-        {status === 'filed' && days !== null && days >= 0 ? (
-          <p className="font-display text-4xl font-extrabold tabular-nums">
-            {days}
-            <span className="ml-2 text-base font-semibold text-muted-foreground">{t('tracker.daysLeft', { count: days })}</span>
-          </p>
-        ) : null}
-        <h3 className="font-display text-lg font-bold leading-tight">{now.title}</h3>
-        <p className="text-sm text-muted-foreground">{now.body}</p>
-        {now.actions ? <div className="flex flex-col gap-2 sm:flex-row">{now.actions}</div> : null}
-        {status === 'escalated' && lastStep ? <p className="text-xs text-muted-foreground">{t('tracker.lastStep')}</p> : null}
-      </div>
+      <ShieldHero
+        tone={days !== null && days < 0 ? 'mixed' : 'brand'}
+        eyebrow={
+          status === 'filed' && days !== null && days >= 0
+            ? `${days} ${t('tracker.daysLeft', { count: days })}`
+            : t('tracker.title')
+        }
+        footer={
+          <>
+            {now.body}
+            {status === 'escalated' && lastStep ? <span className="mt-1 block text-sm opacity-80">{t('tracker.lastStep')}</span> : null}
+          </>
+        }
+        actions={now.actions}
+      >
+        {now.title}
+      </ShieldHero>
 
       {warning && status !== 'resolved' ? (
         <p className="flex gap-2 rounded-lg border border-amber/50 bg-amber/10 p-4 text-sm">
@@ -194,7 +193,7 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
 
       {ladder.length ? (
         <div className="flex flex-col gap-3">
-          <h3 className="font-display text-base font-bold">{t('tracker.ladder')}</h3>
+          <h3 className="text-xl font-extrabold tracking-tight">{t('tracker.ladder')}</h3>
           <Stepper
             steps={ladder.map((s) => ({ label: s.step, detail: t('tracker.replyWithin', { days: s.deadline_days }) }))}
             current={status === 'resolved' ? ladder.length : stepIndex}
@@ -204,7 +203,7 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
 
       {kase.events?.length ? (
         <div className="flex flex-col gap-3">
-          <h3 className="font-display text-base font-bold">{t('tracker.history')}</h3>
+          <h3 className="text-xl font-extrabold tracking-tight">{t('tracker.history')}</h3>
           <History events={kase.events} />
         </div>
       ) : null}

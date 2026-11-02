@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from '@tanstack/react-query'
 import {
@@ -27,6 +27,7 @@ import type { CaseEvent, Document } from '@/api/types'
 import { cn } from '@/lib/cn'
 import { timeAgo } from '@/lib/dates'
 import { downloadBlob } from '@/lib/download'
+import { shortInsurer } from '@/lib/insurer'
 import { Composer } from './Composer'
 import { NewClaim } from './NewClaim'
 import { AnalysingPanel } from './Panels/AnalysingPanel'
@@ -117,7 +118,7 @@ function FilesBlock({
   if (!docs.length) return null
   return (
     <section className="flex flex-col gap-3">
-      <h2 className="font-display text-base font-bold">{t('workspace.files')}</h2>
+      <h2 className="text-xl font-extrabold tracking-tight">{t('workspace.files')}</h2>
       <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {docs.map((d) => (
           <li key={d.id} className="flex flex-col gap-1.5">
@@ -198,7 +199,7 @@ function HearingBlock({ onStart, locked }: { onStart: () => void; locked: boolea
   return (
     <section className="flex flex-wrap items-center justify-between gap-3">
       <div className="min-w-0">
-        <h2 className="font-display text-base font-bold">{t('hearing.title')}</h2>
+        <h2 className="text-xl font-extrabold tracking-tight">{t('hearing.title')}</h2>
         <p className="text-sm text-muted-foreground">
           {locked ? t('unlock.rehearsalLocked') : t('hearing.introSub')}
         </p>
@@ -216,7 +217,7 @@ function QaFeed({ entries }: { entries: CaseEvent[] }) {
   if (!entries.length) return null
   return (
     <section className="flex flex-col">
-      <h2 className="font-display text-base font-bold">{t('workspace.conversation')}</h2>
+      <h2 className="text-xl font-extrabold tracking-tight">{t('workspace.conversation')}</h2>
       <div className="mt-3 flex flex-col">
         {entries.map((e, i) => (
           <div key={`${e.at}-${i}`} className="border-b border-rule/60 py-3 last:border-0">
@@ -242,7 +243,8 @@ export function Dossier() {
   const analyse = useAnalyse(caseId ?? '')
   const remove = useDeleteDocument(caseId ?? '')
   const [analyseError, setAnalyseError] = useState<string | null>(null)
-  const [active, setActive] = useState<string | null>(null)
+  const [searchParams] = useSearchParams()
+  const [active, setActive] = useState<string | null>(searchParams.get('section'))
   const [chatOpen, setChatOpen] = useState(false)
   const prevStatus = useRef<string | undefined>(undefined)
 
@@ -289,7 +291,7 @@ export function Dossier() {
   }
 
   const docs = current.documents ?? []
-  const title = current.title || current.facts?.insurer || t('workspace.untitled')
+  const title = current.title || (current.facts?.insurer ? shortInsurer(current.facts.insurer) : t('workspace.untitled'))
   const hasAssessment = Boolean(current.assessment)
   // Payments on (the pack has a price) and this case not paid yet: PDFs and rehearsal are locked.
   const locked = Boolean(pack?.price_amount) && !current.paid_at
@@ -337,7 +339,7 @@ export function Dossier() {
 
   const header = (
     <header className="flex items-center gap-3">
-      <h1 className="min-w-0 flex-1 truncate font-display text-2xl font-bold tracking-tight">{title}</h1>
+      <h1 className="min-w-0 flex-1 truncate text-xl font-extrabold tracking-tight">{title}</h1>
       <LanguageSwitcher />
       <ThemeToggle />
       <StatusLine status={status} />
@@ -394,9 +396,9 @@ export function Dossier() {
       case 'discharge':
         return current.discharge_check ? <DischargePanel check={current.discharge_check} /> : null
       case 'summary':
-        return <SummaryPanel kase={current} />
+        return <SummaryPanel kase={current} onNext={hasAssessment ? () => setActive('chances') : undefined} />
       case 'chances':
-        return <ChancesPanel kase={current} />
+        return <ChancesPanel kase={current} onNext={() => setActive(current.letter ? 'letter' : 'filing')} />
       case 'letter':
         return (
           <>
@@ -431,7 +433,7 @@ export function Dossier() {
 
   return (
     <div className="flex h-full flex-col">
-      <div className="shrink-0 border-b border-rule px-5 py-4 md:px-10">
+      <div className="shrink-0 border-b border-rule px-5 py-4 md:px-10 lg:pr-[17.5rem]">
         <div className="mx-auto w-full max-w-[760px]">{header}</div>
       </div>
 
@@ -469,7 +471,7 @@ export function Dossier() {
         </div>
 
         <aside className="hidden w-60 shrink-0 overflow-y-auto border-l border-rule px-3 py-6 lg:block">
-          <p className="px-3 pb-2 font-display text-sm font-bold text-muted-foreground">{t('workspace.sections')}</p>
+          <p className="px-3 pb-2 text-sm font-bold text-muted-foreground">{t('workspace.sections')}</p>
           <SectionList sections={sections} active={activeId} onSelect={setActive} />
         </aside>
       </div>

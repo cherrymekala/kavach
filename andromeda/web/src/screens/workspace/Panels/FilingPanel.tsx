@@ -70,12 +70,12 @@ export function FilingPanel({
   return (
     <section className="flex flex-col gap-5">
       <header>
-        <h2 className="font-display text-xl font-bold">{t('filing.title')}</h2>
+        <h2 className="text-2xl font-extrabold tracking-tight">{t('filing.title')}</h2>
       </header>
 
       <div className="grid items-start gap-8 lg:grid-cols-2">
         <div className="flex flex-col gap-3">
-          <h3 className="font-display text-base font-bold">{t('filing.yourDetails')}</h3>
+          <h3 className="text-xl font-extrabold tracking-tight">{t('filing.yourDetails')}</h3>
           <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="f-name">{t('filing.name')}</Label>
@@ -107,7 +107,7 @@ export function FilingPanel({
 
         <div className="flex flex-col gap-3">
           <div className="flex items-center justify-between">
-            <h3 className="font-display text-base font-bold">{t('filing.pack')}</h3>
+            <h3 className="text-xl font-extrabold tracking-tight">{t('filing.pack')}</h3>
             <Button
               size="sm"
               variant="outline"

@@ -1,5 +1,5 @@
 import { useTranslation } from 'react-i18next'
-import { Stepper } from '@/components'
+import { Stepper, ShieldHero } from '@/components'
 import type { Case } from '@/api/types'
 
 /** The analysis progress, in order (sombrero/src/kavach/agents/orchestrator.py). */
@@ -30,11 +30,8 @@ export function AnalysingPanel({ kase }: { kase: Case }) {
   const current = at >= 0 ? at : 0
 
   return (
-    <section className="flex flex-col gap-4">
-      <div>
-        <h2 className="font-display text-xl font-bold">{t('upload.analysingHeading')}</h2>
-        <p className="mt-1 max-w-[60ch] text-sm text-muted-foreground">{t('upload.analysingSub')}</p>
-      </div>
+    <section className="flex flex-col gap-8">
+      <ShieldHero footer={t('upload.analysingSub')}>{t('upload.analysingHeading')}</ShieldHero>
       <Stepper
         steps={steps.map((_s, i) => ({
           label: t(`${prefix}.${i}.label`),

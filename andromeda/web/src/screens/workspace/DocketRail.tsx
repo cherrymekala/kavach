@@ -43,17 +43,17 @@ function CaseList() {
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2.5 px-4 pt-5">
-        <span className="grid size-8 place-items-center rounded-lg bg-brand text-white">
+        <span className="grid size-8 place-items-center rounded-full bg-white/15 text-white">
           <ShieldCheckIcon className="size-5" aria-hidden />
         </span>
-        <span className="font-display text-lg font-bold tracking-tight text-rail-foreground">Kavach</span>
+        <span className="text-lg font-bold tracking-tight text-rail-foreground">Kavach</span>
       </div>
 
       <div className="px-4 pt-5">
         <button
           type="button"
           onClick={() => navigate('/app')}
-          className="flex h-10 w-full items-center justify-center gap-2 rounded-lg border border-rail-foreground/20 text-sm font-semibold text-rail-foreground transition-colors hover:bg-rail-foreground/10"
+          className="flex h-10 w-full items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-[#1d5c4d] transition-colors hover:bg-white/90"
         >
           <PlusIcon className="size-4" aria-hidden />
           {t('workspace.newCase')}
@@ -76,20 +76,18 @@ function CaseList() {
                     onClick={() => navigate(`/case/${c.id}`)}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
-                      'flex w-full flex-col gap-0.5 rounded-md border-l-2 px-3 py-2.5 text-left transition-colors',
-                      active
-                        ? 'border-brand bg-rail-foreground/10'
-                        : 'border-transparent hover:bg-rail-foreground/5',
+                      'flex w-full flex-col gap-0.5 rounded-2xl px-3 py-2.5 text-left transition-colors',
+                      active ? 'bg-rail-foreground/15' : 'hover:bg-rail-foreground/[0.07]',
                     )}
                   >
                     <span className="flex items-center gap-2">
                       <span className={cn('size-1.5 shrink-0 rounded-full', DOT[c.status] ?? 'bg-rail-foreground/30')} />
                       <span className="min-w-0 flex-1 truncate text-sm font-semibold text-rail-foreground">{title(c)}</span>
-                      <span className="shrink-0 rounded border border-rail-foreground/20 px-1.5 py-px font-mono text-[10px] font-semibold text-rail-foreground/60">
+                      <span className="shrink-0 rounded-full bg-rail-foreground/10 px-2 py-px text-[10px] font-semibold text-rail-foreground/80">
                         {c.country}
                       </span>
                     </span>
-                    <span className="flex items-center gap-2 pl-3.5 text-xs text-rail-foreground/50">
+                    <span className="flex items-center gap-2 pl-3.5 text-xs text-rail-foreground/65">
                       <span className="min-w-0 flex-1 truncate">{lastLine(c)}</span>
                       {c.last_message_at ? <span className="shrink-0">{timeAgo(c.last_message_at)}</span> : null}
                     </span>
@@ -130,7 +128,7 @@ export function DocketRail() {
         >
           <MenuIcon className="size-5" aria-hidden />
         </button>
-        <span className="font-display text-lg font-bold tracking-tight">Kavach</span>
+        <span className="text-lg font-bold tracking-tight">Kavach</span>
       </header>
 
       <Sheet open={open} onOpenChange={setOpen}>

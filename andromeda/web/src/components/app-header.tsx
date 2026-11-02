@@ -23,7 +23,7 @@ export function AppHeader({ title, onBack, right, pack }: AppHeaderProps) {
           <ArrowLeftIcon className="size-5" />
         </button>
       ) : null}
-      <h1 className="min-w-0 flex-1 truncate font-display text-2xl font-extrabold tracking-tight">{title}</h1>
+      <h1 className="min-w-0 flex-1 truncate text-2xl font-extrabold tracking-tight">{title}</h1>
       {pack ? <Badge variant="secondary">{pack}</Badge> : null}
       {right}
     </div>

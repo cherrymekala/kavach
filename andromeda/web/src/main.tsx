@@ -46,6 +46,12 @@ if (import.meta.env.DEV) {
   for (const [code, pack] of Object.entries(packs)) {
     queryClient.setQueryData(['pack', code], pack.default)
   }
+  // The desktop case list (/preview/workspace) reads GET /cases.
+  queryClient.setQueryData(['cases'], [
+    { id: 'demo', title: 'Star Health', insurer: 'Star Health', diagnosis: 'Cholelithiasis', claim_amount: 184000, currency: 'INR', strength: 'strong', status: 'ready', country: 'IN', created_at: '2026-10-11T09:00:00Z' },
+    { id: 'demo-filed', title: 'HDFC ERGO', insurer: 'HDFC ERGO', diagnosis: 'Cataract', claim_amount: 62000, currency: 'INR', strength: 'medium', status: 'escalated', country: 'IN', created_at: '2026-09-02T09:00:00Z' },
+  ])
+  queryClient.setQueryDefaults(['cases'], { staleTime: Infinity })
   for (const [id, data] of Object.entries(variants)) {
     queryClient.setQueryData(['case', id], data)
     queryClient.setQueryDefaults(['case', id], { staleTime: Infinity })

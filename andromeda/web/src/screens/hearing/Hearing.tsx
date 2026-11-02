@@ -38,7 +38,7 @@ function CoachCard({ coach }: { coach: Coaching }) {
     <div className="flex flex-col gap-2 rounded-xl border border-mint/40 bg-mint/10 p-3 text-sm">
       <div className="flex items-center justify-between gap-3">
         <span className="font-bold text-mint">{t('hearing.coach')}</span>
-        <span className="font-mono text-xs font-semibold tabular-nums">{coach.score}/5</span>
+        <span className="text-xs font-semibold tabular-nums">{coach.score}/5</span>
       </div>
       <Meter value={coach.score / 5} tone={tone(coach.score)} />
       <p>{coach.feedback}</p>
@@ -120,9 +120,9 @@ export function Hearing() {
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 pb-24">
         <AppHeader title={t('hearing.title')} />
         <section className="flex flex-col gap-3 rounded-2xl bg-primary p-6 text-primary-foreground">
-          <span className="font-mono text-xs opacity-80">{t('hearing.debrief')}</span>
+          <span className="text-xs opacity-80">{t('hearing.debrief')}</span>
           {d.average_score !== null ? (
-            <p className="font-display text-4xl font-extrabold tabular-nums">
+            <p className="text-4xl font-extrabold tabular-nums">
               {d.average_score}
               <span className="text-lg opacity-70">/5</span>
             </p>
@@ -130,10 +130,10 @@ export function Hearing() {
           <p className="text-sm opacity-90">{d.summary}</p>
         </section>
         <section className="flex flex-col gap-2">
-          <h3 className="font-display text-base font-bold">{t('hearing.tipsForReal')}</h3>
+          <h3 className="text-xl font-extrabold tracking-tight">{t('hearing.tipsForReal')}</h3>
           {d.top_tips.map((tip, i) => (
             <div key={tip} className="flex items-start gap-3 rounded-xl border border-border bg-card p-4">
-              <span className="font-display text-lg font-extrabold text-brand">{i + 1}</span>
+              <span className="text-lg font-extrabold text-brand">{i + 1}</span>
               <p className="text-sm">{tip}</p>
             </div>
           ))}
@@ -156,7 +156,7 @@ export function Hearing() {
               <GavelIcon className="size-5" aria-hidden />
             </span>
             <div>
-              <h3 className="font-display font-bold">{t('hearing.intro', { body })}</h3>
+              <h3 className="text-lg font-extrabold tracking-tight">{t('hearing.intro', { body })}</h3>
               <p className="text-sm text-muted-foreground">{t('hearing.introSub')}</p>
             </div>
           </div>
@@ -174,10 +174,10 @@ export function Hearing() {
           {!ready ? <p className="text-sm text-muted-foreground">{t('hearing.needAnalysis')}</p> : null}
         </section>
         <section className="flex flex-col gap-2">
-          <h3 className="font-display text-base font-bold">{t('hearing.tips')}</h3>
+          <h3 className="text-xl font-extrabold tracking-tight">{t('hearing.tips')}</h3>
           {[t('hearing.tip1'), t('hearing.tip2'), t('hearing.tip3')].map((tip, i) => (
             <div key={tip} className="flex items-start gap-3 rounded-xl border border-border bg-card p-4">
-              <span className="font-display text-lg font-extrabold text-brand">{i + 1}</span>
+              <span className="text-lg font-extrabold text-brand">{i + 1}</span>
               <p className="text-sm">{tip}</p>
             </div>
           ))}

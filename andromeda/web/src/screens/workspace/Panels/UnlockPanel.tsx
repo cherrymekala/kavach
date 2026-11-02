@@ -38,7 +38,7 @@ export function UnlockPanel({ caseId, price }: { caseId: string; price: PackInfo
           <LockIcon className="size-4" aria-hidden />
         </span>
         <div>
-          <h2 className="font-display text-lg font-bold">{t('unlock.title')}</h2>
+          <h2 className="text-lg font-bold">{t('unlock.title')}</h2>
           <p className="text-sm text-muted-foreground">{t('unlock.sub')}</p>
         </div>
       </div>
