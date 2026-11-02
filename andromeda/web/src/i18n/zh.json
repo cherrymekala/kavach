@@ -1,7 +1,10 @@
 {
   "common": {
     "loading": "加载中…",
-    "back": "返回"
+    "back": "返回",
+    "language": "语言",
+    "cancel": "取消",
+    "save": "保存"
   },
   "auth": {
     "kicker": "健康保险，为您护航",
@@ -38,7 +41,9 @@
     "callDesc": "用您的语言沟通",
     "comingSoon": "即将推出",
     "detected": "根据您的号码识别",
-    "errorCreate": "无法开始您的案件。"
+    "errorCreate": "无法开始您的案件。",
+    "hero": "让我们一起准备您的申诉。",
+    "heroSub": "请告诉我们您所在的位置，我们会把每一步都引导到正确的监管机构、表格和期限。"
   },
   "unlock": {
     "title": "解锁申诉资料包",
@@ -55,5 +60,444 @@
     "confirmingTitle": "正在确认付款",
     "confirmingSub": "需要几秒钟，请保持此页面打开。",
     "downloadLocked": "包含在申诉资料包中。请在上方解锁后下载。"
+  },
+  "upload": {
+    "heading": "添加您的理赔文件",
+    "sub": "照片或 PDF 都可以。文件越完整，您的案件就越有力。",
+    "wanted": {
+      "rejection_letter": {
+        "label": "拒赔信",
+        "hint": "必需——保险公司的信件或电子邮件"
+      },
+      "policy": {
+        "label": "保单文件",
+        "hint": "附有条款的保单条文"
+      },
+      "discharge_summary": {
+        "label": "出院小结",
+        "hint": "由医院提供"
+      }
+    },
+    "choose": "选择文件",
+    "photo": "拍照",
+    "limits": "PDF · JPG · PNG · WEBP · TXT · 每个最大 20 MB",
+    "yourFiles_one": "已添加 1 个文件",
+    "yourFiles_other": "已添加 {{count}} 个文件",
+    "remove": "删除 {{name}}",
+    "analyse": "分析我的案件",
+    "retry": "再试一次",
+    "seeFull": "查看我们的发现",
+    "analysingHeading": "正在整理您的案件",
+    "analysingSub": "我们的智能助手正在逐一阅读您的文件，大约需要一分钟。您可以离开此页面，稍后再回来。",
+    "steps": [
+      {
+        "label": "正在阅读您的文件",
+        "detail": "逐一整理每份文件，提取日期、金额和保险公司给出的理由"
+      },
+      {
+        "label": "解读拒赔原因",
+        "detail": "将保险公司的代码与官方列表进行比对"
+      },
+      {
+        "label": "查找适用的规则",
+        "detail": "在监管机构的规则中搜索保护您的条款"
+      },
+      {
+        "label": "查找类似的过往案例",
+        "detail": "搜索数以千计的过往 Ombudsman 裁决"
+      },
+      {
+        "label": "整理您的案件",
+        "detail": "根据您的文件、规则和裁决撰写论点"
+      },
+      {
+        "label": "核对每一处来源",
+        "detail": "确保每段引文都确实出现在原始文件中"
+      },
+      {
+        "label": "撰写您的申诉信",
+        "detail": "起草您的信函"
+      }
+    ],
+    "errorUpload": "无法上传该文件。",
+    "errorAnalyse": "无法开始分析。"
+  },
+  "summary": {
+    "title": "发生了什么",
+    "notReady": "仍在阅读您的文件",
+    "notReadySub": "我们仍在整理您的文件，请稍后再查看。",
+    "reason": "保险公司的原话理由",
+    "noReason": "我们在您的文件中找不到保险公司说明的理由。",
+    "amounts": "金额",
+    "claimed": "申请金额",
+    "approved": "批准金额",
+    "details": "保单号和理赔号",
+    "patient": "被保险人",
+    "insurer": "保险公司",
+    "hospital": "医院",
+    "policy": "保单号码",
+    "claimNumber": "理赔号码",
+    "admission": "入院日期",
+    "rejectionDate": "拒赔日期",
+    "policyStart": "保单生效日期",
+    "diagnosisDate": "首次确诊日期",
+    "timeline": "各个时间节点",
+    "docs": "我们已阅读的文件",
+    "cta": "查看您的胜算",
+    "headline": "{{insurer}} 拒绝了您 {{amount}} 的理赔",
+    "headlinePartial": "{{insurer}} 支付了您 {{claimed}} 理赔中的 {{approved}}",
+    "headlineNoAmount": "{{insurer}} 拒绝了您的理赔",
+    "unpaid": "未支付：{{amount}}",
+    "yourInsurer": "您的保险公司",
+    "whatItMeans": "这意味着什么",
+    "missing": {
+      "policyStart": "您的文件中没有保单生效日期。这关系到等待期的计算，如果您有保单明细表或首份保单，请补充上传。"
+    },
+    "read": "已阅读",
+    "check": "请核对",
+    "category": {
+      "pre_existing": "既有病症",
+      "specific_waiting_period": "等待期",
+      "initial_waiting_period": "前 30 天",
+      "non_disclosure": "未如实告知",
+      "room_rent": "房费限额",
+      "reasonable_charges": "费用被削减",
+      "diagnostic_only": "仅做检查",
+      "not_medically_necessary": "非医疗必需",
+      "excluded_treatment": "除外治疗",
+      "missing_documents": "文件缺失",
+      "late_intimation": "通知延迟",
+      "sub_limit": "已达分项限额",
+      "under_24_hours": "住院不足 24 小时",
+      "hospital_ineligible": "医院不符合条件",
+      "duplicate_claim": "重复理赔",
+      "fraud": "涉嫌欺诈",
+      "other": "其他"
+    },
+    "meaning": {
+      "pre_existing": "保险公司认为您在保单生效前已患有此病，并且此类病症仍在等待期内。关键在于首次确诊或接受治疗的时间，因此日期非常重要。",
+      "specific_waiting_period": "某些治疗需要在投保满一定时间后才予以承保（例如白内障需满 2 年）。保险公司认为该期限尚未届满。",
+      "initial_waiting_period": "大多数保单在前 30 天内不承保疾病（意外除外）。保险公司认为您的理赔落在这段时间内。",
+      "non_disclosure": "保险公司认为您在购买保单时，未申报某些健康状况。保险公司必须证明该情况确实影响了承保决定；在投保满 5 年后，通常无法再以此为由拒赔。",
+      "room_rent": "保险公司认为您入住的病房费用超出了保单允许的范围，因此削减了理赔金额。请查看您的保单：许多保单并无房费限制。",
+      "reasonable_charges": "保险公司认为医院收费高于正常水平，因此只支付了部分费用。",
+      "diagnostic_only": "保险公司认为您只是为了做检查而入院，这类费用不予承保。如果您实际接受了治疗，这一点很重要。",
+      "not_medically_necessary": "保险公司认为住院并非必要。您的医生病历是最关键的证据。",
+      "excluded_treatment": "保险公司认为您的保单排除了这项治疗。除外条款的确切措辞非常重要。",
+      "missing_documents": "保险公司表示未收到其所需的全部文件。这通常是最容易解决的问题。",
+      "late_intimation": "保险公司表示其获知住院情况的时间太晚。如果延误有正当理由，通常会被接受。",
+      "sub_limit": "保险公司认为您保单中的某项限额已经用完，因此只支付了部分费用。",
+      "under_24_hours": "保险公司认为您的住院时间不足 24 小时。许多日间手术仍然可以获得承保。"
+    }
+  },
+  "chances": {
+    "title": "您的胜算",
+    "notReady": "评估尚未完成",
+    "notReadySub": "我们尚未评估您的案件。",
+    "strength": {
+      "strong": "案件有力",
+      "medium": "案件尚可",
+      "weak": "案件较弱"
+    },
+    "won": "类似案件中，已有 {{won}} / {{total}} 位投保人胜诉",
+    "noArguments": "暂无论点。",
+    "missing": "您可能仍需准备的文件",
+    "noMissing": "您需要的文件已齐全。",
+    "cta": "撰写申诉信",
+    "verdict": "我们的评估",
+    "strengthHint": {
+      "strong": "您的文件和相关规则表明，此次拒赔并不正确。",
+      "medium": "您有实际的论据，但结果可能有不同走向。",
+      "weak": "根据您的保单，拒赔可能是正确的。您仍可以申请复核。"
+    },
+    "precedents": "类似案件中，{{body}} 判投保人胜诉的案例",
+    "disputeBody": "Ombudsman",
+    "arguments_one": "您的一项论点",
+    "arguments_other": "您的 {{count}} 项论点",
+    "checked": "每段引文均已与原始文件核对",
+    "verified": "引文已核实",
+    "why": "为什么这很重要",
+    "kind": {
+      "policy": "您的保单",
+      "rejection_letter": "拒赔信",
+      "discharge_summary": "出院小结",
+      "bill": "医院账单",
+      "regulation": "监管规定",
+      "ruling": "过往裁决",
+      "other": "文件"
+    },
+    "peopleWon": "与您情况类似的 {{total}} 人中，有 {{won}} 人在向 {{body}} 投诉后获得了赔付。"
+  },
+  "letter": {
+    "title": "申诉信",
+    "notReady": "信函尚未准备好",
+    "notReadySub": "我们尚未为您起草申诉信。",
+    "download": "PDF",
+    "toneOptions": {
+      "firm": "语气更坚决",
+      "friendly": "语气更温和",
+      "concise": "更简短",
+      "detailed": "更详细"
+    },
+    "errorRedraft": "无法重新撰写信函。",
+    "errorDownload": "无法下载信函。",
+    "cta": "准备提交材料包",
+    "copy": "复制",
+    "copied": "已复制",
+    "subject": "主题：",
+    "askPlaceholder": "请求修改，例如“提及该医院在保险公司网络内”",
+    "askSend": "重新撰写",
+    "fillIn_one": "发送前请补充 1 项信息",
+    "fillIn_other": "发送前请补充 {{count}} 项信息",
+    "rewriting": "正在重新撰写您的信函…"
+  },
+  "filing": {
+    "title": "提交材料包",
+    "yourDetails": "您的资料",
+    "name": "全名",
+    "mobile": "手机号码",
+    "email": "电子邮件",
+    "address": "地址",
+    "relationship": "与投保人的关系",
+    "relationshipPlaceholder": "本人、配偶、父母…",
+    "save": "保存资料",
+    "pack": "提交材料包",
+    "download": "表格",
+    "disputeBody": "投诉机构",
+    "missing": "仍需补充",
+    "complete": "您的材料包已准备齐全。",
+    "notReady": "材料包尚未准备好",
+    "notReadySub": "请先保存您的资料，以生成材料包。",
+    "errorSave": "无法保存您的资料。",
+    "errorDownload": "无法下载表格。",
+    "cta": "排练您的聆讯"
+  },
+  "hearing": {
+    "title": "聆讯模拟练习",
+    "intro": "练习您的 {{body}} 聆讯",
+    "introSub": "基于您真实案件的语音实战演练。每次回答后，您都会获得评分和更好的回答建议。",
+    "disputeBody": "Ombudsman",
+    "roleBody": "提出中立、切中要点的问题",
+    "insurerRep": "保险公司代表",
+    "roleInsurer": "为拒赔辩护，并进行反驳",
+    "needAnalysis": "请先完成案件分析，以便模拟练习能使用您的实际情况。",
+    "tips": "发言前请注意",
+    "tip1": "请使用您文件上的确切日期，不要凭记忆猜测。",
+    "tip2": "只陈述事实。如果您不知道，请说“我不知道”。",
+    "tip3": "回答保持简短，一两句话即可。",
+    "start": "开始模拟练习",
+    "skip": "跳过",
+    "connecting": "正在连接…",
+    "live": "实时",
+    "wrappingUp": "正在撰写总结…",
+    "yourTurn": "轮到您了",
+    "micOn": "点击作答",
+    "micOff": "静音",
+    "typeInstead": "改为打字",
+    "typePlaceholder": "输入您的回答",
+    "send": "发送",
+    "end": "结束模拟练习",
+    "coach": "指导",
+    "tryThis": "可以试着这样说",
+    "scoring": "正在为您的回答打分…",
+    "debrief": "您的模拟练习总结",
+    "tipsForReal": "正式聆讯时的建议",
+    "again": "再练一次",
+    "cta": "跟进您的案件"
+  },
+  "tracker": {
+    "title": "案件跟进",
+    "whatNow": "现在该做什么",
+    "daysLeft_one": "天内等待对方答复",
+    "daysLeft_other": "天内等待对方答复",
+    "now": {
+      "send": {
+        "title": "将您的申诉信寄给保险公司",
+        "body": "请通过电子邮件或邮寄，将您的申诉信发送给 {{body}}。对方有 {{days}} 天时间答复。寄出后请告诉我们，我们会为您跟进期限。",
+        "cta": "我已寄出",
+        "open": "打开我的信函"
+      },
+      "waiting": {
+        "title": "正在等待 {{body}} 的答复",
+        "body": "对方应于 {{date}} 前答复。如果对方未答复，我们会告诉您下一步该怎么做。",
+        "overdue": "答复已逾期。我们会自动将您的案件推进到下一步。",
+        "cta": "对方已答复"
+      },
+      "next": {
+        "title": "下一步：{{body}}",
+        "body": "您的 {{form}} 已准备好。请将其提交给 {{body}}，然后告诉我们提交的日期。",
+        "cta": "我已提交",
+        "open": "打开提交材料包"
+      },
+      "resolved": {
+        "title": "您的案件已解决",
+        "body": "查看您追回的金额，并下载您的文件。",
+        "cta": "查看结果"
+      }
+    },
+    "lastStep": "这已是最后一步。如果您没有收到任何回复，请直接联系对方。",
+    "ladder": "各个步骤",
+    "replyWithin": "请在 {{days}} 天内答复",
+    "history": "已发生的事件",
+    "filedTitle": "您何时向 {{body}} 提交了申请？",
+    "filedSub": "我们将从该日期开始计算答复期限。",
+    "replyTitle": "对方怎么说？",
+    "replySub": "请记录对方的答复，以便我们规划下一步。",
+    "outcomes": {
+      "paid": "对方已全额支付",
+      "partly_paid": "对方已支付部分金额",
+      "rejected": "对方再次拒绝"
+    },
+    "amountPaid": "已支付金额",
+    "filedOn": "提交日期",
+    "repliedOn": "对方答复日期",
+    "errorSave": "无法保存，请再试一次。"
+  },
+  "outcome": {
+    "title": "结果",
+    "congrats": "您做到了。",
+    "recovered": "已追回",
+    "sub": "您的申诉已经解决。请保留一份文件副本。",
+    "download": "下载您的文件",
+    "deleteTitle": "删除我的数据",
+    "deleteSub": "删除此案件及所有已上传的文件。此操作无法撤销。",
+    "delete": "删除我的数据",
+    "deleteConfirm": "删除此案件？",
+    "deleteConfirmSub": "所有文件都将被永久删除。",
+    "errorDownload": "无法下载。",
+    "errorDelete": "无法删除您的数据。",
+    "cta": "开始新的理赔"
+  },
+  "cases": {
+    "title": "我的案件",
+    "new": "开始新案件",
+    "untitled": "新案件",
+    "noDetails": "等待您上传文件",
+    "status": {
+      "collecting": "上传中",
+      "analysing": "分析中",
+      "ready": "已就绪",
+      "filed": "已提交",
+      "escalated": "下一步已就绪",
+      "resolved": "已解决"
+    },
+    "strength": {
+      "strong": "案件有力",
+      "medium": "案件中等",
+      "weak": "案件较弱"
+    }
+  },
+  "workspace": {
+    "newCase": "新案件",
+    "yourCases": "您的案件",
+    "untitled": "未命名理赔",
+    "noCases": "暂无案件",
+    "loadError": "无法连接 Kavach",
+    "history": "历史记录",
+    "status": {
+      "collecting": "收集中",
+      "analysing": "分析中",
+      "ready": "已就绪",
+      "filed": "已提交",
+      "escalated": "下一步已就绪",
+      "resolved": "已解决"
+    },
+    "ask": {
+      "title": "询问关于此案件的问题",
+      "placeholder": "例如：我的理赔为什么被拒？",
+      "send": "发送",
+      "thinking": "思考中…",
+      "error": "无法获得回答。"
+    },
+    "composer": {
+      "heroTitle": "为拒赔据理力争",
+      "heroSub": "请附上您的拒赔信、保单和出院小结，或描述事情的经过。",
+      "placeholder": "询问您的案件，或描述发生的情况…",
+      "attach": "添加文件",
+      "mic": "语音输入即将推出",
+      "send": "发送"
+    },
+    "files": "文件",
+    "you": "您",
+    "conversation": "对话",
+    "downloadFile": "下载 {{name}}",
+    "sections": "各部分",
+    "sectionsHint": "跳转到某一部分",
+    "chat": {
+      "open": "发消息给 Kavach",
+      "close": "关闭消息"
+    }
+  },
+  "insights": {
+    "kicker": "拒赔模式 · 印度",
+    "title": "当投保人将被拒的健康理赔提交给保险申诉专员（Insurance Ombudsman）时，大多数人都能胜诉",
+    "sub": "共 {{total}} 份已公布的 Ombudsman 裁决，时间范围 {{from}}–{{to}}，由 Kavach 阅读并分类。",
+    "overall": "的纠纷以全额或部分赔付结案",
+    "best": "当保险公司援引{{ground}}时，投保人胜诉",
+    "worst": "当保险公司援引{{ground}}时，投保人胜诉：这是最难的理由",
+    "chartTitle": "投保人胜诉的频率",
+    "won": "理赔获得全额或部分赔付的裁决所占比例。援引次数少于 20 份裁决的理由未予列出。",
+    "by": {
+      "category": "理由",
+      "insurer": "保险公司",
+      "year": "年份"
+    },
+    "rowDetail": "共 {{total}} 份裁决：{{allowed}} 份全额赔付，{{partly}} 份部分赔付，{{dismissed}} 份驳回",
+    "table": "查看具体数字",
+    "col": {
+      "total": "裁决数",
+      "allowed": "全额赔付",
+      "partly": "部分赔付",
+      "dismissed": "驳回"
+    },
+    "unavailable": "此报告目前无法查看。"
+  },
+  "discharge": {
+    "mode": {
+      "dispute": "我的理赔被拒",
+      "pre_discharge": "我仍在住院"
+    },
+    "modeLabel": "您需要什么帮助？",
+    "heroTitle": "出院前先核对您的理赔",
+    "heroSub": "请附上您的保单、出院小结草稿和中期账单。我们会标出保险公司可能削减的项目，让您在仍可修正时及时处理。",
+    "title": "出院前",
+    "verdict": {
+      "clear": "看起来没有问题",
+      "some_risks": "有几处需要修正",
+      "high_risk": "出院前请先修正这些问题"
+    },
+    "risks_one": "有 {{count}} 项需要核对",
+    "risks_other": "有 {{count}} 项需要核对",
+    "severity": {
+      "high": "可能被拒赔或大幅削减",
+      "medium": "可能被部分削减",
+      "low": "可能引起查询或延误"
+    },
+    "fix": "出院前请处理",
+    "noRisks": "在您的文件中，我们未发现保险公司可能削减的项目。",
+    "steps": [
+      {
+        "label": "正在阅读您的文件",
+        "detail": "逐一整理每份文件，提取日期、金额以及您所住病房的信息"
+      },
+      {
+        "label": "查找适用的规则",
+        "detail": "在监管机构的规则中搜索限额及必须支付的项目"
+      },
+      {
+        "label": "将账单与保单进行核对",
+        "detail": "将房费、费用项目和等待期与您的保单进行比对"
+      },
+      {
+        "label": "核对每一处来源",
+        "detail": "确保每段引文都确实出现在原始文件中"
+      }
+    ]
+  },
+  "account": {
+    "title": "账户",
+    "signedInAs": "已登录",
+    "placeholder": "Kavach 账户",
+    "signOut": "退出登录"
   }
 }

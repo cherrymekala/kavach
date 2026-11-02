@@ -1,7 +1,10 @@
 {
   "common": {
     "loading": "Memuatkan…",
-    "back": "Kembali"
+    "back": "Kembali",
+    "language": "Bahasa",
+    "cancel": "Batal",
+    "save": "Simpan"
   },
   "auth": {
     "kicker": "Insurans kesihatan, di pihak anda",
@@ -38,7 +41,9 @@
     "callDesc": "Bercakap dalam bahasa anda",
     "comingSoon": "Akan datang",
     "detected": "dikesan daripada nombor anda",
-    "errorCreate": "Tidak dapat memulakan kes anda."
+    "errorCreate": "Tidak dapat memulakan kes anda.",
+    "hero": "Mari sediakan rayuan anda.",
+    "heroSub": "Beritahu kami lokasi anda dan kami akan hantar setiap langkah kepada pihak berkuasa, borang dan tarikh akhir yang betul."
   },
   "unlock": {
     "title": "Buka pakej rayuan anda",
@@ -55,5 +60,444 @@
     "confirmingTitle": "Mengesahkan pembayaran",
     "confirmingSub": "Ini mengambil beberapa saat. Biarkan halaman ini terbuka.",
     "downloadLocked": "Termasuk dalam pakej rayuan. Buka di atas untuk memuat turun."
+  },
+  "upload": {
+    "heading": "Tambah dokumen tuntutan anda",
+    "sub": "Foto atau PDF pun boleh. Lebih banyak dokumen, lebih kukuh kes anda.",
+    "wanted": {
+      "rejection_letter": {
+        "label": "Surat penolakan",
+        "hint": "Diperlukan — surat atau e-mel daripada insurer"
+      },
+      "policy": {
+        "label": "Dokumen polisi",
+        "hint": "Terma polisi dengan klausa"
+      },
+      "discharge_summary": {
+        "label": "Ringkasan pelepasan",
+        "hint": "Daripada hospital"
+      }
+    },
+    "choose": "Pilih fail",
+    "photo": "Ambil foto",
+    "limits": "PDF · JPG · PNG · WEBP · TXT · sehingga 20 MB setiap satu",
+    "yourFiles_one": "1 fail ditambah",
+    "yourFiles_other": "{{count}} fail ditambah",
+    "remove": "Buang {{name}}",
+    "analyse": "Analisis kes saya",
+    "retry": "Cuba lagi",
+    "seeFull": "Lihat apa yang kami jumpa",
+    "analysingHeading": "Menyediakan kes anda",
+    "analysingSub": "Ejen kami sedang meneliti dokumen anda. Proses ini mengambil masa kira-kira seminit — anda boleh tinggalkan halaman ini dan kembali semula.",
+    "steps": [
+      {
+        "label": "Membaca dokumen anda",
+        "detail": "Menyusun setiap fail dan mengambil tarikh, jumlah dan sebab yang diberikan"
+      },
+      {
+        "label": "Menyahkod penolakan",
+        "detail": "Memadankan kod insurer dengan senarai rasmi"
+      },
+      {
+        "label": "Mencari peraturan yang terpakai",
+        "detail": "Mencari bahagian peraturan pengawal selia yang melindungi anda"
+      },
+      {
+        "label": "Mencari kes lepas yang serupa",
+        "detail": "Mencari dalam ribuan keputusan Ombudsman yang lepas"
+      },
+      {
+        "label": "Menyediakan kes anda",
+        "detail": "Menulis hujah daripada dokumen, peraturan dan keputusan anda"
+      },
+      {
+        "label": "Menyemak setiap sumber",
+        "detail": "Memastikan setiap petikan benar-benar wujud dalam sumbernya"
+      },
+      {
+        "label": "Menulis rayuan anda",
+        "detail": "Merangka surat anda"
+      }
+    ],
+    "errorUpload": "Fail itu tidak dapat dimuat naik.",
+    "errorAnalyse": "Analisis tidak dapat dimulakan."
+  },
+  "summary": {
+    "title": "Apa yang berlaku",
+    "notReady": "Masih membaca dokumen anda",
+    "notReadySub": "Kami masih meneliti dokumen anda. Semak semula sebentar lagi.",
+    "reason": "Sebab mereka, dalam kata-kata mereka",
+    "noReason": "Kami tidak menjumpai sebab yang dinyatakan dalam dokumen anda.",
+    "amounts": "Wang",
+    "claimed": "Dituntut",
+    "approved": "Diluluskan",
+    "details": "Nombor polisi dan tuntutan",
+    "patient": "Pesakit",
+    "insurer": "Insurer",
+    "hospital": "Hospital",
+    "policy": "Nombor polisi",
+    "claimNumber": "Nombor tuntutan",
+    "admission": "Dimasukkan ke hospital",
+    "rejectionDate": "Tuntutan ditolak",
+    "policyStart": "Polisi bermula",
+    "diagnosisDate": "Pertama didiagnosis",
+    "timeline": "Apa yang berlaku dan bila",
+    "docs": "Dokumen yang kami baca",
+    "cta": "Lihat peluang anda",
+    "headline": "{{insurer}} menolak tuntutan {{amount}} anda",
+    "headlinePartial": "{{insurer}} membayar {{approved}} daripada tuntutan {{claimed}} anda",
+    "headlineNoAmount": "{{insurer}} menolak tuntutan anda",
+    "unpaid": "Belum dibayar: {{amount}}",
+    "yourInsurer": "Insurer anda",
+    "whatItMeans": "Maksudnya",
+    "missing": {
+      "policyStart": "Tarikh mula polisi anda tiada dalam dokumen anda. Ia penting untuk tempoh menunggu, jadi tambahkan jadual polisi atau polisi pertama anda jika ada."
+    },
+    "read": "Dibaca",
+    "check": "Sila semak",
+    "category": {
+      "pre_existing": "Keadaan sedia ada",
+      "specific_waiting_period": "Tempoh menunggu",
+      "initial_waiting_period": "30 hari pertama",
+      "non_disclosure": "Tidak didedahkan",
+      "room_rent": "Had sewa bilik",
+      "reasonable_charges": "Caj dipotong",
+      "diagnostic_only": "Ujian sahaja",
+      "not_medically_necessary": "Tidak perlu dari segi perubatan",
+      "excluded_treatment": "Rawatan dikecualikan",
+      "missing_documents": "Dokumen tidak lengkap",
+      "late_intimation": "Notis lewat",
+      "sub_limit": "Had dicapai",
+      "under_24_hours": "Kurang 24 jam",
+      "hospital_ineligible": "Hospital tidak layak",
+      "duplicate_claim": "Tuntutan berganda",
+      "fraud": "Disyaki penipuan",
+      "other": "Lain-lain"
+    },
+    "meaning": {
+      "pre_existing": "Insurer berkata anda sudah menghidap penyakit ini sebelum polisi bermula, dan ia masih dalam tempoh menunggu bagi penyakit sebegini. Yang dikira ialah bila ia pertama kali didiagnosis atau dirawat, jadi tarikh amat penting.",
+      "specific_waiting_period": "Sesetengah rawatan hanya dilindungi selepas tempoh tetap bersama insurer (contohnya 2 tahun bagi katarak). Insurer berkata tempoh itu belum berlalu.",
+      "initial_waiting_period": "Kebanyakan polisi tidak melindungi penyakit dalam 30 hari pertama, kecuali kemalangan. Insurer berkata tuntutan anda jatuh dalam tempoh itu.",
+      "non_disclosure": "Insurer berkata sesuatu tentang kesihatan anda tidak diisytiharkan semasa membeli polisi. Insurer mesti menunjukkan ia benar-benar memberi kesan, dan selepas 5 tahun perlindungan, mereka biasanya tidak boleh menggunakan sebab ini sama sekali.",
+      "room_rent": "Insurer berkata bilik anda berharga lebih daripada yang dibenarkan polisi anda, lalu tuntutan anda dipotong. Semak polisi anda: banyak pelan tidak mempunyai had bilik.",
+      "reasonable_charges": "Insurer berkata hospital mengenakan caj lebih daripada kebiasaan dan hanya membayar sebahagian.",
+      "diagnostic_only": "Insurer berkata anda dimasukkan hanya untuk ujian, yang tidak dilindungi. Jika anda menerima rawatan, itu penting.",
+      "not_medically_necessary": "Insurer berkata penginapan di hospital itu tidak perlu. Nota doktor anda ialah bukti utama.",
+      "excluded_treatment": "Insurer berkata polisi anda mengecualikan rawatan ini. Perkataan tepat bagi pengecualian itu penting.",
+      "missing_documents": "Insurer berkata ia tidak menerima semua dokumen yang diperlukan. Ini sering menjadi yang paling mudah untuk diperbetulkan.",
+      "late_intimation": "Insurer berkata ia dimaklumkan tentang penginapan hospital itu terlalu lewat. Kelewatan atas sebab yang munasabah selalunya diterima.",
+      "sub_limit": "Insurer berkata had dalam polisi anda telah dicapai, jadi ia hanya membayar sebahagian.",
+      "under_24_hours": "Insurer berkata penginapan anda kurang 24 jam. Banyak prosedur sehari masih dilindungi."
+    }
+  },
+  "chances": {
+    "title": "Peluang anda",
+    "notReady": "Penilaian belum sedia",
+    "notReadySub": "Kami belum menilai kes anda.",
+    "strength": {
+      "strong": "Kes yang kukuh",
+      "medium": "Kes yang munasabah",
+      "weak": "Kes yang lemah"
+    },
+    "won": "Pesakit menang {{won}} daripada {{total}} kes yang serupa",
+    "noArguments": "Belum ada hujah.",
+    "missing": "Dokumen yang mungkin masih anda perlukan",
+    "noMissing": "Anda sudah mempunyai semua yang diperlukan.",
+    "cta": "Tulis surat rayuan",
+    "verdict": "Penilaian kami",
+    "strengthHint": {
+      "strong": "Dokumen dan peraturan anda menunjukkan penolakan itu tidak betul.",
+      "medium": "Anda mempunyai hujah yang sebenar, tetapi keputusannya boleh berpihak kepada mana-mana pihak.",
+      "weak": "Penolakan itu mungkin betul di bawah polisi anda. Anda masih boleh memohon semakan semula."
+    },
+    "precedents": "kes yang serupa di {{body}} berpihak kepada pesakit",
+    "disputeBody": "Ombudsman",
+    "arguments_one": "Hujah anda",
+    "arguments_other": "{{count}} hujah anda",
+    "checked": "Setiap petikan disemak dengan sumbernya",
+    "verified": "Petikan disahkan",
+    "why": "Mengapa ini penting",
+    "kind": {
+      "policy": "Polisi anda",
+      "rejection_letter": "Surat penolakan",
+      "discharge_summary": "Ringkasan pelepasan",
+      "bill": "Bil hospital",
+      "regulation": "Peraturan",
+      "ruling": "Keputusan lepas",
+      "other": "Dokumen"
+    },
+    "peopleWon": "{{won}} daripada {{total}} orang yang mempunyai kes seperti anda menerima bayaran selepas aduan kepada {{body}}."
+  },
+  "letter": {
+    "title": "Surat rayuan",
+    "notReady": "Surat belum sedia",
+    "notReadySub": "Kami belum merangka rayuan anda.",
+    "download": "PDF",
+    "toneOptions": {
+      "firm": "Lebih tegas",
+      "friendly": "Lebih lembut",
+      "concise": "Lebih ringkas",
+      "detailed": "Lebih terperinci"
+    },
+    "errorRedraft": "Surat tidak dapat dirangka semula.",
+    "errorDownload": "Surat tidak dapat dimuat turun.",
+    "cta": "Sediakan pakej pemfailan",
+    "copy": "Salin",
+    "copied": "Disalin",
+    "subject": "Perkara:",
+    "askPlaceholder": "Minta perubahan, cth. “nyatakan hospital itu dalam rangkaian insurer”",
+    "askSend": "Tulis semula",
+    "fillIn_one": "Isi 1 butiran sebelum menghantar",
+    "fillIn_other": "Isi {{count}} butiran sebelum menghantar",
+    "rewriting": "Sedang menulis semula surat anda…"
+  },
+  "filing": {
+    "title": "Pakej pemfailan",
+    "yourDetails": "Butiran anda",
+    "name": "Nama penuh",
+    "mobile": "Telefon bimbit",
+    "email": "E-mel",
+    "address": "Alamat",
+    "relationship": "Hubungan dengan pemegang polisi",
+    "relationshipPlaceholder": "Diri sendiri, suami/isteri, ibu bapa…",
+    "save": "Simpan butiran",
+    "pack": "Pakej pemfailan",
+    "download": "Borang",
+    "disputeBody": "Badan pertikaian",
+    "missing": "Masih diperlukan",
+    "complete": "Pakej anda sudah lengkap.",
+    "notReady": "Pakej belum sedia",
+    "notReadySub": "Simpan butiran anda untuk menjana pakej.",
+    "errorSave": "Butiran anda tidak dapat disimpan.",
+    "errorDownload": "Borang tidak dapat dimuat turun.",
+    "cta": "Latih pendengaran anda"
+  },
+  "hearing": {
+    "title": "Latihan pendengaran",
+    "intro": "Latih pendengaran {{body}} anda",
+    "introSub": "Latihan suara secara langsung dengan kes sebenar anda. Anda akan mendapat skor dan jawapan yang lebih baik selepas setiap jawapan.",
+    "disputeBody": "Ombudsman",
+    "roleBody": "bertanya soalan yang neutral dan tertumpu",
+    "insurerRep": "Wakil insurer",
+    "roleInsurer": "mempertahankan penolakan dan membantah",
+    "needAnalysis": "Selesaikan analisis kes dahulu, supaya latihan dapat menggunakan fakta anda.",
+    "tips": "Sebelum anda bercakap",
+    "tip1": "Gunakan tarikh tepat pada dokumen anda. Jangan meneka.",
+    "tip2": "Berpegang pada fakta. Jika anda tidak tahu, katakan \"Saya tidak tahu\".",
+    "tip3": "Jawab ringkas — satu atau dua ayat.",
+    "start": "Mula latihan",
+    "skip": "Langkau",
+    "connecting": "Menyambung…",
+    "live": "Langsung",
+    "wrappingUp": "Sedang menulis ringkasan anda…",
+    "yourTurn": "Giliran anda",
+    "micOn": "Ketik untuk menjawab",
+    "micOff": "Senyapkan",
+    "typeInstead": "Taip sebaliknya",
+    "typePlaceholder": "Taip jawapan anda",
+    "send": "Hantar",
+    "end": "Tamatkan latihan",
+    "coach": "Jurulatih",
+    "tryThis": "Cuba katakan",
+    "scoring": "Sedang menilai jawapan anda…",
+    "debrief": "Latihan anda",
+    "tipsForReal": "Untuk pendengaran sebenar",
+    "again": "Latih semula",
+    "cta": "Jejak kes anda"
+  },
+  "tracker": {
+    "title": "Penjejak kes",
+    "whatNow": "Apa yang perlu dilakukan sekarang",
+    "daysLeft_one": "hari lagi",
+    "daysLeft_other": "hari lagi",
+    "now": {
+      "send": {
+        "title": "Hantar rayuan anda kepada insurer",
+        "body": "E-melkan atau pos surat rayuan anda kepada {{body}}. Mereka ada {{days}} hari untuk membalas. Beritahu kami sebaik sahaja ia dihantar dan kami akan menjejak tarikh akhir.",
+        "cta": "Saya sudah hantar",
+        "open": "Buka surat saya"
+      },
+      "waiting": {
+        "title": "Menunggu balasan daripada: {{body}}",
+        "body": "Mereka sepatutnya membalas menjelang {{date}}. Jika tidak, kami akan beritahu apa yang perlu dilakukan seterusnya.",
+        "overdue": "Balasan sudah lewat. Kami akan memindahkan kes anda ke langkah seterusnya secara automatik.",
+        "cta": "Mereka sudah membalas"
+      },
+      "next": {
+        "title": "Seterusnya: {{body}}",
+        "body": "{{form}} anda sudah sedia. Failkan dengan {{body}}, kemudian beritahu kami tarikhnya.",
+        "cta": "Saya sudah failkan",
+        "open": "Buka pakej pemfailan"
+      },
+      "resolved": {
+        "title": "Kes anda sudah selesai",
+        "body": "Lihat apa yang anda peroleh semula dan muat turun dokumen anda.",
+        "cta": "Lihat hasilnya"
+      }
+    },
+    "lastStep": "Ini langkah terakhir. Jika anda tidak menerima apa-apa, hubungi mereka secara terus.",
+    "ladder": "Langkah-langkah",
+    "replyWithin": "Balas dalam {{days}} hari",
+    "history": "Apa yang telah berlaku",
+    "filedTitle": "Bila anda memfailkan dengan: {{body}}?",
+    "filedSub": "Kami akan mengira tarikh akhir balasan dari tarikh ini.",
+    "replyTitle": "Apa kata mereka?",
+    "replySub": "Rekodkan balasan supaya kami dapat merancang langkah seterusnya.",
+    "outcomes": {
+      "paid": "Mereka membayar sepenuhnya",
+      "partly_paid": "Mereka membayar sebahagian",
+      "rejected": "Mereka menolak sekali lagi"
+    },
+    "amountPaid": "Jumlah dibayar",
+    "filedOn": "Tarikh difailkan",
+    "repliedOn": "Tarikh balasan mereka",
+    "errorSave": "Tidak dapat disimpan. Sila cuba lagi."
+  },
+  "outcome": {
+    "title": "Hasil",
+    "congrats": "Anda berjaya.",
+    "recovered": "Diperoleh semula",
+    "sub": "Rayuan anda sudah selesai. Simpan salinan dokumen anda.",
+    "download": "Muat turun dokumen anda",
+    "deleteTitle": "Padam data saya",
+    "deleteSub": "Padamkan kes ini dan setiap dokumen yang dimuat naik. Tindakan ini tidak boleh dibatalkan.",
+    "delete": "Padam data saya",
+    "deleteConfirm": "Padam kes ini?",
+    "deleteConfirmSub": "Semua dokumen akan dipadamkan secara kekal.",
+    "errorDownload": "Tidak dapat dimuat turun.",
+    "errorDelete": "Data anda tidak dapat dipadamkan.",
+    "cta": "Mulakan tuntutan baharu"
+  },
+  "cases": {
+    "title": "Kes saya",
+    "new": "Mulakan kes baharu",
+    "untitled": "Kes baharu",
+    "noDetails": "Menunggu dokumen anda",
+    "status": {
+      "collecting": "Memuat naik",
+      "analysing": "Menganalisis",
+      "ready": "Sedia",
+      "filed": "Difailkan",
+      "escalated": "Langkah seterusnya sedia",
+      "resolved": "Selesai"
+    },
+    "strength": {
+      "strong": "Kes yang kukuh",
+      "medium": "Kes sederhana",
+      "weak": "Kes yang lemah"
+    }
+  },
+  "workspace": {
+    "newCase": "Kes baharu",
+    "yourCases": "Kes anda",
+    "untitled": "Tuntutan tanpa tajuk",
+    "noCases": "Belum ada kes",
+    "loadError": "Tidak dapat berhubung dengan Kavach",
+    "history": "Sejarah",
+    "status": {
+      "collecting": "Mengumpul",
+      "analysing": "Menganalisis",
+      "ready": "Sedia",
+      "filed": "Difailkan",
+      "escalated": "Langkah seterusnya sedia",
+      "resolved": "Selesai"
+    },
+    "ask": {
+      "title": "Tanya tentang kes ini",
+      "placeholder": "Cth. kenapa tuntutan saya ditolak?",
+      "send": "Hantar",
+      "thinking": "Sedang berfikir…",
+      "error": "Jawapan tidak dapat diperoleh."
+    },
+    "composer": {
+      "heroTitle": "Lawan penolakan itu",
+      "heroSub": "Lampirkan surat penolakan, polisi dan ringkasan pelepasan anda — atau terangkan apa yang berlaku.",
+      "placeholder": "Tanya tentang kes anda, atau terangkan apa yang berlaku…",
+      "attach": "Lampirkan fail",
+      "mic": "Input suara akan datang tidak lama lagi",
+      "send": "Hantar"
+    },
+    "files": "Fail",
+    "you": "Anda",
+    "conversation": "Perbualan",
+    "downloadFile": "Muat turun {{name}}",
+    "sections": "Bahagian",
+    "sectionsHint": "Pergi ke bahagian",
+    "chat": {
+      "open": "Mesej Kavach",
+      "close": "Tutup mesej"
+    }
+  },
+  "insights": {
+    "kicker": "Corak penolakan · India",
+    "title": "Apabila pesakit membawa tuntutan kesihatan yang ditolak ke Ombudsman Insurans, kebanyakan mereka menang",
+    "sub": "{{total}} award Ombudsman yang diterbitkan, {{from}}–{{to}}, dibaca dan dilabel oleh Kavach.",
+    "overall": "daripada pertikaian berakhir dengan tuntutan dibayar sepenuhnya atau sebahagian",
+    "best": "menang apabila insurer memetik {{ground}}",
+    "worst": "menang apabila insurer memetik {{ground}}: alasan yang paling sukar",
+    "chartTitle": "Kekerapan pesakit menang",
+    "won": "Bahagian award yang tuntutannya dibayar sepenuhnya atau sebahagian. Alasan dengan kurang 20 award tidak disertakan.",
+    "by": {
+      "category": "Alasan",
+      "insurer": "Insurer",
+      "year": "Tahun"
+    },
+    "rowDetail": "{{total}} award: {{allowed}} dibayar sepenuhnya, {{partly}} dibayar sebahagian, {{dismissed}} ditolak",
+    "table": "Tunjukkan angkanya",
+    "col": {
+      "total": "Award",
+      "allowed": "Dibayar",
+      "partly": "Dibayar sebahagian",
+      "dismissed": "Ditolak"
+    },
+    "unavailable": "Laporan ini tidak tersedia buat masa ini."
+  },
+  "discharge": {
+    "mode": {
+      "dispute": "Tuntutan saya ditolak",
+      "pre_discharge": "Saya masih di hospital"
+    },
+    "modeLabel": "Apa yang anda perlukan?",
+    "heroTitle": "Semak tuntutan anda sebelum anda keluar hospital",
+    "heroSub": "Lampirkan polisi anda, draf ringkasan pelepasan dan bil sementara. Kami akan tandakan apa yang mungkin dipotong oleh insurer semasa anda masih boleh membetulkannya.",
+    "title": "Sebelum anda dibenarkan keluar",
+    "verdict": {
+      "clear": "Nampaknya jelas",
+      "some_risks": "Beberapa perkara perlu diperbetulkan",
+      "high_risk": "Betulkan ini sebelum anda keluar"
+    },
+    "risks_one": "{{count}} perkara untuk disemak",
+    "risks_other": "{{count}} perkara untuk disemak",
+    "severity": {
+      "high": "Kemungkinan ditolak atau dipotong banyak",
+      "medium": "Kemungkinan dipotong sebahagian",
+      "low": "Mungkin menimbulkan pertanyaan atau kelewatan"
+    },
+    "fix": "Sebelum anda keluar",
+    "noRisks": "Kami tidak menjumpai apa-apa dalam dokumen anda yang mungkin dipotong oleh insurer.",
+    "steps": [
+      {
+        "label": "Membaca dokumen anda",
+        "detail": "Menyusun setiap fail dan mengambil tarikh, jumlah dan bilik yang anda diami"
+      },
+      {
+        "label": "Mencari peraturan yang terpakai",
+        "detail": "Mencari dalam peraturan pengawal selia tentang had dan apa yang mesti dibayar"
+      },
+      {
+        "label": "Menyemak bil anda dengan polisi",
+        "detail": "Membandingkan sewa bilik, item dan tempoh menunggu dengan polisi anda"
+      },
+      {
+        "label": "Menyemak setiap sumber",
+        "detail": "Memastikan setiap petikan benar-benar wujud dalam sumbernya"
+      }
+    ]
+  },
+  "account": {
+    "title": "Akaun",
+    "signedInAs": "Log masuk sebagai",
+    "placeholder": "Akaun Kavach",
+    "signOut": "Log keluar"
   }
 }
