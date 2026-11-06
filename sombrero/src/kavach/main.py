@@ -9,6 +9,7 @@ from .routers import (
     filing,
     hearing,
     insights,
+    mail,
     packs,
     payments,
     tracker,
@@ -35,6 +36,7 @@ app.include_router(tracker.case_router)
 app.include_router(voice.router)
 app.include_router(whatsapp.router)
 app.include_router(payments.router)
+app.include_router(mail.router)
 
 
 @app.get("/health")

@@ -416,6 +416,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/whatsapp/webhook": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Verify
+         * @description Meta's subscription handshake: echo hub.challenge when the verify token matches.
+         */
+        get: operations["verify_whatsapp_webhook_get"];
+        put?: never;
+        /** Receive */
+        post: operations["receive_whatsapp_webhook_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/cases/{case_id}/checkout": {
         parameters: {
             query?: never;
@@ -474,6 +495,44 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cases/{case_id}/send-appeal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Appeal Preview */
+        get: operations["appeal_preview_cases__case_id__send_appeal_get"];
+        put?: never;
+        /** Send Appeal */
+        post: operations["send_appeal_cases__case_id__send_appeal_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/mail/inbound": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Inbound
+         * @description Postmark inbound webhook. Always 200 for mail we can't place, so Postmark won't retry it.
+         */
+        post: operations["inbound_mail_inbound_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -495,6 +554,29 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AppealMail */
+        AppealMail: {
+            /** To */
+            to: string | null;
+            /** To Source */
+            to_source: string | null;
+            /** Cc */
+            cc: string | null;
+            /** Reply To */
+            reply_to: string | null;
+            /** Subject */
+            subject: string | null;
+            /** Attachments */
+            attachments: string[];
+            /** Missing */
+            missing: string[];
+            /** Blanks */
+            blanks: string[];
+            /** Sent On */
+            sent_on: string | null;
+            /** Dry Run */
+            dry_run: boolean;
+        };
         /** Argument */
         Argument: {
             /** Claim */
@@ -731,6 +813,8 @@ export interface components {
             relationship_to_insured?: string | null;
             /** Insurer Office Address */
             insurer_office_address?: string | null;
+            /** Insurer Email */
+            insurer_email?: string | null;
             /** Grievance Date */
             grievance_date?: string | null;
             /** Grievance Reply Date */
@@ -961,6 +1045,11 @@ export interface components {
             fix: string;
             /** Sources */
             sources: components["schemas"]["Source"][];
+        };
+        /** SendAppealRequest */
+        SendAppealRequest: {
+            /** To */
+            to: string;
         };
         /** Source */
         Source: {
@@ -1815,6 +1904,48 @@ export interface operations {
             };
         };
     };
+    verify_whatsapp_webhook_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    receive_whatsapp_webhook_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
     checkout_cases__case_id__checkout_post: {
         parameters: {
             query?: never;
@@ -1893,6 +2024,109 @@ export interface operations {
             header?: {
                 "stripe-signature"?: string;
             };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    appeal_preview_cases__case_id__send_appeal_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AppealMail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    send_appeal_cases__case_id__send_appeal_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendAppealRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Case"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    inbound_mail_inbound_post: {
+        parameters: {
+            query?: {
+                token?: string | null;
+            };
+            header?: never;
             path?: never;
             cookie?: never;
         };

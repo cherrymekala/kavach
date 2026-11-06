@@ -7,6 +7,8 @@ import {
   CheckCircle2Icon,
   CheckIcon,
   FileTextIcon,
+  InboxIcon,
+  MailIcon,
   MessageSquareReplyIcon,
   MicIcon,
   SendIcon,
@@ -28,8 +30,9 @@ import {
 } from '@/components'
 import { useMarkFiled, usePack, useRecordReply } from '@/api/hooks'
 import type { Case, CaseEvent } from '@/api/types'
-import { daysUntil, formatDate } from '@/lib/dates'
+import { daysUntil, formatDate, formatDeadline } from '@/lib/dates'
 import { cn } from '@/lib/cn'
+import { SendAppealDialog } from './SendAppealDialog'
 
 function todayISO(): string {
   const d = new Date()
@@ -45,11 +48,14 @@ const EVENT_ICON: Record<string, LucideIcon> = {
   resolved: TrophyIcon,
   rehearsal: MicIcon,
   documents_deleted: Trash2Icon,
+  emailed: MailIcon,
+  insurer_reply: InboxIcon,
 }
 const EVENT_TONE: Record<string, string> = {
   warning: 'bg-amber/15 text-amber',
   resolved: 'bg-mint/15 text-mint',
   escalated: 'bg-amber/15 text-amber',
+  insurer_reply: 'bg-accent text-accent-foreground',
 }
 
 const TRACKER_KINDS = new Set([
@@ -61,6 +67,8 @@ const TRACKER_KINDS = new Set([
   'resolved',
   'rehearsal',
   'documents_deleted',
+  'emailed',
+  'insurer_reply',
 ])
 
 function History({ events }: { events: CaseEvent[] }) {
@@ -97,6 +105,7 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
   const recordReply = useRecordReply(caseId)
 
   const [dialog, setDialog] = useState<'filed' | 'reply' | null>(null)
+  const [emailing, setEmailing] = useState(false)
   const [date, setDate] = useState(todayISO())
   const [outcome, setOutcome] = useState<Outcome | null>(null)
   const [amount, setAmount] = useState('')
@@ -150,7 +159,7 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
       body:
         days !== null && days < 0
           ? t('tracker.now.waiting.overdue')
-          : t('tracker.now.waiting.body', { date: formatDate(kase.next_deadline) }),
+          : t('tracker.now.waiting.body', { date: formatDeadline(kase.next_deadline) }),
       actions: <Button onClick={() => open('reply')}>{t('tracker.now.waiting.cta')}</Button>,
     }
   } else {
@@ -160,7 +169,19 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
       body: first
         ? t('tracker.now.send.body', { body: step?.dispute_body ?? '', days: step?.deadline_days ?? '' })
         : t('tracker.now.next.body', { form: step?.form ?? '', body: step?.dispute_body ?? '' }),
-      actions: <Button onClick={() => open('filed')}>{first ? t('tracker.now.send.cta') : t('tracker.now.next.cta')}</Button>,
+      actions: first ? (
+        <>
+          <Button onClick={() => setEmailing(true)}>
+            <MailIcon aria-hidden />
+            {t('tracker.now.send.email')}
+          </Button>
+          <Button variant="outline" onClick={() => open('filed')}>
+            {t('tracker.now.send.cta')}
+          </Button>
+        </>
+      ) : (
+        <Button onClick={() => open('filed')}>{t('tracker.now.next.cta')}</Button>
+      ),
     }
   }
 
@@ -231,6 +252,8 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
           <History events={kase.events} />
         </div>
       ) : null}
+
+      <SendAppealDialog caseId={caseId} open={emailing} onClose={() => setEmailing(false)} />
 
       <Dialog open={dialog !== null} onOpenChange={(o) => !o && setDialog(null)}>
         <DialogContent>
