@@ -23,13 +23,22 @@ EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 _REPLY = re.compile(r"case-([0-9a-f]{32})-([0-9a-f]{10})@", re.IGNORECASE)
 
 
+# Cloud Run can't deploy with an empty secret, so the secret holds this until the real token is
+# added (gcloud secrets versions add postmark-server-token …): until then, sends are dry runs.
+PLACEHOLDER = "unset"
+
+
+def _token() -> str:
+    token = get_settings().postmark_server_token.strip()
+    return "" if token == PLACEHOLDER else token
+
+
 class MailError(Exception):
     """Sending failed; the message is safe to show the patient."""
 
 
 def configured() -> bool:
-    s = get_settings()
-    return bool(s.postmark_server_token and s.mail_from)
+    return bool(_token() and get_settings().mail_from)
 
 
 def _sig(case_id: str) -> str:
@@ -87,7 +96,7 @@ def send(
             {"Name": name, "Content": base64.b64encode(data).decode(), "ContentType": mime}
             for name, data, mime in attachments
         ]
-    if not s.postmark_server_token:
+    if not _token():
         log.info("mail: dry run, not sent: %s", subject)
         return "dry-run"
     try:
@@ -95,7 +104,7 @@ def send(
             API,
             json=payload,
             headers={
-                "X-Postmark-Server-Token": s.postmark_server_token,
+                "X-Postmark-Server-Token": _token(),
                 "Accept": "application/json",
             },
             timeout=20,

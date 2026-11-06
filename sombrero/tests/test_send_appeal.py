@@ -142,3 +142,11 @@ def test_insurer_directory_matches_the_name_on_the_letter(monkeypatch):
         == "gro@starhealth.example"
     )
     assert packs.insurer_contact("IN", "Niva Bupa") is None
+
+
+def test_the_placeholder_token_keeps_sending_a_dry_run(monkeypatch):
+    monkeypatch.setenv("POSTMARK_SERVER_TOKEN", "unset")
+    monkeypatch.setenv("MAIL_FROM", "Kavach <appeals@kavach.example>")
+    get_settings.cache_clear()
+    assert not mail.configured()
+    assert mail.send("gro@insurer.example", "Appeal", "text") == "dry-run"
