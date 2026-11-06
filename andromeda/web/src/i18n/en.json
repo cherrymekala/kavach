@@ -211,7 +211,8 @@
       "ruling": "Past ruling",
       "other": "Document"
     },
-    "peopleWon": "{{won}} of {{total}} people with a case like yours got paid after a complaint to the {{body}}."
+    "peopleWon": "{{won}} of {{total}} people with a case like yours got paid after a complaint to the {{body}}.",
+    "fromRulings": "From past {{body}} rulings"
   },
   "letter": {
     "title": "Appeal letter",
@@ -336,7 +337,8 @@
     "amountPaid": "Amount paid",
     "filedOn": "Date filed",
     "repliedOn": "Date of their reply",
-    "errorSave": "Could not save that. Please try again."
+    "errorSave": "Could not save that. Please try again.",
+    "nowLabel": "Now"
   },
   "outcome": {
     "title": "Outcome",

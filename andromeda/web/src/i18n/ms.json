@@ -227,7 +227,8 @@
       "ruling": "Keputusan lepas",
       "other": "Dokumen"
     },
-    "peopleWon": "{{won}} daripada {{total}} orang yang mempunyai kes seperti anda menerima bayaran selepas aduan kepada {{body}}."
+    "peopleWon": "{{won}} daripada {{total}} orang yang mempunyai kes seperti anda menerima bayaran selepas aduan kepada {{body}}.",
+    "fromRulings": "Daripada keputusan lepas {{body}}"
   },
   "letter": {
     "title": "Surat rayuan",
@@ -352,7 +353,8 @@
     "amountPaid": "Jumlah dibayar",
     "filedOn": "Tarikh difailkan",
     "repliedOn": "Tarikh balasan mereka",
-    "errorSave": "Tidak dapat disimpan. Sila cuba lagi."
+    "errorSave": "Tidak dapat disimpan. Sila cuba lagi.",
+    "nowLabel": "Sekarang"
   },
   "outcome": {
     "title": "Hasil",
