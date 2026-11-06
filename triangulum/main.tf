@@ -252,3 +252,17 @@ resource "google_secret_manager_secret" "whatsapp" {
   }
   depends_on = [google_project_service.apis]
 }
+
+# Email (Cloudflare Email Service): the API token sends the appeal letter; the inbound token
+# is shared with the mail Worker (pinwheel/), which posts insurer replies to /mail/inbound.
+#   printf %s "$CLOUDFLARE_EMAIL_TOKEN" | gcloud secrets versions add cloudflare-email-token --data-file=-
+#   (until then the secret holds "unset", which keeps sending a dry run)
+#   openssl rand -hex 24 | tr -d '\n' | gcloud secrets versions add mail-inbound-token --data-file=-
+resource "google_secret_manager_secret" "mail" {
+  for_each  = toset(["cloudflare-email-token", "mail-inbound-token"])
+  secret_id = each.key
+  replication {
+    auto {}
+  }
+  depends_on = [google_project_service.apis]
+}

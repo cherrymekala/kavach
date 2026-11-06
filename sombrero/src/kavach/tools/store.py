@@ -1,5 +1,6 @@
 """Case storage in Firestore. Falls back to memory when AUTH_DISABLED (local dev)."""
 
+import hashlib
 from datetime import UTC, datetime, timedelta
 
 from ..config import get_settings
@@ -176,3 +177,27 @@ def claim_once(key: str) -> bool:
         return True
     except (gexc.AlreadyExists, gexc.Conflict):
         return False
+
+
+# ── Email threads: which case an appeal email belongs to. ──────────────────────────────
+# The insurer's reply names our message in In-Reply-To/References; this maps it back.
+
+_threads: dict[str, str] = {}
+
+
+def _thread_key(message_id: str) -> str:
+    return hashlib.sha256(message_id.strip().strip("<>").lower().encode()).hexdigest()
+
+
+def save_mail_thread(message_id: str, case_id: str) -> None:
+    if _local():
+        _threads[_thread_key(message_id)] = case_id
+        return
+    _db().collection("mail_threads").document(_thread_key(message_id)).set({"case_id": case_id})
+
+
+def case_for_message(message_id: str) -> str | None:
+    if _local():
+        return _threads.get(_thread_key(message_id))
+    snap = _db().collection("mail_threads").document(_thread_key(message_id)).get()
+    return (snap.to_dict() or {}).get("case_id") if snap.exists else None

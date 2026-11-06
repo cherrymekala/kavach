@@ -54,6 +54,13 @@ class Settings(BaseSettings):
     stripe_secret_key: str = ""  # Singapore, Malaysia
     stripe_webhook_secret: str = ""
     app_url: str = "https://kavach-510312.web.app"  # where Stripe sends the patient back
+    # Email (Cloudflare Email Service): the appeal letter out; replies come back through a
+    # Cloudflare Email Routing Worker (pinwheel/). No token = dry run.
+    cloudflare_account_id: str = ""
+    cloudflare_email_token: str = ""  # API token with "Email Sending: Edit"
+    mail_from: str = ""  # e.g. "Kavach Appeals <appeals@kavach.agentiny.me>" (onboarded domain)
+    mail_reply_to: str = ""  # routed to the Worker, e.g. appeals@kavach.agentiny.me
+    mail_inbound_token: str = ""  # shared secret: the Worker sends it on every inbound post
 
 
 @lru_cache

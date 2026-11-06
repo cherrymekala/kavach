@@ -495,6 +495,44 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cases/{case_id}/send-appeal": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Appeal Preview */
+        get: operations["appeal_preview_cases__case_id__send_appeal_get"];
+        put?: never;
+        /** Send Appeal */
+        post: operations["send_appeal_cases__case_id__send_appeal_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/mail/inbound": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Inbound
+         * @description Always 200 for mail we can't place, so the Worker doesn't treat it as a failure.
+         */
+        post: operations["inbound_mail_inbound_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -516,6 +554,29 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** AppealMail */
+        AppealMail: {
+            /** To */
+            to: string | null;
+            /** To Source */
+            to_source: string | null;
+            /** Cc */
+            cc: string | null;
+            /** Reply To */
+            reply_to: string | null;
+            /** Subject */
+            subject: string | null;
+            /** Attachments */
+            attachments: string[];
+            /** Missing */
+            missing: string[];
+            /** Blanks */
+            blanks: string[];
+            /** Sent On */
+            sent_on: string | null;
+            /** Dry Run */
+            dry_run: boolean;
+        };
         /** Argument */
         Argument: {
             /** Claim */
@@ -752,6 +813,8 @@ export interface components {
             relationship_to_insured?: string | null;
             /** Insurer Office Address */
             insurer_office_address?: string | null;
+            /** Insurer Email */
+            insurer_email?: string | null;
             /** Grievance Date */
             grievance_date?: string | null;
             /** Grievance Reply Date */
@@ -846,6 +909,38 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /**
+         * InboundMail
+         * @description What the Cloudflare Email Worker posts for each reply (pinwheel/src/index.js).
+         */
+        InboundMail: {
+            /**
+             * From
+             * @default
+             */
+            from: string;
+            /**
+             * Subject
+             * @default
+             */
+            subject: string;
+            /**
+             * Text
+             * @default
+             */
+            text: string;
+            /** In Reply To */
+            in_reply_to?: string | null;
+            /** References */
+            references?: string | null;
+            /**
+             * Attachments
+             * @default []
+             */
+            attachments: {
+                [key: string]: unknown;
+            }[];
         };
         /** InsightRow */
         InsightRow: {
@@ -984,6 +1079,11 @@ export interface components {
             fix: string;
             /** Sources */
             sources: components["schemas"]["Source"][];
+        };
+        /** SendAppealRequest */
+        SendAppealRequest: {
+            /** To */
+            to: string;
         };
         /** Source */
         Source: {
@@ -1962,6 +2062,113 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    appeal_preview_cases__case_id__send_appeal_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AppealMail"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    send_appeal_cases__case_id__send_appeal_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SendAppealRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Case"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    inbound_mail_inbound_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                "x-kavach-token"?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InboundMail"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {

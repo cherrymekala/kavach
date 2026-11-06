@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { apiFetch } from './client'
 import type {
+  AppealMail,
   AskAnswer,
   AskRequest,
   Case,
@@ -121,6 +122,27 @@ export function useMarkFiled(caseId: string) {
   return useMutation({
     mutationFn: (body: FiledRequest) => apiFetch<Case>(`/cases/${caseId}/filed`, jsonBody(body)),
     onSuccess: (c) => qc.setQueryData(caseKey(caseId), c),
+  })
+}
+
+/** What emailing the appeal would send, and what is still missing (GET /send-appeal). */
+export function useAppealMail(caseId: string, enabled: boolean) {
+  return useQuery({
+    queryKey: ['appeal-mail', caseId],
+    queryFn: () => apiFetch<AppealMail>(`/cases/${caseId}/send-appeal`),
+    enabled,
+    staleTime: 0,
+  })
+}
+
+export function useSendAppeal(caseId: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (to: string) => apiFetch<Case>(`/cases/${caseId}/send-appeal`, jsonBody({ to })),
+    onSuccess: (c) => {
+      qc.setQueryData(caseKey(caseId), c)
+      qc.invalidateQueries({ queryKey: ['appeal-mail', caseId] })
+    },
   })
 }
 
