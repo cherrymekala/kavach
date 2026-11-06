@@ -35,6 +35,9 @@ class Document(BaseModel):
     doc_type: DocType = DocType.OTHER
     pages: int | None = None
     warning: str | None = None
+    # Photo check at upload (agents/quality.py): blurry | cut_off | too_dark | glare |
+    # not_a_document. None when the file is fine or was not a photo.
+    quality: str | None = None
     uploaded_at: datetime | None = None
 
 

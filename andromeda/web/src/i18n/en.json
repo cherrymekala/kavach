@@ -105,7 +105,16 @@
     ],
     "errorUpload": "Could not upload that file.",
     "errorAnalyse": "Could not start the analysis.",
-    "stepOf": "Step {{current}} of {{total}}"
+    "stepOf": "Step {{current}} of {{total}}",
+    "quality": {
+      "blurry": "This photo looks blurry. Retake it in good light, holding the phone steady.",
+      "cut_off": "Part of the page is cut off. Retake it with all four edges in the frame.",
+      "too_dark": "This photo is too dark to read. Retake it near a window or a light.",
+      "glare": "A reflection hides some text. Tilt the paper or turn off the flash and retake it.",
+      "not_a_document": "This doesn't look like a document. Check you picked the right photo."
+    },
+    "qualityNote_one": "1 photo may be hard to read. Retake it for a stronger case, or analyse anyway.",
+    "qualityNote_other": "{{count}} photos may be hard to read. Retake them for a stronger case, or analyse anyway."
   },
   "summary": {
     "title": "What happened",

@@ -416,6 +416,27 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/whatsapp/webhook": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Verify
+         * @description Meta's subscription handshake: echo hub.challenge when the verify token matches.
+         */
+        get: operations["verify_whatsapp_webhook_get"];
+        put?: never;
+        /** Receive */
+        post: operations["receive_whatsapp_webhook_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/cases/{case_id}/checkout": {
         parameters: {
             query?: never;
@@ -793,6 +814,8 @@ export interface components {
             pages?: number | null;
             /** Warning */
             warning?: string | null;
+            /** Quality */
+            quality?: string | null;
             /** Uploaded At */
             uploaded_at?: string | null;
         };
@@ -1811,6 +1834,48 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    verify_whatsapp_webhook_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    receive_whatsapp_webhook_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
                 };
             };
         };

@@ -27,6 +27,7 @@ locals {
     "storage.googleapis.com", "discoveryengine.googleapis.com", "bigquery.googleapis.com",
     "cloudscheduler.googleapis.com", "secretmanager.googleapis.com", "cloudbuild.googleapis.com",
     "artifactregistry.googleapis.com", "dlp.googleapis.com", "billingbudgets.googleapis.com", "firebaserules.googleapis.com",
+    "logging.googleapis.com", "monitoring.googleapis.com", "clouderrorreporting.googleapis.com",
   ]
 }
 

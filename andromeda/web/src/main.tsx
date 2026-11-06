@@ -41,6 +41,15 @@ if (import.meta.env.DEV) {
       ],
     },
     'demo-resolved': { ...demo.default, status: 'resolved', amount_recovered: 184000 },
+    'demo-photos': {
+      ...demo.default,
+      status: 'collecting',
+      facts: null,
+      assessment: null,
+      letter: null,
+      events: [],
+      documents: docs.map((d, i) => ({ ...d, quality: i === 0 ? 'blurry' : i === 1 ? 'cut_off' : null })),
+    },
     'demo-run': { ...demo.default, status: 'analysing', progress: 'Finding the rules that apply', facts: null, assessment: null, letter: null, events: [], documents: docs },
   }
   const packs = { IN: await import('./dev/pack-IN.json'), SG: await import('./dev/pack-SG.json') }
