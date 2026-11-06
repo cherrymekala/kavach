@@ -62,6 +62,8 @@ function Turn({ entry }: { entry: Entry }) {
           <div className="w-full">
             <CoachCard coach={entry.coach} />
           </div>
+        ) : entry.coachFailed ? (
+          <span className="text-xs text-muted-foreground">{t('hearing.scoreFailed')}</span>
         ) : entry.text.trim().split(/\s+/).length >= MIN_ANSWER_WORDS ? (
           <span className="flex items-center gap-1 text-xs text-muted-foreground">
             <Spinner /> {t('hearing.scoring')}

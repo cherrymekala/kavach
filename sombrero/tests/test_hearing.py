@@ -62,3 +62,25 @@ def test_fillers_are_not_scored_as_answers():
     assert not hearing.is_answer("Yeah, sure.")
     assert not hearing.is_answer("  um  ")
     assert hearing.is_answer("I was diagnosed in July 2026.")
+
+
+def test_failed_coaching_tells_the_browser_instead_of_hanging(monkeypatch):
+    import asyncio
+
+    from kavach.routers import hearing as router
+
+    def broken(*_args):
+        raise RuntimeError("402 RESOURCE_EXHAUSTED")
+
+    class FakeSocket:
+        def __init__(self):
+            self.sent = []
+
+        async def send_json(self, msg):
+            self.sent.append(msg)
+
+    monkeypatch.setattr(hearing, "coach", broken)
+    ws, turns = FakeSocket(), router._Turns()
+    asyncio.run(router._coach(ws, _case("IN"), turns, "When were you diagnosed?", "In July 2026."))
+    assert ws.sent == [{"coach_error": {"answer": "In July 2026."}}]
+    assert turns.scores == []

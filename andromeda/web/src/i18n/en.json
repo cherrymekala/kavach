@@ -289,7 +289,8 @@
     "debrief": "Your rehearsal",
     "tipsForReal": "For the real hearing",
     "again": "Rehearse again",
-    "cta": "Track your case"
+    "cta": "Track your case",
+    "scoreFailed": "We couldn't score this answer. Carry on — the rehearsal still counts."
   },
   "tracker": {
     "title": "Case tracker",

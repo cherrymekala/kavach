@@ -305,7 +305,8 @@
     "debrief": "Latihan anda",
     "tipsForReal": "Untuk pendengaran sebenar",
     "again": "Latih semula",
-    "cta": "Jejak kes anda"
+    "cta": "Jejak kes anda",
+    "scoreFailed": "Kami tidak dapat menilai jawapan ini. Teruskan — latihan ini tetap dikira."
   },
   "tracker": {
     "title": "Penjejak kes",

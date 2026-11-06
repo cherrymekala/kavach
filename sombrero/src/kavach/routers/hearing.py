@@ -5,12 +5,14 @@ Browser -> server (JSON): first {"token": "<Firebase ID token>"}, then any of
 Server -> browser (JSON):
   {"audio": "<base64 PCM16 mono 24 kHz>"}, {"transcript": {"who": "ai"|"you", "text": "..."}},
   {"turn_complete": true}, {"coach": {"question", "answer", "score", "feedback", "better_answer"}},
+  {"coach_error": {"answer"}} (that answer could not be scored),
   {"done": {"summary", "top_tips", "average_score"}}, {"error": "..."}
 """
 
 import asyncio
 import base64
 import contextlib
+import logging
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 
@@ -23,6 +25,7 @@ from ..config import get_settings
 from ..models import Case, CaseEvent
 from ..tools import payments, store
 
+log = logging.getLogger(__name__)
 router = APIRouter(tags=["hearing"])
 MIN_ANSWERS = 3  # the Live model sometimes calls `finish` before the hearing has happened
 
@@ -42,7 +45,14 @@ class _Turns:
 
 
 async def _coach(ws: WebSocket, case: Case, turns: _Turns, question: str, answer: str) -> None:
-    result = await asyncio.to_thread(hearing.coach, case, question, answer)
+    try:
+        result = await asyncio.to_thread(hearing.coach, case, question, answer)
+    except Exception:
+        # Quota or model errors must not leave the browser showing "Scoring…" forever.
+        log.exception("coaching failed")
+        with contextlib.suppress(RuntimeError, WebSocketDisconnect):
+            await ws.send_json({"coach_error": {"answer": answer}})
+        return
     turns.scores.append(result.score)
     turns.coaching.append({"question": question, "answer": answer, **result.model_dump()})
     with contextlib.suppress(RuntimeError, WebSocketDisconnect):
