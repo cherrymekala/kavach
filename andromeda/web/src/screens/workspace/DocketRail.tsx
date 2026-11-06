@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { MenuIcon, PlusIcon, ShieldCheckIcon } from 'lucide-react'
+import { MenuIcon, PlusIcon } from 'lucide-react'
+import { KavachMark } from '@/components'
 import { Sheet, SheetContent, SheetTitle } from '@/components/ui/sheet'
 import { useCases } from '@/api/hooks'
 import type { CaseSummary } from '@/api/types'
@@ -43,17 +44,15 @@ function CaseList() {
   return (
     <div className="flex h-full flex-col">
       <div className="flex items-center gap-2.5 px-4 pt-5">
-        <span className="grid size-8 place-items-center rounded-full bg-white/15 text-white">
-          <ShieldCheckIcon className="size-5" aria-hidden />
-        </span>
-        <span className="text-lg font-bold tracking-tight text-rail-foreground">Kavach</span>
+        <KavachMark className="h-7 text-rail-foreground" />
+        <span className="font-display text-lg font-extrabold tracking-[-0.05em] text-rail-foreground">kavach</span>
       </div>
 
       <div className="px-4 pt-5">
         <button
           type="button"
           onClick={() => navigate('/app')}
-          className="flex h-10 w-full items-center justify-center gap-2 rounded-full bg-white text-sm font-semibold text-[#1d5c4d] transition-colors hover:bg-white/90"
+          className="flex h-11 w-full items-center justify-center gap-2 rounded-full bg-primary text-sm font-bold text-primary-foreground transition-colors hover:bg-primary/90"
         >
           <PlusIcon className="size-4" aria-hidden />
           {t('workspace.newCase')}
@@ -77,7 +76,7 @@ function CaseList() {
                     aria-current={active ? 'page' : undefined}
                     className={cn(
                       'flex w-full flex-col gap-0.5 rounded-2xl px-3 py-2.5 text-left transition-colors',
-                      active ? 'bg-rail-foreground/15' : 'hover:bg-rail-foreground/[0.07]',
+                      active ? 'bg-accent' : 'hover:bg-rail-foreground/[0.06]',
                     )}
                   >
                     <span className="flex items-center gap-2">
@@ -128,7 +127,8 @@ export function DocketRail() {
         >
           <MenuIcon className="size-5" aria-hidden />
         </button>
-        <span className="text-lg font-bold tracking-tight">Kavach</span>
+        <KavachMark className="h-6 text-ink" animate={false} />
+        <span className="font-display text-lg font-extrabold tracking-[-0.05em]">kavach</span>
       </header>
 
       <Sheet open={open} onOpenChange={setOpen}>

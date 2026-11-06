@@ -120,7 +120,8 @@
       }
     ],
     "errorUpload": "Fail itu tidak dapat dimuat naik.",
-    "errorAnalyse": "Analisis tidak dapat dimulakan."
+    "errorAnalyse": "Analisis tidak dapat dimulakan.",
+    "stepOf": "Langkah {{current}} daripada {{total}}"
   },
   "summary": {
     "title": "Apa yang berlaku",
@@ -226,7 +227,8 @@
       "ruling": "Keputusan lepas",
       "other": "Dokumen"
     },
-    "peopleWon": "{{won}} daripada {{total}} orang yang mempunyai kes seperti anda menerima bayaran selepas aduan kepada {{body}}."
+    "peopleWon": "{{won}} daripada {{total}} orang yang mempunyai kes seperti anda menerima bayaran selepas aduan kepada {{body}}.",
+    "fromRulings": "Daripada keputusan lepas {{body}}"
   },
   "letter": {
     "title": "Surat rayuan",
@@ -303,7 +305,8 @@
     "debrief": "Latihan anda",
     "tipsForReal": "Untuk pendengaran sebenar",
     "again": "Latih semula",
-    "cta": "Jejak kes anda"
+    "cta": "Jejak kes anda",
+    "scoreFailed": "Kami tidak dapat menilai jawapan ini. Teruskan — latihan ini tetap dikira."
   },
   "tracker": {
     "title": "Penjejak kes",
@@ -351,7 +354,8 @@
     "amountPaid": "Jumlah dibayar",
     "filedOn": "Tarikh difailkan",
     "repliedOn": "Tarikh balasan mereka",
-    "errorSave": "Tidak dapat disimpan. Sila cuba lagi."
+    "errorSave": "Tidak dapat disimpan. Sila cuba lagi.",
+    "nowLabel": "Sekarang"
   },
   "outcome": {
     "title": "Hasil",

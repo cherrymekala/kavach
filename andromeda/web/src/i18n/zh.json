@@ -120,7 +120,8 @@
       }
     ],
     "errorUpload": "无法上传该文件。",
-    "errorAnalyse": "无法开始分析。"
+    "errorAnalyse": "无法开始分析。",
+    "stepOf": "第 {{current}} 步，共 {{total}} 步"
   },
   "summary": {
     "title": "发生了什么",
@@ -226,7 +227,8 @@
       "ruling": "过往裁决",
       "other": "文件"
     },
-    "peopleWon": "与您情况类似的 {{total}} 人中，有 {{won}} 人在向 {{body}} 投诉后获得了赔付。"
+    "peopleWon": "与您情况类似的 {{total}} 人中，有 {{won}} 人在向 {{body}} 投诉后获得了赔付。",
+    "fromRulings": "根据{{body}}以往的裁决"
   },
   "letter": {
     "title": "申诉信",
@@ -303,7 +305,8 @@
     "debrief": "您的模拟练习总结",
     "tipsForReal": "正式聆讯时的建议",
     "again": "再练一次",
-    "cta": "跟进您的案件"
+    "cta": "跟进您的案件",
+    "scoreFailed": "这条回答暂时无法评分。请继续——这次练习仍然有效。"
   },
   "tracker": {
     "title": "案件跟进",
@@ -351,7 +354,8 @@
     "amountPaid": "已支付金额",
     "filedOn": "提交日期",
     "repliedOn": "对方答复日期",
-    "errorSave": "无法保存，请再试一次。"
+    "errorSave": "无法保存，请再试一次。",
+    "nowLabel": "当前"
   },
   "outcome": {
     "title": "结果",

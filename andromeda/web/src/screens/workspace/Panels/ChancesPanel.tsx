@@ -1,20 +1,51 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ArrowRightIcon, CheckCircle2Icon, CircleIcon, ShieldCheckIcon } from 'lucide-react'
-import { Argument, Button, ShieldHero, type ArgumentSource, type ShieldTone } from '@/components'
+import { Argument, Button, type ArgumentSource } from '@/components'
 import { SourceSheet } from '@/screens/chances/SourceSheet'
 import { usePack } from '@/api/hooks'
 import type { Case } from '@/api/types'
 import { cn } from '@/lib/cn'
 
-const TONE: Record<string, ShieldTone> = { strong: 'good', medium: 'mixed', weak: 'low' }
+const PILL: Record<string, string> = {
+  strong: 'bg-accent text-accent-foreground',
+  medium: 'bg-[#ffe3da] text-[#8f2207] dark:bg-[#3a1f19] dark:text-[#ffb49e]',
+  weak: 'bg-muted text-muted-foreground',
+}
+// Without past cases to count, the ring shows the verdict level instead.
+const LEVEL: Record<string, number> = { strong: 0.8, medium: 0.55, weak: 0.25 }
+const RING = 2 * Math.PI * 44
 
-/** A small figure for one past case; filled when the patient was paid. */
-function Person({ won }: { won: boolean }) {
+/** The canvas's chances gauge: filled with the share of similar cases that patients won. */
+function ChanceRing({ won, total, strength }: { won: number; total: number; strength: string }) {
+  const id = useId().replace(/:/g, '')
+  const value = total ? won / total : (LEVEL[strength] ?? 0.25)
   return (
-    <svg viewBox="0 0 16 24" className={cn('h-7 w-auto', won ? 'text-brand' : 'text-muted-foreground/30')} aria-hidden>
-      <circle cx="8" cy="5" r="4" fill="currentColor" />
-      <path d="M1 23 V16 C1 12 4 10 8 10 C12 10 15 12 15 16 V23 Z" fill="currentColor" />
+    <svg viewBox="0 0 110 110" className="size-[110px] shrink-0" aria-hidden>
+      <defs>
+        <linearGradient id={id} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stopColor="#FFC2AE" />
+          <stop offset="1" stopColor="#FF5A36" />
+        </linearGradient>
+      </defs>
+      <circle cx="55" cy="55" r="44" fill="none" className="stroke-accent" strokeWidth="12" />
+      <circle
+        className="kv-ring"
+        cx="55"
+        cy="55"
+        r="44"
+        fill="none"
+        stroke={`url(#${id})`}
+        strokeWidth="12"
+        strokeLinecap="round"
+        strokeDasharray={`${value * RING} ${RING}`}
+        transform="rotate(-90 55 55)"
+      />
+      {total ? (
+        <text x="55" y="62" textAnchor="middle" className="fill-foreground font-display text-[19px] font-bold">
+          {won}/{total}
+        </text>
+      ) : null}
     </svg>
   )
 }
@@ -36,26 +67,21 @@ export function ChancesPanel({ kase, onNext }: { kase: Case; onNext?: () => void
 
   return (
     <section className="flex flex-col gap-10">
-      <ShieldHero
-        tone={TONE[strength] ?? 'low'}
-        eyebrow={t('chances.title')}
-        footer={t(`chances.strengthHint.${strength}`)}
-      >
-        {t(`chances.strength.${strength}`)}
-      </ShieldHero>
-
-      {total ? (
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap gap-1.5" role="img" aria-label={t('chances.won', { won, total })}>
-            {Array.from({ length: total }, (_, i) => (
-              <Person key={i} won={i < won} />
-            ))}
-          </div>
-          <p className="max-w-[44ch] text-[15px] leading-relaxed">
-            {t('chances.peopleWon', { won, total, body })}
+      <div className="animate-rise flex items-center gap-5 rounded-[28px] bg-card p-6 shadow-[0_18px_40px_rgb(46_31_184/0.08)]">
+        <ChanceRing won={won} total={total} strength={strength} />
+        <div className="flex min-w-0 flex-col gap-2">
+          <span className={cn('w-fit rounded-full px-3 py-1 text-xs font-bold', PILL[strength] ?? PILL.weak)}>
+            {t(`chances.strength.${strength}`)}
+          </span>
+          <h2 className="font-display text-xl leading-tight font-bold tracking-[-0.03em]">
+            {total ? t('chances.won', { won, total }) : t(`chances.strength.${strength}`)}
+          </h2>
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            {total ? t('chances.fromRulings', { body }) : t(`chances.strengthHint.${strength}`)}
           </p>
         </div>
-      ) : null}
+      </div>
+      {total ? <p className="-mt-6 max-w-[56ch] text-[15px] leading-relaxed">{t(`chances.strengthHint.${strength}`)}</p> : null}
 
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-1">

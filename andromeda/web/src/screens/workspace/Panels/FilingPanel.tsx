@@ -70,12 +70,12 @@ export function FilingPanel({
   return (
     <section className="flex flex-col gap-5">
       <header>
-        <h2 className="text-2xl font-extrabold tracking-tight">{t('filing.title')}</h2>
+        <h2 className="font-display text-2xl font-bold tracking-[-0.03em]">{t('filing.title')}</h2>
       </header>
 
-      <div className="grid items-start gap-8 lg:grid-cols-2">
-        <div className="flex flex-col gap-3">
-          <h3 className="text-xl font-extrabold tracking-tight">{t('filing.yourDetails')}</h3>
+      <div className="grid items-start gap-3 lg:grid-cols-2">
+        <div className="flex flex-col gap-3 rounded-[24px] bg-card p-5">
+          <h3 className="text-base font-extrabold tracking-tight">{t('filing.yourDetails')}</h3>
           <div className="flex flex-col gap-3">
             <div className="flex flex-col gap-1.5">
               <Label htmlFor="f-name">{t('filing.name')}</Label>
@@ -105,9 +105,9 @@ export function FilingPanel({
           </Button>
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-3 rounded-[24px] bg-card p-5">
           <div className="flex items-center justify-between">
-            <h3 className="text-xl font-extrabold tracking-tight">{t('filing.pack')}</h3>
+            <h3 className="text-base font-extrabold tracking-tight">{t('filing.pack')}</h3>
             <Button
               size="sm"
               variant="outline"
@@ -125,8 +125,8 @@ export function FilingPanel({
                 {t('filing.disputeBody')}: <span className="font-medium text-foreground">{filing.dispute_body}</span>
               </p>
               {missing.length ? (
-                <div className="flex flex-col gap-2 rounded-lg bg-amber/10 p-3">
-                  <p className="flex items-center gap-2 text-sm font-semibold text-amber">
+                <div className="flex flex-col gap-2 rounded-2xl bg-[#ffe3da] p-3 text-[#5c1605] dark:bg-[#3a1f19] dark:text-[#ffd3c6]">
+                  <p className="flex items-center gap-2 text-sm font-semibold">
                     <AlertTriangleIcon className="size-4" aria-hidden />
                     {t('filing.missing')}
                   </p>

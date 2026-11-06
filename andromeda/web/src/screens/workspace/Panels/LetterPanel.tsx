@@ -100,7 +100,7 @@ export function LetterPanel({
   return (
     <section className="flex flex-col gap-4">
       <header className="flex items-center gap-2">
-        <h2 className="text-2xl font-extrabold tracking-tight">{t('letter.title')}</h2>
+        <h2 className="font-display text-2xl font-bold tracking-[-0.03em]">{t('letter.title')}</h2>
         <div className="ml-auto flex gap-1">
           <Button size="sm" variant="ghost" onClick={copy} aria-label={t('letter.copy')}>
             {copied ? <CheckIcon className="size-4 text-mint" /> : <CopyIcon className="size-4" />}
@@ -120,7 +120,7 @@ export function LetterPanel({
       </header>
 
       {hasLocal ? (
-        <div className="flex rounded-full border border-line p-0.5" role="tablist">
+        <div className="flex w-fit rounded-full bg-card p-1" role="tablist">
           {(['en', 'local'] as const).map((v) => (
             <button
               key={v}
@@ -129,7 +129,7 @@ export function LetterPanel({
               aria-selected={active === v}
               onClick={() => setView(v)}
               className={cn(
-                'rounded-full px-3 py-1 text-sm font-semibold',
+                'h-10 rounded-full px-4 text-sm font-bold',
                 active === v ? 'bg-primary text-primary-foreground' : 'text-muted-foreground',
               )}
             >
@@ -146,7 +146,7 @@ export function LetterPanel({
             type="button"
             disabled={Boolean(busy)}
             onClick={() => rewrite(tone.key, tone.instruction)}
-            className="flex h-8 shrink-0 items-center gap-1.5 rounded-full border border-line bg-surface px-3 text-sm disabled:opacity-50"
+            className="flex h-11 shrink-0 items-center gap-1.5 rounded-full bg-card px-4 text-sm font-bold transition-colors hover:bg-accent disabled:opacity-50"
           >
             {busy === tone.key ? <Spinner /> : null}
             {t(`letter.toneOptions.${tone.key}`)}
@@ -155,7 +155,7 @@ export function LetterPanel({
       </div>
 
       <form
-        className="flex items-center gap-1 rounded-full border border-line bg-surface px-2 py-1"
+        className="flex items-center gap-1 rounded-full bg-card px-3 py-1.5"
         onSubmit={(e) => {
           e.preventDefault()
           if (ask.trim()) rewrite('ask', ask.trim())
@@ -177,11 +177,11 @@ export function LetterPanel({
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
 
       {holes.length ? (
-        <div className="flex flex-col gap-2 rounded-lg border border-amber/50 bg-amber/10 p-4">
+        <div className="flex flex-col gap-2 rounded-[22px] bg-[#ffe3da] p-4 text-[#5c1605] dark:bg-[#3a1f19] dark:text-[#ffd3c6]">
           <p className="text-sm font-semibold">{t('letter.fillIn', { count: holes.length })}</p>
           <div className="flex flex-wrap gap-1.5">
             {holes.map((h) => (
-              <span key={h} className="rounded bg-amber/25 px-1.5 py-0.5 text-xs font-semibold">
+              <span key={h} className="rounded-full bg-white/70 px-2 py-0.5 text-xs font-semibold dark:bg-black/20">
                 {h.slice(1, -1)}
               </span>
             ))}
@@ -189,14 +189,14 @@ export function LetterPanel({
         </div>
       ) : null}
 
-      <article className="relative rounded-lg border border-line bg-surface px-5 py-6 sm:px-8">
-        <p className="mb-4 border-b border-line pb-3 text-sm">
+      <article className="relative rounded-[28px] bg-card px-6 py-7 shadow-[0_18px_40px_rgb(46_31_184/0.12)] sm:px-8">
+        <p className="mb-4 border-b border-rule pb-3 text-sm">
           <span className="font-semibold">{t('letter.subject')} </span>
           <span className="font-semibold">{letter.subject}</span>
         </p>
         <Body text={body} />
         {busy ? (
-          <div className="absolute inset-0 grid place-items-center rounded-lg bg-surface/80 backdrop-blur-[1px]">
+          <div className="absolute inset-0 grid place-items-center rounded-[28px] bg-card/80 backdrop-blur-[1px]">
             <span className="flex items-center gap-2 text-sm font-semibold">
               <Spinner /> {t('letter.rewriting')}
             </span>

@@ -3,8 +3,8 @@ import { Navigate, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { ConfirmationResult } from 'firebase/auth'
 import { RecaptchaVerifier } from 'firebase/auth'
-import { FileTextIcon, LanguagesIcon, SendIcon, ShieldCheckIcon } from 'lucide-react'
-import { LanguageSwitcher, PhoneOTPForm, ShieldHero } from '@/components'
+import { FileTextIcon, LanguagesIcon, SendIcon } from 'lucide-react'
+import { KavachMark, KavachPlates, LanguageSwitcher, PhoneOTPForm } from '@/components'
 import { auth, mapAuthError, sendOtp } from '@/firebase'
 import { useAuth } from '@/auth'
 
@@ -53,60 +53,55 @@ export function SignIn() {
 
   return (
     <div className="min-h-dvh lg:grid lg:grid-cols-2">
-      {/* Evergreen brand panel — desktop only */}
-      <div className="relative hidden flex-col justify-between overflow-hidden bg-[#1d5c4d] px-12 py-12 text-white lg:flex">
-        <svg viewBox="0 0 120 140" className="pointer-events-none absolute -right-16 -bottom-20 h-[34rem] w-auto opacity-[0.1]" aria-hidden>
-          <path d="M60 4 L112 22 V66 C112 100 90 124 60 136 C30 124 8 100 8 66 V22 Z" fill="none" stroke="currentColor" strokeWidth="8" strokeLinejoin="round" />
-          <path d="M38 70 L54 86 L84 54" fill="none" stroke="currentColor" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-        </svg>
+      {/* Brand panel — desktop only: the plates assemble beside the headline */}
+      <div className="relative hidden flex-col justify-between overflow-hidden bg-card px-12 py-12 lg:flex">
         <div className="flex items-center gap-2.5">
-          <span className="grid size-9 place-items-center rounded-lg bg-white/10">
-            <ShieldCheckIcon className="size-5" aria-hidden />
-          </span>
-          <span className="text-lg font-bold tracking-tight">Kavach</span>
+          <KavachMark className="h-8 text-ink" />
+          <span className="font-display text-xl font-extrabold tracking-[-0.05em]">kavach</span>
         </div>
 
-        <div className="max-w-md">
-          <p className="text-sm font-semibold text-white/80">{t('auth.kicker')}</p>
-          <h1 className="mt-4 text-5xl font-extrabold leading-[1.1] tracking-tight text-balance">{t('auth.headline')}</h1>
-          <p className="mt-4 text-lg text-white/70">{t('auth.subhead')}</p>
+        <div className="flex items-center gap-10">
+          <div className="max-w-md">
+            <p className="text-sm font-semibold text-brand">{t('auth.kicker')}</p>
+            <h1 className="mt-4 font-display text-[2.6rem] leading-[1.1] font-bold tracking-[-0.03em] text-balance">{t('auth.headline')}</h1>
+            <p className="mt-4 text-lg text-muted-foreground">{t('auth.subhead')}</p>
 
-          <ul className="mt-10 flex flex-col gap-4">
-            {FEATURES.map(({ icon: Icon, key }) => (
-              <li key={key} className="flex items-center gap-3">
-                <span className="grid size-9 shrink-0 place-items-center rounded-full bg-white/10">
-                  <Icon className="size-4" aria-hidden />
-                </span>
-                <span className="text-white/90">{t(key)}</span>
-              </li>
-            ))}
-          </ul>
+            <ul className="mt-10 flex flex-col gap-4">
+              {FEATURES.map(({ icon: Icon, key }) => (
+                <li key={key} className="flex items-center gap-3">
+                  <span className="grid size-9 shrink-0 place-items-center rounded-full bg-accent text-accent-foreground">
+                    <Icon className="size-4" aria-hidden />
+                  </span>
+                  <span>{t(key)}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <KavachPlates size={240} className="hidden xl:block" />
         </div>
 
-        <p className="text-xs text-white/50">{t('auth.privacy')}</p>
+        <p className="text-xs text-muted-foreground">{t('auth.privacy')}</p>
       </div>
 
       {/* Form panel */}
       <div className="flex min-h-dvh flex-col bg-page">
         <header className="flex items-center justify-between px-5 py-4 sm:px-8">
-          <div className="flex items-center gap-2.5 lg:hidden">
-            <span className="grid size-8 place-items-center rounded-lg bg-brand text-white">
-              <ShieldCheckIcon className="size-5" aria-hidden />
-            </span>
-            <span className="text-lg font-bold tracking-tight">Kavach</span>
+          <div className="flex items-center gap-2 lg:hidden">
+            <KavachMark className="h-7 text-ink" />
+            <span className="font-display text-lg font-extrabold tracking-[-0.05em]">kavach</span>
           </div>
           <LanguageSwitcher />
         </header>
 
         <main className="flex flex-1 items-center justify-center px-5 pb-10 sm:px-8">
           <div className="w-full max-w-md">
-            <div className="mb-8 lg:hidden">
-              <ShieldHero eyebrow={t('auth.kicker')} footer={t('auth.subhead')}>
-                <h1>{t('auth.headline')}</h1>
-              </ShieldHero>
+            <div className="mb-8 flex flex-col items-center text-center lg:hidden">
+              <KavachPlates size={150} />
+              <h1 className="mt-4 font-display text-[1.65rem] leading-[1.15] font-bold tracking-[-0.03em] text-balance">{t('auth.headline')}</h1>
+              <p className="mt-3 max-w-[36ch] text-muted-foreground">{t('auth.subhead')}</p>
             </div>
 
-            <div className="rounded-3xl border border-line bg-card p-6 sm:p-8">
+            <div className="rounded-[28px] bg-card p-6 shadow-[0_18px_40px_rgb(46_31_184/0.08)] sm:p-8">
               <h2 className="text-xl font-extrabold tracking-tight">{t('auth.signIn')}</h2>
               <p className="mt-1 text-sm text-muted-foreground">{t('auth.privacy')}</p>
               <div className="mt-5">

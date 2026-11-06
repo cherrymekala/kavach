@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from '@tanstack/react-query'
 import { MicIcon, PaperclipIcon, SendIcon } from 'lucide-react'
-import { Button, Input } from '@/components'
+import { Button, Input, KavachPlates } from '@/components'
 import { caseKey, useAddNote, useAsk, useUploadDocument } from '@/api/hooks'
 import type { Case } from '@/api/types'
 import { cn } from '@/lib/cn'
@@ -121,8 +121,9 @@ export function Composer({ caseId, kase, variant = 'dock', className }: Composer
   if (variant === 'hero') {
     return (
       <div className="flex w-full flex-col items-center gap-6 text-center">
+        <KavachPlates size={150} />
         <div>
-          <h2 className="text-2xl font-bold tracking-tight">{t('workspace.composer.heroTitle')}</h2>
+          <h2 className="font-display text-[1.65rem] leading-tight font-bold tracking-[-0.03em]">{t('workspace.composer.heroTitle')}</h2>
           <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">{t('workspace.composer.heroSub')}</p>
         </div>
         <div className="w-full max-w-xl">{input}</div>

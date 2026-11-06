@@ -104,7 +104,8 @@
       }
     ],
     "errorUpload": "Could not upload that file.",
-    "errorAnalyse": "Could not start the analysis."
+    "errorAnalyse": "Could not start the analysis.",
+    "stepOf": "Step {{current}} of {{total}}"
   },
   "summary": {
     "title": "What happened",
@@ -210,7 +211,8 @@
       "ruling": "Past ruling",
       "other": "Document"
     },
-    "peopleWon": "{{won}} of {{total}} people with a case like yours got paid after a complaint to the {{body}}."
+    "peopleWon": "{{won}} of {{total}} people with a case like yours got paid after a complaint to the {{body}}.",
+    "fromRulings": "From past {{body}} rulings"
   },
   "letter": {
     "title": "Appeal letter",
@@ -287,7 +289,8 @@
     "debrief": "Your rehearsal",
     "tipsForReal": "For the real hearing",
     "again": "Rehearse again",
-    "cta": "Track your case"
+    "cta": "Track your case",
+    "scoreFailed": "We couldn't score this answer. Carry on — the rehearsal still counts."
   },
   "tracker": {
     "title": "Case tracker",
@@ -335,7 +338,8 @@
     "amountPaid": "Amount paid",
     "filedOn": "Date filed",
     "repliedOn": "Date of their reply",
-    "errorSave": "Could not save that. Please try again."
+    "errorSave": "Could not save that. Please try again.",
+    "nowLabel": "Now"
   },
   "outcome": {
     "title": "Outcome",

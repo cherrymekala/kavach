@@ -19,7 +19,7 @@ import {
   TrophyIcon,
   XIcon,
 } from 'lucide-react'
-import { Button, ErrorState, LanguageSwitcher, SourceKindIcon, Spinner, ThemeToggle } from '@/components'
+import { Button, ErrorState, KavachPlates, LanguageSwitcher, SourceKindIcon, ThemeToggle } from '@/components'
 import { apiBlob } from '@/api/client'
 import { caseKey, useAnalyse, useCase, useDeleteDocument, usePack } from '@/api/hooks'
 import { useLiveCase } from '@/api/live'
@@ -285,7 +285,7 @@ export function Dossier() {
     }
     return (
       <div className="flex h-full items-center justify-center">
-        <Spinner />
+        <KavachPlates size={110} interactive={false} />
       </div>
     )
   }

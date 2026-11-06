@@ -5,6 +5,7 @@ import {
   ArrowUpRightIcon,
   BellIcon,
   CheckCircle2Icon,
+  CheckIcon,
   FileTextIcon,
   MessageSquareReplyIcon,
   MicIcon,
@@ -24,7 +25,6 @@ import {
   Input,
   Label,
   ShieldHero,
-  Stepper,
 } from '@/components'
 import { useMarkFiled, usePack, useRecordReply } from '@/api/hooks'
 import type { Case, CaseEvent } from '@/api/types'
@@ -194,10 +194,34 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
       {ladder.length ? (
         <div className="flex flex-col gap-3">
           <h3 className="text-xl font-extrabold tracking-tight">{t('tracker.ladder')}</h3>
-          <Stepper
-            steps={ladder.map((s) => ({ label: s.step, detail: t('tracker.replyWithin', { days: s.deadline_days }) }))}
-            current={status === 'resolved' ? ladder.length : stepIndex}
-          />
+          {/* The canvas's step cards: the current step filled, finished ones ticked. */}
+          <ol className="grid gap-2" style={{ gridTemplateColumns: `repeat(${ladder.length}, minmax(0, 1fr))` }}>
+            {ladder.map((s, i) => {
+              const at = status === 'resolved' ? ladder.length : stepIndex
+              const done = i < at
+              const now = i === at
+              return (
+                <li
+                  key={s.step}
+                  aria-current={now ? 'step' : undefined}
+                  className={cn(
+                    'flex flex-col gap-1.5 rounded-[18px] p-3',
+                    now ? 'bg-primary text-primary-foreground' : 'bg-card text-card-foreground',
+                  )}
+                >
+                  <span className={cn('flex items-center gap-1 text-[11px] font-bold', now ? 'opacity-85' : 'text-muted-foreground')}>
+                    {done ? <CheckIcon className="size-3.5 text-mint" aria-hidden /> : null}
+                    {String(i + 1).padStart(2, '0')}
+                    {now ? ` · ${t('tracker.nowLabel')}` : null}
+                  </span>
+                  <strong className="text-[13px] leading-snug">{s.step}</strong>
+                  <span className={cn('text-[11px] leading-snug', now ? 'opacity-85' : 'text-muted-foreground')}>
+                    {t('tracker.replyWithin', { days: s.deadline_days })}
+                  </span>
+                </li>
+              )
+            })}
+          </ol>
         </div>
       ) : null}
 

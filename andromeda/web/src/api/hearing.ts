@@ -20,7 +20,7 @@ export interface Debrief {
 
 export type Entry =
   | { id: number; kind: 'ai'; text: string }
-  | { id: number; kind: 'you'; text: string; coach?: Coaching }
+  | { id: number; kind: 'you'; text: string; coach?: Coaching; coachFailed?: boolean }
 
 export type HearingState = 'idle' | 'connecting' | 'live' | 'ending' | 'done' | 'error'
 
@@ -57,20 +57,21 @@ export function useHearing(caseId: string | undefined) {
     })
   }, [])
 
-  const attachCoach = useCallback((c: Coaching) => {
+  /** Attach a coaching result (or its failure) to the answer it scores. */
+  const attachCoach = useCallback((answer: string, patch: { coach: Coaching } | { coachFailed: true }) => {
     setEntries((list) => {
-      const target = norm(c.answer).slice(0, 40)
+      const target = norm(answer).slice(0, 40)
       let idx = -1
       for (let i = list.length - 1; i >= 0; i--) {
         const e = list[i]
-        if (e.kind === 'you' && !e.coach && (idx === -1 || norm(e.text).includes(target))) {
+        if (e.kind === 'you' && !e.coach && !e.coachFailed && (idx === -1 || norm(e.text).includes(target))) {
           idx = i
           if (norm(e.text).includes(target)) break
         }
       }
       if (idx === -1) return list
       const copy = [...list]
-      copy[idx] = { ...(copy[idx] as Extract<Entry, { kind: 'you' }>), coach: c }
+      copy[idx] = { ...(copy[idx] as Extract<Entry, { kind: 'you' }>), ...patch }
       return copy
     })
   }, [])
@@ -122,7 +123,8 @@ export function useHearing(caseId: string | undefined) {
         }
         add(msg.transcript.who, msg.transcript.text)
       } else if (msg.turn_complete) setYourTurn(true)
-      else if (msg.coach) attachCoach(msg.coach)
+      else if (msg.coach) attachCoach(msg.coach.answer, { coach: msg.coach })
+      else if (msg.coach_error) attachCoach(msg.coach_error.answer, { coachFailed: true })
       else if (msg.done) {
         setDebrief(msg.done)
         setState('done')
