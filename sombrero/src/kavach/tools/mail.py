@@ -1,16 +1,20 @@
-"""Email through Postmark: the appeal letter out to the insurer, their replies back in.
+"""Email through Cloudflare Email Service: the appeal letter out, insurer replies back in.
 
-Each case gets its own Reply-To address, `case-<id>-<sig>@<inbound domain>`, signed with
-MAIL_INBOUND_TOKEN so a reply can only ever land in the case it was meant for. Postmark's
-inbound webhook posts replies to /mail/inbound?token=<MAIL_INBOUND_TOKEN>. With no server
-token everything runs dry (logged, not sent), like the WhatsApp channel in local dev.
+Out: the REST send API with the patient in CC and Reply-To set to MAIL_REPLY_TO. Cloudflare
+returns the message's id, which is saved against the case (store.save_mail_thread).
+
+In: Cloudflare Email Routing hands mail for MAIL_REPLY_TO to the Worker in pinwheel/, which
+posts it to /mail/inbound with MAIL_INBOUND_TOKEN. Mail clients put the id of the message
+being answered in In-Reply-To/References, so the reply finds its case without per-case
+addresses (Email Routing has no catch-all on subdomains, and the apex mail is Google
+Workspace). With no API token everything runs dry (logged, not sent).
 """
 
 import base64
-import hashlib
 import hmac
 import logging
 import re
+import uuid
 
 import httpx
 
@@ -18,55 +22,50 @@ from ..config import get_settings
 
 log = logging.getLogger(__name__)
 
-API = "https://api.postmarkapp.com/email"
+API = "https://api.cloudflare.com/client/v4/accounts/{account}/email/sending/send"
 EMAIL = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
-_REPLY = re.compile(r"case-([0-9a-f]{32})-([0-9a-f]{10})@", re.IGNORECASE)
-
+_MESSAGE_ID = re.compile(r"<[^<>\s]+>")
+_NAMED = re.compile(r"^\s*(.*?)\s*<([^<>\s]+)>\s*$")
 
 # Cloud Run can't deploy with an empty secret, so the secret holds this until the real token is
-# added (gcloud secrets versions add postmark-server-token …): until then, sends are dry runs.
+# added (gcloud secrets versions add cloudflare-email-token …): until then, sends are dry runs.
 PLACEHOLDER = "unset"
-
-
-def _token() -> str:
-    token = get_settings().postmark_server_token.strip()
-    return "" if token == PLACEHOLDER else token
 
 
 class MailError(Exception):
     """Sending failed; the message is safe to show the patient."""
 
 
+def _token() -> str:
+    token = get_settings().cloudflare_email_token.strip()
+    return "" if token == PLACEHOLDER else token
+
+
 def configured() -> bool:
-    return bool(_token() and get_settings().mail_from)
-
-
-def _sig(case_id: str) -> str:
-    key = get_settings().mail_inbound_token.encode()
-    return hmac.new(key, case_id.encode(), hashlib.sha256).hexdigest()[:10]
-
-
-def reply_address(case_id: str) -> str | None:
     s = get_settings()
-    if not (s.mail_inbound_domain and s.mail_inbound_token):
-        return None
-    return f"case-{case_id}-{_sig(case_id)}@{s.mail_inbound_domain}"
+    return bool(_token() and s.cloudflare_account_id and s.mail_from)
 
 
-def case_for_addresses(addresses: list[str]) -> str | None:
-    """The case a reply was sent to, if any recipient is a correctly signed case address."""
-    if not get_settings().mail_inbound_token:
-        return None
-    for address in addresses:
-        m = _REPLY.search(address or "")
-        if m and hmac.compare_digest(m.group(2).lower(), _sig(m.group(1).lower())):
-            return m.group(1).lower()
-    return None
+def reply_address() -> str | None:
+    return get_settings().mail_reply_to or None
 
 
 def token_ok(token: str | None) -> bool:
     secret = get_settings().mail_inbound_token
     return bool(secret) and hmac.compare_digest((token or "").encode(), secret.encode())
+
+
+def message_ids(*headers: str | None) -> list[str]:
+    """Every <message-id> in In-Reply-To / References headers, newest last."""
+    return [m for h in headers if h for m in _MESSAGE_ID.findall(h)]
+
+
+def _sender(value: str) -> dict | str:
+    """ "Kavach Appeals <appeals@x>" → {"address", "name"}; a bare address stays a string."""
+    m = _NAMED.match(value)
+    if m and m.group(1):
+        return {"address": m.group(2), "name": m.group(1).strip('"')}
+    return value.strip()
 
 
 def send(
@@ -78,46 +77,54 @@ def send(
     reply_to: str | None = None,
     attachments: list[tuple[str, bytes, str]] = (),
 ) -> str:
-    """Send one email; returns Postmark's MessageID ("dry-run" without a server token)."""
+    """Send one email; returns its Message-ID (a <dry-run-…> id without an API token)."""
     s = get_settings()
-    payload = {
-        "From": s.mail_from or "Kavach <appeals@example.invalid>",
-        "To": to,
-        "Subject": subject,
-        "TextBody": text,
-        "MessageStream": "outbound",
+    payload: dict = {
+        "from": _sender(s.mail_from or "Kavach <appeals@example.invalid>"),
+        "to": [to],
+        "subject": subject,
+        "text": text,
     }
     if cc:
-        payload["Cc"] = cc
+        payload["cc"] = [cc]
     if reply_to:
-        payload["ReplyTo"] = reply_to
+        payload["reply_to"] = reply_to
     if attachments:
-        payload["Attachments"] = [
-            {"Name": name, "Content": base64.b64encode(data).decode(), "ContentType": mime}
+        payload["attachments"] = [
+            {
+                "content": base64.b64encode(data).decode(),
+                "filename": name,
+                "type": mime,
+                "disposition": "attachment",
+            }
             for name, data, mime in attachments
         ]
     if not _token():
         log.info("mail: dry run, not sent: %s", subject)
-        return "dry-run"
+        # A unique id still threads local replies to the case (see store.save_mail_thread).
+        return f"<dry-run-{uuid.uuid4().hex}@kavach.local>"
     try:
         r = httpx.post(
-            API,
+            API.format(account=s.cloudflare_account_id),
             json=payload,
-            headers={
-                "X-Postmark-Server-Token": _token(),
-                "Accept": "application/json",
-            },
-            timeout=20,
+            headers={"Authorization": f"Bearer {_token()}"},
+            timeout=30,
         )
     except httpx.HTTPError as exc:
         raise MailError("We couldn't reach the email service. Please try again.") from exc
-    if r.status_code != 200:
-        try:
-            reason = r.json().get("Message", "")
-        except ValueError:
-            reason = ""
-        log.error("mail: Postmark refused (%s): %s", r.status_code, reason)
+    try:
+        body = r.json()
+    except ValueError:
+        body = {}
+    if r.status_code != 200 or not body.get("success"):
+        errors = body.get("errors") or []
+        reason = errors[0].get("message", "") if errors else ""
+        log.error("mail: Cloudflare refused (%s): %s", r.status_code, errors)
         raise MailError(
-            f"The email was not sent{': ' + reason if reason else ''}. Please try again."
+            "The email was not sent. Please try again in a few minutes."
+            + (f" ({reason})" if reason else "")
         )
-    return r.json().get("MessageID", "")
+    result = body.get("result") or {}
+    if result.get("permanent_bounces"):
+        raise MailError("The insurer's address bounced. Check the email address and try again.")
+    return result.get("message_id", "")

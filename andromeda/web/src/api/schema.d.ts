@@ -524,7 +524,7 @@ export interface paths {
         put?: never;
         /**
          * Inbound
-         * @description Postmark inbound webhook. Always 200 for mail we can't place, so Postmark won't retry it.
+         * @description Always 200 for mail we can't place, so the Worker doesn't treat it as a failure.
          */
         post: operations["inbound_mail_inbound_post"];
         delete?: never;
@@ -907,6 +907,38 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /**
+         * InboundMail
+         * @description What the Cloudflare Email Worker posts for each reply (pinwheel/src/index.js).
+         */
+        InboundMail: {
+            /**
+             * From
+             * @default
+             */
+            from: string;
+            /**
+             * Subject
+             * @default
+             */
+            subject: string;
+            /**
+             * Text
+             * @default
+             */
+            text: string;
+            /** In Reply To */
+            in_reply_to?: string | null;
+            /** References */
+            references?: string | null;
+            /**
+             * Attachments
+             * @default []
+             */
+            attachments: {
+                [key: string]: unknown;
+            }[];
         };
         /** InsightRow */
         InsightRow: {
@@ -2123,14 +2155,18 @@ export interface operations {
     };
     inbound_mail_inbound_post: {
         parameters: {
-            query?: {
-                token?: string | null;
+            query?: never;
+            header?: {
+                "x-kavach-token"?: string | null;
             };
-            header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["InboundMail"];
+            };
+        };
         responses: {
             /** @description Successful Response */
             200: {

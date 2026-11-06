@@ -10,12 +10,14 @@ from kavach.main import app
 from kavach.models import Case, CaseFacts, CaseStatus, Complainant, Letter
 from kavach.tools import mail, packs, store
 
+TOKEN = {"X-Kavach-Token": "inbound-secret"}
+
 
 @pytest.fixture
 def client(monkeypatch, tmp_path):
     monkeypatch.chdir(tmp_path)
     monkeypatch.setenv("MAIL_INBOUND_TOKEN", "inbound-secret")
-    monkeypatch.setenv("MAIL_INBOUND_DOMAIN", "replies.example.org")
+    monkeypatch.setenv("MAIL_REPLY_TO", "appeals@kavach.example")
     get_settings.cache_clear()
     yield TestClient(app)
     get_settings.cache_clear()
@@ -27,7 +29,7 @@ def outbox(monkeypatch):
 
     def fake_send(to, subject, text, **kw):
         sent.append({"to": to, "subject": subject, "text": text, **kw})
-        return "msg-1"
+        return f"<msg-{len(sent)}@cloudflare.example>"
 
     monkeypatch.setattr(mail, "send", fake_send)
     return sent
@@ -69,20 +71,20 @@ def test_sending_emails_the_letter_and_starts_the_reply_clock(client, outbox):
 
     [msg] = outbox
     assert msg["to"] == "gro@insurer.example" and msg["cc"] == "lakshmi@example.com"
-    assert msg["reply_to"] == mail.reply_address(case.id)
-    assert msg["reply_to"].startswith(f"case-{case.id}-") and msg["reply_to"].endswith(
-        "@replies.example.org"
-    )
+    assert msg["reply_to"] == "appeals@kavach.example"
     assert "I appeal the rejection." in msg["text"]
     assert (
         msg["attachments"][0][0] == "appeal-letter.pdf" and msg["attachments"][0][1][:4] == b"%PDF"
     )
+    assert store.case_for_message("<msg-1@cloudflare.example>") == case.id
 
     again = client.post(f"/cases/{case.id}/send-appeal", json={"to": "gro@insurer.example"})
     assert again.status_code == 409 and len(outbox) == 1
 
 
-def test_insurer_reply_lands_on_the_tracker(client, outbox, monkeypatch):
+def test_insurer_reply_finds_its_case_by_thread_and_lands_on_the_tracker(
+    client, outbox, monkeypatch
+):
     case = _case()
     client.post(f"/cases/{case.id}/send-appeal", json={"to": "gro@insurer.example"})
     monkeypatch.setattr(
@@ -93,21 +95,27 @@ def test_insurer_reply_lands_on_the_tracker(client, outbox, monkeypatch):
         ),
     )
     payload = {
-        "FromFull": {"Email": "gro@insurer.example"},
-        "ToFull": [{"Email": mail.reply_address(case.id)}],
-        "Subject": "Re: Appeal against rejection of claim CLI/1",
-        "StrippedTextReply": "Please share the ultrasound report dated 05/07/2026.",
-        "Attachments": [
+        "from": "gro@insurer.example",
+        "subject": "Re: Appeal against rejection of claim CLI/1",
+        "text": "Please share the ultrasound report dated 05/07/2026.",
+        "in_reply_to": "<msg-1@cloudflare.example>",
+        "references": "<older@insurer.example> <msg-1@cloudflare.example>",
+        "attachments": [
             {
-                "Name": "query.pdf",
-                "Content": base64.b64encode(b"%PDF-1.4 query").decode(),
-                "ContentType": "application/pdf",
+                "filename": "query.pdf",
+                "content": base64.b64encode(b"%PDF-1.4 query").decode(),
+                "type": "application/pdf",
             }
         ],
     }
-    assert client.post("/mail/inbound?token=wrong", json=payload).status_code == 403
-    r = client.post("/mail/inbound?token=inbound-secret", json=payload)
-    assert r.json() == {"ok": True, "matched": True}
+    assert (
+        client.post("/mail/inbound", json=payload, headers={"X-Kavach-Token": "wrong"}).status_code
+        == 403
+    )
+    assert client.post("/mail/inbound", json=payload, headers=TOKEN).json() == {
+        "ok": True,
+        "matched": True,
+    }
 
     saved = store.load_case(case.id)
     event = saved.events[-1]
@@ -117,14 +125,17 @@ def test_insurer_reply_lands_on_the_tracker(client, outbox, monkeypatch):
     assert forward["to"] == "lakshmi@example.com" and "ultrasound report dated" in forward["text"]
 
 
-def test_forged_case_addresses_are_ignored(client):
+def test_replies_that_answer_no_appeal_are_ignored(client):
     case = _case()
     payload = {
-        "ToFull": [{"Email": f"case-{case.id}-0000000000@replies.example.org"}],
-        "Subject": "spam",
+        "from": "spam@example.org",
+        "subject": "Hello",
+        "in_reply_to": "<unknown@example.org>",
     }
-    r = client.post("/mail/inbound?token=inbound-secret", json=payload)
-    assert r.json() == {"ok": True, "matched": False}
+    assert client.post("/mail/inbound", json=payload, headers=TOKEN).json() == {
+        "ok": True,
+        "matched": False,
+    }
     assert store.load_case(case.id).events == []
 
 
@@ -145,8 +156,54 @@ def test_insurer_directory_matches_the_name_on_the_letter(monkeypatch):
 
 
 def test_the_placeholder_token_keeps_sending_a_dry_run(monkeypatch):
-    monkeypatch.setenv("POSTMARK_SERVER_TOKEN", "unset")
+    monkeypatch.setenv("CLOUDFLARE_EMAIL_TOKEN", "unset")
+    monkeypatch.setenv("CLOUDFLARE_ACCOUNT_ID", "acc")
     monkeypatch.setenv("MAIL_FROM", "Kavach <appeals@kavach.example>")
     get_settings.cache_clear()
     assert not mail.configured()
-    assert mail.send("gro@insurer.example", "Appeal", "text") == "dry-run"
+    assert mail.send("gro@insurer.example", "Appeal", "text").startswith("<dry-run-")
+
+
+def test_cloudflare_request_matches_the_documented_rest_schema(monkeypatch):
+    monkeypatch.setenv("CLOUDFLARE_EMAIL_TOKEN", "cf-token")
+    monkeypatch.setenv("CLOUDFLARE_ACCOUNT_ID", "acc123")
+    monkeypatch.setenv("MAIL_FROM", "Kavach Appeals <appeals@kavach.example>")
+    get_settings.cache_clear()
+    calls = []
+
+    class Response:
+        status_code = 200
+
+        def json(self):
+            return {
+                "success": True,
+                "errors": [],
+                "result": {"message_id": "<abc@cf>", "permanent_bounces": []},
+            }
+
+    def fake_post(url, json, headers, timeout):
+        calls.append((url, json, headers))
+        return Response()
+
+    monkeypatch.setattr(mail.httpx, "post", fake_post)
+    mid = mail.send(
+        "gro@insurer.example",
+        "Appeal",
+        "Dear Sir",
+        cc="me@example.com",
+        reply_to="appeals@kavach.example",
+        attachments=[("appeal-letter.pdf", b"%PDF", "application/pdf")],
+    )
+    url, body, headers = calls[0]
+    assert mid == "<abc@cf>"
+    assert url == "https://api.cloudflare.com/client/v4/accounts/acc123/email/sending/send"
+    assert headers == {"Authorization": "Bearer cf-token"}
+    assert body["from"] == {"address": "appeals@kavach.example", "name": "Kavach Appeals"}
+    assert body["to"] == ["gro@insurer.example"] and body["cc"] == ["me@example.com"]
+    assert body["reply_to"] == "appeals@kavach.example"
+    assert body["attachments"][0] == {
+        "content": "JVBERg==",
+        "filename": "appeal-letter.pdf",
+        "type": "application/pdf",
+        "disposition": "attachment",
+    }

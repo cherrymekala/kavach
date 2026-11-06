@@ -2,7 +2,7 @@
 
 GET  /cases/{id}/send-appeal   what would be sent, and what is still missing
 POST /cases/{id}/send-appeal   email the letter to the insurer and start the reply deadline
-POST /mail/inbound?token=...   Postmark's inbound webhook for replies to case addresses
+POST /mail/inbound             replies, posted by the Cloudflare Email Worker (pinwheel/)
 """
 
 import base64
@@ -11,8 +11,8 @@ import uuid
 from datetime import UTC, datetime
 from pathlib import Path
 
-from fastapi import APIRouter, Depends, HTTPException, Request
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends, Header, HTTPException
+from pydantic import BaseModel, Field
 
 from ..agents import appeal_mail, escalation, filing
 from ..auth import current_user
@@ -95,7 +95,7 @@ def _preview(case: Case) -> AppealMail:
         to=to,
         to_source=source,
         cc=who.email if who else None,
-        reply_to=mail.reply_address(case.id),
+        reply_to=mail.reply_address(),
         subject=case.letter.subject if case.letter else None,
         attachments=names if case.letter else [],
         missing=missing,
@@ -132,7 +132,7 @@ def send_appeal(case_id: str, body: SendAppealRequest, uid: str = Depends(curren
 
     subject, text = appeal_mail.compose(case, preview.reply_to)
     try:
-        mail.send(
+        message_id = mail.send(
             to,
             subject,
             text,
@@ -144,6 +144,8 @@ def send_appeal(case_id: str, body: SendAppealRequest, uid: str = Depends(curren
         raise HTTPException(502, str(exc)) from exc
 
     now = datetime.now(UTC)
+    # The insurer's reply quotes this id in In-Reply-To/References; that is how it finds the case.
+    store.save_mail_thread(message_id, case.id)
     case.complainant.insurer_email = to
     case.events.append(
         CaseEvent(
@@ -162,17 +164,17 @@ def send_appeal(case_id: str, body: SendAppealRequest, uid: str = Depends(curren
 def _save_attachments(case: Case, attachments: list[dict]) -> int:
     saved = 0
     for att in attachments or []:
-        name = safe_name(att.get("Name"))
+        name = safe_name(att.get("filename"))
         if Path(name).suffix.lower() not in ALLOWED or len(case.documents) >= MAX_DOCUMENTS:
             continue
         try:
-            data = base64.b64decode(att.get("Content") or "", validate=True)
+            data = base64.b64decode(att.get("content") or "", validate=True)
         except ValueError:
             continue
         if not data or len(data) > MAX_BYTES:
             continue
         doc_id = uuid.uuid4().hex
-        uri = files.put(f"{case.id}/{doc_id}-insurer-{name}", data, att.get("ContentType"))
+        uri = files.put(f"{case.id}/{doc_id}-insurer-{name}", data, att.get("type"))
         case.documents.append(
             Document(
                 id=doc_id, filename=f"insurer-{name}", gcs_uri=uri, uploaded_at=datetime.now(UTC)
@@ -182,24 +184,34 @@ def _save_attachments(case: Case, attachments: list[dict]) -> int:
     return saved
 
 
+class InboundMail(BaseModel):
+    """What the Cloudflare Email Worker posts for each reply (pinwheel/src/index.js)."""
+
+    sender: str = Field("", alias="from")
+    subject: str = ""
+    text: str = ""
+    in_reply_to: str | None = None
+    references: str | None = None
+    attachments: list[dict] = []
+
+
 @router.post("/mail/inbound")
-async def inbound(request: Request, token: str | None = None) -> dict:
-    """Postmark inbound webhook. Always 200 for mail we can't place, so Postmark won't retry it."""
-    if not mail.token_ok(token):
+def inbound(msg: InboundMail, x_kavach_token: str | None = Header(None)) -> dict:
+    """Always 200 for mail we can't place, so the Worker doesn't treat it as a failure."""
+    if not mail.token_ok(x_kavach_token):
         raise HTTPException(403, "Not the mail service.")
-    msg = await request.json()
-    recipients = [r.get("Email", "") for r in (msg.get("ToFull") or []) + (msg.get("CcFull") or [])]
-    recipients += [msg.get("OriginalRecipient", ""), msg.get("To", "")]
-    case_id = mail.case_for_addresses(recipients)
+    # Newest reference first: the message this one answers is the most specific match.
+    ids = mail.message_ids(msg.in_reply_to, msg.references)
+    case_id = next((c for c in map(store.case_for_message, reversed(ids)) if c), None)
     case = store.load_case(case_id) if case_id else None
     if not case:
         log.info("mail: inbound message for no known case")
         return {"ok": True, "matched": False}
 
-    sender = (msg.get("FromFull") or {}).get("Email") or msg.get("From", "the insurer")
-    subject = (msg.get("Subject") or "").strip()[:200]
-    text = (msg.get("StrippedTextReply") or msg.get("TextBody") or "").strip()[:8000]
-    attachments = msg.get("Attachments") or []
+    sender = msg.sender or "the insurer"
+    subject = msg.subject.strip()[:200]
+    text = msg.text.strip()[:8000]
+    attachments = msg.attachments
     read = appeal_mail.read_reply(subject, text)
     saved = 0 if case.documents_deleted_at else _save_attachments(case, attachments)
 
@@ -225,9 +237,9 @@ async def inbound(request: Request, token: str | None = None) -> dict:
                 "open the app to record what they decided.\n\n--- Their message ---\n" + text,
                 attachments=[
                     (
-                        a.get("Name", "attachment"),
-                        base64.b64decode(a.get("Content") or ""),
-                        a.get("ContentType", ""),
+                        a.get("filename", "attachment"),
+                        base64.b64decode(a.get("content") or ""),
+                        a.get("type", ""),
                     )
                     for a in attachments
                 ][:5],
