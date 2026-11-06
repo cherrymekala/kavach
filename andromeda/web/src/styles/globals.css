@@ -6,10 +6,9 @@
  * border-border, …) AND our brand aliases (bg-brand, bg-mint, …) both work and
  * both re-theme when <html data-theme="dark"> flips.
  *
- * Direction — "the advocate's desk": warm paper, near-black ink, a confident
- * evergreen brand (trust + authority), gold for hope/recovery and deadlines, and a
- * quiet green reserved for success. Chosen for a patient-facing legal-aid tool —
- * calm and human, no indigo/violet, no gradients.
+ * Direction — "lamellar armour" (Kavach Mobile canvas): light lavender page, white
+ * cards, ink text, one bright indigo for actions, and vermilion for the plate that
+ * holds (wins, the mic, key moments). Dark navy is not used as a surface.
  * ------------------------------------------------------------------------- */
 
 @import "tailwindcss";
@@ -20,88 +19,92 @@
 
 :root {
   /* shadcn semantic layer (light) */
-  --background: #f6f4ee; /* warm paper — page */
-  --foreground: #21201c; /* warm near-black ink */
-  --card: #fdfcf8; /* surface */
-  --card-foreground: #21201c;
-  --popover: #fdfcf8;
-  --popover-foreground: #21201c;
-  --primary: #1d5c4d; /* deep evergreen — trust */
+  --background: #eeedf4; /* warm paper — page */
+  --foreground: #121027; /* warm near-black ink */
+  --card: #ffffff; /* surface */
+  --card-foreground: #121027;
+  --popover: #ffffff;
+  --popover-foreground: #121027;
+  --primary: #3b2bd9; /* deep evergreen — trust */
   --primary-foreground: #ffffff;
-  --secondary: #ebe8dd; /* chip */
-  --secondary-foreground: #21201c;
-  --muted: #ebe8dd; /* subtle fill */
-  --muted-foreground: #6e6c62; /* muted text */
-  --accent: #e6ece7; /* evergreen-soft */
-  --accent-foreground: #1d5c4d;
-  --destructive: #b23a33; /* red */
+  --secondary: #e4e1ff; /* chip */
+  --secondary-foreground: #2e1fb8;
+  --muted: #e6e4f0; /* subtle fill */
+  --muted-foreground: #4a4766; /* muted text */
+  --accent: #e4e1ff; /* evergreen-soft */
+  --accent-foreground: #2e1fb8;
+  --destructive: #a0260b; /* red */
   --destructive-foreground: #ffffff;
-  --border: #dcd8cb; /* line */
-  --input: #dcd8cb;
-  --ring: #1d5c4d; /* evergreen (focus) */
+  --border: #dcd9ea; /* line */
+  --input: #d6d3e6;
+  --ring: #3b2bd9; /* evergreen (focus) */
 
   /* brand aliases */
-  --page: #f6f4ee;
-  --surface: #fdfcf8;
-  --ink: #21201c;
-  --line: #dcd8cb;
-  --chip: #ebe8dd;
-  --brand: #1d5c4d;
-  --brand-soft: #e6ece7;
-  --mint: #2f7d58; /* success only */
-  --amber: #a8691f; /* hope / deadline */
-  --red: #b23a33;
+  --page: #eeedf4;
+  --surface: #ffffff;
+  --ink: #121027;
+  --line: #dcd9ea;
+  --chip: #e6e4f0;
+  --brand: #3b2bd9;
+  --brand-soft: #e4e1ff;
+  --mint: #0f7a4f; /* success only */
+  --amber: #b4540a; /* hope / deadline */
+  --red: #a0260b;
 
   /* workspace surfaces */
-  --rail: #1d5c4d; /* case rail: the same evergreen as the shield panel */
-  --rail-foreground: #f2f5f3;
-  --rule: #e3ded1; /* hairline between document sections */
+  --rail: #ffffff;
+  --vermilion: #ff5a36; /* the plate that holds: wins, the mic, key moments */
+  --vermilion-ink: #a0260b; /* case rail: the same evergreen as the shield panel */
+  --rail-foreground: #121027;
+  --rule: #e6e4f0; /* hairline between document sections */
 
-  --radius: 1rem; /* base; rounded-lg = 16px, rounded-md = 14px */
+  --radius: 1.25rem; /* base; rounded-lg = 16px, rounded-md = 14px */
 
   --float-shadow: 0 30px 60px -20px rgb(28 28 24 / 0.35);
   --sheet-shadow: 0 -20px 40px -20px rgb(0 0 0 / 0.4);
 
-  --font-sans: "Figtree", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Telugu", system-ui, sans-serif;
-  --font-display: "Figtree", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Telugu", system-ui, sans-serif;
+  --font-sans: "Manrope", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Telugu", system-ui, sans-serif;
+  --font-display: "Unbounded", "Noto Sans Devanagari", "Noto Sans Tamil", "Noto Sans Telugu", system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 [data-theme="dark"] {
-  --background: #161614; /* warm near-black */
-  --foreground: #ece9df; /* warm off-white ink */
-  --card: #1f1f1c;
-  --card-foreground: #ece9df;
-  --popover: #1f1f1c;
-  --popover-foreground: #ece9df;
-  --primary: #57a183;
-  --primary-foreground: #101310;
-  --secondary: #262723;
-  --secondary-foreground: #ece9df;
-  --muted: #262723;
-  --muted-foreground: #9c9a90;
-  --accent: #24352d;
-  --accent-foreground: #a9d6c3;
-  --destructive: #ef7a70;
-  --destructive-foreground: #161614;
-  --border: #2f2f2b;
-  --input: #2f2f2b;
-  --ring: #57a183;
+  --background: #121120; /* warm near-black */
+  --foreground: #eeedf4; /* warm off-white ink */
+  --card: #1c1a2c;
+  --card-foreground: #eeedf4;
+  --popover: #1c1a2c;
+  --popover-foreground: #eeedf4;
+  --primary: #9d93ff;
+  --primary-foreground: #121027;
+  --secondary: #2a2645;
+  --secondary-foreground: #d9d5ff;
+  --muted: #24213a;
+  --muted-foreground: #b4b0cc;
+  --accent: #2a2645;
+  --accent-foreground: #d9d5ff;
+  --destructive: #ff8a70;
+  --destructive-foreground: #121027;
+  --border: #302c4a;
+  --input: #3a3556;
+  --ring: #9d93ff;
 
-  --page: #161614;
-  --surface: #1f1f1c;
-  --ink: #ece9df;
-  --line: #2f2f2b;
-  --chip: #262723;
-  --brand: #57a183;
-  --brand-soft: #24352d;
-  --mint: #5fd0a0;
-  --amber: #d9a441;
-  --red: #ef7a70;
+  --page: #121120;
+  --surface: #1c1a2c;
+  --ink: #eeedf4;
+  --line: #302c4a;
+  --chip: #24213a;
+  --brand: #9d93ff;
+  --brand-soft: #2a2645;
+  --mint: #4fd6a0;
+  --amber: #ffb08f;
+  --red: #ff8a70;
 
-  --rail: #12302a;
-  --rail-foreground: #e3ece8;
-  --rule: #292926;
+  --rail: #1c1a2c;
+  --vermilion: #ff6a4a;
+  --vermilion-ink: #ffb49e;
+  --rail-foreground: #eeedf4;
+  --rule: #2a2645;
 
   --float-shadow: 0 30px 60px -20px rgb(0 0 0 / 0.7);
 
@@ -146,6 +149,8 @@
   --color-rail: var(--rail);
   --color-rail-foreground: var(--rail-foreground);
   --color-rule: var(--rule);
+  --color-vermilion: var(--vermilion);
+  --color-vermilion-ink: var(--vermilion-ink);
 
   /* fonts */
   --font-sans: var(--font-sans);
@@ -205,6 +210,72 @@
     opacity: 0;
     transform: translateY(8px);
   }
+}
+
+/* Kavach plates (components/kavach-plates.tsx): drop in one by one, the bottom plate
+ * ignites from lavender to vermilion, then the shield bobs over a breathing shadow. */
+@keyframes kv-drop {
+  0% { opacity: 0; transform: translateY(-90px) scaleY(0.35); }
+  60% { opacity: 1; transform: translateY(8px) scaleY(1.06); }
+  80% { transform: translateY(-3px) scaleY(0.98); }
+  100% { opacity: 1; transform: none; }
+}
+@keyframes kv-fade { to { opacity: 0; } }
+@keyframes kv-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes kv-floor { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(0.82); opacity: 0.6; } }
+@keyframes kv-dot { 0%, 100% { transform: translate(0, 0); } 33% { transform: translate(6px, -10px); } 66% { transform: translate(-5px, 6px); } }
+@keyframes kv-dash { to { stroke-dashoffset: -32; } }
+@keyframes kv-breathe { 0%, 100% { opacity: 1; } 50% { opacity: 0.45; } }
+@keyframes kv-draw { from { stroke-dashoffset: 240; } to { stroke-dashoffset: 0; } }
+@keyframes kv-pop { 0% { opacity: 0; transform: scale(0.2); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes kv-mic {
+  0% { box-shadow: 0 0 0 0 rgb(255 90 54 / 0.45); }
+  100% { box-shadow: 0 0 0 22px rgb(255 90 54 / 0); }
+}
+@keyframes kv-ring { from { stroke-dasharray: 0 277; } }
+
+@utility kv-plate {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: kv-drop 0.9s cubic-bezier(0.2, 0.9, 0.25, 1.2) both;
+}
+@utility kv-ignite {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: kv-drop 0.9s cubic-bezier(0.2, 0.9, 0.25, 1.2) 0.55s both, kv-fade 0.7s ease 1.35s both;
+}
+@utility kv-bob {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: kv-bob 4.5s ease-in-out 1.6s infinite;
+}
+@utility kv-floor {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: kv-floor 4.5s ease-in-out 1.6s infinite;
+}
+@utility kv-dot {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: kv-dot 6s ease-in-out infinite;
+}
+@utility kv-dash {
+  animation: kv-dash 1.1s linear infinite, kv-breathe 1.8s ease-in-out infinite;
+}
+@utility kv-draw {
+  stroke-dasharray: 240;
+  animation: kv-draw 1.4s ease 0.2s both;
+}
+@utility kv-pop {
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  animation: kv-pop 0.6s cubic-bezier(0.2, 0.9, 0.25, 1.4) 1.2s both;
+}
+@utility kv-mic {
+  animation: kv-mic 1.8s ease-out infinite;
+}
+@utility kv-ring {
+  animation: kv-ring 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) 0.3s both;
 }
 
 /* Only the key message of a panel arrives with motion; the rest is still. */

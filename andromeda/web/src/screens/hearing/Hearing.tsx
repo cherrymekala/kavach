@@ -259,7 +259,7 @@ export function Hearing() {
               size="lg"
               disabled={!live}
               onClick={hearing.toggleMic}
-              className={cn('h-14 flex-1 rounded-full', hearing.micOn && 'bg-amber text-black hover:bg-amber/90')}
+              className={cn('h-14 flex-1 rounded-full', hearing.micOn && 'kv-mic bg-vermilion text-[#1a0b06] hover:bg-vermilion/90')}
               aria-pressed={hearing.micOn}
             >
               {hearing.micOn ? <MicOffIcon className="size-5" /> : <MicIcon className="size-5" />}

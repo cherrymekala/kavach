@@ -120,7 +120,8 @@
       }
     ],
     "errorUpload": "वह फ़ाइल अपलोड नहीं हो सकी।",
-    "errorAnalyse": "विश्लेषण शुरू नहीं हो सका।"
+    "errorAnalyse": "विश्लेषण शुरू नहीं हो सका।",
+    "stepOf": "चरण {{current}} / {{total}}"
   },
   "summary": {
     "title": "क्या हुआ",

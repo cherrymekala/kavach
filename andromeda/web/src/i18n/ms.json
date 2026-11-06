@@ -120,7 +120,8 @@
       }
     ],
     "errorUpload": "Fail itu tidak dapat dimuat naik.",
-    "errorAnalyse": "Analisis tidak dapat dimulakan."
+    "errorAnalyse": "Analisis tidak dapat dimulakan.",
+    "stepOf": "Langkah {{current}} daripada {{total}}"
   },
   "summary": {
     "title": "Apa yang berlaku",

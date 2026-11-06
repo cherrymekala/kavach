@@ -120,7 +120,8 @@
       }
     ],
     "errorUpload": "无法上传该文件。",
-    "errorAnalyse": "无法开始分析。"
+    "errorAnalyse": "无法开始分析。",
+    "stepOf": "第 {{current}} 步，共 {{total}} 步"
   },
   "summary": {
     "title": "发生了什么",

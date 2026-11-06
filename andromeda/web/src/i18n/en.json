@@ -104,7 +104,8 @@
       }
     ],
     "errorUpload": "Could not upload that file.",
-    "errorAnalyse": "Could not start the analysis."
+    "errorAnalyse": "Could not start the analysis.",
+    "stepOf": "Step {{current}} of {{total}}"
   },
   "summary": {
     "title": "What happened",

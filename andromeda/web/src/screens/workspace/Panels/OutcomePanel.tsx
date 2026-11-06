@@ -11,6 +11,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   Button,
+  KavachPlates,
   ShieldHero
 } from '@/components'
 import { useDeleteCase } from '@/api/hooks'
@@ -51,6 +52,7 @@ export function OutcomePanel({ caseId, kase }: { caseId: string; kase: Case }) {
 
   return (
     <section className="flex flex-col gap-6">
+      <KavachPlates size={200} celebrate className="mx-auto" />
       <ShieldHero
         eyebrow={t('outcome.congrats')}
         footer={recovered != null ? t('outcome.recovered') : t('outcome.sub')}

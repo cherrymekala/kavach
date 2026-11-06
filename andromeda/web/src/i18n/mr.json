@@ -120,7 +120,8 @@
       }
     ],
     "errorUpload": "ती फाईल अपलोड करता आली नाही.",
-    "errorAnalyse": "विश्लेषण सुरू करता आले नाही."
+    "errorAnalyse": "विश्लेषण सुरू करता आले नाही.",
+    "stepOf": "टप्पा {{current}} / {{total}}"
   },
   "summary": {
     "title": "काय घडले",
