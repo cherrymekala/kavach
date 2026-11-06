@@ -2,3 +2,4 @@ project_id    = "kavach-prod"
 region        = "asia-south1"
 billing_account = "XXXXXX-XXXXXX-XXXXXX"
 budget_amount   = 4500
+alert_email     = "you@example.com"

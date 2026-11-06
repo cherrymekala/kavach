@@ -127,6 +127,13 @@ function FilesBlock({
               <div className="flex items-start gap-2 px-0.5">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-sm font-medium">{d.filename}</p>
+                  {d.quality ? (
+                    // Photo check at upload: say what is wrong while the paper is still at hand.
+                    <p className="mt-1 flex items-start gap-1 text-xs leading-snug text-vermilion-ink">
+                      <AlertTriangleIcon className="mt-px size-3 shrink-0" aria-hidden />
+                      <span>{t(`upload.quality.${d.quality}`, { defaultValue: '' })}</span>
+                    </p>
+                  ) : null}
                   {d.warning ? (
                     <p className="mt-0.5 flex items-center gap-1 text-xs text-amber">
                       <AlertTriangleIcon className="size-3 shrink-0" aria-hidden />
@@ -170,7 +177,9 @@ function AnalyseBlock({
   error,
   isPending,
   onStart,
+  hardToRead,
 }: {
+  hardToRead: number
   failed: boolean
   progress?: string | null
   error: string | null
@@ -180,6 +189,12 @@ function AnalyseBlock({
   const { t } = useTranslation()
   return (
     <div className="flex flex-col gap-3">
+      {hardToRead && !failed ? (
+        <p className="flex gap-2 rounded-2xl bg-[#ffe3da] p-4 text-sm text-[#5c1605] dark:bg-[#3a1f19] dark:text-[#ffd3c6]">
+          <AlertTriangleIcon className="mt-0.5 size-4 shrink-0" aria-hidden />
+          {t('upload.qualityNote', { count: hardToRead })}
+        </p>
+      ) : null}
       {failed ? (
         <div className="flex gap-3 rounded-lg border border-amber/50 bg-amber/10 p-4 text-sm">
           <AlertTriangleIcon className="mt-0.5 size-5 shrink-0 text-amber" aria-hidden />
@@ -387,6 +402,7 @@ export function Dossier() {
                 error={analyseError}
                 isPending={analyse.isPending}
                 onStart={startAnalyse}
+                hardToRead={docs.filter((d) => d.quality).length}
               />
             ) : null}
           </>

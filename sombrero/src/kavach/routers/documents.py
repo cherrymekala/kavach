@@ -5,6 +5,7 @@ from pathlib import Path
 
 from fastapi import APIRouter, Depends, HTTPException, Response, UploadFile
 
+from ..agents import quality
 from ..auth import current_user
 from ..models import CaseStatus, Document
 from ..tools import files, store
@@ -49,7 +50,14 @@ async def upload(case_id: str, file: UploadFile, uid: str = Depends(current_user
         raise HTTPException(400, "The file is empty.")
     doc_id = uuid.uuid4().hex
     uri = files.put(f"{case_id}/{doc_id}-{name}", data, file.content_type)
-    doc = Document(id=doc_id, filename=name, gcs_uri=uri, uploaded_at=datetime.now(UTC))
+    issue = (
+        await quality.photo_issue(uri)
+        if Path(name).suffix.lower() in quality.PHOTO_SUFFIXES
+        else None
+    )
+    doc = Document(
+        id=doc_id, filename=name, gcs_uri=uri, quality=issue, uploaded_at=datetime.now(UTC)
+    )
     case.documents.append(doc)
     store.save_case(case)
     return doc

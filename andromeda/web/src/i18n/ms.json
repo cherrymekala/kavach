@@ -121,7 +121,16 @@
     ],
     "errorUpload": "Fail itu tidak dapat dimuat naik.",
     "errorAnalyse": "Analisis tidak dapat dimulakan.",
-    "stepOf": "Langkah {{current}} daripada {{total}}"
+    "stepOf": "Langkah {{current}} daripada {{total}}",
+    "quality": {
+      "blurry": "Foto ini kelihatan kabur. Ambil semula dalam cahaya yang baik sambil memegang telefon dengan stabil.",
+      "cut_off": "Sebahagian halaman terpotong. Ambil semula dengan keempat-empat tepi dalam bingkai.",
+      "too_dark": "Foto ini terlalu gelap untuk dibaca. Ambil semula berhampiran tingkap atau lampu.",
+      "glare": "Pantulan cahaya menyembunyikan sebahagian teks. Condongkan kertas atau matikan denyar dan ambil semula.",
+      "not_a_document": "Ini tidak kelihatan seperti dokumen. Pastikan anda memilih foto yang betul."
+    },
+    "qualityNote_one": "1 foto mungkin sukar dibaca. Ambil semula untuk kes yang lebih kukuh, atau teruskan analisis.",
+    "qualityNote_other": "{{count}} foto mungkin sukar dibaca. Ambil semula untuk kes yang lebih kukuh, atau teruskan analisis."
   },
   "summary": {
     "title": "Apa yang berlaku",

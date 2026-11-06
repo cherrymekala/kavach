@@ -13,3 +13,9 @@ variable "budget_currency" {
   type        = string
   default     = "INR"
 }
+
+variable "alert_email" {
+  description = "Where backend error alerts go (Cloud Monitoring email channel). Empty = no alerts."
+  type        = string
+  default     = ""
+}

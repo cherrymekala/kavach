@@ -1,6 +1,12 @@
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+import asyncio
+import logging
+from contextlib import asynccontextmanager
 
+from fastapi import FastAPI, Request
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
+
+from . import logs
 from .config import get_settings
 from .routers import (
     analysis,
@@ -16,7 +22,28 @@ from .routers import (
     whatsapp,
 )
 
-app = FastAPI(title="Kavach API", version="0.1.0")
+logs.setup()
+log = logging.getLogger("kavach")
+
+
+@asynccontextmanager
+async def lifespan(_app: FastAPI):
+    asyncio.get_running_loop().set_exception_handler(logs.log_task_exception)
+    yield
+
+
+app = FastAPI(title="Kavach API", version="0.1.0", lifespan=lifespan)
+
+
+@app.exception_handler(Exception)
+async def unexpected_error(request: Request, exc: Exception) -> JSONResponse:
+    # HTTPExceptions are handled by FastAPI before this; anything here is a real bug.
+    log.error("unhandled error on %s %s", request.method, request.url.path, exc_info=exc)
+    return JSONResponse(
+        {"detail": "Something went wrong on our side. Please try again."}, status_code=500
+    )
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[o.strip() for o in get_settings().cors_origins.split(",") if o.strip()],
