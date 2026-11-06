@@ -40,6 +40,7 @@ if (import.meta.env.DEV) {
         { at: '2026-09-20T10:00:00Z', kind: 'rehearsal', step: 1, text: 'Hearing rehearsal: average score 3.4/5.' },
       ],
     },
+    'demo-resolved': { ...demo.default, status: 'resolved', amount_recovered: 184000 },
     'demo-run': { ...demo.default, status: 'analysing', progress: 'Finding the rules that apply', facts: null, assessment: null, letter: null, events: [], documents: docs },
   }
   const packs = { IN: await import('./dev/pack-IN.json'), SG: await import('./dev/pack-SG.json') }

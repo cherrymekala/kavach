@@ -35,9 +35,9 @@ function tone(score: number): 'mint' | 'amber' | 'brand' {
 function CoachCard({ coach }: { coach: Coaching }) {
   const { t } = useTranslation()
   return (
-    <div className="flex flex-col gap-2 rounded-xl border border-mint/40 bg-mint/10 p-3 text-sm">
+    <div className="flex flex-col gap-2 rounded-[22px] border border-[#ffd3c6] bg-[#fff1ec] p-4 text-sm dark:border-[#5c2a1d] dark:bg-[#2a1813]">
       <div className="flex items-center justify-between gap-3">
-        <span className="font-bold text-mint">{t('hearing.coach')}</span>
+        <span className="font-bold text-vermilion-ink">{t('hearing.coach')}</span>
         <span className="text-xs font-semibold tabular-nums">{coach.score}/5</span>
       </div>
       <Meter value={coach.score / 5} tone={tone(coach.score)} />
@@ -55,7 +55,7 @@ function Turn({ entry }: { entry: Entry }) {
   if (entry.kind === 'you') {
     return (
       <div className="flex flex-col items-end gap-2">
-        <div className="max-w-[85%] rounded-lg rounded-br-sm bg-primary px-3 py-2 text-sm text-primary-foreground">
+        <div className="max-w-[85%] rounded-[22px] rounded-br-md bg-primary px-4 py-3 text-[15px] leading-relaxed text-primary-foreground">
           {entry.text}
         </div>
         {entry.coach ? (
@@ -77,14 +77,13 @@ function Turn({ entry }: { entry: Entry }) {
         return (
           <div key={i} className="max-w-[85%] self-start">
             {part.speaker ? (
-              <span className={cn('mb-1 block text-xs font-bold', insurer ? 'text-amber' : 'text-brand')}>
+              <span className={cn('mb-1 block text-xs font-bold', insurer ? 'text-vermilion-ink' : 'text-brand')}>
                 {part.speaker}
               </span>
             ) : null}
             <div
               className={cn(
-                'rounded-lg rounded-bl-sm px-3 py-2 text-sm',
-                insurer ? 'border border-amber/40 bg-amber/10' : 'bg-muted',
+                'rounded-[22px] rounded-bl-md bg-card px-4 py-3 text-[15px] leading-relaxed',
               )}
             >
               {part.text}
@@ -119,10 +118,10 @@ export function Hearing() {
     return (
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 pb-24">
         <AppHeader title={t('hearing.title')} />
-        <section className="flex flex-col gap-3 rounded-2xl bg-primary p-6 text-primary-foreground">
+        <section className="flex flex-col gap-3 rounded-[28px] bg-primary p-6 text-primary-foreground">
           <span className="text-xs opacity-80">{t('hearing.debrief')}</span>
           {d.average_score !== null ? (
-            <p className="text-4xl font-extrabold tabular-nums">
+            <p className="font-display text-5xl font-bold tracking-[-0.05em] tabular-nums">
               {d.average_score}
               <span className="text-lg opacity-70">/5</span>
             </p>
@@ -132,8 +131,8 @@ export function Hearing() {
         <section className="flex flex-col gap-2">
           <h3 className="text-xl font-extrabold tracking-tight">{t('hearing.tipsForReal')}</h3>
           {d.top_tips.map((tip, i) => (
-            <div key={tip} className="flex items-start gap-3 rounded-xl border border-border bg-card p-4">
-              <span className="text-lg font-extrabold text-brand">{i + 1}</span>
+            <div key={tip} className="flex items-start gap-3 rounded-[22px] bg-card p-4">
+              <span className="font-display text-lg font-bold text-brand">{i + 1}</span>
               <p className="text-sm">{tip}</p>
             </div>
           ))}
@@ -150,13 +149,13 @@ export function Hearing() {
     return (
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 pb-24">
         <AppHeader title={t('hearing.title')} />
-        <section className="flex flex-col gap-4 rounded-2xl border border-border bg-card p-5">
+        <section className="flex flex-col gap-4 rounded-[28px] bg-card p-6">
           <div className="flex items-center gap-3">
             <span className="grid size-11 place-items-center rounded-full bg-accent text-accent-foreground">
               <GavelIcon className="size-5" aria-hidden />
             </span>
             <div>
-              <h3 className="text-lg font-extrabold tracking-tight">{t('hearing.intro', { body })}</h3>
+              <h3 className="font-display text-xl font-bold tracking-[-0.03em]">{t('hearing.intro', { body })}</h3>
               <p className="text-sm text-muted-foreground">{t('hearing.introSub')}</p>
             </div>
           </div>
@@ -166,7 +165,7 @@ export function Hearing() {
               <span className="text-muted-foreground">{t('hearing.roleBody')}</span>
             </li>
             <li className="flex gap-2">
-              <span className="font-bold text-amber">{t('hearing.insurerRep')}</span>
+              <span className="font-bold text-vermilion-ink">{t('hearing.insurerRep')}</span>
               <span className="text-muted-foreground">{t('hearing.roleInsurer')}</span>
             </li>
           </ul>
@@ -176,8 +175,8 @@ export function Hearing() {
         <section className="flex flex-col gap-2">
           <h3 className="text-xl font-extrabold tracking-tight">{t('hearing.tips')}</h3>
           {[t('hearing.tip1'), t('hearing.tip2'), t('hearing.tip3')].map((tip, i) => (
-            <div key={tip} className="flex items-start gap-3 rounded-xl border border-border bg-card p-4">
-              <span className="text-lg font-extrabold text-brand">{i + 1}</span>
+            <div key={tip} className="flex items-start gap-3 rounded-[22px] bg-card p-4">
+              <span className="font-display text-lg font-bold text-brand">{i + 1}</span>
               <p className="text-sm">{tip}</p>
             </div>
           ))}
@@ -194,7 +193,7 @@ export function Hearing() {
   return (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 pb-40">
       <AppHeader title={t('hearing.title')} />
-      <div className="flex items-center justify-between rounded-xl border border-border bg-card px-4 py-2">
+      <div className="flex items-center justify-between rounded-full bg-card px-5 py-2.5">
         <span className="text-sm font-semibold">{body}</span>
         {hearing.state === 'connecting' ? (
           <span className="flex items-center gap-2 text-xs text-muted-foreground">
@@ -222,7 +221,7 @@ export function Hearing() {
       </div>
 
       <div className="fixed inset-x-0 bottom-4 z-30 px-4">
-        <div className="mx-auto flex w-full max-w-3xl flex-col gap-2 rounded-2xl border border-border bg-card p-2 shadow-lg">
+        <div className="mx-auto flex w-full max-w-3xl flex-col gap-2 rounded-[28px] bg-card p-2 shadow-[0_18px_40px_rgb(46_31_184/0.14)]">
           {typing ? (
             <form
               className="flex items-center gap-1"

@@ -59,15 +59,17 @@ export function SummaryPanel({ kase, onNext }: { kase: Case; onNext?: () => void
 
   return (
     <section className="flex flex-col gap-10">
+      {/* Canvas "What happened": category pill, plain headline, the decoded meaning. */}
       <ShieldHero
-        eyebrow={t('summary.title')}
-        footer={category ? t(`summary.category.${category}`, { defaultValue: category }) : undefined}
+        tone="mixed"
+        eyebrow={category ? t(`summary.category.${category}`, { defaultValue: category }) : t('summary.title')}
+        footer={meaning || undefined}
       >
         {headline}
       </ShieldHero>
 
-      <div className="flex flex-col gap-3">
-        <h3 className="text-xl font-extrabold tracking-tight">{t('summary.reason')}</h3>
+      <div className="flex flex-col gap-3 rounded-[24px] bg-card p-5">
+        <h3 className="text-base font-extrabold tracking-tight">{t('summary.reason')}</h3>
         <blockquote className="rounded-2xl bg-muted/70 p-4 text-[15px] leading-relaxed">
           “{facts.rejection_reason || t('summary.noReason')}”
           {facts.cited_clause || facts.rejection_code ? (
@@ -78,26 +80,19 @@ export function SummaryPanel({ kase, onNext }: { kase: Case; onNext?: () => void
         </blockquote>
       </div>
 
-      {meaning ? (
-        <div className="flex flex-col gap-2">
-          <h3 className="text-xl font-extrabold tracking-tight">{t('summary.whatItMeans')}</h3>
-          <p className="max-w-[62ch] text-[15px] leading-relaxed">{meaning}</p>
+      <div className="grid grid-cols-2 gap-2.5">
+        <div className="flex flex-col gap-1 rounded-[22px] bg-primary p-4 text-primary-foreground">
+          <p className="text-xs font-semibold opacity-80">{t('summary.claimed')}</p>
+          <p className="font-display text-xl font-bold tracking-[-0.03em] tabular-nums">{claimed ?? '—'}</p>
         </div>
-      ) : null}
-
-      <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-border bg-border">
-        <div className="flex flex-col gap-1 bg-background p-4">
-          <p className="text-sm text-muted-foreground">{t('summary.claimed')}</p>
-          <p className="text-2xl font-extrabold tracking-tight tabular-nums">{claimed ?? '—'}</p>
-        </div>
-        <div className="flex flex-col gap-1 bg-background p-4">
-          <p className="text-sm text-muted-foreground">{t('summary.approved')}</p>
-          <p className="text-2xl font-extrabold tracking-tight tabular-nums">
+        <div className="flex flex-col gap-1 rounded-[22px] bg-card p-4">
+          <p className="text-xs font-semibold text-muted-foreground">{t('summary.approved')}</p>
+          <p className="font-display text-xl font-bold tracking-[-0.03em] tabular-nums">
             {facts.amount_approved != null ? formatMoney(facts.amount_approved, currency) : '—'}
           </p>
         </div>
         {unpaid ? (
-          <p className="col-span-2 bg-background px-4 py-3 text-sm font-semibold text-destructive">
+          <p className="col-span-2 px-1 text-sm font-semibold text-destructive">
             {t('summary.unpaid', { amount: formatMoney(unpaid, currency) })}
           </p>
         ) : null}
@@ -106,17 +101,14 @@ export function SummaryPanel({ kase, onNext }: { kase: Case; onNext?: () => void
       {timeline.length ? (
         <div className="flex flex-col gap-4">
           <h3 className="text-xl font-extrabold tracking-tight">{t('summary.timeline')}</h3>
-          <ol className="flex flex-col">
+          <ol className="flex flex-col rounded-[24px] bg-card p-5">
             {timeline.map((r, i) => (
               <li key={r.key} className="relative flex items-baseline justify-between gap-4 pb-5 pl-6 last:pb-0">
                 {i < timeline.length - 1 ? (
                   <span className="absolute top-2 bottom-0 left-[5px] w-px bg-rule" aria-hidden />
                 ) : null}
                 <span
-                  className={cn(
-                    'absolute top-1.5 left-0 size-[11px] rounded-full border-2',
-                    r.hot ? 'border-destructive bg-destructive' : 'border-brand bg-background',
-                  )}
+                  className={cn('absolute top-1.5 left-0 size-3 rounded-full', r.hot ? 'bg-vermilion' : 'bg-brand')}
                   aria-hidden
                 />
                 <span className={cn('text-sm', r.hot && 'font-semibold')}>{r.key}</span>
@@ -135,7 +127,7 @@ export function SummaryPanel({ kase, onNext }: { kase: Case; onNext?: () => void
       {rows.length ? (
         <div className="flex flex-col gap-2">
           <h3 className="text-xl font-extrabold tracking-tight">{t('summary.details')}</h3>
-          <dl className="flex flex-col">
+          <dl className="flex flex-col rounded-[24px] bg-card px-5 py-2">
             {rows.map((r) => (
               <Row key={r.key} label={r.key} value={r.value} />
             ))}
