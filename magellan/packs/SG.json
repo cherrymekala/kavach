@@ -208,5 +208,6 @@
       "source": "https://www.cpf.gov.sg/ipinsurers",
       "checked": "2026-11-06"
     }
-  ]
+  ],
+  "expert_threshold": 20000
 }

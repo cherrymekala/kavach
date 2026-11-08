@@ -3,6 +3,8 @@ import { apiFetch } from './client'
 import type {
   AppealMail,
   AskAnswer,
+  ExpertOffer,
+  ExpertRequestBody,
   AskRequest,
   Case,
   CaseSummary,
@@ -142,6 +144,24 @@ export function useSendAppeal(caseId: string) {
     onSuccess: (c) => {
       qc.setQueryData(caseKey(caseId), c)
       qc.invalidateQueries({ queryKey: ['appeal-mail', caseId] })
+    },
+  })
+}
+
+export function useExpertOffer(caseId: string) {
+  return useQuery({
+    queryKey: ['expert', caseId],
+    queryFn: () => apiFetch<ExpertOffer>(`/cases/${caseId}/expert`),
+  })
+}
+
+export function useRequestExpert(caseId: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (body: ExpertRequestBody) => apiFetch<Case>(`/cases/${caseId}/expert`, jsonBody(body)),
+    onSuccess: (c) => {
+      qc.setQueryData(caseKey(caseId), c)
+      qc.invalidateQueries({ queryKey: ['expert', caseId] })
     },
   })
 }

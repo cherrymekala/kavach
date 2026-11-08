@@ -222,6 +222,7 @@ class Case(BaseModel):
     assessment: Assessment | None = None
     discharge_check: DischargeCheck | None = None
     preauth_check: PreauthCheck | None = None
+    expert_requested_at: datetime | None = None  # the patient asked for a human advocate
     letter: Letter | None = None
     complainant: Complainant | None = None
     next_deadline: datetime | None = None
@@ -344,6 +345,37 @@ class AskRequest(BaseModel):
 
 class AskAnswer(BaseModel):
     answer: str
+
+
+class ExpertRequestBody(BaseModel):
+    """The patient asks for a human advocate and agrees to share a summary of the case."""
+
+    consent: bool
+    phone: str | None = None
+    email: str | None = None
+    note: str = ""
+
+
+class ExpertOffer(BaseModel):
+    reason: str | None  # weak | high_value | None (still available, just not suggested)
+    requested_at: datetime | None
+    shared: list[str]  # what the team will see, shown before the patient consents
+
+
+class ExpertRequest(BaseModel):
+    """One referral in the triage queue: a case summary, never the patient's documents."""
+
+    id: str
+    case_id: str
+    owner: str
+    created_at: datetime
+    country: str
+    reason: str | None
+    summary: dict
+    phone: str | None = None
+    email: str | None = None
+    note: str = ""
+    status: str = "open"  # open | matched | closed
 
 
 class CreateCase(BaseModel):

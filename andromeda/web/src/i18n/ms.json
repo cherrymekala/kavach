@@ -571,5 +571,33 @@
         "detail": "Memastikan setiap petikan benar-benar ada dalam sumbernya"
       }
     ]
+  },
+  "expert": {
+    "title": "Bercakap dengan pakar manusia",
+    "why": {
+      "weak": "Berdasarkan dokumen, kes anda kelihatan sukar. Peguam bela yang berpengalaman mungkin dapat menemui hujah atau bukti yang tidak dapat kami temui.",
+      "high_value": "Jumlah wang yang besar dipertaruhkan. Peguam bela yang berpengalaman boleh menyemak kes anda dan membantu anda memfailkannya."
+    },
+    "cta": "Minta bantuan pakar",
+    "link": "Mahu pakar manusia meneliti kes anda?",
+    "how": "Pasukan kami membaca ringkasan pendek kes anda dan menghubungkan anda dengan peguam bela atau kumpulan bantuan pesakit yang sesuai. Anda yang memutuskan sama ada mahu bekerjasama dengan mereka.",
+    "sharedTitle": "Apa yang kami kongsi dengan pasukan kami",
+    "shared": {
+      "country": "Negara anda",
+      "insurer": "Syarikat insurans anda",
+      "reason": "Sebab penolakan dan kategorinya",
+      "amounts": "Jumlah yang dituntut dan jumlah yang dibayar",
+      "assessment": "Penilaian Kavach terhadap kes anda",
+      "deadline": "Tarikh akhir anda yang seterusnya dan langkah semasa",
+      "contact": "Nama, telefon dan e-mel anda seperti yang diberikan di sini",
+      "note": "Nota anda"
+    },
+    "notShared": "Dokumen anda tidak dikongsi.",
+    "note": "Ada apa-apa yang perlu kami tahu? (pilihan)",
+    "notePlaceholder": "Contohnya, masa terbaik untuk menelefon, atau perkara yang paling membimbangkan anda",
+    "consent": "Saya bersetuju untuk berkongsi ringkasan ini dengan pasukan Kavach supaya mereka dapat mencari peguam bela untuk saya.",
+    "send": "Hantar permintaan",
+    "error": "Kami tidak dapat menghantar permintaan anda. Sila cuba lagi.",
+    "requested": "Anda telah meminta pakar manusia pada {{date}}. Pasukan kami akan menghubungi anda."
   }
 }

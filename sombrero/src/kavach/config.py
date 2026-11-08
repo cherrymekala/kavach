@@ -60,6 +60,8 @@ class Settings(BaseSettings):
     cloudflare_email_token: str = ""  # API token with "Email Sending: Edit"
     mail_from: str = ""  # e.g. "Kavach Appeals <appeals@reimaginy.tech>" (onboarded domain)
     mail_reply_to: str = ""  # routed to the Worker, e.g. appeals@reimaginy.tech
+    # Advocate handoff: where new expert requests are emailed (empty = queue in Firestore only).
+    expert_team_email: str = ""
     mail_inbound_token: str = ""  # shared secret: the Worker sends it on every inbound post
 
 

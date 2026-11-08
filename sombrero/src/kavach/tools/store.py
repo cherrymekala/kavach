@@ -201,3 +201,16 @@ def case_for_message(message_id: str) -> str | None:
         return _threads.get(_thread_key(message_id))
     snap = _db().collection("mail_threads").document(_thread_key(message_id)).get()
     return (snap.to_dict() or {}).get("case_id") if snap.exists else None
+
+
+# ── Expert requests: the triage queue for human advocates. ─────────────────────────────
+
+_expert_requests: dict[str, dict] = {}
+
+
+def save_expert_request(request) -> None:
+    data = request.model_dump(mode="json")
+    if _local():
+        _expert_requests[request.id] = data
+        return
+    _db().collection("expert_requests").document(request.id).set(data)

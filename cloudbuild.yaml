@@ -19,6 +19,8 @@ substitutions:
   _MAIL_FROM: "Kavach Appeals <appeals@kavach.reimaginy.tech>"
   _MAIL_REPLY_TO: appeals@reimaginy.tech
   _CLOUDFLARE_ACCOUNT_ID: 25440e45ad090dc826ef2f8a7a4f0a25
+  # Advocate handoff: new expert requests are emailed here (empty = Firestore queue only).
+  _EXPERT_TEAM_EMAIL: ""
 options:
   # Required when the trigger runs as a user-managed service account.
   logging: CLOUD_LOGGING_ONLY
@@ -42,7 +44,7 @@ steps:
       - --max-instances=3
       # Hearing rehearsals are WebSocket sessions; the 5-minute default would cut them off.
       - --timeout=3600
-      - --set-env-vars=GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},USE_VERTEX=true,DOCS_BUCKET=$PROJECT_ID-docs,MODEL_FAST=${_MODEL_FAST},MODEL_REASONING=${_MODEL_REASONING},RULINGS_ENGINE=kavach-rulings,PUBLIC_URL=${_PUBLIC_URL},PAYMENTS_ENABLED=${_PAYMENTS_ENABLED},WHATSAPP_VERIFY_TOKEN=${_WHATSAPP_VERIFY_TOKEN},WHATSAPP_PHONE_NUMBER_ID=${_WHATSAPP_PHONE_NUMBER_ID},WHATSAPP_TEMPLATE=${_WHATSAPP_TEMPLATE},MAIL_FROM=${_MAIL_FROM},MAIL_REPLY_TO=${_MAIL_REPLY_TO},CLOUDFLARE_ACCOUNT_ID=${_CLOUDFLARE_ACCOUNT_ID}
+      - --set-env-vars=GCP_PROJECT=$PROJECT_ID,GCP_REGION=${_REGION},USE_VERTEX=true,DOCS_BUCKET=$PROJECT_ID-docs,MODEL_FAST=${_MODEL_FAST},MODEL_REASONING=${_MODEL_REASONING},RULINGS_ENGINE=kavach-rulings,PUBLIC_URL=${_PUBLIC_URL},PAYMENTS_ENABLED=${_PAYMENTS_ENABLED},WHATSAPP_VERIFY_TOKEN=${_WHATSAPP_VERIFY_TOKEN},WHATSAPP_PHONE_NUMBER_ID=${_WHATSAPP_PHONE_NUMBER_ID},WHATSAPP_TEMPLATE=${_WHATSAPP_TEMPLATE},MAIL_FROM=${_MAIL_FROM},MAIL_REPLY_TO=${_MAIL_REPLY_TO},CLOUDFLARE_ACCOUNT_ID=${_CLOUDFLARE_ACCOUNT_ID},EXPERT_TEAM_EMAIL=${_EXPERT_TEAM_EMAIL}
       # Secrets: Twilio's auth token signs webhooks; WhatsApp's app secret verifies Meta's
       # signature and its access token sends replies; Razorpay/Stripe keys take payments.
       - --update-secrets=TWILIO_ACCOUNT_SID=twilio-account-sid:latest,TWILIO_AUTH_TOKEN=twilio-auth-token:latest,WHATSAPP_ACCESS_TOKEN=whatsapp-access-token:latest,WHATSAPP_APP_SECRET=whatsapp-app-secret:latest,RAZORPAY_KEY_ID=razorpay-key-id:latest,RAZORPAY_KEY_SECRET=razorpay-key-secret:latest,STRIPE_SECRET_KEY=stripe-secret-key:latest,STRIPE_WEBHOOK_SECRET=stripe-webhook-secret:latest,CLOUDFLARE_EMAIL_TOKEN=cloudflare-email-token:latest,MAIL_INBOUND_TOKEN=mail-inbound-token:latest
