@@ -5,7 +5,7 @@ import worker, { toInbound } from '../src/index.js'
 const pdf = Buffer.from('%PDF-1.4 query').toString('base64')
 const raw = [
   'From: Grievance Cell <gro@insurer.example>',
-  'To: appeals@kavach.agentiny.me',
+  'To: appeals@reimaginy.tech',
   'Subject: Re: Appeal against rejection of claim CLI/1',
   'Message-ID: <reply-1@insurer.example>',
   'In-Reply-To: <abc@cloudflare.example>',
