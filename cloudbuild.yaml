@@ -20,7 +20,7 @@ substitutions:
   _MAIL_REPLY_TO: appeals@reimaginy.tech
   _CLOUDFLARE_ACCOUNT_ID: 25440e45ad090dc826ef2f8a7a4f0a25
   # Advocate handoff: new expert requests are emailed here (empty = Firestore queue only).
-  _EXPERT_TEAM_EMAIL: ""
+  _EXPERT_TEAM_EMAIL: mekalasharan@gmail.com
 options:
   # Required when the trigger runs as a user-managed service account.
   logging: CLOUD_LOGGING_ONLY
