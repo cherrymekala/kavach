@@ -571,5 +571,31 @@
         "detail": "确保每段引文确实出自其来源"
       }
     ]
+  },
+  "share": {
+    "button": "分享",
+    "title": "与协助者分享",
+    "sub": "让您信任的人与您一起处理此案件：家人、医院账单柜台或病人互助团体。",
+    "create": "生成代码",
+    "codeLabel": "分享代码",
+    "expires": "仅限使用一次，有效期至 {{date}}。",
+    "copy": "复制代码和链接",
+    "message": "用此代码加入我的 Kavach 案件：{{code}}\n{{link}}",
+    "helpers": "协助此案件的人",
+    "none": "暂时没有。",
+    "since": "自 {{date}} 起",
+    "remove": "移除",
+    "note": "协助者可以查看和处理此案件，但不能删除它，也不能分享给他人。您可以随时移除他们。",
+    "error": "无法生成代码，请再试一次。",
+    "sharedWithYou": "与您分享的案件",
+    "sharedBadge": "已分享",
+    "joinLink": "用代码加入",
+    "joinTitle": "协助病人的案件",
+    "joinSub": "请输入病人与您分享的代码。",
+    "yourName": "您的名字",
+    "namePlaceholder": "例如：Asha、Lotus 医院账单柜台",
+    "join": "加入案件",
+    "joinNote": "病人会看到您的名字，并可随时移除您。",
+    "joinError": "无法加入此案件，请检查代码。"
   }
 }

@@ -495,6 +495,57 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cases/{case_id}/share": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Create Share Code */
+        post: operations["create_share_code_cases__case_id__share_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cases/{case_id}/helpers/{helper_uid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Remove Helper */
+        delete: operations["remove_helper_cases__case_id__helpers__helper_uid__delete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/share/redeem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Redeem Share Code */
+        post: operations["redeem_share_code_share_redeem_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/cases/{case_id}/send-appeal": {
         parameters: {
             query?: never;
@@ -671,6 +722,18 @@ export interface components {
             assessment?: components["schemas"]["Assessment"] | null;
             discharge_check?: components["schemas"]["DischargeCheck"] | null;
             preauth_check?: components["schemas"]["PreauthCheck"] | null;
+            /**
+             * Helpers
+             * @default []
+             */
+            helpers: components["schemas"]["Helper"][];
+            /**
+             * Helper Ids
+             * @default []
+             */
+            helper_ids: string[];
+            /** Share Code Hash */
+            share_code_hash?: string | null;
             letter?: components["schemas"]["Letter"] | null;
             complainant?: components["schemas"]["Complainant"] | null;
             /** Next Deadline */
@@ -776,6 +839,11 @@ export interface components {
             /** Language */
             language: string;
             status: components["schemas"]["CaseStatus"];
+            /**
+             * Role
+             * @default owner
+             */
+            role: string;
             /** Progress */
             progress: string | null;
             /** Insurer */
@@ -910,6 +978,21 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /**
+         * Helper
+         * @description Someone the patient invited (caregiver, hospital billing desk, NGO) who can work on the case.
+         */
+        Helper: {
+            /** Uid */
+            uid: string;
+            /** Name */
+            name: string;
+            /**
+             * Added At
+             * Format: date-time
+             */
+            added_at: string;
         };
         /**
          * InboundMail
@@ -1108,6 +1191,13 @@ export interface components {
             /** Signature */
             signature: string;
         };
+        /** RedeemRequest */
+        RedeemRequest: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+        };
         /**
          * RejectionCategory
          * @enum {string}
@@ -1142,6 +1232,16 @@ export interface components {
         SendAppealRequest: {
             /** To */
             to: string;
+        };
+        /** ShareCode */
+        ShareCode: {
+            /** Code */
+            code: string;
+            /**
+             * Expires At
+             * Format: date-time
+             */
+            expires_at: string;
         };
         /** Source */
         Source: {
@@ -2130,6 +2230,108 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    create_share_code_cases__case_id__share_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ShareCode"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    remove_helper_cases__case_id__helpers__helper_uid__delete: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+                helper_uid: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Case"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    redeem_share_code_share_redeem_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RedeemRequest"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Case"];
                 };
             };
             /** @description Validation Error */

@@ -38,3 +38,5 @@ export type Insights = components['schemas']['Insights']
 export type Checkout =
   | { provider: 'razorpay'; key_id: string; order_id: string; amount: number; currency: string; name: string }
   | { provider: 'stripe'; url: string; amount: number; currency: string }
+export type Helper = components['schemas']['Helper']
+export type ShareCode = components['schemas']['ShareCode']

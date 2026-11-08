@@ -12,6 +12,7 @@ import type {
   FiledRequest,
   FilingPack,
   Insights,
+  ShareCode,
   Letter,
   LetterRequest,
   NoteRequest,
@@ -142,6 +143,34 @@ export function useSendAppeal(caseId: string) {
     onSuccess: (c) => {
       qc.setQueryData(caseKey(caseId), c)
       qc.invalidateQueries({ queryKey: ['appeal-mail', caseId] })
+    },
+  })
+}
+
+/** Helper mode: the patient makes a one-time code for a caregiver, desk or NGO. */
+export function useCreateShareCode(caseId: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: () => apiFetch<ShareCode>(`/cases/${caseId}/share`, { method: 'POST' }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: caseKey(caseId) }),
+  })
+}
+
+export function useRemoveHelper(caseId: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (uid: string) => apiFetch<Case>(`/cases/${caseId}/helpers/${uid}`, { method: 'DELETE' }),
+    onSuccess: (c) => qc.setQueryData(caseKey(caseId), c),
+  })
+}
+
+export function useRedeemShare() {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (body: { code: string; name: string }) => apiFetch<Case>('/share/redeem', jsonBody(body)),
+    onSuccess: (c) => {
+      qc.setQueryData(caseKey(c.id), c)
+      qc.invalidateQueries({ queryKey: ['cases'] })
     },
   })
 }

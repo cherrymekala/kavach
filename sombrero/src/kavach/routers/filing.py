@@ -4,14 +4,14 @@ from pydantic import BaseModel
 from ..agents import filing
 from ..auth import current_user
 from ..models import Case, Complainant, FilingPack, Letter
-from ..tools import payments, store
+from ..tools import access, payments, store
 
 router = APIRouter(prefix="/cases/{case_id}", tags=["filing"])
 
 
 def _ready_case(case_id: str, uid: str) -> Case:
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     if not case.assessment:
         raise HTTPException(409, "Run the analysis first.")
@@ -27,7 +27,7 @@ def _unlocked(case: Case) -> Case:
 @router.put("/complainant", response_model=Case)
 def set_complainant(case_id: str, body: Complainant, uid: str = Depends(current_user)) -> Case:
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     case.complainant = body
     store.save_case(case)

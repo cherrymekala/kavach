@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { ConfirmationResult } from 'firebase/auth'
 import { RecaptchaVerifier } from 'firebase/auth'
@@ -15,6 +15,10 @@ const FEATURES = [
 ] as const
 
 export function SignIn() {
+  const location = useLocation()
+  // Back to where sign-in interrupted (e.g. a helper's /join/<code> link). Internal paths only.
+  const from = (location.state as { from?: string } | null)?.from
+  const next = from && from.startsWith('/') && !from.startsWith('//') ? from : '/app'
   const navigate = useNavigate()
   const { t } = useTranslation()
   const { user, loading } = useAuth()
@@ -37,7 +41,7 @@ export function SignIn() {
     try {
       await confirmation.confirm(code)
       verifierRef.current?.clear()
-      navigate('/app')
+      navigate(next)
     } catch (e) {
       throw new Error(mapAuthError(e))
     }
@@ -48,7 +52,7 @@ export function SignIn() {
   }
 
   if (user) {
-    return <Navigate to="/app" replace />
+    return <Navigate to={next} replace />
   }
 
   return (

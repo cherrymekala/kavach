@@ -571,5 +571,31 @@
         "detail": "Making sure every quote really appears in its source"
       }
     ]
+  },
+  "share": {
+    "button": "Share",
+    "title": "Share with a helper",
+    "sub": "Let someone you trust work on this case with you: a family member, the hospital's billing desk or a patient-help group.",
+    "create": "Create a code",
+    "codeLabel": "Share code",
+    "expires": "Works once, until {{date}}.",
+    "copy": "Copy code and link",
+    "message": "Join my Kavach case with this code: {{code}}\n{{link}}",
+    "helpers": "People helping with this case",
+    "none": "No one yet.",
+    "since": "Since {{date}}",
+    "remove": "Remove",
+    "note": "Helpers can see and work on this case, but they cannot delete it or share it with others. You can remove them at any time.",
+    "error": "We couldn't create a code. Please try again.",
+    "sharedWithYou": "Shared with you",
+    "sharedBadge": "Shared",
+    "joinLink": "Join with a code",
+    "joinTitle": "Help with a patient's case",
+    "joinSub": "Enter the code the patient shared with you.",
+    "yourName": "Your name",
+    "namePlaceholder": "E.g. Asha, Lotus Hospital billing desk",
+    "join": "Join case",
+    "joinNote": "The patient will see your name and can remove you at any time.",
+    "joinError": "We couldn't join this case. Please check the code."
   }
 }

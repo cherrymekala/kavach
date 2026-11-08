@@ -6,7 +6,7 @@ from pydantic import BaseModel
 from ..auth import current_user
 from ..config import get_settings
 from ..models import Case, CaseEvent
-from ..tools import payments, store
+from ..tools import access, payments, store
 
 router = APIRouter(tags=["payments"])
 
@@ -19,7 +19,7 @@ class RazorpayPaid(BaseModel):
 
 def _own(case_id: str, uid: str) -> Case:
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     return case
 

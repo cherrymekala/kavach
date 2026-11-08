@@ -18,12 +18,14 @@ import {
   PaperclipIcon,
   StethoscopeIcon,
   TrophyIcon,
+  UsersRoundIcon,
   XIcon,
 } from 'lucide-react'
 import { Button, ErrorState, KavachPlates, LanguageSwitcher, SourceKindIcon, ThemeToggle } from '@/components'
 import { apiBlob } from '@/api/client'
 import { caseKey, useAnalyse, useCase, useDeleteDocument, usePack } from '@/api/hooks'
 import { useLiveCase } from '@/api/live'
+import { useAuth } from '@/auth'
 import type { CaseEvent, Document } from '@/api/types'
 import { cn } from '@/lib/cn'
 import { timeAgo } from '@/lib/dates'
@@ -43,6 +45,7 @@ import { SummaryPanel } from './Panels/SummaryPanel'
 import { TrackerPanel } from './Panels/TrackerPanel'
 import { UnlockPanel } from './Panels/UnlockPanel'
 import { SectionDock, SectionList, type Section } from './SectionNav'
+import { ShareDialog } from './ShareDialog'
 import { usePaymentReturn } from './usePaymentReturn'
 
 const DOT: Record<string, string> = {
@@ -263,6 +266,8 @@ export function Dossier() {
   const [searchParams] = useSearchParams()
   const [active, setActive] = useState<string | null>(searchParams.get('section'))
   const [chatOpen, setChatOpen] = useState(false)
+  const [shareOpen, setShareOpen] = useState(false)
+  const { user } = useAuth()
   const prevStatus = useRef<string | undefined>(undefined)
 
   const current = (live.data ?? kase) ?? undefined
@@ -358,9 +363,18 @@ export function Dossier() {
       ? preferred
       : (sections[0]?.id ?? '')
 
+  const isOwner = !user || current.owner === user.uid
   const header = (
     <header className="flex items-center gap-3">
       <h1 className="min-w-0 flex-1 truncate text-xl font-extrabold tracking-tight">{title}</h1>
+      {isOwner ? (
+        <Button variant="outline" size="sm" onClick={() => setShareOpen(true)} aria-label={t('share.button')}>
+          <UsersRoundIcon aria-hidden />
+          <span className="hidden sm:inline">{t('share.button')}</span>
+        </Button>
+      ) : (
+        <span className="shrink-0 rounded-full bg-accent px-2.5 py-1 text-xs font-bold text-accent-foreground">{t('share.sharedWithYou')}</span>
+      )}
       <LanguageSwitcher />
       <ThemeToggle />
       <StatusLine status={status} />
@@ -492,6 +506,7 @@ export function Dossier() {
           </button>
 
           <SectionDock sections={sections} active={activeId} onSelect={setActive} lifted={chatOpen} />
+          {isOwner ? <ShareDialog kase={current} open={shareOpen} onClose={() => setShareOpen(false)} /> : null}
         </div>
 
         <aside className="hidden w-60 shrink-0 overflow-y-auto border-l border-rule px-3 py-6 lg:block">

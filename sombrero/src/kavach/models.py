@@ -207,6 +207,14 @@ class ReplyRequest(BaseModel):
     amount_paid: float | None = None
 
 
+class Helper(BaseModel):
+    """Someone the patient invited (caregiver, hospital billing desk, NGO) who can work on the case."""
+
+    uid: str
+    name: str  # as the helper gave it when joining
+    added_at: datetime
+
+
 class Case(BaseModel):
     id: str
     owner: str
@@ -222,6 +230,11 @@ class Case(BaseModel):
     assessment: Assessment | None = None
     discharge_check: DischargeCheck | None = None
     preauth_check: PreauthCheck | None = None
+    # Helpers the patient invited with a share code. `helper_ids` mirrors their uids so Firestore
+    # can query and the security rules can let them read the case.
+    helpers: list[Helper] = []
+    helper_ids: list[str] = []
+    share_code_hash: str | None = None  # the one live share code (sha256); a new code replaces it
     letter: Letter | None = None
     complainant: Complainant | None = None
     next_deadline: datetime | None = None
@@ -244,6 +257,7 @@ class CaseSummary(BaseModel):
     country: str
     language: str
     status: CaseStatus
+    role: str = "owner"  # owner | helper: whether this case was shared with the user
     progress: str | None
     insurer: str | None
     diagnosis: str | None
@@ -256,7 +270,7 @@ class CaseSummary(BaseModel):
     last_message_at: datetime | None = None
 
     @classmethod
-    def of(cls, case: "Case") -> "CaseSummary":
+    def of(cls, case: "Case", uid: str | None = None) -> "CaseSummary":
         f = case.facts
         last_message = None
         last_message_at = None
@@ -266,6 +280,7 @@ class CaseSummary(BaseModel):
                 last_message_at = e.at
                 break
         return cls(
+            role="helper" if uid and uid != case.owner else "owner",
             id=case.id,
             created_at=case.created_at,
             title=case.title,

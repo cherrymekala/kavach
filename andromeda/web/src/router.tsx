@@ -4,6 +4,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import { App } from './App'
 import { RequireAuth } from './auth'
 import { Workspace } from './screens/workspace/Workspace'
+import { JoinCase } from './screens/workspace/JoinCase'
 
 // Legacy case screens (kept for dev previews only). Screens live in src/screens/<name>/.
 const SignIn = lazy(() => import('./screens/auth/SignIn').then((m) => ({ default: m.SignIn })))
@@ -57,6 +58,8 @@ export const router = createBrowserRouter([
     children: [
       { path: '/app', element: <Workspace /> },
       { path: '/case/:caseId', element: <Workspace /> },
+      { path: '/join', element: <JoinCase /> },
+      { path: '/join/:code', element: <JoinCase /> },
       {
         path: '/case/:caseId/hearing',
         element: (

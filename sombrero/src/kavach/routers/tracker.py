@@ -6,7 +6,7 @@ from ..agents import escalation
 from ..auth import current_user
 from ..config import Settings, get_settings
 from ..models import Case, FiledRequest, ReplyRequest
-from ..tools import files, store
+from ..tools import access, files, store
 from . import whatsapp
 
 router = APIRouter(prefix="/tracker", tags=["tracker"])
@@ -65,7 +65,7 @@ def tick() -> dict:
 
 def _own(case_id: str, uid: str) -> Case:
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     return case
 
