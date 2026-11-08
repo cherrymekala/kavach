@@ -3,6 +3,8 @@ import { apiFetch } from './client'
 import type {
   AppealMail,
   AskAnswer,
+  ExpertOffer,
+  ExpertRequestBody,
   AskRequest,
   Case,
   CaseSummary,
@@ -13,6 +15,7 @@ import type {
   FilingPack,
   Insights,
   ShareCode,
+  InsurerScorecard,
   Letter,
   LetterRequest,
   NoteRequest,
@@ -175,6 +178,24 @@ export function useRedeemShare() {
   })
 }
 
+export function useExpertOffer(caseId: string) {
+  return useQuery({
+    queryKey: ['expert', caseId],
+    queryFn: () => apiFetch<ExpertOffer>(`/cases/${caseId}/expert`),
+  })
+}
+
+export function useRequestExpert(caseId: string) {
+  const qc = useQueryClient()
+  return useMutation({
+    mutationFn: (body: ExpertRequestBody) => apiFetch<Case>(`/cases/${caseId}/expert`, jsonBody(body)),
+    onSuccess: (c) => {
+      qc.setQueryData(caseKey(caseId), c)
+      qc.invalidateQueries({ queryKey: ['expert', caseId] })
+    },
+  })
+}
+
 export function useRecordReply(caseId: string) {
   const qc = useQueryClient()
   return useMutation({
@@ -227,6 +248,16 @@ export function useAsk(caseId: string) {
       qc.invalidateQueries({ queryKey: caseKey(caseId) })
       qc.invalidateQueries({ queryKey: ['cases'] })
     },
+  })
+}
+
+export function useScorecard(country: string, slug: string | undefined) {
+  return useQuery({
+    queryKey: ['scorecard', country, slug],
+    queryFn: () => apiFetch<InsurerScorecard>(`/insights/${country}/insurers/${slug}`),
+    enabled: Boolean(slug),
+    staleTime: Infinity,
+    retry: false,
   })
 }
 

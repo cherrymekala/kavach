@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from ..models import Insights
+from ..models import Insights, InsurerScorecard
 from ..tools import packs
 
 router = APIRouter(prefix="/insights", tags=["insights"])
@@ -17,3 +17,13 @@ def get_insights(country: str) -> Insights:
             404, f"Not enough published rulings for a {country.upper()} report yet."
         )
     return Insights.model_validate(report)
+
+
+@router.get("/{country}/insurers/{slug}", response_model=InsurerScorecard)
+def get_scorecard(country: str, slug: str) -> InsurerScorecard:
+    """Public: one insurer's scorecard (shareable link)."""
+    report = get_insights(country)
+    card = next((c for c in report.insurers if c.slug == slug), None)
+    if not card:
+        raise HTTPException(404, "No scorecard for that insurer: too few published awards.")
+    return card

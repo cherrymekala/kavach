@@ -134,6 +134,29 @@ export function Insights() {
         </details>
       </section>
 
+      {data.insurers?.length ? (
+        <section className="flex flex-col gap-3">
+          <h2 className="text-xl font-extrabold tracking-tight">{t('scorecard.listTitle')}</h2>
+          <p className="text-sm text-muted-foreground">{t('scorecard.listSub')}</p>
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {data.insurers.map((c) => (
+              <li key={c.slug}>
+                <Link
+                  to={`/insights/insurer/${c.slug}`}
+                  className="flex items-center justify-between gap-3 rounded-[20px] bg-card p-4 transition-colors hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring"
+                >
+                  <span className="min-w-0">
+                    <span className="block truncate font-bold">{c.key}</span>
+                    <span className="text-xs text-muted-foreground">{t('scorecard.awards', { count: c.total })}</span>
+                  </span>
+                  <span className="shrink-0 font-display text-xl font-bold tabular-nums">{c.won_pct}%</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ) : null}
+
       <p className="text-xs text-muted-foreground">
         {data.source}. {data.note}
       </p>

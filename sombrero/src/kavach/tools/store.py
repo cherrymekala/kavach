@@ -238,3 +238,16 @@ def delete_share_code(code_hash: str) -> None:
         _share_codes.pop(code_hash, None)
         return
     _db().collection("share_codes").document(code_hash).delete()
+
+
+# ── Expert requests: the triage queue for human advocates. ─────────────────────────────
+
+_expert_requests: dict[str, dict] = {}
+
+
+def save_expert_request(request) -> None:
+    data = request.model_dump(mode="json")
+    if _local():
+        _expert_requests[request.id] = data
+        return
+    _db().collection("expert_requests").document(request.id).set(data)

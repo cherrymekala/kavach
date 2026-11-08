@@ -33,6 +33,7 @@ export type PreauthCheck = components['schemas']['PreauthCheck']
 export type PreauthAction = components['schemas']['PreauthAction']
 export type InsightRow = components['schemas']['InsightRow']
 export type Insights = components['schemas']['Insights']
+export type InsurerScorecard = components['schemas']['InsurerScorecard']
 
 /** POST /cases/{id}/checkout (an untyped dict in the backend). */
 export type Checkout =
@@ -40,3 +41,5 @@ export type Checkout =
   | { provider: 'stripe'; url: string; amount: number; currency: string }
 export type Helper = components['schemas']['Helper']
 export type ShareCode = components['schemas']['ShareCode']
+export type ExpertOffer = components['schemas']['ExpertOffer']
+export type ExpertRequestBody = components['schemas']['ExpertRequestBody']

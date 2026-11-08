@@ -12,6 +12,7 @@ from .routers import (
     analysis,
     cases,
     documents,
+    expert,
     filing,
     hearing,
     insights,
@@ -55,6 +56,7 @@ app.add_middleware(
 )
 app.include_router(cases.router)
 app.include_router(documents.router)
+app.include_router(expert.router)
 app.include_router(analysis.router)
 app.include_router(filing.router)
 app.include_router(hearing.router)

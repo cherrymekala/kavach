@@ -110,3 +110,13 @@ def test_a_helper_can_tell_the_story_by_voice_but_strangers_cannot(as_user):
         voice_intake._authorise({"token": None}, case_id)  # dev-user is a stranger here
     as_user("dev-user").post("/share/redeem", json={"code": code, "name": "Asha"})
     assert voice_intake._authorise({"token": None}, case_id).id == case_id  # now a helper
+
+
+def test_a_helper_can_ask_for_a_human_expert_on_the_patients_behalf(as_user):
+    case_id, code = _shared_case(as_user)
+    assert as_user("helper").get(f"/cases/{case_id}/expert").status_code == 404
+    as_user("helper").post("/share/redeem", json={"code": code, "name": "Asha (NGO)"})
+    helper = as_user("helper")
+    assert helper.get(f"/cases/{case_id}/expert").status_code == 200
+    r = helper.post(f"/cases/{case_id}/expert", json={"consent": True, "phone": "+91 99999 00002"})
+    assert r.status_code == 200 and r.json()["expert_requested_at"]

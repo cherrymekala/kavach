@@ -160,6 +160,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cases/{case_id}/expert": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Offer */
+        get: operations["get_offer_cases__case_id__expert_get"];
+        put?: never;
+        /** Request Expert */
+        post: operations["request_expert_cases__case_id__expert_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/cases/{case_id}/analyse": {
         parameters: {
             query?: never;
@@ -297,6 +315,26 @@ export interface paths {
          * @description Public: how disputes that reached the dispute body ended, by ground, insurer and year.
          */
         get: operations["get_insights_insights__country__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/insights/{country}/insurers/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Scorecard
+         * @description Public: one insurer's scorecard (shareable link).
+         */
+        get: operations["get_scorecard_insights__country__insurers__slug__get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -734,6 +772,8 @@ export interface components {
             helper_ids: string[];
             /** Share Code Hash */
             share_code_hash?: string | null;
+            /** Expert Requested At */
+            expert_requested_at?: string | null;
             letter?: components["schemas"]["Letter"] | null;
             complainant?: components["schemas"]["Complainant"] | null;
             /** Next Deadline */
@@ -951,6 +991,32 @@ export interface components {
             /** Uploaded At */
             uploaded_at?: string | null;
         };
+        /** ExpertOffer */
+        ExpertOffer: {
+            /** Reason */
+            reason: string | null;
+            /** Requested At */
+            requested_at: string | null;
+            /** Shared */
+            shared: string[];
+        };
+        /**
+         * ExpertRequestBody
+         * @description The patient asks for a human advocate and agrees to share a summary of the case.
+         */
+        ExpertRequestBody: {
+            /** Consent */
+            consent: boolean;
+            /** Phone */
+            phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
+        };
         /** FiledRequest */
         FiledRequest: {
             /**
@@ -1061,8 +1127,49 @@ export interface components {
             by_insurer: components["schemas"]["InsightRow"][];
             /** By Year */
             by_year: components["schemas"]["InsightRow"][];
+            /**
+             * Insurers
+             * @default []
+             */
+            insurers: components["schemas"]["InsurerScorecard"][];
             /** Note */
             note: string;
+        };
+        /**
+         * InsurerScorecard
+         * @description One insurer's published Ombudsman awards: grounds, outcomes and trend.
+         */
+        InsurerScorecard: {
+            /** Key */
+            key: string;
+            /** Total */
+            total: number;
+            /** Allowed */
+            allowed: number;
+            /** Partly Allowed */
+            partly_allowed: number;
+            /** Dismissed */
+            dismissed: number;
+            /** Won Pct */
+            won_pct: number;
+            /** Slug */
+            slug: string;
+            /** Now Known As */
+            now_known_as?: string | null;
+            /** Period */
+            period?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Grounds
+             * @default []
+             */
+            grounds: components["schemas"]["ScorecardGround"][];
+            /**
+             * By Year
+             * @default []
+             */
+            by_year: components["schemas"]["InsightRow"][];
         };
         /** LadderStep */
         LadderStep: {
@@ -1227,6 +1334,25 @@ export interface components {
             fix: string;
             /** Sources */
             sources: components["schemas"]["Source"][];
+        };
+        /** ScorecardGround */
+        ScorecardGround: {
+            /** Key */
+            key: string;
+            /** Total */
+            total: number;
+            /** Allowed */
+            allowed: number;
+            /** Partly Allowed */
+            partly_allowed: number;
+            /** Dismissed */
+            dismissed: number;
+            /** Won Pct */
+            won_pct: number;
+            /** Share Pct */
+            share_pct: number;
+            /** Everyone Won Pct */
+            everyone_won_pct?: number | null;
         };
         /** SendAppealRequest */
         SendAppealRequest: {
@@ -1628,6 +1754,76 @@ export interface operations {
             };
         };
     };
+    get_offer_cases__case_id__expert_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExpertOffer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_expert_cases__case_id__expert_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExpertRequestBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Case"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
     analyse_cases__case_id__analyse_post: {
         parameters: {
             query?: never;
@@ -1891,6 +2087,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Insights"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_scorecard_insights__country__insurers__slug__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                country: string;
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsurerScorecard"];
                 };
             };
             /** @description Validation Error */

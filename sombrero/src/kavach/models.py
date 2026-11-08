@@ -235,6 +235,7 @@ class Case(BaseModel):
     helpers: list[Helper] = []
     helper_ids: list[str] = []
     share_code_hash: str | None = None  # the one live share code (sha256); a new code replaces it
+    expert_requested_at: datetime | None = None  # the patient asked for a human advocate
     letter: Letter | None = None
     complainant: Complainant | None = None
     next_deadline: datetime | None = None
@@ -332,6 +333,21 @@ class InsightRow(BaseModel):
     won_pct: int  # allowed + partly allowed
 
 
+class ScorecardGround(InsightRow):
+    share_pct: int  # this ground's share of the insurer's awards
+    everyone_won_pct: int | None = None  # the same ground across all insurers, for comparison
+
+
+class InsurerScorecard(InsightRow):
+    """One insurer's published Ombudsman awards: grounds, outcomes and trend."""
+
+    slug: str
+    now_known_as: str | None = None  # renamed since the awards (e.g. Reliance General)
+    period: dict | None = None
+    grounds: list[ScorecardGround] = []
+    by_year: list[InsightRow] = []
+
+
 class Insights(BaseModel):
     """Public rejection-pattern report built from published dispute-body rulings."""
 
@@ -342,6 +358,7 @@ class Insights(BaseModel):
     by_category: list[InsightRow]
     by_insurer: list[InsightRow]
     by_year: list[InsightRow]
+    insurers: list[InsurerScorecard] = []
     note: str
 
 
@@ -359,6 +376,37 @@ class AskRequest(BaseModel):
 
 class AskAnswer(BaseModel):
     answer: str
+
+
+class ExpertRequestBody(BaseModel):
+    """The patient asks for a human advocate and agrees to share a summary of the case."""
+
+    consent: bool
+    phone: str | None = None
+    email: str | None = None
+    note: str = ""
+
+
+class ExpertOffer(BaseModel):
+    reason: str | None  # weak | high_value | None (still available, just not suggested)
+    requested_at: datetime | None
+    shared: list[str]  # what the team will see, shown before the patient consents
+
+
+class ExpertRequest(BaseModel):
+    """One referral in the triage queue: a case summary, never the patient's documents."""
+
+    id: str
+    case_id: str
+    owner: str
+    created_at: datetime
+    country: str
+    reason: str | None
+    summary: dict
+    phone: str | None = None
+    email: str | None = None
+    note: str = ""
+    status: str = "open"  # open | matched | closed
 
 
 class CreateCase(BaseModel):

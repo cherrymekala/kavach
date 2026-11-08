@@ -225,5 +225,6 @@
       "source": "https://www.bnm.gov.my/en/-/prudential-bsn-takaful-berhad",
       "checked": "2026-11-06"
     }
-  ]
+  ],
+  "expert_threshold": 50000
 }
