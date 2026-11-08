@@ -84,3 +84,68 @@ def test_failed_coaching_tells_the_browser_instead_of_hanging(monkeypatch):
     asyncio.run(router._coach(ws, _case("IN"), turns, "When were you diagnosed?", "In July 2026."))
     assert ws.sent == [{"coach_error": {"answer": "In July 2026."}}]
     assert turns.scores == []
+
+
+def _live_case() -> Case:
+    import uuid
+
+    from kavach.tools import store
+
+    case = _case("IN").model_copy(update={"id": uuid.uuid4().hex, "owner": "dev-user"})
+    store.save_case(case)
+    return case
+
+
+def test_a_live_failure_before_any_answer_tells_the_patient(monkeypatch):
+    from kavach.routers import hearing as relay
+
+    case = _live_case()
+
+    class Exhausted:
+        class aio:
+            class live:
+                @staticmethod
+                def connect(**kw):
+                    raise RuntimeError("1011 Resource exhausted")
+
+    monkeypatch.setattr(hearing, "client", lambda: Exhausted)
+    with TestClient(app).websocket_connect(f"/cases/{case.id}/hearing") as ws:
+        ws.send_json({"token": None})
+        assert ws.receive_json() == {"error": relay.BUSY}
+
+
+def test_a_live_failure_mid_rehearsal_still_debriefs_and_logs_it(monkeypatch):
+    from kavach.routers import hearing as relay
+    from kavach.tools import store
+
+    case = _live_case()
+
+    class Session:
+        async def send_client_content(self, **kw):
+            pass
+
+    class Connection:
+        async def __aenter__(self):
+            return Session()
+
+        async def __aexit__(self, *exc):
+            return False
+
+    class Client:
+        class aio:
+            class live:
+                @staticmethod
+                def connect(**kw):
+                    return Connection()
+
+    async def dies_after_one_answer(ws, session, case, turns):
+        turns.answers = 1
+        raise RuntimeError("1011 Resource exhausted")
+
+    monkeypatch.setattr(hearing, "client", lambda: Client)
+    monkeypatch.setattr(relay, "_from_gemini", dies_after_one_answer)
+    with TestClient(app).websocket_connect(f"/cases/{case.id}/hearing") as ws:
+        ws.send_json({"token": None})
+        assert ws.receive_json() == {"error": relay.BUSY}
+        assert set(ws.receive_json()["done"]) == {"summary", "top_tips", "average_score"}
+    assert store.load_case(case.id).events[-1].kind == "rehearsal"
