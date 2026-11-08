@@ -670,6 +670,7 @@ export interface components {
             facts?: components["schemas"]["CaseFacts"] | null;
             assessment?: components["schemas"]["Assessment"] | null;
             discharge_check?: components["schemas"]["DischargeCheck"] | null;
+            preauth_check?: components["schemas"]["PreauthCheck"] | null;
             letter?: components["schemas"]["Letter"] | null;
             complainant?: components["schemas"]["Complainant"] | null;
             /** Next Deadline */
@@ -751,7 +752,7 @@ export interface components {
          * CaseKind
          * @enum {string}
          */
-        CaseKind: "dispute" | "pre_discharge";
+        CaseKind: "dispute" | "pre_discharge" | "preauth";
         /**
          * CaseStatus
          * @enum {string}
@@ -1040,6 +1041,63 @@ export interface components {
             price_currency?: string | null;
             /** Payment Provider */
             payment_provider?: string | null;
+        };
+        /** PreauthAction */
+        PreauthAction: {
+            /** Who */
+            who: string;
+            /** Step */
+            step: string;
+            /**
+             * Why
+             * @default
+             */
+            why: string;
+            /**
+             * Sources
+             * @default []
+             */
+            sources: components["schemas"]["Source"][];
+        };
+        /**
+         * PreauthCheck
+         * @description Cashless was refused or queried while the patient is in hospital: what to do in the next hours.
+         */
+        PreauthCheck: {
+            /** Status */
+            status: string;
+            /** Summary */
+            summary: string;
+            /**
+             * Actions
+             * @default []
+             */
+            actions: components["schemas"]["PreauthAction"][];
+            /**
+             * Doctor Note
+             * @default
+             */
+            doctor_note: string;
+            /**
+             * Request
+             * @default
+             */
+            request: string;
+            /**
+             * Fallback
+             * @default
+             */
+            fallback: string;
+            /**
+             * Rules
+             * @default []
+             */
+            rules: components["schemas"]["Source"][];
+            /**
+             * Disclaimer
+             * @default Kavach prepares documents from your files and public rules to help you raise a dispute. It is not legal advice. Check every detail before you sign or send anything.
+             */
+            disclaimer: string;
         };
         /** RazorpayPaid */
         RazorpayPaid: {

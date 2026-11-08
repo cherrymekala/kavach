@@ -60,6 +60,16 @@ def find_sections(country: str, question: str) -> list[dict]:
     return [{"ref": r, "title": leaves[r].get("title"), "text": leaves[r]["text"]} for r in refs]
 
 
+def sections_by_ref(country: str, refs: list[str]) -> list[dict]:
+    """Specific sections by ref, for rules that always apply to a flow (e.g. cashless time limits)."""
+    leaves = {n["ref"]: n for n in _leaves(regulation_outline(country))}
+    return [
+        {"ref": r, "title": leaves[r].get("title"), "text": leaves[r]["text"]}
+        for r in refs
+        if r in leaves
+    ]
+
+
 def months_of_cover(facts) -> int | None:
     if not (facts.policy_start and facts.admission_date):
         return None

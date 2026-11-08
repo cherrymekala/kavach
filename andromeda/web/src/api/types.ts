@@ -29,6 +29,8 @@ export type TitleRequest = components['schemas']['TitleRequest']
 export type CaseKind = components['schemas']['CaseKind']
 export type Risk = components['schemas']['Risk']
 export type DischargeCheck = components['schemas']['DischargeCheck']
+export type PreauthCheck = components['schemas']['PreauthCheck']
+export type PreauthAction = components['schemas']['PreauthAction']
 export type InsightRow = components['schemas']['InsightRow']
 export type Insights = components['schemas']['Insights']
 

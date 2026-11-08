@@ -7,6 +7,13 @@ import { Button, Input } from '@/components'
 import { apiFetch } from '@/api/client'
 import { caseKey, useCreateCase } from '@/api/hooks'
 import type { CaseKind, CreateCase } from '@/api/types'
+
+// Heading and lead for each kind of case the patient can start.
+const HERO: Record<string, [string, string]> = {
+  dispute: ['workspace.composer.heroTitle', 'workspace.composer.heroSub'],
+  pre_discharge: ['discharge.heroTitle', 'discharge.heroSub'],
+  preauth: ['preauth.heroTitle', 'preauth.heroSub'],
+}
 import { useAuth } from '@/auth'
 import { COUNTRIES, countryFromPhone, type CountryCode } from '@/lib/country'
 import { cn } from '@/lib/cn'
@@ -74,15 +81,15 @@ export function NewClaim() {
     <div className="flex w-full flex-col items-center gap-6 text-center">
       <div>
         <h2 className="text-2xl font-bold tracking-tight">
-          {t(kind === 'dispute' ? 'workspace.composer.heroTitle' : 'discharge.heroTitle')}
+          {t(HERO[kind][0])}
         </h2>
         <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
-          {t(kind === 'dispute' ? 'workspace.composer.heroSub' : 'discharge.heroSub')}
+          {t(HERO[kind][1])}
         </p>
       </div>
 
-      <div className="flex items-center gap-1 rounded-full border border-line bg-surface p-0.5" role="group" aria-label={t('discharge.modeLabel')}>
-        {(['dispute', 'pre_discharge'] as const).map((k) => (
+      <div className="flex flex-wrap items-center justify-center gap-1 rounded-[22px] border border-line bg-surface p-0.5" role="group" aria-label={t('discharge.modeLabel')}>
+        {(['dispute', 'preauth', 'pre_discharge'] as const).map((k) => (
           <button
             key={k}
             type="button"
@@ -93,7 +100,7 @@ export function NewClaim() {
               kind === k ? 'bg-primary text-primary-foreground' : 'text-muted-foreground hover:text-foreground',
             )}
           >
-            {t(`discharge.mode.${k}`)}
+            {t(k === 'preauth' ? 'preauth.mode' : `discharge.mode.${k}`)}
           </button>
         ))}
       </div>

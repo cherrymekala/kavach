@@ -1,9 +1,10 @@
 """Score the intake agent against whirlpool/cases/*/case.json.
 
 Run from the repo root with sombrero's venv:
-    sombrero/.venv/bin/python whirlpool/run_evals.py [--full | --discharge] [case_id ...]
+    sombrero/.venv/bin/python whirlpool/run_evals.py [--full | --discharge | --preauth] [case_id ...]
 --full runs the whole pipeline (needs Vertex AI Search) and scores the strength verdict.
 --discharge runs the pre-discharge check on whirlpool/discharge/ and scores the risks found.
+--preauth runs the cashless-refusal plan on whirlpool/preauth/ and scores status, steps and rules.
 Needs magellan/sources (run magellan/ingest/fetch_sources.sh) and GOOGLE_API_KEY in .env.
 """
 
@@ -15,12 +16,13 @@ from pathlib import Path
 
 from google.genai.errors import ClientError
 
-from kavach.agents import discharge, intake, orchestrator
+from kavach.agents import discharge, intake, orchestrator, preauth
 from kavach.models import Document
 
 ROOT = Path(__file__).resolve().parents[1]
 CASES = Path(__file__).parent / "cases"
 DISCHARGE = Path(__file__).parent / "discharge"
+PREAUTH = Path(__file__).parent / "preauth"
 FACT_FIELDS = [
     "insurer",
     "tpa",
@@ -145,16 +147,49 @@ def run_discharge(case_dir: Path) -> bool:
     return good
 
 
+def run_preauth(case_dir: Path) -> bool:
+    """Cashless-refusal plan; passes on the expected status, a step for each expected actor and
+    every expected rule verified (the checker found its quote)."""
+    case = json.loads((case_dir / "case.json").read_text())
+    docs = [
+        Document(id=str(i), filename=n, gcs_uri=u)
+        for i, (n, u) in enumerate(zip(_names(case), _files(case_dir, case)))
+    ]
+    _, plan = preauth.check(docs, case["country"])
+    exp = case["expected"]
+    who = {a.who for a in plan.actions}
+    refs = {r.ref for r in plan.rules} | {s.ref for a in plan.actions for s in a.sources}
+    good = (
+        plan.status == exp["status"]
+        and all(w in who for w in exp.get("who", []))
+        and all(r in refs for r in exp.get("rule_refs", []))
+    )
+    print(f"\n{case['id']}: {'✓' if good else '✗'} {plan.status}")
+    print(f"  summary: {plan.summary}")
+    for a in plan.actions:
+        print(f"  [{a.who}] {a.step}" + (f"  ({', '.join(s.ref for s in a.sources)})" if a.sources else ""))
+    print(f"  rules: {[r.ref for r in plan.rules]}")
+    print(f"  fallback: {plan.fallback}")
+    print(f"  doctor_note: {plan.doctor_note[:400]}")
+    print(f"  request: {plan.request[:400]}")
+    return good
+
+
 def main() -> None:
     args = sys.argv[1:]
     full = "--full" in args
     pre = "--discharge" in args
+    cashless = "--preauth" in args
     wanted = {x for x in args if not x.startswith("--")}
     dirs = [
         d
-        for d in sorted((DISCHARGE if pre else CASES).iterdir())
+        for d in sorted((PREAUTH if cashless else DISCHARGE if pre else CASES).iterdir())
         if (d / "case.json").exists() and (not wanted or d.name in wanted)
     ]
+    if cashless:
+        right = sum(run_preauth(d) for d in dirs)
+        print(f"\nCashless plans: {right}/{len(dirs)}")
+        return
     if pre:
         right = sum(run_discharge(d) for d in dirs)
         print(f"\nDischarge checks: {right}/{len(dirs)}")

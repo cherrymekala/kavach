@@ -12,7 +12,7 @@ from datetime import UTC, datetime
 from ..config import get_settings
 from ..models import Assessment, CaseEvent, CaseFacts, CaseKind, CaseStatus, DocType, Document
 from ..tools import rulings, store
-from . import checker, code_decoder, discharge, filing, intake, policy_rules, strategist
+from . import checker, code_decoder, discharge, filing, intake, policy_rules, preauth, strategist
 
 log = logging.getLogger("kavach.orchestrator")
 
@@ -79,6 +79,15 @@ def run_case(case_id: str) -> None:
         store.save_case(case)
 
     try:
+        if case.kind == CaseKind.PREAUTH:
+            case.facts, case.preauth_check = preauth.check(case.documents, case.country, progress)
+            if not case.title or case.title_auto:
+                where = case.facts.hospital or case.facts.diagnosis or ""
+                case.title = f"Cashless refused · {where}".rstrip(" ·")
+                case.title_auto = False
+            case.status = CaseStatus.READY
+            progress(None)
+            return
         if case.kind == CaseKind.PRE_DISCHARGE:
             case.facts, case.discharge_check = discharge.check(
                 case.documents, case.country, progress
@@ -104,7 +113,7 @@ def run_case(case_id: str) -> None:
 
         case.status = CaseStatus.READY
         progress(None)
-    except (NotARejection, discharge.NotEnoughDocuments) as exc:
+    except (NotARejection, discharge.NotEnoughDocuments, preauth.NotEnoughDocuments) as exc:
         case.status = CaseStatus.COLLECTING
         case.progress = str(exc)
         case.events.append(CaseEvent(at=datetime.now(UTC), kind="analysis_failed", text=str(exc)))
