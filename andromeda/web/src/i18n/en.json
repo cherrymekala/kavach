@@ -531,6 +531,47 @@
     "confirmingSub": "This takes a few seconds. Keep this page open — the case unlocks the moment Stripe confirms.",
     "downloadLocked": "Included in the appeal pack. Unlock it above to download."
   },
+  "preauth": {
+    "mode": "Cashless refused in hospital",
+    "heroTitle": "Cashless refused? Act in the next hour",
+    "heroSub": "Upload the refusal or query from the insurer or TPA (a photo is fine), and your policy if you have it. We'll tell you who should do what, right now.",
+    "title": "Cashless refused",
+    "status": {
+      "denied": "Cashless was refused",
+      "query": "The insurer has a query",
+      "partial": "Approved for less than asked"
+    },
+    "doNow": "Do this now",
+    "who": {
+      "hospital": "Insurance desk",
+      "doctor": "Doctor",
+      "you": "You"
+    },
+    "rules": "Rules the insurer must follow",
+    "doctorNote": "Note for your doctor",
+    "doctorNoteSub": "Show this to the treating doctor. They should check it, change anything that isn't right, and sign it.",
+    "request": "Request to reconsider",
+    "requestSub": "Send this to the insurer or TPA, or ask the hospital desk to send it.",
+    "fallback": "If cashless is still refused",
+    "steps": [
+      {
+        "label": "Reading your documents",
+        "detail": "Finding the refusal and the reason given"
+      },
+      {
+        "label": "Finding the rules that apply",
+        "detail": "Time limits for cashless decisions and the rules behind the reason"
+      },
+      {
+        "label": "Planning your next steps",
+        "detail": "Who should do what in the next few hours"
+      },
+      {
+        "label": "Checking every source",
+        "detail": "Making sure every quote really appears in its source"
+      }
+    ]
+  },
   "voice": {
     "start": "Tell us by voice",
     "title": "Tell us what happened",

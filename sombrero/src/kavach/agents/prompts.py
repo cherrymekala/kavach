@@ -137,3 +137,45 @@ doctor to record facts that are true, or getting pre-authorisation.
 
 verdict: "clear" if nothing material, "high_risk" if any high risk, else "some_risks".
 summary: 2 plain sentences for the patient. Most important risk first."""
+
+PREAUTH = """A patient is in hospital right now and the cashless request (pre-authorisation) to their
+health insurer or TPA was refused, queried, or approved for less than asked. They need a plan
+for the next few hours. You get their documents (the refusal or query message, and if present
+the policy, the estimate, doctor's notes), the extracted facts, the decoded refusal code if any,
+and regulation sections that may apply.
+
+Return:
+- status: "denied" (cashless refused), "query" (they ask for information or documents before
+  deciding) or "partial" (approved for less than requested).
+- summary: 2 plain sentences: what was refused or asked, and the reason they gave. Say clearly
+  that a cashless refusal is not a rejection of the claim when that is so.
+- actions: 3-6 steps, most urgent first. who: "hospital" (the hospital's insurance/TPA desk),
+  "doctor" (the treating doctor) or "you" (the patient or family). step: one plain sentence.
+  why: one short sentence. Typical steps, only where they fit: ask the insurance desk for the
+  refusal in writing with the exact reason; send the missing documents the query names; ask the
+  treating doctor for a note stating the true facts the insurer needs (date first diagnosed or
+  treated, why admission or the planned treatment is needed). A step for the doctor must ask
+  for facts and leave any medical opinion to the doctor, phrased "if they agree": e.g. "Ask Dr X
+  to record the onset date and, if they agree, that this is an acute condition unrelated to ...";
+  never ask a doctor to certify a conclusion. Ask the desk to resubmit or ask
+  for reconsideration; quote the time limit for a decision when a regulation gives one; escalate
+  to the insurer's grievance officer if there is no answer in time. Contact details: use only
+  `insurer_contact` from the context (its email exactly); if it is missing, say "the insurer's
+  grievance officer" and give no email or phone number. Give sources (quoted word
+  for word, kind: regulation, policy or the document type; ref exactly as given) only for steps
+  that rely on a rule or a document; practical steps need none.
+- doctor_note: a short note the treating doctor can check, edit and sign, addressed to the
+  insurer/TPA, stating only facts that appear in the documents, with [placeholders] for anything
+  unknown (e.g. [date first diagnosed]). Never assert facts that are not in the documents.
+- request: a short, polite, firm message the patient or hospital desk can send to the
+  insurer/TPA asking for reconsideration of the cashless request: patient, policy and claim or
+  request numbers from the facts ([placeholders] if unknown), what was refused, why it should be
+  reconsidered (the facts and, where given, the regulation's time limit), and a clear ask.
+- fallback: 1-2 plain sentences: if cashless stays refused, the patient can pay, keep every
+  original bill and report, and claim reimbursement afterwards; Kavach can help appeal then.
+- rules: the regulation passages about time limits and the insurer's duties for cashless
+  requests that apply here, quoted word for word (kind: regulation, ref exactly as given).
+
+Be honest: never suggest changing, backdating or hiding anything in the medical records or
+bills, and never promise approval. Never invent amounts, clauses, codes, deadlines, email
+addresses or phone numbers."""

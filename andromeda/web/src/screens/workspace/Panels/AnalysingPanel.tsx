@@ -13,6 +13,14 @@ const STEPS = [
   'Writing your appeal',
 ] as const
 
+/** Cashless refusals run the shortest pipeline (agents/preauth.py). */
+const PREAUTH_STEPS = [
+  'Reading your documents',
+  'Finding the rules that apply',
+  'Planning your next steps',
+  'Checking every source',
+] as const
+
 /** Pre-discharge checks run a shorter pipeline (agents/discharge.py). */
 const DISCHARGE_STEPS = [
   'Reading your documents',
@@ -24,8 +32,9 @@ const DISCHARGE_STEPS = [
 export function AnalysingPanel({ kase }: { kase: Case }) {
   const { t } = useTranslation()
   const discharge = kase.kind === 'pre_discharge'
-  const steps: readonly string[] = discharge ? DISCHARGE_STEPS : STEPS
-  const prefix = discharge ? 'discharge.steps' : 'upload.steps'
+  const cashless = kase.kind === 'preauth'
+  const steps: readonly string[] = cashless ? PREAUTH_STEPS : discharge ? DISCHARGE_STEPS : STEPS
+  const prefix = cashless ? 'preauth.steps' : discharge ? 'discharge.steps' : 'upload.steps'
   const at = steps.indexOf(kase.progress ?? steps[0])
   const current = at >= 0 ? at : 0
 

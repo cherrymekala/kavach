@@ -17,6 +17,7 @@ class DocType(StrEnum):
 class CaseKind(StrEnum):
     DISPUTE = "dispute"  # the claim was rejected or cut
     PRE_DISCHARGE = "pre_discharge"  # still in hospital: check the claim before it is filed
+    PREAUTH = "preauth"  # still in hospital: the cashless (pre-authorisation) request was refused
 
 
 class CaseStatus(StrEnum):
@@ -137,6 +138,26 @@ class DischargeCheck(BaseModel):
     disclaimer: str = DISCLAIMER
 
 
+class PreauthAction(BaseModel):
+    who: str  # you | hospital | doctor: who has to act
+    step: str  # what to do, one plain sentence
+    why: str = ""
+    sources: list[Source] = []  # a rule or document behind the step, when there is one
+
+
+class PreauthCheck(BaseModel):
+    """Cashless was refused or queried while the patient is in hospital: what to do in the next hours."""
+
+    status: str  # denied | query | partial
+    summary: str  # what was refused and why, in plain words
+    actions: list[PreauthAction] = []  # most urgent first
+    doctor_note: str = ""  # facts-only note for the treating doctor to check, edit and sign
+    request: str = ""  # reconsideration message to the insurer/TPA
+    fallback: str = ""  # if cashless stays refused: pay, keep bills, claim reimbursement
+    rules: list[Source] = []  # time limits and duties that apply, quoted and verified
+    disclaimer: str = DISCLAIMER
+
+
 class Letter(BaseModel):
     subject: str
     english: str
@@ -200,6 +221,7 @@ class Case(BaseModel):
     facts: CaseFacts | None = None
     assessment: Assessment | None = None
     discharge_check: DischargeCheck | None = None
+    preauth_check: PreauthCheck | None = None
     letter: Letter | None = None
     complainant: Complainant | None = None
     next_deadline: datetime | None = None

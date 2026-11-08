@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useQueryClient } from '@tanstack/react-query'
 import {
   ActivityIcon,
+  AlarmClockIcon,
   AlertTriangleIcon,
   ClipboardListIcon,
   DownloadIcon,
@@ -34,6 +35,7 @@ import { AnalysingPanel } from './Panels/AnalysingPanel'
 import { ChancesPanel } from './Panels/ChancesPanel'
 import { ConfirmingPayment } from './Panels/ConfirmingPayment'
 import { DischargePanel } from './Panels/DischargePanel'
+import { PreauthPanel } from './Panels/PreauthPanel'
 import { FilingPanel } from './Panels/FilingPanel'
 import { LetterPanel } from './Panels/LetterPanel'
 import { OutcomePanel } from './Panels/OutcomePanel'
@@ -319,7 +321,8 @@ export function Dossier() {
       )
     ) : null
   const discharge = current.kind === 'pre_discharge'
-  const hasReport = Boolean(current.facts) && !discharge
+  // A cashless refusal has its own panel; the dispute summary would call it a rejected claim.
+  const hasReport = Boolean(current.facts) && !discharge && current.kind !== 'preauth'
   const failed = status === 'collecting' && Boolean(current.progress)
   const qa = (current.events ?? []).filter((e) => e.kind === 'message' || e.kind === 'ask')
   const empty = status === 'collecting' && docs.length === 0 && qa.length === 0 && !failed
@@ -327,6 +330,7 @@ export function Dossier() {
   const sections: Section[] = []
   if (docs.length > 0) sections.push({ id: 'files', label: t('workspace.files'), icon: PaperclipIcon })
   if (status === 'analysing') sections.push({ id: 'analysing', label: t('upload.analysingHeading'), icon: LoaderCircleIcon })
+  if (current.preauth_check) sections.push({ id: 'preauth', label: t('preauth.title'), icon: AlarmClockIcon })
   if (current.discharge_check) sections.push({ id: 'discharge', label: t('discharge.title'), icon: StethoscopeIcon })
   if (hasReport) sections.push({ id: 'summary', label: t('summary.title'), icon: FileTextIcon })
   if (hasAssessment) sections.push({ id: 'chances', label: t('chances.title'), icon: GaugeIcon })
@@ -337,7 +341,9 @@ export function Dossier() {
   if (status === 'resolved') sections.push({ id: 'outcome', label: t('outcome.title'), icon: TrophyIcon })
   if (qa.length > 0) sections.push({ id: 'conversation', label: t('workspace.conversation'), icon: MessagesSquareIcon })
 
-  const preferred = current.discharge_check
+  const preferred = current.preauth_check
+    ? 'preauth'
+    : current.discharge_check
     ? 'discharge'
     : status === 'resolved'
       ? 'outcome'
@@ -409,6 +415,8 @@ export function Dossier() {
         )
       case 'analysing':
         return <AnalysingPanel kase={current} />
+      case 'preauth':
+        return current.preauth_check ? <PreauthPanel check={current.preauth_check} /> : null
       case 'discharge':
         return current.discharge_check ? <DischargePanel check={current.discharge_check} /> : null
       case 'summary':

@@ -1,0 +1,18 @@
+{
+  "id": "in_p01_appendix_star",
+  "kind": "preauth",
+  "country": "IN",
+  "synthetic": true,
+  "note": "Cashless refused as 'suspected pre-existing disease' for acute appendicitis, citing one episode of dyspepsia in 2023 treated with antacids. Policy in force 14 months. Acute appendicitis is an acute condition; the IRDAI PED definition needs diagnosis or treatment of the same condition within 36 months before the policy. The insurer must decide cashless requests within one hour (Health MC 2024, Ch. I, para 15).",
+  "documents": [
+    "preauth_refusal.txt",
+    "policy_schedule.txt",
+    "admission_note.txt",
+    {"policy.pdf": "magellan/sources/policies/Star_Family_Health_Optima_V21.pdf"}
+  ],
+  "expected": {
+    "status": "denied",
+    "who": ["doctor"],
+    "rule_refs": ["Health Master Circular 2024, Ch. I, para 15"]
+  }
+}
