@@ -7,7 +7,7 @@ main = "src/index.js"
 compatibility_date = "2026-10-01"
 
 # Email Routing rule, reconciled on deploy. Subdomains take literal addresses only (no catch-all).
-addresses = ["appeals@kavach.agentiny.me"]
+addresses = ["appeals@kavach.reimaginy.tech"]
 
 [vars]
 KAVACH_INBOUND_URL = "https://sombrero-urb5ttky3q-el.a.run.app/mail/inbound"

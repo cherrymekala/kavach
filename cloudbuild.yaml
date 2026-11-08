@@ -14,11 +14,11 @@ substitutions:
   _WHATSAPP_VERIFY_TOKEN: kavach-verify
   _WHATSAPP_PHONE_NUMBER_ID: ""
   _WHATSAPP_TEMPLATE: ""
-  # Email (Cloudflare Email Service): kavach.agentiny.me is onboarded for sending; replies to
-  # _MAIL_REPLY_TO are routed to the pinwheel/ Worker. Empty account id = dry run.
-  _MAIL_FROM: "Kavach Appeals <appeals@kavach.agentiny.me>"
-  _MAIL_REPLY_TO: appeals@kavach.agentiny.me
-  _CLOUDFLARE_ACCOUNT_ID: ""
+  # Email (Cloudflare Email Service): kavach.reimaginy.tech is onboarded for sending; replies to
+  # _MAIL_REPLY_TO are routed to the pinwheel/ Worker. No sending token = dry run.
+  _MAIL_FROM: "Kavach Appeals <appeals@kavach.reimaginy.tech>"
+  _MAIL_REPLY_TO: appeals@kavach.reimaginy.tech
+  _CLOUDFLARE_ACCOUNT_ID: 25440e45ad090dc826ef2f8a7a4f0a25
 options:
   # Required when the trigger runs as a user-managed service account.
   logging: CLOUD_LOGGING_ONLY
