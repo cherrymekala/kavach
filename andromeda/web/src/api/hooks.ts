@@ -12,6 +12,7 @@ import type {
   FiledRequest,
   FilingPack,
   Insights,
+  InsurerScorecard,
   Letter,
   LetterRequest,
   NoteRequest,
@@ -198,6 +199,16 @@ export function useAsk(caseId: string) {
       qc.invalidateQueries({ queryKey: caseKey(caseId) })
       qc.invalidateQueries({ queryKey: ['cases'] })
     },
+  })
+}
+
+export function useScorecard(country: string, slug: string | undefined) {
+  return useQuery({
+    queryKey: ['scorecard', country, slug],
+    queryFn: () => apiFetch<InsurerScorecard>(`/insights/${country}/insurers/${slug}`),
+    enabled: Boolean(slug),
+    staleTime: Infinity,
+    retry: false,
   })
 }
 

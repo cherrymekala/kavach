@@ -16,6 +16,7 @@ const Hearing = lazy(() => import('./screens/hearing/Hearing').then((m) => ({ de
 const Tracker = lazy(() => import('./screens/tracker/Tracker').then((m) => ({ default: m.Tracker })))
 const Outcome = lazy(() => import('./screens/outcome/Outcome').then((m) => ({ default: m.Outcome })))
 const Insights = lazy(() => import('./screens/insights/Insights').then((m) => ({ default: m.Insights })))
+const Scorecard = lazy(() => import('./screens/insights/Scorecard').then((m) => ({ default: m.Scorecard })))
 const DischargePreview = lazy(() => import('./dev/DischargePreview').then((m) => ({ default: m.DischargePreview })))
 const UnlockPreview = lazy(() => import('./dev/UnlockPreview').then((m) => ({ default: m.UnlockPreview })))
 const WorkspacePreview = lazy(() => import('./screens/workspace/Workspace').then((m) => ({ default: m.Workspace })))
@@ -50,7 +51,7 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
-    children: [{ index: true, element: <SignIn /> }, { path: 'insights', element: <Insights /> }, ...devRoutes],
+    children: [{ index: true, element: <SignIn /> }, { path: 'insights', element: <Insights /> }, { path: 'insights/insurer/:slug', element: <Scorecard /> }, ...devRoutes],
   },
   {
     element: <RequireAuth />,
