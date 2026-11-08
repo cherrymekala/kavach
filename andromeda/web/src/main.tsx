@@ -24,6 +24,7 @@ const queryClient = new QueryClient({
 if (import.meta.env.DEV) {
   // Seed the design-preview case (see router.tsx /preview routes).
   const demo = await import('./dev/demo-case.json')
+  const cashless = await import('./dev/demo-preauth.json')
   const docs = demo.default.documents
   const variants = {
     demo: demo.default,
@@ -50,6 +51,18 @@ if (import.meta.env.DEV) {
       events: [],
       documents: docs.map((d, i) => ({ ...d, quality: i === 0 ? 'blurry' : i === 1 ? 'cut_off' : null })),
     },
+    'demo-preauth': {
+      ...demo.default,
+      kind: 'preauth',
+      title: 'Cashless refused · Lotus Multispeciality Hospital',
+      status: 'ready',
+      facts: cashless.default.facts,
+      preauth_check: cashless.default.check,
+      assessment: null,
+      letter: null,
+      events: [],
+    },
+    'demo-preauth-run': { ...demo.default, kind: 'preauth', status: 'analysing', progress: 'Planning your next steps', facts: null, assessment: null, letter: null, events: [] },
     'demo-run': { ...demo.default, status: 'analysing', progress: 'Finding the rules that apply', facts: null, assessment: null, letter: null, events: [], documents: docs },
   }
   const packs = { IN: await import('./dev/pack-IN.json'), SG: await import('./dev/pack-SG.json') }

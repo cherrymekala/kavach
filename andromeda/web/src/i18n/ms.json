@@ -530,5 +530,46 @@
     "signedInAs": "Log masuk sebagai",
     "placeholder": "Akaun Kavach",
     "signOut": "Log keluar"
+  },
+  "preauth": {
+    "mode": "Tanpa tunai ditolak di hospital",
+    "heroTitle": "Tanpa tunai ditolak? Bertindak dalam sejam ini",
+    "heroSub": "Muat naik surat penolakan atau pertanyaan daripada syarikat insurans atau TPA (gambar pun boleh), dan polisi anda jika ada. Kami akan beritahu siapa perlu buat apa, sekarang juga.",
+    "title": "Tanpa tunai ditolak",
+    "status": {
+      "denied": "Tanpa tunai telah ditolak",
+      "query": "Syarikat insurans ada pertanyaan",
+      "partial": "Diluluskan kurang daripada yang diminta"
+    },
+    "doNow": "Buat ini sekarang",
+    "who": {
+      "hospital": "Kaunter hospital",
+      "doctor": "Doktor",
+      "you": "Anda"
+    },
+    "rules": "Peraturan yang mesti dipatuhi syarikat insurans",
+    "doctorNote": "Nota untuk doktor anda",
+    "doctorNoteSub": "Tunjukkan ini kepada doktor yang merawat. Doktor perlu menyemak, membetulkan apa-apa yang tidak tepat, dan menandatanganinya.",
+    "request": "Permohonan pertimbangan semula",
+    "requestSub": "Hantar ini kepada syarikat insurans atau TPA, atau minta kaunter hospital menghantarnya.",
+    "fallback": "Jika tanpa tunai masih ditolak",
+    "steps": [
+      {
+        "label": "Membaca dokumen anda",
+        "detail": "Mencari penolakan dan sebab yang diberi"
+      },
+      {
+        "label": "Mencari peraturan yang berkaitan",
+        "detail": "Had masa keputusan tanpa tunai dan peraturan di sebalik sebab itu"
+      },
+      {
+        "label": "Merancang langkah seterusnya",
+        "detail": "Siapa perlu buat apa dalam beberapa jam akan datang"
+      },
+      {
+        "label": "Menyemak setiap sumber",
+        "detail": "Memastikan setiap petikan benar-benar ada dalam sumbernya"
+      }
+    ]
   }
 }

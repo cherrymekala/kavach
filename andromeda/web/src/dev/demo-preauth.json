@@ -1,0 +1,78 @@
+{
+  "facts": {
+    "insurer": "Star Health and Allied Insurance Co. Ltd.",
+    "tpa": "Sample Care TPA Pvt. Ltd. (Synthetic)",
+    "patient_name": "Mr. Arjun Rao (SYNTHETIC)",
+    "hospital": "Lotus Multispeciality Hospital, Hyderabad",
+    "policy_number": "P/181100/01/2025/007731",
+    "claim_number": "PA/2026/1106/55821",
+    "rejection_date": "2026-11-06",
+    "policy_start": "2025-09-05",
+    "admission_date": "2026-11-06",
+    "first_diagnosis_date": "2023-03-14",
+    "diagnosis": "Acute appendicitis",
+    "claim_amount": 145000.0,
+    "amount_approved": null,
+    "currency": "INR",
+    "rejection_code": "PED-SUSP",
+    "rejection_category": "pre_existing",
+    "rejection_reason": "Suspected pre-existing disease as records show consultation for abdominal discomfort/dyspepsia within 36 months of policy inception.",
+    "cited_clause": null
+  },
+  "check": {
+    "status": "denied",
+    "summary": "Sample Care TPA denied the cashless pre-authorisation request of Rs. 1,45,000 for emergency laparoscopic appendicectomy, citing suspected pre-existing disease based on a March 2023 consultation for dyspepsia. Please note that a refusal of cashless facility is not a rejection of your insurance claim, and you remain entitled to seek reimbursement.",
+    "actions": [
+      {
+        "who": "doctor",
+        "step": "Ask Dr. K. Srinivas to provide a signed medical certificate clarifying the acute onset of right lower quadrant pain on 06/11/2026 and stating, if they agree, that acute appendicitis is an emergency surgical condition completely unrelated to the past episode of dyspepsia in March 2023.",
+        "why": "Medical evidence from the treating surgeon can directly refute the insurer's presumption that acute appendicitis is linked to prior dyspepsia.",
+        "sources": []
+      },
+      {
+        "who": "hospital",
+        "step": "Ask the hospital insurance desk to immediately resubmit the pre-authorisation request with Dr. Srinivas's note, the ultrasound report showing an inflamed 9 mm appendix, and the admission chart.",
+        "why": "The TPA must reconsider the cashless facility upon receipt of clinical clarification demonstrating an acute emergency condition.",
+        "sources": [
+          {
+            "kind": "regulation",
+            "ref": "Health Master Circular 2024, Ch. I, para 15",
+            "quote": "Insurer shall decide on the request for cashless authorization immediately but not more than one hour of receipt of request.",
+            "verified": true
+          }
+        ]
+      },
+      {
+        "who": "you",
+        "step": "Send a formal reconsideration request to the insurer and TPA via email, citing the acute surgical emergency and attaching the admission papers.",
+        "why": "A direct written request creates a formal dispute trail and prompts senior claims managers to review the denial.",
+        "sources": []
+      },
+      {
+        "who": "you",
+        "step": "If the TPA fails to review and respond within one hour, escalate the emergency cashless denial to the insurer's Grievance Redressal Officer at gro@starhealth.in.",
+        "why": "Insurers must ensure timely cashless decisions, especially in life-threatening and emergency hospital admissions.",
+        "sources": [
+          {
+            "kind": "regulation",
+            "ref": "Health Master Circular 2024, Ch. I, para 15",
+            "quote": "Every insurer shall strive to achieve 100% cashless claim settlement in a time bound manner. The insurers shall endeavor to ensure that the instances of claims being settled through reimbursement are at bare minimum and only in exceptional circumstances.",
+            "verified": true
+          }
+        ]
+      }
+    ],
+    "doctor_note": "To,\nMedical Desk / Claims Department,\nSample Care TPA Pvt. Ltd. / Star Health and Allied Insurance Co. Ltd.\n\nSub: Clinical Clarification regarding Pre-auth Request No. PA/2026/1106/55821 - Mr. Arjun Rao (34 M)\n\nThis is to certify that Mr. Arjun Rao, 34 years male, was admitted under my care on 06/11/2026 at 19:05 hrs as an emergency with complaints of acute abdominal pain starting periumbilically and shifting to the right iliac fossa since the morning of 06/11/2026, associated with fever and vomiting. \n\nClinical examination revealed right iliac fossa tenderness and rebound tenderness at McBurney's point (Alvarado score 8). USG abdomen dated 06/11/2026 confirmed acute appendicitis with a non-compressible, inflamed appendix measuring 9 mm and periappendiceal fluid, along with leukocytosis (TLC 15,800/cmm). \n\nThe patient's remote history of an OPD consultation for dyspepsia after meals in March 2023 was a transient, medically treated functional upper gastrointestinal symptom that completely resolved. In my professional assessment, acute appendicitis is a de novo, acute inflammatory condition of sudden onset on 06/11/2026, having no clinical or pathological correlation with the past episode of dyspepsia. Emergency laparoscopic appendicectomy is medically necessary. Kindly approve the cashless pre-authorisation request.\n\nSincerely,\nDr. K. Srinivas, MS (General Surgery)\nLotus Multispeciality Hospital, Hyderabad",
+    "request": "To,\nSample Care TPA Pvt. Ltd. / Star Health and Allied Insurance Co. Ltd.,\n\nSubject: Urgent Reconsideration of Cashless Pre-authorisation Denial - PA/2026/1106/55821 (Policy No. P/181100/01/2025/007731)\n\nDear Claims Team,\n\nWe request urgent reconsideration of the cashless denial issued on 06/11/2026 for patient Mr. Arjun Rao (34 M) admitted at Lotus Multispeciality Hospital, Hyderabad for emergency laparoscopic appendicectomy (estimated Rs. 1,45,000).\n\nThe denial cited suspected pre-existing disease (denial code: PED-SUSP) due to an OPD visit for dyspepsia in March 2023. As confirmed by the treating surgeon Dr. K. Srinivas and documented in the admission record, the patient presented with acute onset right iliac fossa pain on 06/11/2026, confirmed as acute appendicitis on USG (9 mm inflamed appendix) and TLC (15,800/cmm). A resolved complaint of dyspepsia over three years ago bears no medical connection to sudden acute appendicitis.\n\nAs this is an emergency surgery, we request you to reconsider and approve the pre-authorisation immediately as required under IRDAI guidelines. We look forward to your prompt approval.\n\nYours sincerely,\nArjun Rao / Lotus Multispeciality Hospital Insurance Desk",
+    "fallback": "If cashless authorisation is not reconsidered in time for the procedure, you can pay the hospital directly, secure all original bills, payment receipts, diagnostic reports, and the discharge summary, and submit a reimbursement claim. Kavach can assist you in preparing and filing the reimbursement claim and appeal.",
+    "rules": [
+      {
+        "kind": "regulation",
+        "ref": "Health Master Circular 2024, Ch. I, para 15",
+        "quote": "Every insurer shall strive to achieve 100% cashless claim settlement in a time bound manner. The insurers shall endeavor to ensure that the instances of claims being settled through reimbursement are at bare minimum and only in exceptional circumstances. b. Insurer shall decide on the request for cashless authorization immediately but not more than one hour of receipt of request. Necessary systems and procedures shall be put in place by the Insurer immediately and not later than 31st July, 2024.",
+        "verified": true
+      }
+    ],
+    "disclaimer": "Kavach prepares documents from your files and public rules to help you raise a dispute. It is not legal advice. Check every detail before you sign or send anything."
+  }
+}
