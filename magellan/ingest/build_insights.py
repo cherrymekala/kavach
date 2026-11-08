@@ -19,6 +19,10 @@ DECISIONS = ("allowed", "partly_allowed", "dismissed")
 MIN_CATEGORY = 20  # smaller groups make percentages meaningless
 MIN_INSURER = 30
 MIN_YEAR = 30
+# Within one insurer's scorecard: smaller groups are left out rather than shown as noisy rates.
+MIN_SCORECARD_GROUP = 10
+# Insurers renamed since the awards were published (name in the awards -> current name).
+NOW_KNOWN_AS = {"Reliance General": "IndusInd General Insurance"}
 
 
 def _records() -> list[dict]:
@@ -66,6 +70,41 @@ def _group(records: list[dict], field: str, minimum: int) -> list[dict]:
     return rows
 
 
+def _slug(name: str) -> str:
+    return "-".join("".join(ch if ch.isalnum() else " " for ch in name.lower()).split())
+
+
+def _scorecards(records: list[dict], by_category: list[dict]) -> list[dict]:
+    """One card per insurer with enough awards: its grounds, how patients fared, and the trend."""
+    everyone = {r["key"]: r["won_pct"] for r in by_category}
+    totals = Counter(r["insurer"] for r in records if r["insurer"])
+    cards = []
+    for insurer, total in totals.most_common():
+        if total < MIN_INSURER:
+            continue
+        mine = [r for r in records if r["insurer"] == insurer]
+        years = sorted(r["year"] for r in mine if r["year"])
+        grounds = sorted(_group(mine, "category", MIN_SCORECARD_GROUP), key=lambda r: -r["total"])
+        cards.append(
+            {
+                **_row(insurer, Counter(r["decision"] for r in mine)),
+                "slug": _slug(insurer),
+                "now_known_as": NOW_KNOWN_AS.get(insurer),
+                "period": {"from": years[0], "to": years[-1]} if years else None,
+                "grounds": [
+                    {
+                        **g,
+                        "share_pct": round(100 * g["total"] / total),
+                        "everyone_won_pct": everyone.get(g["key"]),
+                    }
+                    for g in grounds
+                ],
+                "by_year": sorted(_group(mine, "year", MIN_SCORECARD_GROUP), key=lambda r: r["key"]),
+            }
+        )
+    return cards
+
+
 def build() -> dict:
     records = _records()
     years = sorted(r["year"] for r in records if r["year"])
@@ -81,6 +120,7 @@ def build() -> dict:
         "by_category": by_category,
         "by_insurer": by_insurer,
         "by_year": by_year,
+        "insurers": _scorecards(records, by_category),
         "note": "Published awards only, mostly 2005-2013; complaints settled earlier never reach "
         "an award. Rates show how disputes that reached the Ombudsman ended, not how often "
         "insurers reject claims.",
