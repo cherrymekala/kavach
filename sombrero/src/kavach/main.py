@@ -21,6 +21,7 @@ from .routers import (
     sharing,
     tracker,
     voice,
+    voice_intake,
     whatsapp,
 )
 
@@ -62,6 +63,7 @@ app.include_router(insights.router)
 app.include_router(tracker.router)
 app.include_router(tracker.case_router)
 app.include_router(voice.router)
+app.include_router(voice_intake.router)
 app.include_router(whatsapp.router)
 app.include_router(payments.router)
 app.include_router(sharing.router)

@@ -97,3 +97,16 @@ def test_removing_a_helper_ends_their_access_and_strangers_see_nothing(as_user):
     assert left.status_code == 200 and left.json()["helper_ids"] == []
     assert as_user("helper").get(f"/cases/{case_id}").status_code == 404
     assert case_id not in [c["id"] for c in as_user("helper").get("/cases").json()]
+
+
+def test_a_helper_can_tell_the_story_by_voice_but_strangers_cannot(as_user):
+    from fastapi import HTTPException
+
+    from kavach.routers import voice_intake
+
+    # With AUTH_DISABLED the voice socket signs everyone in as "dev-user".
+    case_id, code = _shared_case(as_user)
+    with pytest.raises(HTTPException):
+        voice_intake._authorise({"token": None}, case_id)  # dev-user is a stranger here
+    as_user("dev-user").post("/share/redeem", json={"code": code, "name": "Asha"})
+    assert voice_intake._authorise({"token": None}, case_id).id == case_id  # now a helper
