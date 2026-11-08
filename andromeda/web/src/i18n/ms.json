@@ -668,5 +668,15 @@
     "join": "Sertai kes",
     "joinNote": "Pesakit akan melihat nama anda dan boleh membuang anda pada bila-bila masa.",
     "joinError": "Kami tidak dapat menyertai kes ini. Sila semak kod."
+  },
+  "reminders": {
+    "title": "Ingatkan saya di telefon ini",
+    "sub": "Kami akan menghantar pemberitahuan 7 hari dan 2 hari sebelum tarikh akhir jawapan syarikat insurans, dan apabila mereka menjawab.",
+    "onTitle": "Peringatan dihidupkan untuk telefon ini",
+    "onSub": "Anda akan menerima pemberitahuan sebelum setiap tarikh akhir dan apabila syarikat insurans menjawab.",
+    "blocked": "Pemberitahuan disekat untuk laman ini. Hidupkannya dalam tetapan pelayar untuk menerima peringatan.",
+    "turnOn": "Hidupkan",
+    "turnOff": "Matikan",
+    "error": "Tidak dapat menukar peringatan. Sila cuba lagi."
   }
 }

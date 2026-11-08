@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field
 from ..agents import appeal_mail, escalation, filing
 from ..auth import current_user
 from ..models import Case, CaseEvent, Document, FiledRequest
-from ..tools import access, files, mail, packs, payments, store
+from ..tools import access, files, mail, packs, payments, push, store
 from . import whatsapp
 from .documents import ALLOWED, MAX_BYTES, MAX_DOCUMENTS, safe_name
 
@@ -246,6 +246,7 @@ def inbound(msg: InboundMail, x_kavach_token: str | None = Header(None)) -> dict
             )
         except Exception:
             log.warning("mail: forwarding the reply to the patient failed", exc_info=True)
+    push.notify_case(case, event.text)
     try:
         whatsapp.notify_case(case, event.text)
     except Exception:

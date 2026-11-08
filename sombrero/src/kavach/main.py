@@ -19,6 +19,7 @@ from .routers import (
     mail,
     packs,
     payments,
+    push,
     sharing,
     tracker,
     voice,
@@ -70,6 +71,7 @@ app.include_router(whatsapp.router)
 app.include_router(payments.router)
 app.include_router(sharing.router)
 app.include_router(mail.router)
+app.include_router(push.router)
 
 
 @app.get("/health")

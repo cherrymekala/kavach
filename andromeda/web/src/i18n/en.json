@@ -668,5 +668,15 @@
     "join": "Join case",
     "joinNote": "The patient will see your name and can remove you at any time.",
     "joinError": "We couldn't join this case. Please check the code."
+  },
+  "reminders": {
+    "title": "Remind me on this phone",
+    "sub": "We'll send a notification 7 days and 2 days before the insurer's reply is due, and when they reply.",
+    "onTitle": "Reminders are on for this phone",
+    "onSub": "You'll get a notification before each deadline and when the insurer replies.",
+    "blocked": "Notifications are blocked for this site. Turn them on in your browser settings to get reminders.",
+    "turnOn": "Turn on",
+    "turnOff": "Turn off",
+    "error": "Couldn't change reminders. Please try again."
   }
 }

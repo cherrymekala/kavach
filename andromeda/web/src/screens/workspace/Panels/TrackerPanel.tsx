@@ -33,6 +33,7 @@ import type { Case, CaseEvent } from '@/api/types'
 import { daysUntil, formatDate, formatDeadline } from '@/lib/dates'
 import { cn } from '@/lib/cn'
 import { ExpertCard } from './ExpertCard'
+import { RemindersCard } from './RemindersCard'
 import { SendAppealDialog } from './SendAppealDialog'
 
 function todayISO(): string {
@@ -205,6 +206,8 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
       >
         {now.title}
       </ShieldHero>
+
+      {status !== 'resolved' ? <RemindersCard /> : null}
 
       {warning && status !== 'resolved' ? (
         <p className="flex gap-2 rounded-lg border border-amber/50 bg-amber/10 p-4 text-sm">

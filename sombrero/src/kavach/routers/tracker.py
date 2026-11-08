@@ -6,13 +6,13 @@ from ..agents import escalation
 from ..auth import current_user
 from ..config import Settings, get_settings
 from ..models import Case, FiledRequest, ReplyRequest
-from ..tools import access, files, store
+from ..tools import access, files, push, store
 from . import whatsapp
 
 router = APIRouter(prefix="/tracker", tags=["tracker"])
 case_router = APIRouter(prefix="/cases/{case_id}", tags=["tracker"])
 
-# Events the daily tick creates that are worth a WhatsApp nudge.
+# Events the daily tick creates that are worth a push / WhatsApp nudge.
 NOTIFY_KINDS = ("reminder", "escalated", "warning")
 
 
@@ -56,9 +56,10 @@ def tick() -> dict:
         if dirty:
             store.save_case(case)
             changed += 1
-            # Nudge on WhatsApp too: a deadline is only useful if the patient hears about it.
+            # Nudge by push and WhatsApp: a deadline is only useful if the patient hears about it.
             for event in case.events[seen:]:
                 if event.kind in NOTIFY_KINDS:
+                    notified += push.notify_case(case, event.text)
                     notified += whatsapp.notify_case(case, event.text)
     return {"changed": changed, "notified": notified}
 

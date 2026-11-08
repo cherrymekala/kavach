@@ -236,6 +236,8 @@ class Case(BaseModel):
     helper_ids: list[str] = []
     share_code_hash: str | None = None  # the one live share code (sha256); a new code replaces it
     expert_requested_at: datetime | None = None  # the patient asked for a human advocate
+    # "X days left" reminders already sent, as "<deadline date>:<threshold>" (no repeats).
+    reminders_sent: list[str] = []
     letter: Letter | None = None
     complainant: Complainant | None = None
     next_deadline: datetime | None = None

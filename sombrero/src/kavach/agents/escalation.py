@@ -10,6 +10,7 @@ from ..models import Case, CaseEvent, CaseStatus, FiledRequest, ReplyRequest
 from ..tools import packs
 
 LIMITATION_WARN_DAYS = 60
+REMIND_DAYS = (2, 7)  # "X days left" nudges before a reply deadline, smallest first
 KEEP_AFTER_RESOLVED_DAYS = 30  # time to download letters/forms before documents are erased
 
 
@@ -86,9 +87,34 @@ def record_reply(case: Case, req: ReplyRequest, now: datetime) -> Case:
     return case
 
 
+def _remind(case: Case, now: datetime) -> bool:
+    """One "X days left" nudge per threshold while a filed step waits for its reply."""
+    if case.status != CaseStatus.FILED or not case.next_deadline:
+        return False
+    days_left = (case.next_deadline.date() - now.date()).days
+    due = next((d for d in REMIND_DAYS if 0 < days_left <= d), None)
+    if due is None:
+        return False
+    key = f"{case.next_deadline:%Y-%m-%d}:{due}"
+    if key in case.reminders_sent:
+        return False
+    # Mark this and every larger threshold, so a late first tick never sends "7 days" after "2".
+    case.reminders_sent += [f"{case.next_deadline:%Y-%m-%d}:{d}" for d in REMIND_DAYS if d >= due]
+    step = _steps(case)[case.escalation_step]["step"]
+    left = "1 day" if days_left == 1 else f"{days_left} days"
+    _log(
+        case,
+        now,
+        "reminder",
+        f"{step} should reply by {case.next_deadline:%d %b %Y} ({left} left). "
+        "If they reply, add it to your tracker.",
+    )
+    return True
+
+
 def tick(case: Case, now: datetime) -> bool:
     """Daily check for one case. Returns True if the case changed."""
-    changed = False
+    changed = _remind(case, now)
     if case.status == CaseStatus.FILED and case.next_deadline and case.next_deadline <= now:
         step = _steps(case)[case.escalation_step]
         _escalate(case, now, f"No reply from {step['step']} within {step['deadline_days']} days.")

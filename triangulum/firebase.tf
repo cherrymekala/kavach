@@ -13,6 +13,7 @@ variable "auth_test_phone_numbers" {
 resource "google_project_service" "firebase" {
   for_each = toset([
     "firebase.googleapis.com", "identitytoolkit.googleapis.com", "firebasehosting.googleapis.com",
+    "fcm.googleapis.com",
   ])
   service            = each.value
   disable_on_destroy = false
