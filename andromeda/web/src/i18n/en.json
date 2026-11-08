@@ -311,7 +311,8 @@
         "title": "Send your appeal to the insurer",
         "body": "Email or post your appeal letter to the {{body}}. They have {{days}} days to reply. Tell us once it's sent and we'll track the deadline.",
         "cta": "I've sent it",
-        "open": "Open my letter"
+        "open": "Open my letter",
+        "email": "Email it for me"
       },
       "waiting": {
         "title": "Waiting for a reply from: {{body}}",
@@ -348,7 +349,24 @@
     "filedOn": "Date filed",
     "repliedOn": "Date of their reply",
     "errorSave": "Could not save that. Please try again.",
-    "nowLabel": "Now"
+    "nowLabel": "Now",
+    "email": {
+      "title": "Email your appeal",
+      "sub": "We send your letter from Kavach with you in copy. The insurer's reply comes back to your case.",
+      "to": "To (grievance officer)",
+      "fromDirectory": "From the official list of insurer grievance officers. Change it if your letter names someone else.",
+      "cc": "Copy to you",
+      "attachments": "Attached",
+      "send": "Send appeal",
+      "testMode": "Test mode: email isn't set up yet, so nothing will actually be sent.",
+      "error": "Could not send your appeal.",
+      "missing": {
+        "letter_blanks": "Fill in the blanks in your letter first: {{list}}",
+        "name": "Add your name in the Filing pack details.",
+        "email": "Add your email in the Filing pack details, so you get a copy and the replies.",
+        "letter": "Your appeal letter isn't ready yet."
+      }
+    }
   },
   "outcome": {
     "title": "Outcome",

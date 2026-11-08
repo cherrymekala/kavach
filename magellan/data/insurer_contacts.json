@@ -1,0 +1,504 @@
+{
+ "IN": [
+  {
+   "name": "National Insurance Company Ltd",
+   "aliases": [
+    "National Insurance"
+   ],
+   "email": "griho@nic.co.in",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "The New India Assurance Co. Ltd",
+   "aliases": [
+    "New India Assurance"
+   ],
+   "email": "gro@newindia.co.in",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "The Oriental Insurance Co. Ltd",
+   "aliases": [
+    "Oriental Insurance"
+   ],
+   "email": "gro@orientalinsurance.co.in",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "United India Insurance Co. Ltd",
+   "aliases": [
+    "United India Insurance",
+    "UIIC"
+   ],
+   "email": "gro@uiic.co.in",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Acko General Insurance Ltd",
+   "aliases": [
+    "Acko"
+   ],
+   "email": "gro@acko.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Aditya Birla Health Insurance Co. Ltd",
+   "aliases": [
+    "Aditya Birla Health"
+   ],
+   "email": "gro.healthinsurance@adityabirlacapital.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Bajaj General Insurance Ltd",
+   "aliases": [
+    "Bajaj Allianz General Insurance",
+    "Bajaj General"
+   ],
+   "email": "ggro@bajajgeneral.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Bharti AXA General Insurance",
+   "aliases": [
+    "Bharati Axa General"
+   ],
+   "email": "GRO.GI@bhartiaxa.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Cholamandalam MS General Insurance Co. Ltd",
+   "aliases": [
+    "Cholamandalam MS"
+   ],
+   "email": "gro@cholams.murugappa.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Navi General Insurance Ltd",
+   "aliases": [
+    "Navi"
+   ],
+   "email": "gro@navi.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Zuno General Insurance Ltd",
+   "aliases": [
+    "Edelweiss General Insurance",
+    "Zuno"
+   ],
+   "email": "grievanceofficer@edelweissinsurance.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Generali Central Insurance Co. Ltd",
+   "aliases": [
+    "Future Generali India Insurance",
+    "Generali Central"
+   ],
+   "email": "fggro@futuregenerali.in",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Go Digit General Insurance Ltd",
+   "aliases": [
+    "Go Digit",
+    "Digit"
+   ],
+   "email": "grievance@godigit.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "HDFC ERGO General Insurance Co. Ltd",
+   "aliases": [
+    "HDFC ERGO"
+   ],
+   "email": "gro@hdfcergo.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "ICICI Lombard General Insurance Co. Ltd",
+   "aliases": [
+    "ICICI Lombard"
+   ],
+   "email": "gro@icicilombard.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "IFFCO Tokio General Insurance Co. Ltd",
+   "aliases": [
+    "IFFCO Tokio"
+   ],
+   "email": "gro@iffcotokio.co.in",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Zurich Kotak General Insurance Co. Ltd",
+   "aliases": [
+    "Kotak Mahindra General Insurance",
+    "Zurich Kotak"
+   ],
+   "email": "grievanceofficer@kotak.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Liberty General Insurance Ltd",
+   "aliases": [
+    "Liberty"
+   ],
+   "email": "GRO@libertyinsurance.in",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Magma General Insurance Ltd",
+   "aliases": [
+    "Magma HDI",
+    "Magma"
+   ],
+   "email": "gro@magmainsurance.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "ManipalCigna Health Insurance Co. Ltd",
+   "aliases": [
+    "Manipal Cigna"
+   ],
+   "email": "gro@ManipalCigna.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Niva Bupa Health Insurance Co. Ltd",
+   "aliases": [
+    "Max Bupa",
+    "Niva Bupa"
+   ],
+   "email": "gro@maxbupa.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Raheja QBE General Insurance Co. Ltd",
+   "aliases": [
+    "Raheja QBE"
+   ],
+   "email": "complaintsofficer@rahejaqbe.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "IndusInd General Insurance Co. Ltd",
+   "aliases": [
+    "Reliance General Insurance",
+    "IndusInd General"
+   ],
+   "email": "rgicl.grievances@relianceada.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Reliance Health Insurance Ltd",
+   "aliases": [
+    "Reliance Health"
+   ],
+   "email": "rgicl.grievances@relianceada.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Care Health Insurance Ltd",
+   "aliases": [
+    "Religare Health Insurance",
+    "Care Health"
+   ],
+   "email": "gro@careinsurance.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Royal Sundaram General Insurance Co. Ltd",
+   "aliases": [
+    "Royal Sundaram"
+   ],
+   "email": "gro@royalsundaram.in",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "SBI General Insurance Co. Ltd",
+   "aliases": [
+    "SBI General"
+   ],
+   "email": "gro@sbigeneral.in",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Shriram General Insurance Co. Ltd",
+   "aliases": [
+    "Shriram General"
+   ],
+   "email": "gro@shriramgi.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Star Health and Allied Insurance Co. Ltd",
+   "aliases": [
+    "STAR HEALTH AND ALLIED INSURANCE CO. LTD.",
+    "Star Health"
+   ],
+   "email": "gro@starhealth.in",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Tata AIG General Insurance Co. Ltd",
+   "aliases": [
+    "Tata-AIG General",
+    "Tata AIG"
+   ],
+   "email": "gro@tataaig.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Universal Sompo General Insurance Co. Ltd",
+   "aliases": [
+    "Universal Sompo"
+   ],
+   "email": "gro@universalsompo.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://policyholder.gov.in/web/guest/list-of-gros",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Galaxy Health Insurance Co. Ltd",
+   "aliases": [
+    "Galaxy Health"
+   ],
+   "email": "gro@galaxyhealth.com",
+   "role": "Grievance Redressal Officer",
+   "source": "https://www.galaxyhealth.com/grievance-redressal",
+   "checked": "2026-11-06",
+   "note": "Not on IRDAI list (no email there). Same page: seniorcitizengrievance@galaxyhealth.com for senior citizens; support@galaxyhealth.com general."
+  },
+  {
+   "name": "Narayana Health Insurance Ltd",
+   "aliases": [
+    "Narayana Health"
+   ],
+   "email": "gro@narayanahealth.insurance",
+   "role": "Grievance Redressal Officer",
+   "source": "https://narayanahealth.insurance/?p=1450",
+   "checked": "2026-11-06",
+   "note": "Not on IRDAI list (no email there). support@narayanahealth.insurance also listed."
+  }
+ ],
+ "SG": [
+  {
+   "name": "AIA Singapore Private Ltd",
+   "aliases": [
+    "AIA"
+   ],
+   "email": "sg.eCare@aia.com",
+   "role": "customer service (CPF list of Integrated Shield insurers)",
+   "source": "https://www.cpf.gov.sg/ipinsurers",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "The Great Eastern Life Assurance Co. Ltd",
+   "aliases": [
+    "Great Eastern"
+   ],
+   "email": "wecare-SG@greateasternlife.com",
+   "role": "customer service (CPF list of Integrated Shield insurers)",
+   "source": "https://www.cpf.gov.sg/ipinsurers",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "HSBC Life (Singapore) Pte Ltd",
+   "aliases": [
+    "HSBC Life"
+   ],
+   "email": "cc.life@mail.life.hsbc.com.sg",
+   "role": "customer service (CPF list of Integrated Shield insurers)",
+   "source": "https://www.cpf.gov.sg/ipinsurers",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Income Insurance Ltd",
+   "aliases": [
+    "NTUC Income",
+    "Income"
+   ],
+   "email": "healthcare@income.com.sg",
+   "role": "customer service (CPF list of Integrated Shield insurers)",
+   "source": "https://www.cpf.gov.sg/ipinsurers",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Prudential Assurance Co. Singapore (Pte) Ltd",
+   "aliases": [
+    "Prudential"
+   ],
+   "email": "customer.service@prudential.com.sg",
+   "role": "customer service (CPF list of Integrated Shield insurers)",
+   "source": "https://www.cpf.gov.sg/ipinsurers",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Raffles Health Insurance Pte Ltd",
+   "aliases": [
+    "Raffles Health"
+   ],
+   "email": "shield@raffleshealthinsurance.com",
+   "role": "customer service (CPF list of Integrated Shield insurers)",
+   "source": "https://www.cpf.gov.sg/ipinsurers",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Singapore Life Ltd",
+   "aliases": [
+    "Singlife"
+   ],
+   "email": "cs_life@singlife.com",
+   "role": "customer service (CPF list of Integrated Shield insurers)",
+   "source": "https://www.cpf.gov.sg/ipinsurers",
+   "checked": "2026-11-06"
+  }
+ ],
+ "MY": [
+  {
+   "name": "AIA Bhd.",
+   "aliases": [
+    "AIA Malaysia"
+   ],
+   "email": "my.complaint@aia.com",
+   "role": "Complaints Unit (BNM directory)",
+   "source": "https://www.bnm.gov.my/en/-/aia-berhad",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Great Eastern Life Assurance (Malaysia) Berhad",
+   "aliases": [
+    "Great Eastern"
+   ],
+   "email": "feedback@greateasternlife.com",
+   "role": "Complaints Unit (BNM directory)",
+   "source": "https://www.bnm.gov.my/en/-/great-eastern-life-assurance-malaysia-berhad",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Prudential Assurance Malaysia Berhad",
+   "aliases": [
+    "Prudential",
+    "PAMB"
+   ],
+   "email": "prufeedback@prudential.com.my",
+   "role": "Complaints Unit (BNM directory)",
+   "source": "https://www.bnm.gov.my/en/-/prudential-assurance-malaysia-berhad",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Allianz Life Insurance Malaysia Berhad",
+   "aliases": [
+    "Allianz"
+   ],
+   "email": "complaint.unit@allianz.com.my",
+   "role": "Complaints Unit (BNM directory)",
+   "source": "https://www.bnm.gov.my/en/-/allianz-life-insurance-malaysia-berhad",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Etiqa Life Insurance Berhad",
+   "aliases": [
+    "Etiqa"
+   ],
+   "email": "cmu@etiqa.com.my",
+   "role": "Complaints Unit (BNM directory)",
+   "source": "https://www.bnm.gov.my/en/-/etiqa-life-insurance-berhad",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Etiqa Family Takaful Berhad",
+   "aliases": [
+    "Etiqa Takaful"
+   ],
+   "email": "cmu@etiqa.com.my",
+   "role": "Complaints Unit (BNM directory)",
+   "source": "https://www.bnm.gov.my/en/-/etiqa-family-takaful-berhad",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Zurich Takaful Malaysia Berhad",
+   "aliases": [
+    "Zurich Takaful"
+   ],
+   "email": "feedback@zurich.com.my",
+   "role": "Complaints Unit (BNM directory)",
+   "source": "https://www.bnm.gov.my/en/-/zurich-takaful-malaysia-berhad",
+   "checked": "2026-11-06"
+  },
+  {
+   "name": "Prudential BSN Takaful Berhad",
+   "aliases": [
+    "PruBSN"
+   ],
+   "email": "customer@prubsn.com.my",
+   "role": "Complaints Unit (BNM directory)",
+   "source": "https://www.bnm.gov.my/en/-/prudential-bsn-takaful-berhad",
+   "checked": "2026-11-06"
+  }
+ ]
+}

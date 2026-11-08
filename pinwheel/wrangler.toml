@@ -1,0 +1,13 @@
+# Kavach mail Worker: insurer replies to the appeal address come here (Cloudflare Email
+# Routing) and are posted to the backend, which files them on the right case.
+#   npm install && npx wrangler secret put KAVACH_TOKEN   # value of the mail-inbound-token secret
+#   npm run deploy
+name = "kavach-mail"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+# Email Routing rule, reconciled on deploy. Subdomains take literal addresses only (no catch-all).
+addresses = ["appeals@reimaginy.tech"]
+
+[vars]
+KAVACH_INBOUND_URL = "https://sombrero-urb5ttky3q-el.a.run.app/mail/inbound"

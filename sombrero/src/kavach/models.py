@@ -153,6 +153,7 @@ class Complainant(BaseModel):
     email: str | None = None
     relationship_to_insured: str | None = None
     insurer_office_address: str | None = None
+    insurer_email: str | None = None  # grievance officer; remembered once the appeal is emailed
     grievance_date: date | None = None  # when the patient complained to the insurer
     grievance_reply_date: date | None = None
     grievance_outcome: str | None = None
@@ -169,7 +170,7 @@ class FilingPack(BaseModel):
 
 class CaseEvent(BaseModel):
     at: datetime
-    kind: str  # filed | reply | escalated | reminder | resolved | warning
+    kind: str  # filed | reply | escalated | reminder | resolved | warning | emailed | insurer_reply
     text: str  # shown on the tracker screen and used for notifications
     step: int | None = None
 

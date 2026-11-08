@@ -142,5 +142,88 @@
         }
       ]
     }
+  ],
+  "insurer_contacts": [
+    {
+      "name": "AIA Bhd.",
+      "aliases": [
+        "AIA Malaysia"
+      ],
+      "email": "my.complaint@aia.com",
+      "role": "Complaints Unit (BNM directory)",
+      "source": "https://www.bnm.gov.my/en/-/aia-berhad",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Great Eastern Life Assurance (Malaysia) Berhad",
+      "aliases": [
+        "Great Eastern"
+      ],
+      "email": "feedback@greateasternlife.com",
+      "role": "Complaints Unit (BNM directory)",
+      "source": "https://www.bnm.gov.my/en/-/great-eastern-life-assurance-malaysia-berhad",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Prudential Assurance Malaysia Berhad",
+      "aliases": [
+        "Prudential",
+        "PAMB"
+      ],
+      "email": "prufeedback@prudential.com.my",
+      "role": "Complaints Unit (BNM directory)",
+      "source": "https://www.bnm.gov.my/en/-/prudential-assurance-malaysia-berhad",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Allianz Life Insurance Malaysia Berhad",
+      "aliases": [
+        "Allianz"
+      ],
+      "email": "complaint.unit@allianz.com.my",
+      "role": "Complaints Unit (BNM directory)",
+      "source": "https://www.bnm.gov.my/en/-/allianz-life-insurance-malaysia-berhad",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Etiqa Life Insurance Berhad",
+      "aliases": [
+        "Etiqa"
+      ],
+      "email": "cmu@etiqa.com.my",
+      "role": "Complaints Unit (BNM directory)",
+      "source": "https://www.bnm.gov.my/en/-/etiqa-life-insurance-berhad",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Etiqa Family Takaful Berhad",
+      "aliases": [
+        "Etiqa Takaful"
+      ],
+      "email": "cmu@etiqa.com.my",
+      "role": "Complaints Unit (BNM directory)",
+      "source": "https://www.bnm.gov.my/en/-/etiqa-family-takaful-berhad",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Zurich Takaful Malaysia Berhad",
+      "aliases": [
+        "Zurich Takaful"
+      ],
+      "email": "feedback@zurich.com.my",
+      "role": "Complaints Unit (BNM directory)",
+      "source": "https://www.bnm.gov.my/en/-/zurich-takaful-malaysia-berhad",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Prudential BSN Takaful Berhad",
+      "aliases": [
+        "PruBSN"
+      ],
+      "email": "customer@prubsn.com.my",
+      "role": "Complaints Unit (BNM directory)",
+      "source": "https://www.bnm.gov.my/en/-/prudential-bsn-takaful-berhad",
+      "checked": "2026-11-06"
+    }
   ]
 }

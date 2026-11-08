@@ -327,7 +327,8 @@
         "title": "Hantar rayuan anda kepada insurer",
         "body": "E-melkan atau pos surat rayuan anda kepada {{body}}. Mereka ada {{days}} hari untuk membalas. Beritahu kami sebaik sahaja ia dihantar dan kami akan menjejak tarikh akhir.",
         "cta": "Saya sudah hantar",
-        "open": "Buka surat saya"
+        "open": "Buka surat saya",
+        "email": "E-melkan untuk saya"
       },
       "waiting": {
         "title": "Menunggu balasan daripada: {{body}}",
@@ -364,7 +365,24 @@
     "filedOn": "Tarikh difailkan",
     "repliedOn": "Tarikh balasan mereka",
     "errorSave": "Tidak dapat disimpan. Sila cuba lagi.",
-    "nowLabel": "Sekarang"
+    "nowLabel": "Sekarang",
+    "email": {
+      "title": "E-melkan rayuan anda",
+      "sub": "Kami menghantar surat anda dari Kavach dengan salinan kepada anda. Balasan syarikat insurans akan kembali ke kes anda.",
+      "to": "Kepada (pegawai aduan)",
+      "fromDirectory": "Daripada senarai rasmi pegawai aduan syarikat insurans. Tukar jika surat anda menamakan orang lain.",
+      "cc": "Salinan kepada anda",
+      "attachments": "Dilampirkan",
+      "send": "Hantar rayuan",
+      "testMode": "Mod ujian: e-mel belum disediakan, jadi tiada apa-apa yang akan benar-benar dihantar.",
+      "error": "Rayuan anda tidak dapat dihantar.",
+      "missing": {
+        "letter_blanks": "Isi tempat kosong dalam surat anda dahulu: {{list}}",
+        "name": "Tambah nama anda dalam butiran pek pemfailan.",
+        "email": "Tambah e-mel anda dalam butiran pek pemfailan supaya anda menerima salinan dan balasan.",
+        "letter": "Surat rayuan anda belum siap."
+      }
+    }
   },
   "outcome": {
     "title": "Hasil",

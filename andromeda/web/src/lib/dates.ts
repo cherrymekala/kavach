@@ -5,6 +5,18 @@ export function formatDate(value: string | null | undefined): string {
   return d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })
 }
 
+/**
+ * A deadline is a calendar day the backend stores as 23:59 UTC (agents/escalation.py).
+ * Shown in the viewer's zone it becomes the next day east of UTC (India: 05:29 next
+ * morning), so it is formatted in UTC to match "Reply due by …" in the history.
+ */
+export function formatDeadline(value: string | null | undefined): string {
+  if (!value) return ''
+  const d = new Date(value)
+  if (Number.isNaN(d.getTime())) return ''
+  return d.toLocaleDateString(undefined, { day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC' })
+}
+
 /** Whole days from now until `deadline` (can be negative when overdue). */
 export function daysUntil(deadline: string | null | undefined): number | null {
   if (!deadline) return null

@@ -135,5 +135,78 @@
         }
       ]
     }
+  ],
+  "insurer_contacts": [
+    {
+      "name": "AIA Singapore Private Ltd",
+      "aliases": [
+        "AIA"
+      ],
+      "email": "sg.eCare@aia.com",
+      "role": "customer service (CPF list of Integrated Shield insurers)",
+      "source": "https://www.cpf.gov.sg/ipinsurers",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "The Great Eastern Life Assurance Co. Ltd",
+      "aliases": [
+        "Great Eastern"
+      ],
+      "email": "wecare-SG@greateasternlife.com",
+      "role": "customer service (CPF list of Integrated Shield insurers)",
+      "source": "https://www.cpf.gov.sg/ipinsurers",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "HSBC Life (Singapore) Pte Ltd",
+      "aliases": [
+        "HSBC Life"
+      ],
+      "email": "cc.life@mail.life.hsbc.com.sg",
+      "role": "customer service (CPF list of Integrated Shield insurers)",
+      "source": "https://www.cpf.gov.sg/ipinsurers",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Income Insurance Ltd",
+      "aliases": [
+        "NTUC Income",
+        "Income"
+      ],
+      "email": "healthcare@income.com.sg",
+      "role": "customer service (CPF list of Integrated Shield insurers)",
+      "source": "https://www.cpf.gov.sg/ipinsurers",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Prudential Assurance Co. Singapore (Pte) Ltd",
+      "aliases": [
+        "Prudential"
+      ],
+      "email": "customer.service@prudential.com.sg",
+      "role": "customer service (CPF list of Integrated Shield insurers)",
+      "source": "https://www.cpf.gov.sg/ipinsurers",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Raffles Health Insurance Pte Ltd",
+      "aliases": [
+        "Raffles Health"
+      ],
+      "email": "shield@raffleshealthinsurance.com",
+      "role": "customer service (CPF list of Integrated Shield insurers)",
+      "source": "https://www.cpf.gov.sg/ipinsurers",
+      "checked": "2026-11-06"
+    },
+    {
+      "name": "Singapore Life Ltd",
+      "aliases": [
+        "Singlife"
+      ],
+      "email": "cs_life@singlife.com",
+      "role": "customer service (CPF list of Integrated Shield insurers)",
+      "source": "https://www.cpf.gov.sg/ipinsurers",
+      "checked": "2026-11-06"
+    }
   ]
 }
