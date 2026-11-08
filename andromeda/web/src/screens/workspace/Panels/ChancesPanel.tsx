@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { ArrowRightIcon, CheckCircle2Icon, CircleIcon, ShieldCheckIcon } from 'lucide-react'
 import { Argument, Button, type ArgumentSource } from '@/components'
 import { SourceSheet } from '@/screens/chances/SourceSheet'
+import { ExpertCard } from './ExpertCard'
 import { usePack } from '@/api/hooks'
 import type { Case } from '@/api/types'
 import { cn } from '@/lib/cn'
@@ -132,6 +133,8 @@ export function ChancesPanel({ kase, onNext }: { kase: Case; onNext?: () => void
           <ArrowRightIcon aria-hidden />
         </Button>
       ) : null}
+
+      <ExpertCard kase={kase} />
 
       <p className="max-w-[62ch] text-xs leading-relaxed text-muted-foreground">{assessment.disclaimer}</p>
 

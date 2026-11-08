@@ -39,3 +39,5 @@ export type InsurerScorecard = components['schemas']['InsurerScorecard']
 export type Checkout =
   | { provider: 'razorpay'; key_id: string; order_id: string; amount: number; currency: string; name: string }
   | { provider: 'stripe'; url: string; amount: number; currency: string }
+export type ExpertOffer = components['schemas']['ExpertOffer']
+export type ExpertRequestBody = components['schemas']['ExpertRequestBody']

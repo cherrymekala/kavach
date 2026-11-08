@@ -32,6 +32,7 @@ import { useMarkFiled, usePack, useRecordReply } from '@/api/hooks'
 import type { Case, CaseEvent } from '@/api/types'
 import { daysUntil, formatDate, formatDeadline } from '@/lib/dates'
 import { cn } from '@/lib/cn'
+import { ExpertCard } from './ExpertCard'
 import { SendAppealDialog } from './SendAppealDialog'
 
 function todayISO(): string {
@@ -252,6 +253,8 @@ export function TrackerPanel({ caseId, kase }: { caseId: string; kase: Case }) {
           <History events={kase.events} />
         </div>
       ) : null}
+
+      {kase.status !== 'resolved' ? <ExpertCard kase={kase} /> : null}
 
       <SendAppealDialog caseId={caseId} open={emailing} onClose={() => setEmailing(false)} />
 

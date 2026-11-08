@@ -160,6 +160,24 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cases/{case_id}/expert": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Offer */
+        get: operations["get_offer_cases__case_id__expert_get"];
+        put?: never;
+        /** Request Expert */
+        post: operations["request_expert_cases__case_id__expert_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/cases/{case_id}/analyse": {
         parameters: {
             query?: never;
@@ -691,6 +709,8 @@ export interface components {
             assessment?: components["schemas"]["Assessment"] | null;
             discharge_check?: components["schemas"]["DischargeCheck"] | null;
             preauth_check?: components["schemas"]["PreauthCheck"] | null;
+            /** Expert Requested At */
+            expert_requested_at?: string | null;
             letter?: components["schemas"]["Letter"] | null;
             complainant?: components["schemas"]["Complainant"] | null;
             /** Next Deadline */
@@ -902,6 +922,32 @@ export interface components {
             quality?: string | null;
             /** Uploaded At */
             uploaded_at?: string | null;
+        };
+        /** ExpertOffer */
+        ExpertOffer: {
+            /** Reason */
+            reason: string | null;
+            /** Requested At */
+            requested_at: string | null;
+            /** Shared */
+            shared: string[];
+        };
+        /**
+         * ExpertRequestBody
+         * @description The patient asks for a human advocate and agrees to share a summary of the case.
+         */
+        ExpertRequestBody: {
+            /** Consent */
+            consent: boolean;
+            /** Phone */
+            phone?: string | null;
+            /** Email */
+            email?: string | null;
+            /**
+             * Note
+             * @default
+             */
+            note: string;
         };
         /** FiledRequest */
         FiledRequest: {
@@ -1596,6 +1642,76 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_offer_cases__case_id__expert_get: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExpertOffer"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    request_expert_cases__case_id__expert_post: {
+        parameters: {
+            query?: never;
+            header?: {
+                authorization?: string | null;
+            };
+            path: {
+                case_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExpertRequestBody"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Case"];
+                };
             };
             /** @description Validation Error */
             422: {

@@ -614,5 +614,33 @@
     "back": "All insights",
     "missing": "There's no scorecard for that insurer: too few published awards.",
     "cta": "Was your claim rejected by {{insurer}}? Start free"
+  },
+  "expert": {
+    "title": "Talk to a human expert",
+    "why": {
+      "weak": "Your case looks hard on the papers. An experienced advocate may find arguments or evidence we can't.",
+      "high_value": "A lot of money is at stake. An experienced advocate can check your case and help you file it."
+    },
+    "cta": "Ask for an expert",
+    "link": "Want a human expert to look at your case?",
+    "how": "Our team reads a short summary of your case and puts you in touch with a suitable advocate or patient-help group. You decide whether to work with them.",
+    "sharedTitle": "What we share with our team",
+    "shared": {
+      "country": "Your country",
+      "insurer": "Your insurer",
+      "reason": "The rejection reason and its category",
+      "amounts": "The amount claimed and the amount paid",
+      "assessment": "Kavach's assessment of your case",
+      "deadline": "Your next deadline and current step",
+      "contact": "Your name, phone and email as given here",
+      "note": "Your note"
+    },
+    "notShared": "Your documents are not shared.",
+    "note": "Anything we should know? (optional)",
+    "notePlaceholder": "E.g. the best time to call, or what worries you most",
+    "consent": "I agree to share this summary with Kavach's team so they can find an advocate for me.",
+    "send": "Send request",
+    "error": "We couldn't send your request. Please try again.",
+    "requested": "You asked for a human expert on {{date}}. Our team will contact you."
   }
 }

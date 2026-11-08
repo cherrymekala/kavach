@@ -63,6 +63,8 @@ if (import.meta.env.DEV) {
       events: [],
     },
     'demo-preauth-run': { ...demo.default, kind: 'preauth', status: 'analysing', progress: 'Planning your next steps', facts: null, assessment: null, letter: null, events: [] },
+    // A high-value case (over the IN expert threshold) to preview the advocate offer.
+    'demo-expert': { ...demo.default, facts: { ...demo.default.facts, claim_amount: 640000 } },
     'demo-run': { ...demo.default, status: 'analysing', progress: 'Finding the rules that apply', facts: null, assessment: null, letter: null, events: [], documents: docs },
   }
   const packs = { IN: await import('./dev/pack-IN.json'), SG: await import('./dev/pack-SG.json') }
