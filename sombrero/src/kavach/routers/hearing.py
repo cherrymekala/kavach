@@ -23,7 +23,7 @@ from ..agents import hearing
 from ..auth import verify_token
 from ..config import get_settings
 from ..models import Case, CaseEvent
-from ..tools import payments, store
+from ..tools import access, payments, store
 
 log = logging.getLogger(__name__)
 BUSY = "The rehearsal service is busy right now. Please try again in a few minutes."
@@ -137,7 +137,7 @@ async def _from_gemini(ws: WebSocket, session, case: Case, turns: _Turns) -> dic
 def _authorise(first: dict, case_id: str) -> Case:
     uid = verify_token(first.get("token"), get_settings())
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     if not case.assessment:
         raise HTTPException(409, "Run the analysis first.")

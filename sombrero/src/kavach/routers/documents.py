@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, HTTPException, Response, UploadFile
 from ..agents import quality
 from ..auth import current_user
 from ..models import CaseStatus, Document
-from ..tools import files, store
+from ..tools import access, files, store
 
 router = APIRouter(prefix="/cases/{case_id}/documents", tags=["documents"])
 
@@ -36,7 +36,7 @@ def safe_name(name: str | None) -> str:
 @router.post("", response_model=Document)
 async def upload(case_id: str, file: UploadFile, uid: str = Depends(current_user)) -> Document:
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     if len(case.documents) >= MAX_DOCUMENTS:
         raise HTTPException(400, f"A case can hold at most {MAX_DOCUMENTS} documents.")
@@ -67,7 +67,7 @@ async def upload(case_id: str, file: UploadFile, uid: str = Depends(current_user
 def get_file(case_id: str, doc_id: str, uid: str = Depends(current_user)) -> Response:
     """Serve a document's bytes for an inline preview."""
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     if case.documents_deleted_at:
         raise HTTPException(410, "These documents were deleted.")
@@ -85,7 +85,7 @@ def get_file(case_id: str, doc_id: str, uid: str = Depends(current_user)) -> Res
 def delete_document(case_id: str, doc_id: str, uid: str = Depends(current_user)) -> None:
     """Remove a wrong upload. Only before analysis, so results never cite a missing file."""
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     if case.status != CaseStatus.COLLECTING:
         raise HTTPException(409, "Documents can only be removed before the analysis starts.")

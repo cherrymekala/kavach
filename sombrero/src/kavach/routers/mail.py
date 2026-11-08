@@ -17,7 +17,7 @@ from pydantic import BaseModel, Field
 from ..agents import appeal_mail, escalation, filing
 from ..auth import current_user
 from ..models import Case, CaseEvent, Document, FiledRequest
-from ..tools import files, mail, packs, payments, store
+from ..tools import access, files, mail, packs, payments, store
 from . import whatsapp
 from .documents import ALLOWED, MAX_BYTES, MAX_DOCUMENTS, safe_name
 
@@ -46,7 +46,7 @@ class AppealMail(BaseModel):
 
 def _own(case_id: str, uid: str) -> Case:
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     return case
 

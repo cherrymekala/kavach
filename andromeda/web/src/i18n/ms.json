@@ -642,5 +642,31 @@
     "send": "Hantar permintaan",
     "error": "Kami tidak dapat menghantar permintaan anda. Sila cuba lagi.",
     "requested": "Anda telah meminta pakar manusia pada {{date}}. Pasukan kami akan menghubungi anda."
+  },
+  "share": {
+    "button": "Kongsi",
+    "title": "Kongsi dengan pembantu",
+    "sub": "Benarkan orang yang anda percayai menguruskan kes ini bersama anda: ahli keluarga, kaunter bil hospital atau kumpulan bantuan pesakit.",
+    "create": "Cipta kod",
+    "codeLabel": "Kod perkongsian",
+    "expires": "Boleh digunakan sekali, sehingga {{date}}.",
+    "copy": "Salin kod dan pautan",
+    "message": "Sertai kes Kavach saya dengan kod ini: {{code}}\n{{link}}",
+    "helpers": "Orang yang membantu kes ini",
+    "none": "Belum ada sesiapa.",
+    "since": "Sejak {{date}}",
+    "remove": "Buang",
+    "note": "Pembantu boleh melihat dan menguruskan kes ini, tetapi mereka tidak boleh memadamkannya atau berkongsinya dengan orang lain. Anda boleh membuang mereka pada bila-bila masa.",
+    "error": "Kami tidak dapat mencipta kod. Sila cuba lagi.",
+    "sharedWithYou": "Dikongsi dengan anda",
+    "sharedBadge": "Dikongsi",
+    "joinLink": "Sertai dengan kod",
+    "joinTitle": "Bantu kes pesakit",
+    "joinSub": "Masukkan kod yang dikongsi oleh pesakit dengan anda.",
+    "yourName": "Nama anda",
+    "namePlaceholder": "Cth. Asha, kaunter bil Hospital Lotus",
+    "join": "Sertai kes",
+    "joinNote": "Pesakit akan melihat nama anda dan boleh membuang anda pada bila-bila masa.",
+    "joinError": "Kami tidak dapat menyertai kes ini. Sila semak kod."
   }
 }

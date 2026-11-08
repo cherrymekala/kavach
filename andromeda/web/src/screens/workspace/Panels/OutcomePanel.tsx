@@ -14,6 +14,7 @@ import {
   KavachPlates,
   ShieldHero
 } from '@/components'
+import { useAuth } from '@/auth'
 import { useDeleteCase } from '@/api/hooks'
 import { apiBlob } from '@/api/client'
 import { downloadBlob } from '@/lib/download'
@@ -26,6 +27,9 @@ export function OutcomePanel({ caseId, kase }: { caseId: string; kase: Case }) {
   const { t } = useTranslation()
   const deleteCase = useDeleteCase()
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const { user } = useAuth()
+  // Only the patient can erase their data; helpers they invited cannot.
+  const isOwner = !user || kase.owner === user.uid
   const [error, setError] = useState<string | null>(null)
 
   const recovered = kase.amount_recovered
@@ -75,14 +79,16 @@ export function OutcomePanel({ caseId, kase }: { caseId: string; kase: Case }) {
         {error ? <p className="text-sm text-destructive">{error}</p> : null}
       </div>
 
-      <div className="flex flex-col gap-3 rounded-lg border border-destructive/30 bg-destructive/5 p-5">
-        <h3 className="text-xl font-extrabold tracking-tight text-destructive">{t('outcome.deleteTitle')}</h3>
-        <p className="text-sm text-muted-foreground">{t('outcome.deleteSub')}</p>
-        <Button variant="destructive" className="self-start" onClick={() => setConfirmOpen(true)}>
-          <Trash2Icon className="size-4" aria-hidden />
-          {t('outcome.delete')}
-        </Button>
-      </div>
+      {isOwner ? (
+        <div className="flex flex-col gap-3 rounded-lg border border-destructive/30 bg-destructive/5 p-5">
+          <h3 className="text-xl font-extrabold tracking-tight text-destructive">{t('outcome.deleteTitle')}</h3>
+          <p className="text-sm text-muted-foreground">{t('outcome.deleteSub')}</p>
+          <Button variant="destructive" className="self-start" onClick={() => setConfirmOpen(true)}>
+            <Trash2Icon className="size-4" aria-hidden />
+            {t('outcome.delete')}
+          </Button>
+        </div>
+      ) : null}
 
       <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
         <AlertDialogContent>

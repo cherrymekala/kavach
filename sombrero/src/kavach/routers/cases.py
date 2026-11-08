@@ -16,7 +16,7 @@ from ..models import (
     NoteRequest,
     TitleRequest,
 )
-from ..tools import files, store
+from ..tools import access, files, store
 
 router = APIRouter(prefix="/cases", tags=["cases"])
 
@@ -91,13 +91,13 @@ def create_case(body: CreateCase, uid: str = Depends(current_user)) -> Case:
 @router.get("", response_model=list[CaseSummary])
 def list_cases(uid: str = Depends(current_user)) -> list[CaseSummary]:
     """The signed-in user's cases, newest first."""
-    return [CaseSummary.of(c) for c in store.list_cases(uid)]
+    return [CaseSummary.of(c, uid) for c in store.list_cases(uid)]
 
 
 @router.get("/{case_id}", response_model=Case)
 def get_case(case_id: str, uid: str = Depends(current_user)) -> Case:
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     return case
 
@@ -106,7 +106,7 @@ def get_case(case_id: str, uid: str = Depends(current_user)) -> Case:
 def delete_case(case_id: str, uid: str = Depends(current_user)) -> None:
     """Erase the case and every uploaded document (DPDP Act / PDPA: people can delete their data)."""
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not case or case.owner != uid:  # owner only: helpers cannot delete
         raise HTTPException(404, "Case not found.")
     files.delete_case_files(case.id)
     store.delete_case(case.id)
@@ -115,7 +115,7 @@ def delete_case(case_id: str, uid: str = Depends(current_user)) -> None:
 @router.put("/{case_id}/title", response_model=Case)
 def set_title(case_id: str, body: TitleRequest, uid: str = Depends(current_user)) -> Case:
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     title = body.title.strip()
     if not title:
@@ -130,7 +130,7 @@ def set_title(case_id: str, body: TitleRequest, uid: str = Depends(current_user)
 def add_note(case_id: str, body: NoteRequest, uid: str = Depends(current_user)) -> Case:
     """Append the patient's own text to the case history."""
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     text = body.text.strip()
     if not text:
@@ -147,7 +147,7 @@ def add_note(case_id: str, body: NoteRequest, uid: str = Depends(current_user)) 
 def ask(case_id: str, body: AskRequest, uid: str = Depends(current_user)) -> AskAnswer:
     """Answer a free-text question about the case, grounded in its facts and assessment."""
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     if not case.assessment and not case.discharge_check:
         raise HTTPException(409, "Run the analysis before asking about the case.")

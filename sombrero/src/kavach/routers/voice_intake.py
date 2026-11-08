@@ -22,7 +22,7 @@ from ..agents import hearing, voice_intake
 from ..auth import verify_token
 from ..config import get_settings
 from ..models import Case, CaseEvent, CaseStatus, DocType, Document
-from ..tools import files, store
+from ..tools import access, files, store
 from .documents import MAX_DOCUMENTS
 
 log = logging.getLogger(__name__)
@@ -101,7 +101,7 @@ async def _from_gemini(ws: WebSocket, session, talk: _Talk) -> None:
 def _authorise(first: dict, case_id: str) -> Case:
     uid = verify_token(first.get("token"), get_settings())
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):  # the patient or a helper they invited
         raise HTTPException(404, "Case not found.")
     if case.status != CaseStatus.COLLECTING:
         raise HTTPException(409, "This case is already being analysed.")

@@ -14,17 +14,15 @@ from ..agents import expert
 from ..auth import current_user
 from ..config import get_settings
 from ..models import Case, CaseEvent, ExpertOffer, ExpertRequest, ExpertRequestBody
-from ..tools import mail, store
+from ..tools import access, mail, store
 
 log = logging.getLogger(__name__)
 router = APIRouter(prefix="/cases/{case_id}/expert", tags=["expert"])
 
 
 def _own(case_id: str, uid: str) -> Case:
-    case = store.load_case(case_id)
-    if not case or case.owner != uid:
-        raise HTTPException(404, "Case not found.")
-    return case
+    # The patient or a helper they invited (a caregiver or NGO often makes this call for them).
+    return access.load(case_id, uid)
 
 
 @router.get("", response_model=ExpertOffer)

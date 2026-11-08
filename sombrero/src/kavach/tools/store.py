@@ -69,12 +69,23 @@ def delete_case(case_id: str) -> None:
 
 
 def list_cases(owner: str) -> list[Case]:
-    """Newest first. Equality filter only, so no composite index is needed; sorted here."""
+    """The user's own cases and the ones shared with them, newest first.
+
+    Two single-field queries (no composite index needed), merged and sorted here.
+    """
     if _local():
-        cases = [c for c in _memory.values() if c.owner == owner]
+        cases = [c for c in _memory.values() if c.owner == owner or owner in c.helper_ids]
     else:
-        query = _db().collection("cases").where("owner", "==", owner)
-        cases = [Case.model_validate(s.to_dict()) for s in query.stream()]
+        col = _db().collection("cases")
+        found = {
+            s.id: s.to_dict()
+            for q in (
+                col.where("owner", "==", owner),
+                col.where("helper_ids", "array_contains", owner),
+            )
+            for s in q.stream()
+        }
+        cases = [Case.model_validate(d) for d in found.values()]
     return sorted(
         cases, key=lambda c: c.created_at.isoformat() if c.created_at else "", reverse=True
     )
@@ -201,6 +212,32 @@ def case_for_message(message_id: str) -> str | None:
         return _threads.get(_thread_key(message_id))
     snap = _db().collection("mail_threads").document(_thread_key(message_id)).get()
     return (snap.to_dict() or {}).get("case_id") if snap.exists else None
+
+
+# ── Share codes: a patient invites a helper. Stored by hash only; single use. ──────────
+
+_share_codes: dict[str, dict] = {}
+
+
+def save_share_code(code_hash: str, data: dict) -> None:
+    if _local():
+        _share_codes[code_hash] = dict(data)
+        return
+    _db().collection("share_codes").document(code_hash).set(data)
+
+
+def load_share_code(code_hash: str) -> dict | None:
+    if _local():
+        return dict(_share_codes[code_hash]) if code_hash in _share_codes else None
+    snap = _db().collection("share_codes").document(code_hash).get()
+    return snap.to_dict() if snap.exists else None
+
+
+def delete_share_code(code_hash: str) -> None:
+    if _local():
+        _share_codes.pop(code_hash, None)
+        return
+    _db().collection("share_codes").document(code_hash).delete()
 
 
 # ── Expert requests: the triage queue for human advocates. ─────────────────────────────

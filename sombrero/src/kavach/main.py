@@ -19,6 +19,7 @@ from .routers import (
     mail,
     packs,
     payments,
+    sharing,
     tracker,
     voice,
     voice_intake,
@@ -67,6 +68,7 @@ app.include_router(voice.router)
 app.include_router(voice_intake.router)
 app.include_router(whatsapp.router)
 app.include_router(payments.router)
+app.include_router(sharing.router)
 app.include_router(mail.router)
 
 

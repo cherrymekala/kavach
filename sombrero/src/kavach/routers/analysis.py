@@ -6,7 +6,7 @@ from ..agents.orchestrator import run_case
 from ..auth import current_user
 from ..config import get_settings
 from ..models import CaseStatus
-from ..tools import store
+from ..tools import access, store
 
 router = APIRouter(prefix="/cases/{case_id}", tags=["analysis"])
 
@@ -20,7 +20,7 @@ STALE_ANALYSIS = 15 * 60
 def analyse(case_id: str, bg: BackgroundTasks, uid: str = Depends(current_user)) -> dict:
     """Start the agent pipeline. The UI watches the case document for progress."""
     case = store.load_case(case_id)
-    if not case or case.owner != uid:
+    if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
     if case.status == CaseStatus.ANALYSING:
         age = store.seconds_since_update(case_id)

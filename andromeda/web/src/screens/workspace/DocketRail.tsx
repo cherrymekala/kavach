@@ -57,6 +57,13 @@ function CaseList() {
           <PlusIcon className="size-4" aria-hidden />
           {t('workspace.newCase')}
         </button>
+        <button
+          type="button"
+          onClick={() => navigate('/join')}
+          className="mt-2 w-full text-center text-xs font-semibold text-rail-foreground/70 hover:text-rail-foreground hover:underline"
+        >
+          {t('share.joinLink')}
+        </button>
       </div>
 
       <p className="px-4 pt-6 text-xs font-medium text-rail-foreground/50">{t('workspace.yourCases')}</p>
@@ -82,6 +89,11 @@ function CaseList() {
                     <span className="flex items-center gap-2">
                       <span className={cn('size-1.5 shrink-0 rounded-full', DOT[c.status] ?? 'bg-rail-foreground/30')} />
                       <span className="min-w-0 flex-1 truncate text-sm font-semibold text-rail-foreground">{title(c)}</span>
+                      {c.role === 'helper' ? (
+                        <span className="shrink-0 rounded-full bg-accent px-2 py-px text-[10px] font-bold text-accent-foreground">
+                          {t('share.sharedBadge')}
+                        </span>
+                      ) : null}
                       <span className="shrink-0 rounded-full bg-rail-foreground/10 px-2 py-px text-[10px] font-semibold text-rail-foreground/80">
                         {c.country}
                       </span>
