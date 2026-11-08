@@ -15,10 +15,10 @@ substitutions:
   _WHATSAPP_PHONE_NUMBER_ID: ""
   _WHATSAPP_TEMPLATE: ""
   # Email (Cloudflare Email Service): reimaginy.tech is onboarded for sending; replies to
-  # _MAIL_REPLY_TO are routed to the pinwheel/ Worker. Empty account id = dry run.
+  # _MAIL_REPLY_TO are routed to the pinwheel/ Worker. No sending token (or the "unset" placeholder) = dry run.
   _MAIL_FROM: "Kavach Appeals <appeals@reimaginy.tech>"
   _MAIL_REPLY_TO: appeals@reimaginy.tech
-  _CLOUDFLARE_ACCOUNT_ID: ""
+  _CLOUDFLARE_ACCOUNT_ID: 25440e45ad090dc826ef2f8a7a4f0a25
 options:
   # Required when the trigger runs as a user-managed service account.
   logging: CLOUD_LOGGING_ONLY
