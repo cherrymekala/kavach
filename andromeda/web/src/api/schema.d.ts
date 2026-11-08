@@ -305,6 +305,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/insights/{country}/insurers/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Scorecard
+         * @description Public: one insurer's scorecard (shareable link).
+         */
+        get: operations["get_scorecard_insights__country__insurers__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tracker/tick": {
         parameters: {
             query?: never;
@@ -978,8 +998,49 @@ export interface components {
             by_insurer: components["schemas"]["InsightRow"][];
             /** By Year */
             by_year: components["schemas"]["InsightRow"][];
+            /**
+             * Insurers
+             * @default []
+             */
+            insurers: components["schemas"]["InsurerScorecard"][];
             /** Note */
             note: string;
+        };
+        /**
+         * InsurerScorecard
+         * @description One insurer's published Ombudsman awards: grounds, outcomes and trend.
+         */
+        InsurerScorecard: {
+            /** Key */
+            key: string;
+            /** Total */
+            total: number;
+            /** Allowed */
+            allowed: number;
+            /** Partly Allowed */
+            partly_allowed: number;
+            /** Dismissed */
+            dismissed: number;
+            /** Won Pct */
+            won_pct: number;
+            /** Slug */
+            slug: string;
+            /** Now Known As */
+            now_known_as?: string | null;
+            /** Period */
+            period?: {
+                [key: string]: unknown;
+            } | null;
+            /**
+             * Grounds
+             * @default []
+             */
+            grounds: components["schemas"]["ScorecardGround"][];
+            /**
+             * By Year
+             * @default []
+             */
+            by_year: components["schemas"]["InsightRow"][];
         };
         /** LadderStep */
         LadderStep: {
@@ -1137,6 +1198,25 @@ export interface components {
             fix: string;
             /** Sources */
             sources: components["schemas"]["Source"][];
+        };
+        /** ScorecardGround */
+        ScorecardGround: {
+            /** Key */
+            key: string;
+            /** Total */
+            total: number;
+            /** Allowed */
+            allowed: number;
+            /** Partly Allowed */
+            partly_allowed: number;
+            /** Dismissed */
+            dismissed: number;
+            /** Won Pct */
+            won_pct: number;
+            /** Share Pct */
+            share_pct: number;
+            /** Everyone Won Pct */
+            everyone_won_pct?: number | null;
         };
         /** SendAppealRequest */
         SendAppealRequest: {
@@ -1791,6 +1871,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Insights"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_scorecard_insights__country__insurers__slug__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                country: string;
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InsurerScorecard"];
                 };
             };
             /** @description Validation Error */

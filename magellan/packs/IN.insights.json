@@ -283,5 +283,1026 @@
       "won_pct": 70
     }
   ],
+  "insurers": [
+    {
+      "key": "New India Assurance",
+      "total": 1139,
+      "allowed": 381,
+      "partly_allowed": 271,
+      "dismissed": 487,
+      "won_pct": 57,
+      "slug": "new-india-assurance",
+      "now_known_as": null,
+      "period": {
+        "from": "2005",
+        "to": "2016"
+      },
+      "grounds": [
+        {
+          "key": "pre_existing",
+          "total": 316,
+          "allowed": 113,
+          "partly_allowed": 55,
+          "dismissed": 148,
+          "won_pct": 53,
+          "share_pct": 28,
+          "everyone_won_pct": 61
+        },
+        {
+          "key": "excluded_treatment",
+          "total": 166,
+          "allowed": 48,
+          "partly_allowed": 26,
+          "dismissed": 92,
+          "won_pct": 45,
+          "share_pct": 15,
+          "everyone_won_pct": 48
+        },
+        {
+          "key": "not_medically_necessary",
+          "total": 118,
+          "allowed": 53,
+          "partly_allowed": 27,
+          "dismissed": 38,
+          "won_pct": 68,
+          "share_pct": 10,
+          "everyone_won_pct": 72
+        },
+        {
+          "key": "specific_waiting_period",
+          "total": 81,
+          "allowed": 23,
+          "partly_allowed": 11,
+          "dismissed": 47,
+          "won_pct": 42,
+          "share_pct": 7,
+          "everyone_won_pct": 51
+        },
+        {
+          "key": "reasonable_charges",
+          "total": 79,
+          "allowed": 16,
+          "partly_allowed": 50,
+          "dismissed": 13,
+          "won_pct": 84,
+          "share_pct": 7,
+          "everyone_won_pct": 86
+        },
+        {
+          "key": "diagnostic_only",
+          "total": 58,
+          "allowed": 12,
+          "partly_allowed": 12,
+          "dismissed": 34,
+          "won_pct": 41,
+          "share_pct": 5,
+          "everyone_won_pct": 48
+        },
+        {
+          "key": "sub_limit",
+          "total": 42,
+          "allowed": 5,
+          "partly_allowed": 21,
+          "dismissed": 16,
+          "won_pct": 62,
+          "share_pct": 4,
+          "everyone_won_pct": 67
+        },
+        {
+          "key": "missing_documents",
+          "total": 36,
+          "allowed": 18,
+          "partly_allowed": 11,
+          "dismissed": 7,
+          "won_pct": 81,
+          "share_pct": 3,
+          "everyone_won_pct": 86
+        },
+        {
+          "key": "under_24_hours",
+          "total": 34,
+          "allowed": 14,
+          "partly_allowed": 4,
+          "dismissed": 16,
+          "won_pct": 53,
+          "share_pct": 3,
+          "everyone_won_pct": 55
+        },
+        {
+          "key": "non_disclosure",
+          "total": 34,
+          "allowed": 4,
+          "partly_allowed": 8,
+          "dismissed": 22,
+          "won_pct": 35,
+          "share_pct": 3,
+          "everyone_won_pct": 33
+        },
+        {
+          "key": "room_rent",
+          "total": 31,
+          "allowed": 11,
+          "partly_allowed": 18,
+          "dismissed": 2,
+          "won_pct": 94,
+          "share_pct": 3,
+          "everyone_won_pct": 95
+        },
+        {
+          "key": "late_intimation",
+          "total": 24,
+          "allowed": 9,
+          "partly_allowed": 4,
+          "dismissed": 11,
+          "won_pct": 54,
+          "share_pct": 2,
+          "everyone_won_pct": 76
+        },
+        {
+          "key": "hospital_ineligible",
+          "total": 20,
+          "allowed": 9,
+          "partly_allowed": 3,
+          "dismissed": 8,
+          "won_pct": 60,
+          "share_pct": 2,
+          "everyone_won_pct": 77
+        },
+        {
+          "key": "initial_waiting_period",
+          "total": 12,
+          "allowed": 5,
+          "partly_allowed": 1,
+          "dismissed": 6,
+          "won_pct": 50,
+          "share_pct": 1,
+          "everyone_won_pct": 54
+        }
+      ],
+      "by_year": [
+        {
+          "key": "2005",
+          "total": 201,
+          "allowed": 61,
+          "partly_allowed": 37,
+          "dismissed": 103,
+          "won_pct": 49
+        },
+        {
+          "key": "2006",
+          "total": 170,
+          "allowed": 55,
+          "partly_allowed": 36,
+          "dismissed": 79,
+          "won_pct": 54
+        },
+        {
+          "key": "2007",
+          "total": 227,
+          "allowed": 84,
+          "partly_allowed": 57,
+          "dismissed": 86,
+          "won_pct": 62
+        },
+        {
+          "key": "2008",
+          "total": 156,
+          "allowed": 42,
+          "partly_allowed": 42,
+          "dismissed": 72,
+          "won_pct": 54
+        },
+        {
+          "key": "2009",
+          "total": 94,
+          "allowed": 45,
+          "partly_allowed": 17,
+          "dismissed": 32,
+          "won_pct": 66
+        },
+        {
+          "key": "2010",
+          "total": 120,
+          "allowed": 43,
+          "partly_allowed": 34,
+          "dismissed": 43,
+          "won_pct": 64
+        },
+        {
+          "key": "2011",
+          "total": 20,
+          "allowed": 9,
+          "partly_allowed": 9,
+          "dismissed": 2,
+          "won_pct": 90
+        },
+        {
+          "key": "2012",
+          "total": 20,
+          "allowed": 8,
+          "partly_allowed": 10,
+          "dismissed": 2,
+          "won_pct": 90
+        },
+        {
+          "key": "2013",
+          "total": 34,
+          "allowed": 6,
+          "partly_allowed": 3,
+          "dismissed": 25,
+          "won_pct": 26
+        },
+        {
+          "key": "2015",
+          "total": 13,
+          "allowed": 4,
+          "partly_allowed": 5,
+          "dismissed": 4,
+          "won_pct": 69
+        }
+      ]
+    },
+    {
+      "key": "United India Insurance",
+      "total": 676,
+      "allowed": 301,
+      "partly_allowed": 154,
+      "dismissed": 221,
+      "won_pct": 67,
+      "slug": "united-india-insurance",
+      "now_known_as": null,
+      "period": {
+        "from": "2005",
+        "to": "2017"
+      },
+      "grounds": [
+        {
+          "key": "pre_existing",
+          "total": 220,
+          "allowed": 100,
+          "partly_allowed": 33,
+          "dismissed": 87,
+          "won_pct": 60,
+          "share_pct": 33,
+          "everyone_won_pct": 61
+        },
+        {
+          "key": "late_intimation",
+          "total": 88,
+          "allowed": 56,
+          "partly_allowed": 13,
+          "dismissed": 19,
+          "won_pct": 78,
+          "share_pct": 13,
+          "everyone_won_pct": 76
+        },
+        {
+          "key": "excluded_treatment",
+          "total": 58,
+          "allowed": 30,
+          "partly_allowed": 6,
+          "dismissed": 22,
+          "won_pct": 62,
+          "share_pct": 9,
+          "everyone_won_pct": 48
+        },
+        {
+          "key": "not_medically_necessary",
+          "total": 54,
+          "allowed": 33,
+          "partly_allowed": 10,
+          "dismissed": 11,
+          "won_pct": 80,
+          "share_pct": 8,
+          "everyone_won_pct": 72
+        },
+        {
+          "key": "sub_limit",
+          "total": 46,
+          "allowed": 3,
+          "partly_allowed": 30,
+          "dismissed": 13,
+          "won_pct": 72,
+          "share_pct": 7,
+          "everyone_won_pct": 67
+        },
+        {
+          "key": "missing_documents",
+          "total": 34,
+          "allowed": 24,
+          "partly_allowed": 7,
+          "dismissed": 3,
+          "won_pct": 91,
+          "share_pct": 5,
+          "everyone_won_pct": 86
+        },
+        {
+          "key": "reasonable_charges",
+          "total": 28,
+          "allowed": 2,
+          "partly_allowed": 22,
+          "dismissed": 4,
+          "won_pct": 86,
+          "share_pct": 4,
+          "everyone_won_pct": 86
+        },
+        {
+          "key": "diagnostic_only",
+          "total": 27,
+          "allowed": 13,
+          "partly_allowed": 3,
+          "dismissed": 11,
+          "won_pct": 59,
+          "share_pct": 4,
+          "everyone_won_pct": 48
+        },
+        {
+          "key": "specific_waiting_period",
+          "total": 22,
+          "allowed": 12,
+          "partly_allowed": 2,
+          "dismissed": 8,
+          "won_pct": 64,
+          "share_pct": 3,
+          "everyone_won_pct": 51
+        },
+        {
+          "key": "under_24_hours",
+          "total": 18,
+          "allowed": 7,
+          "partly_allowed": 3,
+          "dismissed": 8,
+          "won_pct": 56,
+          "share_pct": 3,
+          "everyone_won_pct": 55
+        },
+        {
+          "key": "non_disclosure",
+          "total": 17,
+          "allowed": 1,
+          "partly_allowed": 1,
+          "dismissed": 15,
+          "won_pct": 12,
+          "share_pct": 3,
+          "everyone_won_pct": 33
+        },
+        {
+          "key": "hospital_ineligible",
+          "total": 11,
+          "allowed": 2,
+          "partly_allowed": 2,
+          "dismissed": 7,
+          "won_pct": 36,
+          "share_pct": 2,
+          "everyone_won_pct": 77
+        }
+      ],
+      "by_year": [
+        {
+          "key": "2005",
+          "total": 72,
+          "allowed": 18,
+          "partly_allowed": 18,
+          "dismissed": 36,
+          "won_pct": 50
+        },
+        {
+          "key": "2006",
+          "total": 75,
+          "allowed": 25,
+          "partly_allowed": 10,
+          "dismissed": 40,
+          "won_pct": 47
+        },
+        {
+          "key": "2007",
+          "total": 134,
+          "allowed": 53,
+          "partly_allowed": 28,
+          "dismissed": 53,
+          "won_pct": 60
+        },
+        {
+          "key": "2008",
+          "total": 85,
+          "allowed": 49,
+          "partly_allowed": 16,
+          "dismissed": 20,
+          "won_pct": 76
+        },
+        {
+          "key": "2009",
+          "total": 63,
+          "allowed": 33,
+          "partly_allowed": 16,
+          "dismissed": 14,
+          "won_pct": 78
+        },
+        {
+          "key": "2010",
+          "total": 104,
+          "allowed": 49,
+          "partly_allowed": 29,
+          "dismissed": 26,
+          "won_pct": 75
+        },
+        {
+          "key": "2011",
+          "total": 17,
+          "allowed": 11,
+          "partly_allowed": 4,
+          "dismissed": 2,
+          "won_pct": 88
+        },
+        {
+          "key": "2012",
+          "total": 22,
+          "allowed": 15,
+          "partly_allowed": 7,
+          "dismissed": 0,
+          "won_pct": 100
+        },
+        {
+          "key": "2013",
+          "total": 30,
+          "allowed": 13,
+          "partly_allowed": 8,
+          "dismissed": 9,
+          "won_pct": 70
+        }
+      ]
+    },
+    {
+      "key": "Oriental Insurance",
+      "total": 473,
+      "allowed": 204,
+      "partly_allowed": 103,
+      "dismissed": 166,
+      "won_pct": 65,
+      "slug": "oriental-insurance",
+      "now_known_as": null,
+      "period": {
+        "from": "2005",
+        "to": "2017"
+      },
+      "grounds": [
+        {
+          "key": "pre_existing",
+          "total": 157,
+          "allowed": 74,
+          "partly_allowed": 33,
+          "dismissed": 50,
+          "won_pct": 68,
+          "share_pct": 33,
+          "everyone_won_pct": 61
+        },
+        {
+          "key": "excluded_treatment",
+          "total": 71,
+          "allowed": 19,
+          "partly_allowed": 14,
+          "dismissed": 38,
+          "won_pct": 46,
+          "share_pct": 15,
+          "everyone_won_pct": 48
+        },
+        {
+          "key": "not_medically_necessary",
+          "total": 41,
+          "allowed": 19,
+          "partly_allowed": 9,
+          "dismissed": 13,
+          "won_pct": 68,
+          "share_pct": 9,
+          "everyone_won_pct": 72
+        },
+        {
+          "key": "specific_waiting_period",
+          "total": 37,
+          "allowed": 20,
+          "partly_allowed": 2,
+          "dismissed": 15,
+          "won_pct": 59,
+          "share_pct": 8,
+          "everyone_won_pct": 51
+        },
+        {
+          "key": "diagnostic_only",
+          "total": 33,
+          "allowed": 15,
+          "partly_allowed": 4,
+          "dismissed": 14,
+          "won_pct": 58,
+          "share_pct": 7,
+          "everyone_won_pct": 48
+        },
+        {
+          "key": "reasonable_charges",
+          "total": 18,
+          "allowed": 6,
+          "partly_allowed": 9,
+          "dismissed": 3,
+          "won_pct": 83,
+          "share_pct": 4,
+          "everyone_won_pct": 86
+        },
+        {
+          "key": "late_intimation",
+          "total": 15,
+          "allowed": 11,
+          "partly_allowed": 2,
+          "dismissed": 2,
+          "won_pct": 87,
+          "share_pct": 3,
+          "everyone_won_pct": 76
+        },
+        {
+          "key": "under_24_hours",
+          "total": 13,
+          "allowed": 6,
+          "partly_allowed": 3,
+          "dismissed": 4,
+          "won_pct": 69,
+          "share_pct": 3,
+          "everyone_won_pct": 55
+        },
+        {
+          "key": "missing_documents",
+          "total": 11,
+          "allowed": 6,
+          "partly_allowed": 2,
+          "dismissed": 3,
+          "won_pct": 73,
+          "share_pct": 2,
+          "everyone_won_pct": 86
+        },
+        {
+          "key": "non_disclosure",
+          "total": 11,
+          "allowed": 3,
+          "partly_allowed": 2,
+          "dismissed": 6,
+          "won_pct": 45,
+          "share_pct": 2,
+          "everyone_won_pct": 33
+        },
+        {
+          "key": "hospital_ineligible",
+          "total": 10,
+          "allowed": 3,
+          "partly_allowed": 3,
+          "dismissed": 4,
+          "won_pct": 60,
+          "share_pct": 2,
+          "everyone_won_pct": 77
+        }
+      ],
+      "by_year": [
+        {
+          "key": "2005",
+          "total": 78,
+          "allowed": 27,
+          "partly_allowed": 17,
+          "dismissed": 34,
+          "won_pct": 56
+        },
+        {
+          "key": "2006",
+          "total": 49,
+          "allowed": 17,
+          "partly_allowed": 10,
+          "dismissed": 22,
+          "won_pct": 55
+        },
+        {
+          "key": "2007",
+          "total": 97,
+          "allowed": 42,
+          "partly_allowed": 27,
+          "dismissed": 28,
+          "won_pct": 71
+        },
+        {
+          "key": "2008",
+          "total": 70,
+          "allowed": 35,
+          "partly_allowed": 10,
+          "dismissed": 25,
+          "won_pct": 64
+        },
+        {
+          "key": "2009",
+          "total": 31,
+          "allowed": 13,
+          "partly_allowed": 6,
+          "dismissed": 12,
+          "won_pct": 61
+        },
+        {
+          "key": "2010",
+          "total": 33,
+          "allowed": 12,
+          "partly_allowed": 5,
+          "dismissed": 16,
+          "won_pct": 52
+        },
+        {
+          "key": "2011",
+          "total": 13,
+          "allowed": 10,
+          "partly_allowed": 3,
+          "dismissed": 0,
+          "won_pct": 100
+        },
+        {
+          "key": "2012",
+          "total": 17,
+          "allowed": 16,
+          "partly_allowed": 1,
+          "dismissed": 0,
+          "won_pct": 100
+        },
+        {
+          "key": "2013",
+          "total": 24,
+          "allowed": 9,
+          "partly_allowed": 4,
+          "dismissed": 11,
+          "won_pct": 54
+        }
+      ]
+    },
+    {
+      "key": "National Insurance",
+      "total": 428,
+      "allowed": 208,
+      "partly_allowed": 93,
+      "dismissed": 127,
+      "won_pct": 70,
+      "slug": "national-insurance",
+      "now_known_as": null,
+      "period": {
+        "from": "2005",
+        "to": "2015"
+      },
+      "grounds": [
+        {
+          "key": "pre_existing",
+          "total": 120,
+          "allowed": 59,
+          "partly_allowed": 20,
+          "dismissed": 41,
+          "won_pct": 66,
+          "share_pct": 28,
+          "everyone_won_pct": 61
+        },
+        {
+          "key": "hospital_ineligible",
+          "total": 41,
+          "allowed": 40,
+          "partly_allowed": 1,
+          "dismissed": 0,
+          "won_pct": 100,
+          "share_pct": 10,
+          "everyone_won_pct": 77
+        },
+        {
+          "key": "excluded_treatment",
+          "total": 35,
+          "allowed": 11,
+          "partly_allowed": 7,
+          "dismissed": 17,
+          "won_pct": 51,
+          "share_pct": 8,
+          "everyone_won_pct": 48
+        },
+        {
+          "key": "specific_waiting_period",
+          "total": 28,
+          "allowed": 12,
+          "partly_allowed": 4,
+          "dismissed": 12,
+          "won_pct": 57,
+          "share_pct": 7,
+          "everyone_won_pct": 51
+        },
+        {
+          "key": "late_intimation",
+          "total": 27,
+          "allowed": 17,
+          "partly_allowed": 4,
+          "dismissed": 6,
+          "won_pct": 78,
+          "share_pct": 6,
+          "everyone_won_pct": 76
+        },
+        {
+          "key": "sub_limit",
+          "total": 23,
+          "allowed": 3,
+          "partly_allowed": 16,
+          "dismissed": 4,
+          "won_pct": 83,
+          "share_pct": 5,
+          "everyone_won_pct": 67
+        },
+        {
+          "key": "diagnostic_only",
+          "total": 23,
+          "allowed": 7,
+          "partly_allowed": 3,
+          "dismissed": 13,
+          "won_pct": 43,
+          "share_pct": 5,
+          "everyone_won_pct": 48
+        },
+        {
+          "key": "not_medically_necessary",
+          "total": 20,
+          "allowed": 10,
+          "partly_allowed": 5,
+          "dismissed": 5,
+          "won_pct": 75,
+          "share_pct": 5,
+          "everyone_won_pct": 72
+        },
+        {
+          "key": "reasonable_charges",
+          "total": 19,
+          "allowed": 5,
+          "partly_allowed": 13,
+          "dismissed": 1,
+          "won_pct": 95,
+          "share_pct": 4,
+          "everyone_won_pct": 86
+        },
+        {
+          "key": "non_disclosure",
+          "total": 17,
+          "allowed": 3,
+          "partly_allowed": 2,
+          "dismissed": 12,
+          "won_pct": 29,
+          "share_pct": 4,
+          "everyone_won_pct": 33
+        },
+        {
+          "key": "missing_documents",
+          "total": 12,
+          "allowed": 8,
+          "partly_allowed": 3,
+          "dismissed": 1,
+          "won_pct": 92,
+          "share_pct": 3,
+          "everyone_won_pct": 86
+        },
+        {
+          "key": "under_24_hours",
+          "total": 10,
+          "allowed": 4,
+          "partly_allowed": 2,
+          "dismissed": 4,
+          "won_pct": 60,
+          "share_pct": 2,
+          "everyone_won_pct": 55
+        }
+      ],
+      "by_year": [
+        {
+          "key": "2005",
+          "total": 53,
+          "allowed": 18,
+          "partly_allowed": 13,
+          "dismissed": 22,
+          "won_pct": 58
+        },
+        {
+          "key": "2006",
+          "total": 74,
+          "allowed": 22,
+          "partly_allowed": 17,
+          "dismissed": 35,
+          "won_pct": 53
+        },
+        {
+          "key": "2007",
+          "total": 64,
+          "allowed": 30,
+          "partly_allowed": 11,
+          "dismissed": 23,
+          "won_pct": 64
+        },
+        {
+          "key": "2008",
+          "total": 46,
+          "allowed": 13,
+          "partly_allowed": 17,
+          "dismissed": 16,
+          "won_pct": 65
+        },
+        {
+          "key": "2009",
+          "total": 43,
+          "allowed": 28,
+          "partly_allowed": 6,
+          "dismissed": 9,
+          "won_pct": 79
+        },
+        {
+          "key": "2010",
+          "total": 63,
+          "allowed": 46,
+          "partly_allowed": 5,
+          "dismissed": 12,
+          "won_pct": 81
+        },
+        {
+          "key": "2011",
+          "total": 24,
+          "allowed": 18,
+          "partly_allowed": 6,
+          "dismissed": 0,
+          "won_pct": 100
+        },
+        {
+          "key": "2012",
+          "total": 16,
+          "allowed": 12,
+          "partly_allowed": 4,
+          "dismissed": 0,
+          "won_pct": 100
+        },
+        {
+          "key": "2013",
+          "total": 17,
+          "allowed": 12,
+          "partly_allowed": 3,
+          "dismissed": 2,
+          "won_pct": 88
+        }
+      ]
+    },
+    {
+      "key": "Reliance General",
+      "total": 73,
+      "allowed": 44,
+      "partly_allowed": 13,
+      "dismissed": 16,
+      "won_pct": 78,
+      "slug": "reliance-general",
+      "now_known_as": "IndusInd General Insurance",
+      "period": {
+        "from": "2008",
+        "to": "2015"
+      },
+      "grounds": [
+        {
+          "key": "pre_existing",
+          "total": 18,
+          "allowed": 14,
+          "partly_allowed": 1,
+          "dismissed": 3,
+          "won_pct": 83,
+          "share_pct": 25,
+          "everyone_won_pct": 61
+        },
+        {
+          "key": "excluded_treatment",
+          "total": 12,
+          "allowed": 6,
+          "partly_allowed": 1,
+          "dismissed": 5,
+          "won_pct": 58,
+          "share_pct": 16,
+          "everyone_won_pct": 48
+        }
+      ],
+      "by_year": [
+        {
+          "key": "2009",
+          "total": 13,
+          "allowed": 7,
+          "partly_allowed": 1,
+          "dismissed": 5,
+          "won_pct": 62
+        },
+        {
+          "key": "2010",
+          "total": 34,
+          "allowed": 17,
+          "partly_allowed": 8,
+          "dismissed": 9,
+          "won_pct": 74
+        }
+      ]
+    },
+    {
+      "key": "Royal Sundaram",
+      "total": 64,
+      "allowed": 30,
+      "partly_allowed": 8,
+      "dismissed": 26,
+      "won_pct": 59,
+      "slug": "royal-sundaram",
+      "now_known_as": null,
+      "period": {
+        "from": "2005",
+        "to": "2011"
+      },
+      "grounds": [
+        {
+          "key": "pre_existing",
+          "total": 45,
+          "allowed": 24,
+          "partly_allowed": 6,
+          "dismissed": 15,
+          "won_pct": 67,
+          "share_pct": 70,
+          "everyone_won_pct": 61
+        }
+      ],
+      "by_year": [
+        {
+          "key": "2007",
+          "total": 24,
+          "allowed": 12,
+          "partly_allowed": 2,
+          "dismissed": 10,
+          "won_pct": 58
+        },
+        {
+          "key": "2008",
+          "total": 13,
+          "allowed": 6,
+          "partly_allowed": 0,
+          "dismissed": 7,
+          "won_pct": 46
+        }
+      ]
+    },
+    {
+      "key": "Star Health",
+      "total": 40,
+      "allowed": 16,
+      "partly_allowed": 18,
+      "dismissed": 6,
+      "won_pct": 85,
+      "slug": "star-health",
+      "now_known_as": null,
+      "period": {
+        "from": "2009",
+        "to": "2013"
+      },
+      "grounds": [
+        {
+          "key": "pre_existing",
+          "total": 11,
+          "allowed": 7,
+          "partly_allowed": 3,
+          "dismissed": 1,
+          "won_pct": 91,
+          "share_pct": 28,
+          "everyone_won_pct": 61
+        }
+      ],
+      "by_year": [
+        {
+          "key": "2013",
+          "total": 10,
+          "allowed": 5,
+          "partly_allowed": 5,
+          "dismissed": 0,
+          "won_pct": 100
+        }
+      ]
+    },
+    {
+      "key": "ICICI Lombard",
+      "total": 35,
+      "allowed": 17,
+      "partly_allowed": 4,
+      "dismissed": 14,
+      "won_pct": 60,
+      "slug": "icici-lombard",
+      "now_known_as": null,
+      "period": {
+        "from": "2006",
+        "to": "2013"
+      },
+      "grounds": [
+        {
+          "key": "pre_existing",
+          "total": 12,
+          "allowed": 4,
+          "partly_allowed": 2,
+          "dismissed": 6,
+          "won_pct": 50,
+          "share_pct": 34,
+          "everyone_won_pct": 61
+        }
+      ],
+      "by_year": []
+    }
+  ],
   "note": "Published awards only, mostly 2005-2013; complaints settled earlier never reach an award. Rates show how disputes that reached the Ombudsman ended, not how often insurers reject claims."
 }

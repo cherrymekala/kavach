@@ -317,6 +317,21 @@ class InsightRow(BaseModel):
     won_pct: int  # allowed + partly allowed
 
 
+class ScorecardGround(InsightRow):
+    share_pct: int  # this ground's share of the insurer's awards
+    everyone_won_pct: int | None = None  # the same ground across all insurers, for comparison
+
+
+class InsurerScorecard(InsightRow):
+    """One insurer's published Ombudsman awards: grounds, outcomes and trend."""
+
+    slug: str
+    now_known_as: str | None = None  # renamed since the awards (e.g. Reliance General)
+    period: dict | None = None
+    grounds: list[ScorecardGround] = []
+    by_year: list[InsightRow] = []
+
+
 class Insights(BaseModel):
     """Public rejection-pattern report built from published dispute-body rulings."""
 
@@ -327,6 +342,7 @@ class Insights(BaseModel):
     by_category: list[InsightRow]
     by_insurer: list[InsightRow]
     by_year: list[InsightRow]
+    insurers: list[InsurerScorecard] = []
     note: str
 
 
