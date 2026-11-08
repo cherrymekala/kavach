@@ -572,6 +572,21 @@
       }
     ]
   },
+  "voice": {
+    "start": "Beritahu kami melalui suara",
+    "title": "Beritahu kami apa yang berlaku",
+    "sub": "Bercakaplah dalam bahasa anda sendiri. Kami akan bertanya beberapa soalan ringkas dan menyimpan apa yang anda katakan bersama kes anda. Tidak perlu sebut nama atau nombor polisi: dokumen anda sudah ada maklumat itu.",
+    "connecting": "Menyambung…",
+    "speak": "Ketik untuk bercakap",
+    "done": "Saya sudah selesai",
+    "saved": "Disimpan dalam fail anda",
+    "savedSub": "Apa yang anda beritahu kami telah disimpan bersama kes anda. Seterusnya, tambah foto dokumen anda, kemudian ketik \"Analisis kes saya\".",
+    "notSaved": "Belum ada apa-apa disimpan",
+    "notSavedSub": "Kami tidak mendengar cukup untuk disimpan. Anda boleh cuba lagi, atau taip apa yang berlaku.",
+    "close": "Tutup",
+    "error": "Sambungan terputus. Sila tutup ini dan cuba lagi.",
+    "noMic": "Mikrofon tidak tersedia. Anda boleh menaip jawapan anda."
+  },
   "expert": {
     "title": "Bercakap dengan pakar manusia",
     "why": {

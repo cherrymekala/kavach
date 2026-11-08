@@ -26,6 +26,7 @@ from ..models import Case, CaseEvent
 from ..tools import payments, store
 
 log = logging.getLogger(__name__)
+BUSY = "The rehearsal service is busy right now. Please try again in a few minutes."
 router = APIRouter(tags=["hearing"])
 MIN_ANSWERS = 3  # the Live model sometimes calls `finish` before the hearing has happened
 
@@ -158,21 +159,30 @@ async def hearing_socket(ws: WebSocket, case_id: str) -> None:
     s = get_settings()
     turns = _Turns()
     result = None
-    async with hearing.client().aio.live.connect(
-        model=s.live_model, config=hearing.live_config(case)
-    ) as session:
-        await session.send_client_content(
-            turns=_text("[session started: open the hearing]"), turn_complete=True
-        )
-        upstream = asyncio.create_task(_from_browser(ws, session, turns))
-        try:
-            result = await _from_gemini(ws, session, case, turns)
-        except WebSocketDisconnect:
-            pass
-        finally:
-            upstream.cancel()
-            with contextlib.suppress(asyncio.CancelledError, WebSocketDisconnect):
-                await upstream
+    try:
+        async with hearing.client().aio.live.connect(
+            model=s.live_model, config=hearing.live_config(case)
+        ) as session:
+            await session.send_client_content(
+                turns=_text("[session started: open the hearing]"), turn_complete=True
+            )
+            upstream = asyncio.create_task(_from_browser(ws, session, turns))
+            try:
+                result = await _from_gemini(ws, session, case, turns)
+            except WebSocketDisconnect:
+                pass
+            finally:
+                upstream.cancel()
+                with contextlib.suppress(asyncio.CancelledError, WebSocketDisconnect):
+                    await upstream
+    except Exception:
+        # Quota (1011 "Resource exhausted") or a dropped Live session: say so instead of leaving
+        # the patient waiting, and still debrief whatever they already rehearsed.
+        log.exception("hearing: Live session failed")
+        with contextlib.suppress(RuntimeError, WebSocketDisconnect):
+            await ws.send_json({"error": BUSY})
+        if turns.answers:
+            result = {}
 
     if result is not None:
         if hearing.is_answer(turns.answer) and turns.question:  # the closing statement

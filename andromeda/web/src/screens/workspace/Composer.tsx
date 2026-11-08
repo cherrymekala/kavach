@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useQueryClient } from '@tanstack/react-query'
+import { useSearchParams } from 'react-router-dom'
 import { MicIcon, PaperclipIcon, SendIcon } from 'lucide-react'
 import { Button, Input, KavachPlates } from '@/components'
 import { caseKey, useAddNote, useAsk, useUploadDocument } from '@/api/hooks'
 import type { Case } from '@/api/types'
 import { cn } from '@/lib/cn'
+import { VoiceIntakeDialog } from './VoiceIntakeDialog'
 
 interface ComposerProps {
   caseId: string
@@ -26,6 +28,20 @@ export function Composer({ caseId, kase, variant = 'dock', className }: Composer
   const [text, setText] = useState('')
   const [uploading, setUploading] = useState<string[]>([])
   const [error, setError] = useState<string | null>(null)
+  // "Tell us by voice" on the new-claim screen lands here with ?voice=1 and opens straight away.
+  const [params, setParams] = useSearchParams()
+  const [voiceOpen, setVoiceOpen] = useState(params.get('voice') === '1')
+  const canSpeak = kase?.status === 'collecting' && !kase?.documents_deleted_at
+  const voiceDialog = canSpeak ? (
+    <VoiceIntakeDialog
+      caseId={caseId}
+      open={voiceOpen}
+      onClose={() => {
+        setVoiceOpen(false)
+        if (params.has('voice')) setParams({}, { replace: true })
+      }}
+    />
+  ) : null
   const fileRef = useRef<HTMLInputElement>(null)
 
   const hasAssessment = Boolean(kase.assessment)
@@ -82,8 +98,9 @@ export function Composer({ caseId, kase, variant = 'dock', className }: Composer
         type="button"
         variant="ghost"
         size="icon"
-        disabled
         className="rounded-full"
+        disabled={!canSpeak}
+        onClick={() => setVoiceOpen(true)}
         aria-label={t('workspace.composer.mic')}
         title={t('workspace.composer.mic')}
       >
@@ -127,9 +144,14 @@ export function Composer({ caseId, kase, variant = 'dock', className }: Composer
           <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">{t('workspace.composer.heroSub')}</p>
         </div>
         <div className="w-full max-w-xl">{input}</div>
+        <Button variant="outline" className="h-11" onClick={() => setVoiceOpen(true)} disabled={!canSpeak}>
+          <MicIcon aria-hidden />
+          {t('voice.start')}
+        </Button>
         <p className="text-xs text-muted-foreground">{t('upload.limits')}</p>
         {uploading.length ? <p className="text-sm text-muted-foreground">{uploading.join(', ')}…</p> : null}
         {error ? <p className="text-sm text-destructive">{error}</p> : null}
+        {voiceDialog}
       </div>
     )
   }
@@ -139,6 +161,7 @@ export function Composer({ caseId, kase, variant = 'dock', className }: Composer
       {input}
       {uploading.length ? <p className="px-2 text-xs text-muted-foreground">Uploading {uploading.join(', ')}…</p> : null}
       {error ? <p className="px-2 text-sm text-destructive">{error}</p> : null}
+      {voiceDialog}
     </div>
   )
 }

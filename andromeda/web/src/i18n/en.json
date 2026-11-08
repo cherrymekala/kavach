@@ -572,6 +572,21 @@
       }
     ]
   },
+  "voice": {
+    "start": "Tell us by voice",
+    "title": "Tell us what happened",
+    "sub": "Speak in your own language. We'll ask a few short questions and save what you say with your case. No need to say names or policy numbers: your papers have those.",
+    "connecting": "Connecting…",
+    "speak": "Tap to speak",
+    "done": "I'm done",
+    "saved": "Saved to your files",
+    "savedSub": "What you told us is saved with your case. Add photos of your papers next, then tap Analyse.",
+    "notSaved": "Nothing saved yet",
+    "notSavedSub": "We didn't hear enough to save. You can try again, or type what happened instead.",
+    "close": "Close",
+    "error": "The connection dropped. Please close this and try again.",
+    "noMic": "Microphone not available. You can type your answers instead."
+  },
   "expert": {
     "title": "Talk to a human expert",
     "why": {

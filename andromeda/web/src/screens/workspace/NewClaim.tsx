@@ -33,7 +33,7 @@ export function NewClaim() {
   const [busy, setBusy] = useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
 
-  async function begin(run: (caseId: string) => Promise<void>) {
+  async function begin(run: (caseId: string) => Promise<void>, query = '') {
     setError(null)
     setBusy(true)
     try {
@@ -44,7 +44,7 @@ export function NewClaim() {
       // Drop the cached (empty) case so the dossier fetches the note/files we just added.
       queryClient.removeQueries({ queryKey: caseKey(c.id) })
       queryClient.invalidateQueries({ queryKey: ['cases'] })
-      navigate(`/case/${c.id}`)
+      navigate(`/case/${c.id}${query}`)
     } catch (e) {
       setError(e instanceof Error ? e.message : t('start.errorCreate'))
     } finally {
@@ -141,7 +141,8 @@ export function NewClaim() {
           type="button"
           variant="ghost"
           size="icon"
-          disabled
+          disabled={busy}
+          onClick={() => begin(async () => {}, '?voice=1')}
           className="rounded-full"
           aria-label={t('workspace.composer.mic')}
           title={t('workspace.composer.mic')}
@@ -175,6 +176,11 @@ export function NewClaim() {
           {!busy ? <SendIcon className="size-4" /> : null}
         </Button>
       </form>
+
+      <Button variant="outline" className="h-11" disabled={busy} onClick={() => begin(async () => {}, '?voice=1')}>
+        <MicIcon aria-hidden />
+        {t('voice.start')}
+      </Button>
 
       <p className="text-xs text-muted-foreground">{t('upload.limits')}</p>
       {error ? <p className="text-sm text-destructive">{error}</p> : null}
