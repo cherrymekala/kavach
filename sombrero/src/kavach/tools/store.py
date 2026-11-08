@@ -251,3 +251,42 @@ def save_expert_request(request) -> None:
         _expert_requests[request.id] = data
         return
     _db().collection("expert_requests").document(request.id).set(data)
+
+
+# --- Web push (FCM registration tokens), keyed by a hash of the token -----------------------
+
+_push_tokens: dict[str, dict] = {}
+
+
+def _push_key(token: str) -> str:
+    return hashlib.sha256(token.encode()).hexdigest()
+
+
+def save_push_token(uid: str, token: str) -> None:
+    data = {"uid": uid, "token": token, "saved_at": datetime.now(UTC)}
+    if _local():
+        _push_tokens[_push_key(token)] = data
+        return
+    _db().collection("push_tokens").document(_push_key(token)).set(data)
+
+
+def push_tokens_for(uid: str) -> list[str]:
+    if _local():
+        return [d["token"] for d in _push_tokens.values() if d["uid"] == uid]
+    docs = _db().collection("push_tokens").where("uid", "==", uid).limit(20).stream()
+    return [d.to_dict()["token"] for d in docs]
+
+
+def delete_push_token(token: str, uid: str | None = None) -> None:
+    """Remove a token (only the caller's own, when uid is given)."""
+    key = _push_key(token)
+    if _local():
+        if uid is None or _push_tokens.get(key, {}).get("uid") == uid:
+            _push_tokens.pop(key, None)
+        return
+    ref = _db().collection("push_tokens").document(key)
+    if uid is not None:
+        snap = ref.get()
+        if not snap.exists or snap.to_dict().get("uid") != uid:
+            return
+    ref.delete()

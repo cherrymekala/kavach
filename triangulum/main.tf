@@ -93,6 +93,7 @@ resource "google_project_iam_member" "run_roles" {
   for_each = toset([
     "roles/datastore.user", "roles/storage.objectAdmin", "roles/aiplatform.user",
     "roles/discoveryengine.user", "roles/bigquery.dataEditor", "roles/secretmanager.secretAccessor",
+    "roles/firebasecloudmessaging.admin", # web push reminders (tools/push.py)
   ])
   project = var.project_id
   role    = each.value

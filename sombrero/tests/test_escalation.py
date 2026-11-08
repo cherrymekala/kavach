@@ -26,7 +26,7 @@ def test_no_reply_moves_case_up_the_ladder_then_reminds_at_the_last_step():
     case = escalation.mark_filed(_case(), FiledRequest(filed_on=date(2026, 7, 1)), _at(2026, 7, 1))
     assert case.status == CaseStatus.FILED and case.next_deadline.date() == date(2026, 7, 16)
 
-    assert not escalation.tick(case, _at(2026, 7, 10))  # still within 15 days
+    assert not escalation.tick(case, _at(2026, 7, 5))  # 11 days to go: nothing yet
     assert escalation.tick(case, _at(2026, 7, 17))
     assert case.escalation_step == 1 and case.status == CaseStatus.ESCALATED
     assert "Bima Bharosa" in case.events[-1].text
