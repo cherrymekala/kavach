@@ -5,6 +5,7 @@ import { App } from './App'
 import { RequireAuth } from './auth'
 import { Workspace } from './screens/workspace/Workspace'
 import { JoinCase } from './screens/workspace/JoinCase'
+import { RouteError } from './screens/RouteError'
 
 // Legacy case screens (kept for dev previews only). Screens live in src/screens/<name>/.
 const SignIn = lazy(() => import('./screens/auth/SignIn').then((m) => ({ default: m.SignIn })))
@@ -52,10 +53,12 @@ export const router = createBrowserRouter([
   {
     path: '/',
     element: <App />,
+    errorElement: <RouteError />,
     children: [{ index: true, element: <SignIn /> }, { path: 'insights', element: <Insights /> }, { path: 'insights/insurer/:slug', element: <Scorecard /> }, ...devRoutes],
   },
   {
     element: <RequireAuth />,
+    errorElement: <RouteError />,
     children: [
       { path: '/app', element: <Workspace /> },
       { path: '/case/:caseId', element: <Workspace /> },

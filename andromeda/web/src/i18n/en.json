@@ -678,5 +678,12 @@
     "turnOn": "Turn on",
     "turnOff": "Turn off",
     "error": "Couldn't change reminders. Please try again."
+  },
+  "crash": {
+    "title": "Something went wrong on this screen",
+    "sub": "Your case and documents are safe. Reload the page, or go back to your cases.",
+    "reload": "Reload",
+    "home": "Go to my cases",
+    "details": "Technical details"
   }
 }
