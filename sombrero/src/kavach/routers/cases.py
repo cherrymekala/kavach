@@ -149,8 +149,6 @@ def ask(case_id: str, body: AskRequest, uid: str = Depends(current_user)) -> Ask
     case = store.load_case(case_id)
     if not access.can_work_on(case, uid):
         raise HTTPException(404, "Case not found.")
-    if not case.assessment and not case.discharge_check:
-        raise HTTPException(409, "Run the analysis before asking about the case.")
     question = body.question.strip()
     if not question:
         raise HTTPException(400, "Ask a question first.")

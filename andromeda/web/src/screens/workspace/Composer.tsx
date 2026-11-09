@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useSearchParams } from 'react-router-dom'
 import { MicIcon, PaperclipIcon, SendIcon } from 'lucide-react'
 import { Button, Input, KavachPlates } from '@/components'
-import { caseKey, useAddNote, useAsk, useUploadDocument } from '@/api/hooks'
+import { caseKey, useAsk, useUploadDocument } from '@/api/hooks'
 import type { Case } from '@/api/types'
 import { cn } from '@/lib/cn'
 import { VoiceIntakeDialog } from './VoiceIntakeDialog'
@@ -23,7 +23,6 @@ export function Composer({ caseId, kase, variant = 'dock', className }: Composer
   const queryClient = useQueryClient()
   const upload = useUploadDocument(caseId)
   const ask = useAsk(caseId)
-  const note = useAddNote(caseId)
 
   const [text, setText] = useState('')
   const [uploading, setUploading] = useState<string[]>([])
@@ -44,8 +43,7 @@ export function Composer({ caseId, kase, variant = 'dock', className }: Composer
   ) : null
   const fileRef = useRef<HTMLInputElement>(null)
 
-  const hasAssessment = Boolean(kase.assessment)
-  const busy = ask.isPending || note.isPending || uploading.length > 0
+  const busy = ask.isPending || uploading.length > 0
 
   async function handleFiles(files: File[]) {
     if (!files.length) return
@@ -68,8 +66,8 @@ export function Composer({ caseId, kase, variant = 'dock', className }: Composer
     setText('')
     setError(null)
     try {
-      if (hasAssessment) await ask.mutateAsync({ question: q })
-      else await note.mutateAsync({ text: q })
+      // Always answered, even before any upload: the assistant guides the patient from there.
+      await ask.mutateAsync({ question: q })
     } catch (err) {
       setError(err instanceof Error ? err.message : t('workspace.ask.error'))
     }
@@ -127,10 +125,10 @@ export function Composer({ caseId, kase, variant = 'dock', className }: Composer
         size="icon"
         className="rounded-full"
         disabled={!text.trim() || busy}
-        loading={ask.isPending || note.isPending}
+        loading={ask.isPending}
         aria-label={t('workspace.composer.send')}
       >
-        {!(ask.isPending || note.isPending) ? <SendIcon className="size-4" /> : null}
+        {!ask.isPending ? <SendIcon className="size-4" /> : null}
       </Button>
     </form>
   )

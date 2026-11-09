@@ -678,5 +678,12 @@
     "turnOn": "Hidupkan",
     "turnOff": "Matikan",
     "error": "Tidak dapat menukar peringatan. Sila cuba lagi."
+  },
+  "crash": {
+    "title": "Sesuatu tidak kena pada skrin ini",
+    "sub": "Kes dan dokumen anda selamat. Muat semula halaman, atau kembali ke kes anda.",
+    "reload": "Muat semula",
+    "home": "Pergi ke kes saya",
+    "details": "Butiran teknikal"
   }
 }
