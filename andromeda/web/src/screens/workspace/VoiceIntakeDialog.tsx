@@ -35,7 +35,11 @@ export function VoiceIntakeDialog({ caseId, open, onClose }: { caseId: string; o
     return () => cleanup()
   }, [open, start, cleanup])
 
-  useEffect(() => bottom.current?.scrollIntoView({ block: 'end' }), [voice.lines])
+  // Braces matter: Chrome 156+ returns a Promise from scrollIntoView, and React would call a
+  // returned value as the effect's cleanup ("l is not a function" crash).
+  useEffect(() => {
+    bottom.current?.scrollIntoView({ block: 'end' })
+  }, [voice.lines])
 
   useEffect(() => {
     if (state === 'saved') queryClient.invalidateQueries({ queryKey: caseKey(caseId) })
