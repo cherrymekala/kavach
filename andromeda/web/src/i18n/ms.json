@@ -685,5 +685,8 @@
     "reload": "Muat semula",
     "home": "Pergi ke kes saya",
     "details": "Butiran teknikal"
+  },
+  "guides": {
+    "link": "Tuntutan ditolak? Baca panduan mengikut sebab penolakan"
   }
 }

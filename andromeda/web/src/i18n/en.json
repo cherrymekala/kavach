@@ -685,5 +685,8 @@
     "reload": "Reload",
     "home": "Go to my cases",
     "details": "Technical details"
+  },
+  "guides": {
+    "link": "Claim rejected? Read the guides by rejection reason"
   }
 }

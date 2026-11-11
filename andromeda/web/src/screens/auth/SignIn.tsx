@@ -84,7 +84,10 @@ export function SignIn() {
           <KavachPlates size={240} className="hidden xl:block" />
         </div>
 
-        <p className="text-xs text-muted-foreground">{t('auth.privacy')}</p>
+        <p className="text-xs text-muted-foreground">
+          {t('auth.privacy')}{' '}
+          <a href="/guides" className="font-semibold text-brand underline">{t('guides.link')}</a>
+        </p>
       </div>
 
       {/* Form panel */}
@@ -123,6 +126,7 @@ export function SignIn() {
                 </li>
               ))}
             </ul>
+            <a href="/guides" className="mt-6 inline-block text-sm font-semibold text-brand underline">{t('guides.link')}</a>
           </div>
         </main>
 

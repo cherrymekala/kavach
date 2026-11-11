@@ -1,0 +1,809 @@
+{
+ "country": "IN",
+ "source": "Insurance Ombudsman award synopses (health and group mediclaim), published by the Council for Insurance Ombudsmen",
+ "period": {
+  "from": "2005",
+  "to": "2017"
+ },
+ "overall": {
+  "key": "all",
+  "total": 3120,
+  "allowed": 1281,
+  "partly_allowed": 693,
+  "dismissed": 1146,
+  "won_pct": 63
+ },
+ "note": "Published awards only, mostly 2005-2013; complaints settled earlier never reach an award. Rates show how disputes that reached the Ombudsman ended, not how often insurers reject claims.",
+ "ladder": [
+  {
+   "step": "Insurer grievance cell",
+   "dispute_body": "Grievance Redressal Officer of the insurer",
+   "deadline_days": 15,
+   "form": "Appeal letter"
+  },
+  {
+   "step": "Bima Bharosa complaint",
+   "dispute_body": "IRDAI Bima Bharosa portal (bimabharosa.irdai.gov.in)",
+   "deadline_days": 30,
+   "form": "Bima Bharosa online complaint"
+  },
+  {
+   "step": "Insurance Ombudsman",
+   "dispute_body": "Insurance Ombudsman (office for the complainant's district)",
+   "deadline_days": 90,
+   "form": "Annexure VI-A (Insurance Ombudsman Rules, 2017)"
+  }
+ ],
+ "limitation": {
+  "days": 365,
+  "body": "Insurance Ombudsman",
+  "from": "the rejection"
+ },
+ "guides": [
+  {
+   "key": "room_rent",
+   "slug": "room-rent-limit",
+   "stats": {
+    "key": "room_rent",
+    "total": 40,
+    "allowed": 12,
+    "partly_allowed": 26,
+    "dismissed": 2,
+    "won_pct": 95
+   },
+   "rules": [
+    {
+     "ref": "Standardization MC 2020, Standard Definition 39",
+     "title": "Definition of Room Rent",
+     "text": "Room Rent means the amount charged by a Hospital towards Room and Boarding expenses and shall include the associated medical expenses."
+    },
+    {
+     "ref": "Health Master Circular 2024, Ch. I, para 17",
+     "title": "Settlement of Claims",
+     "text": "a) No claim shall be repudiated without the approval of PMC or a three- member sub-group of PMC called the Claims Review Committee (CRC). b) In case, the claim is repudiated or disallowed partially, details shall be conveyed to the claimant along with full details giving reference to the specific terms and conditions of the policy document. c) Pursuant to intimation of the claim, Insurers and Third Party Administrators (TPAs) shall collect the required documents from the Hospitals. Policyholder shall not be required to submit the documents."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer partially settled the claim by disallowing room charges and miscellaneous expenses, but the Ombudsman ruled that applying new restrictive terms to an old policy was unjustified and ordered full payment.",
+     "insurer": "New India Assurance",
+     "year": "2010",
+     "case_no": "11-002-0195-11"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer partially settled the claim by deducting an amount based on room rent limits, but the Ombudsman found the deduction unjustified and ordered the insurer to pay the full claimed amount.",
+     "insurer": "New India Assurance",
+     "year": "2010",
+     "case_no": "11-002-0153-11"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer partially paid the claim for hernia treatment based on a lower sum insured and made deductions, but the Ombudsman found the room rent deductions improper and directed the insurer to pay an additional Rs. 21,474.",
+     "insurer": "United India Insurance",
+     "year": "2013",
+     "case_no": "GI/567/UII/11"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer partially paid the claim by deducting an amount for exceeding the eligible room rent limit, and the Ombudsman dismissed the complaint finding the deductions proper.",
+     "insurer": "New India Assurance",
+     "year": "2013",
+     "case_no": "11-002-0227-13"
+    }
+   ]
+  },
+  {
+   "key": "missing_documents",
+   "slug": "missing-documents",
+   "stats": {
+    "key": "missing_documents",
+    "total": 108,
+    "allowed": 66,
+    "partly_allowed": 27,
+    "dismissed": 15,
+    "won_pct": 86
+   },
+   "rules": [
+    {
+     "ref": "Health Master Circular 2024, Ch. I, para 17",
+     "title": "Settlement of Claims",
+     "text": "a) No claim shall be repudiated without the approval of PMC or a three- member sub-group of PMC called the Claims Review Committee (CRC). b) In case, the claim is repudiated or disallowed partially, details shall be conveyed to the claimant along with full details giving reference to the specific terms and conditions of the policy document. c) Pursuant to intimation of the claim, Insurers and Third Party Administrators (TPAs) shall collect the required documents from the Hospitals. Policyholder shall not be required to submit the documents."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer failed to settle the claim due to non-submission of certain documents and delay in intimation, but the Ombudsman held this was unjustified and directed the insurer to pay the claim of Rs. 9587.",
+     "insurer": "United India Insurance",
+     "year": "2013",
+     "case_no": "GI/569/UII/11"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer failed to settle the claim citing non-submission of documents, but the Ombudsman found the documents were already submitted and directed the insurer to pay Rs. 67,144 in full.",
+     "insurer": "Oriental Insurance",
+     "year": "2013",
+     "case_no": "GI/561/OIC/11"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer rejected the claim due to alleged non-submission of original bills and implant invoices, but the Ombudsman partly allowed the complaint, directing the insurer to pay the claim amount less inadmissible expenses along with interest for the delay, as the required documents had indeed been submitted.",
+     "insurer": "United India Insurance",
+     "year": "2017",
+     "case_no": "051-1718-0010"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer delayed and sought itemized bills and discharge cards, and the Ombudsman dismissed the complaint as the complainant failed to comply.",
+     "insurer": "Oriental Insurance",
+     "year": "2013",
+     "case_no": "11-005-0364-13"
+    }
+   ]
+  },
+  {
+   "key": "reasonable_charges",
+   "slug": "charges-not-reasonable",
+   "stats": {
+    "key": "reasonable_charges",
+    "total": 159,
+    "allowed": 30,
+    "partly_allowed": 106,
+    "dismissed": 23,
+    "won_pct": 86
+   },
+   "rules": [
+    {
+     "ref": "Standardization MC 2020, Standard Definition 37",
+     "title": "Definition of Reasonable and Customary Charges",
+     "text": "Insurance): Reasonable and Customary charges means the charges for services or supplies, which are the standard charges for the specific provider and consistent with the prevailing charges in the geographical area for identical or similar services, taking into account the nature of the illness / injury involved."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer and TPA disallowed a portion of the hospitalization claim based on PPN rates and a billing error, but the Ombudsman allowed the complaint and directed the insurer to pay the balance amount of Rs. 33,002 with 12% interest due to the insurer's casual and negligent handling of the matter.",
+     "insurer": "Oriental Insurance",
+     "year": "2015",
+     "case_no": "AHD-G-49-1415-0373"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer deducted part of the claim for appendicitis surgery under reasonable and necessary expenses using a PPN hospital rate, but the Ombudsman directed the insurer to pay the deducted amount of Rs. 21,600/- because the insured was not a party to the PPN arrangement.",
+     "insurer": "Oriental Insurance",
+     "year": "2015",
+     "case_no": "AHD-G-51-1415-0013"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer disallowed a portion of the surgery and investigation charges under reasonable and necessary expenses without justification, and the Ombudsman directed the insurer to pay Rs. 10,200 as ex-gratia after the insurer agreed during proceedings.",
+     "insurer": "New India Assurance",
+     "year": "2015",
+     "case_no": "AHD-G-49-1314-847"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer partially settled two claims for Fibroid Uterus based on customary and reasonable expenses, and the Ombudsman dismissed the complaint as the deductions were proper.",
+     "insurer": "New India Assurance",
+     "year": "2013",
+     "case_no": "11-002-0240-13"
+    }
+   ]
+  },
+  {
+   "key": "hospital_ineligible",
+   "slug": "hospital-not-eligible",
+   "stats": {
+    "key": "hospital_ineligible",
+    "total": 86,
+    "allowed": 57,
+    "partly_allowed": 9,
+    "dismissed": 20,
+    "won_pct": 77
+   },
+   "rules": [
+    {
+     "ref": "Standardization MC 2020, Standard Definition 16",
+     "title": "Definition of Hospital",
+     "text": "A hospital means any institution established for in-patient care and day care treatment of illness and/or injuries and which has been registered as a hospital with the local authorities under Clinical Establishments (Registration and Regulation) Act 2010 or under enactments specified under the Schedule of Section 56(1) of the said act Or complies with all minimum criteria as under: i) has qualified nursing staff under its employment round the clock; ii) has at least 10 in-patient beds in towns having a population of less than 10,00,000 and at least 15 in-patient beds in all other places; iii) has qualified medical practitioner(s) in charge round the clock; iv) has a fully equipped operation theatre of its own where surgical procedures are carried out; v) maintains daily records of patients and makes these accessible to the insurance company’s authorized personnel;"
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer denied the claim because the treatment was taken in a hospital alleged to be blacklisted, but the Ombudsman allowed the claim and directed the insurer to pay Rs. 40,100 since the insured was under a bonafide belief and the hospital was not blacklisted at the time of treatment.",
+     "insurer": "Apollo Munich",
+     "year": "2013",
+     "case_no": null
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer repudiated the claim because the treatment was taken at a hospital not on their approved list, but the Ombudsman held this was unjustified and directed the insurer to pay the claim in full.",
+     "insurer": "National Insurance",
+     "year": "2012",
+     "case_no": "GI/249/NIC/11"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer initially rejected the claim because the hospital was outside the approved list and later made a partial payment, but the Ombudsman partly allowed the claim and ordered the insurer to pay the balance amount along with penal interest, ruling that claims cannot be rejected on technical grounds not stipulated in the policy.",
+     "insurer": "National Insurance",
+     "year": "2011",
+     "case_no": "GI/175/NIC/10"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer rejected the medical claim because the insured mother earned a monthly pension exceeding the dependent income limit of Rs. 2,550, and the Ombudsman dismissed the complaint as the policy condition was clear.",
+     "insurer": "New India Assurance",
+     "year": "2010",
+     "case_no": "IO/KCH/GI/11-002-066/2010-11"
+    }
+   ]
+  },
+  {
+   "key": "late_intimation",
+   "slug": "late-intimation",
+   "stats": {
+    "key": "late_intimation",
+    "total": 173,
+    "allowed": 105,
+    "partly_allowed": 26,
+    "dismissed": 42,
+    "won_pct": 76
+   },
+   "rules": [
+    {
+     "ref": "Standardization MC 2020, Standard Definition 31",
+     "title": "Definition of Notification of Claim",
+     "text": "Notification of claim means the process of intimating a claim to the insurer or TPA through any of the recognized modes of communication."
+    },
+    {
+     "ref": "Health Master Circular 2024, Ch. I, para 17",
+     "title": "Settlement of Claims",
+     "text": "a) No claim shall be repudiated without the approval of PMC or a three- member sub-group of PMC called the Claims Review Committee (CRC). b) In case, the claim is repudiated or disallowed partially, details shall be conveyed to the claimant along with full details giving reference to the specific terms and conditions of the policy document. c) Pursuant to intimation of the claim, Insurers and Third Party Administrators (TPAs) shall collect the required documents from the Hospitals. Policyholder shall not be required to submit the documents."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer repudiated the accident claim due to delayed intimation and document submission, but the Ombudsman allowed the complaint, directing the insurer to settle the claim in accordance with IRDA guidelines on delayed documentation.",
+     "insurer": "Oriental Insurance",
+     "year": "2015",
+     "case_no": "AHD-G-050-1415-0021"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer repudiated the claim due to delay in intimation, but the Ombudsman allowed the complaint, directing the insurer to settle the claim by condoning the delay given the insured's exceptional circumstances during hospitalization.",
+     "insurer": null,
+     "year": "2015",
+     "case_no": "L-041-1415-0781"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer rejected the claim due to late intimation, but the Ombudsman partly allowed it, holding that an otherwise admissible claim cannot be declined on technical grounds and directed the insurer to pay 75% of the sum insured along with interest.",
+     "insurer": "United India Insurance",
+     "year": "2013",
+     "case_no": "GI/524/UII/11"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer rejected the mediclaim due to late intimation and delayed submission of claim papers, and the Ombudsman dismissed the complaint upholding the insurer's decision.",
+     "insurer": "United India Insurance",
+     "year": "2013",
+     "case_no": "11-004-0098-13"
+    }
+   ]
+  },
+  {
+   "key": "not_medically_necessary",
+   "slug": "not-medically-necessary",
+   "stats": {
+    "key": "not_medically_necessary",
+    "total": 261,
+    "allowed": 136,
+    "partly_allowed": 53,
+    "dismissed": 72,
+    "won_pct": 72
+   },
+   "rules": [
+    {
+     "ref": "Standardization MC 2020, Standard Definition 27",
+     "title": "Definition of Medically Necessary Treatment",
+     "text": "Insurance): Medically necessary treatment means any treatment, tests, medication, or stay in hospital or part of a stay in hospital which: i) is required for the medical management of the illness or injury suffered by the insured; ii) must not exceed the level of care necessary to provide safe, adequate and appropriate medical care in scope, duration, or intensity; iii) must have been prescribed by a medical practitioner; iv) must conform to the professional standards widely accepted in international medical practice or by the medical community in India."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer rejected the claim stating hospitalization was not necessary, but during the hearing the panel doctor recommended payment, and the Ombudsman directed the insurer to settle the claim with interest due to the delay.",
+     "insurer": "New India Assurance",
+     "year": "2015",
+     "case_no": "AHD-G-50-1415-128"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer repudiated the claim for Rituximab Infusion and Pemphigus vagaries stating the treatment was unproven or experimental, but the Ombudsman directed the insurer to settle the claim after the treating physician confirmed it was given under strict medical supervision.",
+     "insurer": "United India Insurance",
+     "year": "2015",
+     "case_no": "BNG-G-055-1516-0150"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer rejected the claim arguing lack of active treatment and pre-existing diabetes, but the Ombudsman found the treatment valid and ordered partial payment up to the sum insured.",
+     "insurer": "New India Assurance",
+     "year": "2012",
+     "case_no": "IO/ KCH/GI/10-004-223/2011-12"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer repudiated the claim on the ground that hospitalization was unnecessary as it was a conversion of OPD treatment, and the Ombudsman upheld the decision because the patient was admitted without specialist advice just a day after being prescribed outpatient medicines and having normal test results.",
+     "insurer": "United India Insurance",
+     "year": "2010",
+     "case_no": "11-004-0162-11"
+    }
+   ]
+  },
+  {
+   "key": "sub_limit",
+   "slug": "sub-limit-reached",
+   "stats": {
+    "key": "sub_limit",
+    "total": 125,
+    "allowed": 12,
+    "partly_allowed": 72,
+    "dismissed": 41,
+    "won_pct": 67
+   },
+   "rules": [
+    {
+     "ref": "Health Master Circular 2024, Ch. I, para 17",
+     "title": "Settlement of Claims",
+     "text": "a) No claim shall be repudiated without the approval of PMC or a three- member sub-group of PMC called the Claims Review Committee (CRC). b) In case, the claim is repudiated or disallowed partially, details shall be conveyed to the claimant along with full details giving reference to the specific terms and conditions of the policy document. c) Pursuant to intimation of the claim, Insurers and Third Party Administrators (TPAs) shall collect the required documents from the Hospitals. Policyholder shall not be required to submit the documents."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer underpaid the claim by capping the lens cost, but the Ombudsman found no justification for the deduction and directed the insurer to pay the full demanded amount of Rs. 60,000 along with 8% penal interest.",
+     "insurer": "United India Insurance",
+     "year": "2012",
+     "case_no": "GI/153/UII/11"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer partially paid the claim by applying expense caps, but the Ombudsman allowed the full claim and ordered the payment of the balance because those caps were not applicable during the currency of the policy.",
+     "insurer": "National Insurance",
+     "year": "2011",
+     "case_no": "GI/228/NIC/10"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer restricted the cataract and eye injection claim based on policy limits and terms not provided to the insured, and the Ombudsman directed the insurer to settle the claim for Rs. 25,000 on an ex-gratia basis.",
+     "insurer": "National Insurance",
+     "year": "2015",
+     "case_no": "AHD-G-49-1314-840"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer partially settled the claim based on the policy sum insured, co-payment clause, and hospital discount, and the Ombudsman dismissed the complaint because the insurer correctly followed the terms and conditions of the group policy.",
+     "insurer": "United India Insurance",
+     "year": "2015",
+     "case_no": "BNG-G-051-1516-0170"
+    }
+   ]
+  },
+  {
+   "key": "pre_existing",
+   "slug": "pre-existing-disease",
+   "stats": {
+    "key": "pre_existing",
+    "total": 948,
+    "allowed": 418,
+    "partly_allowed": 160,
+    "dismissed": 370,
+    "won_pct": 61
+   },
+   "rules": [
+    {
+     "ref": "Products Regulations 2024, Sch. III, cl. 1.6",
+     "title": "Definition of Pre-existing disease (PED)",
+     "text": "“Pre-existing disease (PED)” means any condition, ailment, injury or disease: a) that is/are diagnosed by a physician not more than 36 months prior to the date of commencement of the policy issued by the insurer; or b) for which medical advice or treatment was recommended by, or received from, a physician, not more than 36 months prior to the date of commencement of the policy. Provided that the definition of the pre-existing disease shall not be applicable for Overseas Travel Policies. Life insurers may define norms for applicability of PED at reinstatement."
+    },
+    {
+     "ref": "Standardization MC 2020, Excl01",
+     "title": "Standard exclusion: Pre-Existing Diseases",
+     "text": "Exclusion Name: Pre-Existing Diseases - Code- Excl01 a) Expenses related to the treatment of a pre-existing Disease (PED) and its direct complications shall be excluded until the expiry of #### months of continuous coverage after the date of inception of the first policy with insurer. b) In case of enhancement of sum insured the exclusion shall apply afresh to the extent of sum insured increase. c) If the Insured Person is continuously covered without any break as defined under the portability norms of the extant IRDAI (Health Insurance) Regulations, then waiting period for the same would be reduced to the extent of prior coverage. d) Coverage under the policy after the expiry of ##### months for any pre-existing disease is subject to the same being declared at the time of application and accepted by Insurer. (Explanation: Subject to product design the number of months, not exceeding 48 …"
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer repudiated the claim for coronary artery disease and hypertension citing pre-existing hypertension, but the Ombudsman allowed the complaint giving the benefit of doubt to the insured since medical certificates showed the hypertension developed recently after the policy inception, and directed the insurer to settle the claim.",
+     "insurer": "United India Insurance",
+     "year": "2015",
+     "case_no": "BNG-G-0451-1516-0195"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer rejected the medical reimbursement claim citing non-disclosure of pre-existing ailments based on contradictory hospital records, but the Ombudsman allowed the complaint because the insurer failed to provide contemporaneous documentary evidence to substantiate its stand.",
+     "insurer": null,
+     "year": "2014",
+     "case_no": "L - 029 -1415"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer deducted part of the claim citing co-payment for a pre-existing disease, but the Ombudsman found the treatment unrelated to any pre-existing condition and directed the insurer to pay the balance amount.",
+     "insurer": "Oriental Insurance",
+     "year": "2017",
+     "case_no": null
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer repudiated the mediclaim for Lt. Frontal Glioma under pre-existing disease clause during the fourth policy year, and the Ombudsman dismissed the complaint upholding the insurer's decision.",
+     "insurer": "United India Insurance",
+     "year": "2013",
+     "case_no": "11-003-0223-13"
+    }
+   ]
+  },
+  {
+   "key": "under_24_hours",
+   "slug": "hospitalised-under-24-hours",
+   "stats": {
+    "key": "under_24_hours",
+    "total": 85,
+    "allowed": 34,
+    "partly_allowed": 13,
+    "dismissed": 38,
+    "won_pct": 55
+   },
+   "rules": [
+    {
+     "ref": "Standardization MC 2020, Standard Definition 17",
+     "title": "Definition of Hospitalization",
+     "text": "Hospitalization means admission in a Hospital for a minimum period of 24 consecutive ‘In-patient Care’ hours except for specified procedures/ treatments, where such admission could be for a period of less than 24 consecutive hours."
+    },
+    {
+     "ref": "Standardization MC 2020, Standard Definition 9",
+     "title": "Definition of Day Care Treatment",
+     "text": "Day care treatment means medical treatment, and/or surgical procedure which is: i. undertaken under General or Local Anesthesia in a hospital/day care centre in less than 24 hrs because of technological advancement, and ii. which would have otherwise required hospitalization of more than 24 hours. Treatment normally taken on an out-patient basis is not included in the scope of this definition. (Insurers may, in addition, restrict coverage to a specified list)."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer rejected the claim for Hepatitis C treatment because the patient received only one injection and was discharged, arguing it was an OPD procedure; the Ombudsman allowed the claim finding the repudiation mechanical since hospitalization was needed for potential complications.",
+     "insurer": null,
+     "year": "2015",
+     "case_no": "AHD-G-049-1415-0155"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer rejected the claim because the hospitalization period was less than 24 hours following a fall from height, but the Ombudsman set aside the decision and directed the insurer to pay the full claim of Rs. 27,186 as the treatment was necessary.",
+     "insurer": "New India Assurance",
+     "year": "2013",
+     "case_no": "GI/27/NIA/12"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer rejected the claim because hospitalization was less than 24 hours, but the Ombudsman partly allowed the claim of Rs. 2,000 as prolonged hospitalization was not required for this treatment.",
+     "insurer": "Star Health",
+     "year": "2011",
+     "case_no": "GI/340/Star/10"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer rejected the dental treatment claim because it was managed on an OPD basis without 24 hours of hospitalization, and the Ombudsman upheld the decision as it complied with the policy terms.",
+     "insurer": "New India Assurance",
+     "year": "2015",
+     "case_no": "AHD-G-35-1415-0243"
+    }
+   ]
+  },
+  {
+   "key": "initial_waiting_period",
+   "slug": "first-30-days-waiting-period",
+   "stats": {
+    "key": "initial_waiting_period",
+    "total": 41,
+    "allowed": 20,
+    "partly_allowed": 2,
+    "dismissed": 19,
+    "won_pct": 54
+   },
+   "rules": [
+    {
+     "ref": "Standardization MC 2020, Excl03",
+     "title": "Standard exclusion: 30-day waiting period",
+     "text": "30-day waiting period- Code- Excl03 a) Expenses related to the treatment of any illness within 30 days from the first policy commencement date shall be excluded except claims arising due to an accident, provided the same are covered. b) This exclusion shall not, however, apply if the Insured Person has Continuous Coverage for more than twelve months. c) The within referred waiting period is made applicable to the enhanced sum insured in the event of granting higher sum insured subsequently."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer repudiated the claim for a newborn child under the initial waiting period clause, but the Ombudsman allowed the claim because the child was entitled to policy benefits from birth and the treatment occurred well after that date.",
+     "insurer": "United India Insurance",
+     "year": "2011",
+     "case_no": "GI/43/UII/10"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer repudiated the claim for brain tumor treatment under a policy clause excluding expenses incurred within the first year, but the Ombudsman allowed the claim because the policy is in its second year and the clause does not exclude diseases whose symptoms merely appeared during the first year.",
+     "insurer": "Reliance General",
+     "year": "2010",
+     "case_no": "11-09-0379-11"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer repudiated the claim on the ground that it was made within the first year of the policy, but the Ombudsman partly allowed the claim because the insured was entitled to continuity benefits from previous policies, directing the insurer to pay Rs. 2,00,000.",
+     "insurer": "Oriental Insurance",
+     "year": "2011",
+     "case_no": "GI/85/OIC/11"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer repudiated the claim for ovarian cystectomy and hysterectomy under the initial waiting period exclusion clause, and the Ombudsman upheld the decision as the treatment occurred within the first 30 days of the policy inception.",
+     "insurer": "Oriental Insurance",
+     "year": "2010",
+     "case_no": "IO/KCH/GI/11-005-052/2010-11"
+    }
+   ]
+  },
+  {
+   "key": "fraud",
+   "slug": "suspected-fraud",
+   "stats": {
+    "key": "fraud",
+    "total": 29,
+    "allowed": 10,
+    "partly_allowed": 5,
+    "dismissed": 14,
+    "won_pct": 52
+   },
+   "rules": [
+    {
+     "ref": "Health Master Circular 2024, Ch. I, para 13",
+     "title": "Policy/Claim cannot be contested",
+     "text": "No policy and claim of health insurance shall be contestable on any grounds of non-disclosure and/or misrepresentation except for established fraud, after the completion of the Moratorium Period, i.e. 60 months of continuous coverage Note :The accrued credits gained under the ported and migrated policies shall be counted for the purpose of calculating the Moratorium period."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer rejected the claim alleging non-disclosure and fraud due to inconsistency in investigation reports, but the Ombudsman held the repudiation unjustified and directed the insurer to pay Rs. 45,727.",
+     "insurer": null,
+     "year": "2012",
+     "case_no": "GI/RGI/474/11"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer repudiated the claim alleging fraudulent hospitalization and inflated bills, but the Ombudsman found no supportive evidence of fraud and directed the insurer to pay the claim amount of Rs.98883 with 8% penal interest.",
+     "insurer": "Reliance General",
+     "year": "2011",
+     "case_no": "GI/180/RGI/10"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer rejected the claims as fraudulent and cancelled the policy, but during the hearing, the insurer's representative agreed to settle the claim, leading the Ombudsman to direct the insurer to pay Rs. 80,507 with interest and reinstate the policy.",
+     "insurer": "Oriental Insurance",
+     "year": "2015",
+     "case_no": "AHD-G-20-1415-0368"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer repudiated the mediclaim due to fraudulent hospitalization papers, and the Ombudsman upheld the decision as the claim was inadmissible under policy conditions.",
+     "insurer": "New India Assurance",
+     "year": "2013",
+     "case_no": "11-008-0236-13"
+    }
+   ]
+  },
+  {
+   "key": "specific_waiting_period",
+   "slug": "specific-disease-waiting-period",
+   "stats": {
+    "key": "specific_waiting_period",
+    "total": 196,
+    "allowed": 75,
+    "partly_allowed": 24,
+    "dismissed": 97,
+    "won_pct": 51
+   },
+   "rules": [
+    {
+     "ref": "Products Regulations 2024, Sch. III, cl. 1.7",
+     "title": "Definition of Specific waiting period",
+     "text": "“Specific waiting period” means a period up to 36 months from the commencement of a health insurance policy during which period specified diseases/treatments (except due to an accident) are not covered. On completion of the period, diseases/treatments shall be covered provided the policy has been continuously renewed without any break."
+    },
+    {
+     "ref": "Standardization MC 2020, Excl02",
+     "title": "Standard exclusion: Specified disease/procedure waiting period",
+     "text": "Exclusion Name: Specified disease/procedure waiting period- Code- Excl02 a) Expenses related to the treatment of the listed Conditions, surgeries/treatments shall be excluded until the expiry of <####> months of continuous coverage after the date of inception of the first policy with us. This exclusion shall not be applicable for claims arising due to an accident. (Explanation: Subject to product design the number of months, not exceeding 48 months, shall be specified) b) In case of enhancement of sum insured the exclusion shall apply afresh to the extent of sum insured increase. c) If any of the specified disease/procedure falls under the waiting period specified for pre-Existing diseases, then the longer of the two waiting periods shall apply. d) The waiting period for listed conditions shall apply even if contracted after the policy or declared and accepted without a specific …"
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer rejected a claim for Crohn's disease and other ailments citing a waiting period exclusion for hernia surgery, but the Ombudsman allowed the claim because no hernia surgery was actually performed.",
+     "insurer": null,
+     "year": "2015",
+     "case_no": "AHD-G-50-1415-0218"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer wrongly rejected the claim for a cataract operation, but the Ombudsman allowed it because the surgery occurred after the 24-month waiting period and the insurer agreed to settle during the hearing.",
+     "insurer": null,
+     "year": "2014",
+     "case_no": "L-036-1415-0283"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer rejected the paralytic stroke claim citing a two-year waiting period for hypertension and related complications, while a cataract claim was partially paid; the Ombudsman held that the stroke had no waiting period and ordered payment of Rs. 26,897, while upholding the cataract claim settlement.",
+     "insurer": "New India Assurance",
+     "year": "2013",
+     "case_no": "GI/508/NIA/11"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer partially paid a knee replacement claim based on the original sum insured due to a waiting period for enhanced sum insured, and the Ombudsman upheld the insurer's decision as correct.",
+     "insurer": "Bajaj Allianz",
+     "year": "2015",
+     "case_no": "AHD-G-49-1415-0037"
+    }
+   ]
+  },
+  {
+   "key": "excluded_treatment",
+   "slug": "excluded-treatment",
+   "stats": {
+    "key": "excluded_treatment",
+    "total": 380,
+    "allowed": 125,
+    "partly_allowed": 59,
+    "dismissed": 196,
+    "won_pct": 48
+   },
+   "rules": [
+    {
+     "ref": "Standardization MC 2020, Exclusions not allowed",
+     "title": "Exclusions insurers may not use",
+     "text": "1. On examining the extant wordings in the health insurance policy contracts and the prevailing exclusions, it is directed that the following exclusions shall not be allowed in health insurance (Other than PA & Travel) policies. No Health Insurance Policy shall incorporate the following exclusions in the terms and conditions of the policy contract. a. Diseases contracted after taking the health insurance policy, except for the conditions excluded for which standard wordings are prescribed in Chapter III. b. Injury or illness associated with hazardous activities. (Explanation: However, only treatment necessitated due to participation in adventure or hazardous sports is permitted as exclusion.) c. Impairment of Persons’ intellectual faculties by usage of drugs, stimulants or depressants as prescribed by a medical practitioner. d. Artificial life maintenance, including life support machine …"
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer rejected the claim for cerebral palsy treatment under the congenital external defect exclusion, but the Ombudsman allowed the claim after noting the treating doctor's certification that it was not a congenital defect.",
+     "insurer": "Star Health",
+     "year": "2013",
+     "case_no": "GI/554/star/11"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer rejected the claim under the exclusion clause citing alcoholism, but the Ombudsman allowed the complaint and directed the insurer to pay Rs. 58,240 because the discharge summary and evidence did not establish that the illness was caused by alcohol use.",
+     "insurer": "United India Insurance",
+     "year": "2013",
+     "case_no": "GI/563/UII/11"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer rejected a claim for twisted ovarian cyst under a genito-urinary exclusion clause, but the Ombudsman noted ovaries are part of the reproductive system and granted an ex-gratia payment of Rs. 30,000/-.",
+     "insurer": "New India Assurance",
+     "year": "2015",
+     "case_no": "AHD-G-49-1415-0691"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer repudiated the dental extraction claim under exclusion clause 3.18 as not covered, and since the complainant's only grievance was delay in communication (which is outside the forum's jurisdiction), the complaint was closed.",
+     "insurer": "United India Insurance",
+     "year": "2017",
+     "case_no": "051-1617-0797"
+    }
+   ]
+  },
+  {
+   "key": "diagnostic_only",
+   "slug": "admitted-only-for-tests",
+   "stats": {
+    "key": "diagnostic_only",
+    "total": 158,
+    "allowed": 53,
+    "partly_allowed": 23,
+    "dismissed": 82,
+    "won_pct": 48
+   },
+   "rules": [
+    {
+     "ref": "Standardization MC 2020, Excl04",
+     "title": "Standard exclusion: Investigation & Evaluation",
+     "text": "Investigation & Evaluation- Code- Excl04 a) Expenses related to any admission primarily for diagnostics and evaluation purposes only are excluded. b) Any diagnostic expenses which are not related or not incidental to the current diagnosis and treatment are excluded."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer repudiated the claim citing that diagnostic charges were for non-confinement admissions, but the Ombudsman allowed the complaint since the tests were recommended by the attending doctor and covered under the scheme, directing the insurer to pay Rs.35,721/- less inadmissible expenses.",
+     "insurer": "United India Insurance",
+     "year": "2017",
+     "case_no": "051-1718-0001"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer repudiated the claim stating the hospitalization was for primary investigation and observation, but the Ombudsman allowed the complaint and directed the insurer to settle the claim according to policy terms.",
+     "insurer": "Reliance General",
+     "year": "2015",
+     "case_no": "BNG-G-035-1415-0007"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer rejected the claim arguing the insured was admitted only for investigation purposes, but the Ombudsman held the claim payable as the insured was treated after admission and directed the company to pay Rs. 12,613.",
+     "insurer": "New India Assurance",
+     "year": "2012",
+     "case_no": "GI/463/NIA/11"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer repudiated the claim because the hospitalization was solely for investigation without any active line of treatment, and the Ombudsman upheld this decision, dismissing the complaint.",
+     "insurer": "United India Insurance",
+     "year": "2015",
+     "case_no": "BNG-G-051-1516-0068"
+    }
+   ]
+  },
+  {
+   "key": "non_disclosure",
+   "slug": "non-disclosure",
+   "stats": {
+    "key": "non_disclosure",
+    "total": 103,
+    "allowed": 20,
+    "partly_allowed": 14,
+    "dismissed": 69,
+    "won_pct": 33
+   },
+   "rules": [
+    {
+     "ref": "Standardization MC 2020, Standard Definition 12",
+     "title": "Definition of Disclosure to information norm",
+     "text": "The policy shall be void and all premium paid thereon shall be forfeited to the Company in the event of misrepresentation, mis-description or non-disclosure of any material fact."
+    },
+    {
+     "ref": "Products Regulations 2024, Sch. III, cl. 8",
+     "title": "Moratorium (applicable for health insurance policies issued by general and health insurers)",
+     "text": "After completion of sixty continuous months of coverage (including portability and migration) in health insurance policy, no policy and claim shall be contestable by the insurer on grounds of non-disclosure, misrepresentation, except on grounds of established fraud. This period of sixty continuous months is called as moratorium period. The moratorium would be applicable for the sums insured of the first policy. Wherever, the sum insured is enhanced, completion of sixty continuous months would be applicable from the date of enhancement of sums insured only on the enhanced limits."
+    }
+   ],
+   "examples": [
+    {
+     "decision": "allowed",
+     "summary": "The insurer rejected the critical illness claim citing non-disclosure of pre-existing chest pain, but since the insurer failed to provide contemporaneous evidence of pre-proposal illness, the Ombudsman set aside the rejection and directed the insurer to settle the claim.",
+     "insurer": "Future Generali",
+     "year": "2014",
+     "case_no": "L-017-1415-0372"
+    },
+    {
+     "decision": "allowed",
+     "summary": "The insurer initially rejected the claim due to non-disclosure of pre-existing ailments, but later settled it after the complaint was filed; the Ombudsman allowed the complaint and directed the insurer to pay interest for the delay in settlement.",
+     "insurer": null,
+     "year": "2014",
+     "case_no": "L - 029 -1415 - 0070"
+    },
+    {
+     "decision": "partly_allowed",
+     "summary": "The insurer repudiated the claim for concealment of facts regarding an accident, but through mediation, both parties agreed to a settlement payment of Rs 65,000.",
+     "insurer": "Reliance General",
+     "year": "2010",
+     "case_no": "11-009-0074-11"
+    },
+    {
+     "decision": "dismissed",
+     "summary": "The insurer rejected the medical expenses claim due to non-disclosure of past medical treatment for tubercular pleural effusion and diabetes in the proposal, and the Ombudsman upheld the decision as the contract is based on utmost good faith.",
+     "insurer": "Oriental Insurance",
+     "year": "2015",
+     "case_no": "L-029-1415-0500"
+    }
+   ]
+  }
+ ]
+}
