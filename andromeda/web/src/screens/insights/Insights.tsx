@@ -157,6 +157,8 @@ export function Insights() {
         </section>
       ) : null}
 
+      <a href="/guides" className="self-start rounded-full bg-primary px-5 py-3 text-sm font-bold text-primary-foreground">{t('guides.link')}</a>
+
       <p className="text-xs text-muted-foreground">
         {data.source}. {data.note}
       </p>
