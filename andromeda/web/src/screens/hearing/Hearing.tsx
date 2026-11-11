@@ -118,7 +118,7 @@ export function Hearing() {
   if (hearing.state === 'done' && hearing.debrief) {
     const d = hearing.debrief
     return (
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 pb-24">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 pt-4 pb-24 sm:px-6">
         <AppHeader title={t('hearing.title')} />
         <section className="flex flex-col gap-3 rounded-[28px] bg-primary p-6 text-primary-foreground">
           <span className="text-xs opacity-80">{t('hearing.debrief')}</span>
@@ -149,7 +149,7 @@ export function Hearing() {
 
   if (hearing.state === 'idle' || hearing.state === 'error') {
     return (
-      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 pb-24">
+      <div className="mx-auto flex w-full max-w-3xl flex-col gap-6 px-4 pt-4 pb-24 sm:px-6">
         <AppHeader title={t('hearing.title')} />
         <section className="flex flex-col gap-4 rounded-[28px] bg-card p-6">
           <div className="flex items-center gap-3">
@@ -193,7 +193,7 @@ export function Hearing() {
 
   const live = hearing.state === 'live'
   return (
-    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 pb-40">
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 px-4 pt-4 pb-40 sm:px-6">
       <AppHeader title={t('hearing.title')} />
       <div className="flex items-center justify-between rounded-full bg-card px-5 py-2.5">
         <span className="text-sm font-semibold">{body}</span>
