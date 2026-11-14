@@ -17,7 +17,7 @@ const here = path.dirname(fileURLToPath(import.meta.url))
 const web = path.resolve(here, '..')
 const packs = path.resolve(web, '../../magellan/packs')
 const dist = path.join(web, 'dist')
-const SITE = (process.env.VITE_SITE_URL || readEnv('VITE_SITE_URL') || 'https://kavach-510312.web.app').replace(/\/$/, '')
+const SITE = (process.env.VITE_SITE_URL || readEnv('VITE_SITE_URL') || 'https://kavach.reimaginy.tech').replace(/\/$/, '')
 
 const G = JSON.parse(fs.readFileSync(path.join(packs, 'IN.guides.json'), 'utf8'))
 const I = JSON.parse(fs.readFileSync(path.join(packs, 'IN.insights.json'), 'utf8'))

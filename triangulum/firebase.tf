@@ -59,6 +59,7 @@ resource "google_identity_platform_config" "auth" {
     "localhost",
     "${var.project_id}.firebaseapp.com",
     "${var.project_id}.web.app",
+    "kavach.reimaginy.tech",
   ]
   depends_on = [google_firebase_project.default]
 }

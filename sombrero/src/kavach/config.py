@@ -29,7 +29,8 @@ class Settings(BaseSettings):
     # Comma-separated browser origins allowed to call the API.
     cors_origins: str = (
         "http://localhost:5173,http://localhost:3000,"
-        "https://kavach-510312.web.app,https://kavach-510312.firebaseapp.com"
+        "https://kavach-510312.web.app,https://kavach-510312.firebaseapp.com,"
+        "https://kavach.reimaginy.tech"
     )
     packs_dir: str = "packs"
     # Phone line (Twilio). The auth token signs webhooks and our media-stream parameters.
@@ -53,7 +54,7 @@ class Settings(BaseSettings):
     razorpay_key_secret: str = ""
     stripe_secret_key: str = ""  # Singapore, Malaysia
     stripe_webhook_secret: str = ""
-    app_url: str = "https://kavach-510312.web.app"  # where Stripe sends the patient back
+    app_url: str = "https://kavach.reimaginy.tech"  # where Stripe sends the patient back
     # Email (Cloudflare Email Service): the appeal letter out; replies come back through a
     # Cloudflare Email Routing Worker (pinwheel/). No token = dry run.
     cloudflare_account_id: str = ""
