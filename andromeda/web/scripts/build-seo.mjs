@@ -148,8 +148,8 @@ function guidePage(g) {
   const description = `${s.won_pct}% of ${num(s.total)} published Insurance Ombudsman cases about “${label}” ended with the claim paid in full or in part. The IRDAI rules, real decisions and how to appeal.`
   const qas = [
     [`Can I appeal a health claim rejected for “${label}”?`, `Yes. Write to the insurer's grievance cell first, then IRDAI's Bima Bharosa portal, then the Insurance Ombudsman. In ${num(s.total)} published Ombudsman cases on this ground, ${s.won_pct}% ended with the claim paid in full or in part.`],
-    ['How long do I have to complain to the Insurance Ombudsman?', `Within ${Math.round(G.limitation.days / 30)} months (${G.limitation.days} days) of ${G.limitation.from}, after the insurer has replied to your complaint or not replied within ${G.ladder[0].deadline_days} days.`],
-    ['Does it cost money to go to the Insurance Ombudsman?', 'No. Complaints to the Insurance Ombudsman are free, and you can present your case yourself.'],
+    [`How often does the insurer win a “${label}” dispute?`, `In ${num(s.dismissed)} of ${num(s.total)} published cases (${Math.round((100 * s.dismissed) / s.total)}%) the Ombudsman upheld the rejection. In ${num(s.partly_allowed)} more, the insurer had to pay part of the claim.`],
+    [`Which IRDAI rules apply to a “${label}” rejection?`, g.rules.map((r) => `${r.ref}${r.title ? ` (${r.title})` : ''}`).join('; ') + '.'],
   ]
   const body = `
 <p class="note">Guide · Rejection reason</p>
@@ -285,6 +285,19 @@ function write(urlPath, html) {
 
 const pages = [indexPage(), ombudsmanPage(), ...G.guides.map(guidePage), ...I.insurers.map(insurerPage)]
 for (const p of pages) write(p.urlPath, p.html)
+
+// Unknown addresses: Firebase serves dist/404.html with a real 404 status (firebase.json only
+// rewrites the app's own routes), so typo URLs never index as copies of the homepage.
+fs.writeFileSync(
+  path.join(dist, '404.html'),
+  page({
+    urlPath: '/404',
+    title: 'Page not found | Kavach',
+    description: 'This page does not exist.',
+    body: `<h1>We couldn’t find that page</h1><p class="lead">The link may be old or mistyped. These are good places to start:</p>
+<ul class="list"><li><a href="/guides"><span>Guides by rejection reason</span><b>→</b></a></li><li><a href="/guides/${OMBUDSMAN_SLUG}"><span>How to complain to the Insurance Ombudsman</span><b>→</b></a></li><li><a href="/"><span>Check my claim</span><b>→</b></a></li></ul>`,
+  }).replace(/<link rel="canonical"[^>]*>/, '<meta name="robots" content="noindex">'),
+)
 
 const urls = ['/', '/insights', ...pages.map((p) => p.urlPath)]
 fs.writeFileSync(

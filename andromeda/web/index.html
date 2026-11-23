@@ -38,7 +38,14 @@
     />
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <!-- Shown until the app loads, and what crawlers that don't run JavaScript read. -->
+      <main style="max-width:640px;margin:0 auto;padding:48px 16px;font-family:Manrope,system-ui,sans-serif;color:#121027">
+        <h1 style="font-family:Unbounded,system-ui,sans-serif;letter-spacing:-0.03em">Kavach: appeal a rejected health insurance claim</h1>
+        <p>Upload your rejection letter and policy. Kavach finds the regulations and past Insurance Ombudsman decisions that apply to your case, writes your appeal, fills the official forms and tracks every deadline. India, Singapore and Malaysia, in seven languages.</p>
+        <p><a href="/guides">Guides by rejection reason</a> · <a href="/guides/insurance-ombudsman-complaint">How to complain to the Insurance Ombudsman</a> · <a href="/insights">How Ombudsman disputes ended</a></p>
+      </main>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

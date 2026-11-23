@@ -8,7 +8,31 @@
     ],
     "rewrites": [
       {
-        "source": "**",
+        "source": "/",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/app",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/case/**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/join",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/join/**",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/insights",
+        "destination": "/index.html"
+      },
+      {
+        "source": "/insights/**",
         "destination": "/index.html"
       }
     ],
