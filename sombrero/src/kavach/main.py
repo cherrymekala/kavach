@@ -19,6 +19,7 @@ from .routers import (
     mail,
     packs,
     payments,
+    preview,
     push,
     sharing,
     tracker,
@@ -72,6 +73,7 @@ app.include_router(payments.router)
 app.include_router(sharing.router)
 app.include_router(mail.router)
 app.include_router(push.router)
+app.include_router(preview.router)
 
 
 @app.get("/health")

@@ -26,6 +26,8 @@ class Settings(BaseSettings):
     auth_disabled: bool = False
     analyses_per_day: int = 10  # per user; protects Gemini/Vertex credits on the public demo
     questions_per_day: int = 50  # per user; caps /ask spend
+    previews_per_ip_per_day: int = 5  # signed-out letter checks (/preview) per visitor
+    previews_per_day: int = 300  # all signed-out letter checks together; hard cap on spend
     # Comma-separated browser origins allowed to call the API.
     cors_origins: str = (
         "http://localhost:5173,http://localhost:3000,"

@@ -63,3 +63,10 @@ def insurer_contact(country: str, insurer: str | None) -> dict | None:
             ):
                 return contact
     return None
+
+
+@lru_cache
+def guides(country: str) -> dict | None:
+    """Public guides per rejection reason (magellan/ingest/build_guides.py), if built."""
+    path = _dir() / f"{country.upper()}.guides.json"
+    return json.loads(path.read_text(encoding="utf-8")) if path.exists() else None

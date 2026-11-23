@@ -688,5 +688,48 @@
   },
   "guides": {
     "link": "Claim rejected? Read the guides by rejection reason"
+  },
+  "check": {
+    "title": "Check your rejection letter",
+    "sub": "Free, no sign-up. See why your claim was rejected, how similar cases ended at the Ombudsman, and your deadline.",
+    "country": "Country",
+    "countries": {
+      "india": "India",
+      "singapore": "Singapore",
+      "malaysia": "Malaysia"
+    },
+    "upload": "Upload or photograph the letter",
+    "uploadHint": "PDF, photo or text · up to 10 MB",
+    "pasteInstead": "Paste the text instead",
+    "uploadInstead": "Upload a file instead",
+    "pastePlaceholder": "Paste the text of the insurer's rejection letter or email",
+    "explain": "Explain my rejection",
+    "privacy": "We read your letter once to explain it and don't keep it. Nothing is saved until you sign in.",
+    "reading": "Reading your letter…",
+    "readingSub": "Finding the reason, the rules and how similar cases ended.",
+    "rejected": "Claim rejected",
+    "yourInsurer": "Your insurer",
+    "headline": "{{insurer}} rejected your {{amount}} claim",
+    "headlineNoAmount": "{{insurer}} rejected your claim",
+    "theirWords": "Their reason, in their words",
+    "odds": "of {{total}} similar cases at the Insurance Ombudsman ended with the claim paid in full or in part.",
+    "readGuide": "Read the guide",
+    "deadline": "Last day to go to the {{body}}: {{date}}.",
+    "daysLeft_one": "{{count}} day left.",
+    "daysLeft_other": "{{count}} days left.",
+    "steps": "How to appeal",
+    "ctaTitle": "Build my appeal",
+    "ctaSub": "Kavach finds the rules and past decisions for your case, writes the appeal letter, fills the official forms and tracks every deadline. Sign in with your phone to save this letter as your case.",
+    "cta": "Build my appeal",
+    "another": "Check another letter",
+    "disclaimer": "General information, not legal advice.",
+    "notLetterTitle": "This doesn't look like a rejection letter",
+    "notLetterSub": "Upload the letter or email in which your insurer rejected or cut the claim.",
+    "tryAgain": "Try another file",
+    "error": "Something went wrong. Please try again.",
+    "signIn": "Sign in",
+    "myCases": "My cases",
+    "saving": "Saving your case and starting the analysis…",
+    "link": "Try it first: check your rejection letter without signing in"
   }
 }

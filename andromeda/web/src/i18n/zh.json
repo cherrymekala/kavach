@@ -688,5 +688,48 @@
   },
   "guides": {
     "link": "理赔被拒？按拒赔原因阅读指南"
+  },
+  "check": {
+    "title": "检查您的拒赔信",
+    "sub": "免费，无需注册。了解理赔被拒的原因、类似案件在申诉机构的结果，以及您的截止日期。",
+    "country": "国家",
+    "countries": {
+      "india": "印度",
+      "singapore": "新加坡",
+      "malaysia": "马来西亚"
+    },
+    "upload": "上传或拍摄拒赔信",
+    "uploadHint": "PDF、照片或文本 · 最大 10 MB",
+    "pasteInstead": "改为粘贴文字",
+    "uploadInstead": "改为上传文件",
+    "pastePlaceholder": "粘贴保险公司拒赔信或电子邮件的文字",
+    "explain": "解释我的拒赔",
+    "privacy": "我们只读取一次您的信件用于解释，不会保存。登录前不会保存任何内容。",
+    "reading": "正在读取您的信件…",
+    "readingSub": "正在查找原因、相关规定和类似案件的结果。",
+    "rejected": "理赔被拒",
+    "yourInsurer": "您的保险公司",
+    "headline": "{{insurer}} 拒绝了您 {{amount}} 的理赔",
+    "headlineNoAmount": "{{insurer}} 拒绝了您的理赔",
+    "theirWords": "他们的理由（原文）",
+    "odds": "在申诉机构处理的 {{total}} 宗类似案件中，理赔获全额或部分支付。",
+    "readGuide": "阅读指南",
+    "deadline": "向{{body}}申诉的最后期限：{{date}}。",
+    "daysLeft_one": "还剩 {{count}} 天。",
+    "daysLeft_other": "还剩 {{count}} 天。",
+    "steps": "如何申诉",
+    "ctaTitle": "为我准备申诉",
+    "ctaSub": "Kavach 会找出适用于您案件的规定和过往裁决，撰写申诉信，填写官方表格，并跟踪每个截止日期。用手机登录即可将此信件保存为您的案件。",
+    "cta": "为我准备申诉",
+    "another": "检查另一封信",
+    "disclaimer": "一般信息，不构成法律建议。",
+    "notLetterTitle": "这看起来不是拒赔信",
+    "notLetterSub": "请上传保险公司拒绝或削减理赔的信件或电子邮件。",
+    "tryAgain": "换一个文件",
+    "error": "出了点问题，请重试。",
+    "signIn": "登录",
+    "myCases": "我的案件",
+    "saving": "正在保存您的案件并开始分析…",
+    "link": "先试试：无需登录即可检查您的拒赔信"
   }
 }

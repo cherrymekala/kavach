@@ -688,5 +688,48 @@
   },
   "guides": {
     "link": "Tuntutan ditolak? Baca panduan mengikut sebab penolakan"
+  },
+  "check": {
+    "title": "Semak surat penolakan anda",
+    "sub": "Percuma, tanpa daftar. Lihat sebab tuntutan anda ditolak, keputusan kes serupa di Ombudsman, dan tarikh akhir anda.",
+    "country": "Negara",
+    "countries": {
+      "india": "India",
+      "singapore": "Singapura",
+      "malaysia": "Malaysia"
+    },
+    "upload": "Muat naik atau ambil gambar surat",
+    "uploadHint": "PDF, gambar atau teks · hingga 10 MB",
+    "pasteInstead": "Tampal teks sebaliknya",
+    "uploadInstead": "Muat naik fail sebaliknya",
+    "pastePlaceholder": "Tampal teks surat atau e-mel penolakan daripada syarikat insurans",
+    "explain": "Terangkan penolakan saya",
+    "privacy": "Kami membaca surat anda sekali untuk menerangkannya dan tidak menyimpannya. Tiada apa disimpan sehingga anda log masuk.",
+    "reading": "Membaca surat anda…",
+    "readingSub": "Mencari sebab, peraturan dan keputusan kes serupa.",
+    "rejected": "Tuntutan ditolak",
+    "yourInsurer": "Syarikat insurans anda",
+    "headline": "{{insurer}} menolak tuntutan {{amount}} anda",
+    "headlineNoAmount": "{{insurer}} menolak tuntutan anda",
+    "theirWords": "Sebab mereka, dalam kata-kata mereka",
+    "odds": "daripada {{total}} kes serupa di Ombudsman berakhir dengan tuntutan dibayar sepenuhnya atau sebahagian.",
+    "readGuide": "Baca panduan",
+    "deadline": "Hari terakhir untuk ke {{body}}: {{date}}.",
+    "daysLeft_one": "Tinggal {{count}} hari.",
+    "daysLeft_other": "Tinggal {{count}} hari.",
+    "steps": "Cara membuat rayuan",
+    "ctaTitle": "Sediakan rayuan saya",
+    "ctaSub": "Kavach mencari peraturan dan keputusan lalu untuk kes anda, menulis surat rayuan, mengisi borang rasmi dan menjejak setiap tarikh akhir. Log masuk dengan telefon untuk menyimpan surat ini sebagai kes anda.",
+    "cta": "Sediakan rayuan saya",
+    "another": "Semak surat lain",
+    "disclaimer": "Maklumat am, bukan nasihat undang-undang.",
+    "notLetterTitle": "Ini tidak kelihatan seperti surat penolakan",
+    "notLetterSub": "Muat naik surat atau e-mel di mana syarikat insurans menolak atau mengurangkan tuntutan.",
+    "tryAgain": "Cuba fail lain",
+    "error": "Ada masalah. Sila cuba lagi.",
+    "signIn": "Log masuk",
+    "myCases": "Kes saya",
+    "saving": "Menyimpan kes anda dan memulakan analisis…",
+    "link": "Cuba dahulu: semak surat penolakan anda tanpa log masuk"
   }
 }

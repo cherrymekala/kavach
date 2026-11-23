@@ -662,6 +662,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/preview": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Preview
+         * @description Explain a rejection letter without an account. Nothing is stored.
+         */
+        post: operations["preview_preview_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -756,6 +776,18 @@ export interface components {
              * @default Kavach prepares documents from your files and public rules to help you raise a dispute. It is not legal advice. Check every detail before you sign or send anything.
              */
             disclaimer: string;
+        };
+        /** Body_preview_preview_post */
+        Body_preview_preview_post: {
+            /** File */
+            file?: string | null;
+            /** Text */
+            text?: string | null;
+            /**
+             * Country
+             * @default IN
+             */
+            country: string;
         };
         /** Body_upload_cases__case_id__documents_post */
         Body_upload_cases__case_id__documents_post: {
@@ -1333,6 +1365,65 @@ export interface components {
              * @default Kavach prepares documents from your files and public rules to help you raise a dispute. It is not legal advice. Check every detail before you sign or send anything.
              */
             disclaimer: string;
+        };
+        /** PreviewGuide */
+        PreviewGuide: {
+            /** Slug */
+            slug: string;
+            /** Total */
+            total: number;
+            /** Won Pct */
+            won_pct: number;
+            /** Allowed */
+            allowed: number;
+            /** Partly Allowed */
+            partly_allowed: number;
+            /** Dismissed */
+            dismissed: number;
+        };
+        /** PreviewResult */
+        PreviewResult: {
+            /** Is Rejection */
+            is_rejection: boolean;
+            /** Insurer */
+            insurer?: string | null;
+            /** Diagnosis */
+            diagnosis?: string | null;
+            /** Claim Amount */
+            claim_amount?: number | null;
+            /** Amount Approved */
+            amount_approved?: number | null;
+            /** Currency */
+            currency?: string | null;
+            /** Rejection Date */
+            rejection_date?: string | null;
+            /** Rejection Category */
+            rejection_category?: string | null;
+            /** Rejection Reason */
+            rejection_reason?: string | null;
+            /** Cited Clause */
+            cited_clause?: string | null;
+            /** Decoded Code */
+            decoded_code?: string | null;
+            /** Deadline */
+            deadline?: string | null;
+            /** Deadline Body */
+            deadline_body?: string | null;
+            /**
+             * Ladder
+             * @default []
+             */
+            ladder: components["schemas"]["PreviewStep"][];
+            guide?: components["schemas"]["PreviewGuide"] | null;
+        };
+        /** PreviewStep */
+        PreviewStep: {
+            /** Step */
+            step: string;
+            /** Dispute Body */
+            dispute_body: string;
+            /** Deadline Days */
+            deadline_days: number;
         };
         /** PushToken */
         PushToken: {
@@ -2784,6 +2875,39 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    preview_preview_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "multipart/form-data": components["schemas"]["Body_preview_preview_post"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PreviewResult"];
+                };
             };
             /** @description Validation Error */
             422: {
