@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react'
-import { Navigate, useLocation, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import type { ConfirmationResult } from 'firebase/auth'
 import { RecaptchaVerifier } from 'firebase/auth'
@@ -86,6 +86,7 @@ export function SignIn() {
 
         <p className="text-xs text-muted-foreground">
           {t('auth.privacy')}{' '}
+          <Link to="/check" className="font-semibold text-brand underline">{t('check.link')}</Link>{' '}
           <a href="/guides" className="font-semibold text-brand underline">{t('guides.link')}</a>
         </p>
       </div>
@@ -126,7 +127,8 @@ export function SignIn() {
                 </li>
               ))}
             </ul>
-            <a href="/guides" className="mt-6 inline-block text-sm font-semibold text-brand underline">{t('guides.link')}</a>
+            <Link to="/check" className="mt-6 block rounded-[20px] bg-accent p-4 text-sm font-bold text-accent-foreground">{t('check.link')} →</Link>
+            <a href="/guides" className="mt-3 inline-block text-sm font-semibold text-brand underline">{t('guides.link')}</a>
           </div>
         </main>
 

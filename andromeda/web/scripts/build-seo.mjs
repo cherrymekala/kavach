@@ -97,7 +97,7 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j)}</sc
 </head>
 <body>
 <div class="wrap">
-<header class="top"><a class="brand" href="/guides">${MARK}kavach</a><a class="cta small" href="/">Check my claim</a></header>
+<header class="top"><a class="brand" href="/guides">${MARK}kavach</a><a class="cta small" href="/check">Check my claim</a></header>
 <main>
 ${body}
 </main>
@@ -179,7 +179,7 @@ ${ladderHtml()}
 <div class="band">
   <h2 style="margin-top:0">Check your own rejection</h2>
   <p>Upload your rejection letter and policy. Kavach finds the rules and past decisions that apply to your case, writes the appeal and fills the forms.</p>
-  <a class="cta" href="/">Check my claim</a>
+  <a class="cta" href="/check">Check my claim</a>
 </div>
 
 <h2>Common questions</h2>
@@ -242,7 +242,7 @@ ${offices.map((o) => `<div class="card"><h3>${esc(o.centre)}</h3><p style="margi
 <p class="note">Office details from cioins.co.in. Check the Council for Insurance Ombudsmen website before sending, as addresses can change.</p>
 <h2>The hearing</h2>
 <p>The Ombudsman hears both sides, in person or by video. Keep your answers short and stick to dates and documents. Kavach lets you rehearse it with a live AI Ombudsman and insurer's representative.</p>
-<div class="band"><h2 style="margin-top:0">Let Kavach fill the form</h2><p>Upload your rejection letter and policy. Kavach writes your appeal, fills the Annexure VI-A form and picks the right office from your address.</p><a class="cta" href="/">Check my claim</a></div>
+<div class="band"><h2 style="margin-top:0">Let Kavach fill the form</h2><p>Upload your rejection letter and policy. Kavach writes your appeal, fills the Annexure VI-A form and picks the right office from your address.</p><a class="cta" href="/check">Check my claim</a></div>
 <h2>Common questions</h2>
 ${qas.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}`
   return { urlPath, html: page({ urlPath, title, description, body, jsonld: [article(urlPath, title, description), faq(qas)] }) }
@@ -273,7 +273,7 @@ ${ins.now_known_as ? `<p class="note">Now known as ${esc(ins.now_known_as)}.</p>
     .join('')}</ul>
 <h2>How to appeal</h2>
 ${ladderHtml()}
-<div class="band"><h2 style="margin-top:0">Rejected by ${esc(ins.key)}?</h2><p>Kavach reads your rejection letter and policy, finds the rules and past decisions that apply, and writes your appeal.</p><a class="cta" href="/">Check my claim</a></div>`
+<div class="band"><h2 style="margin-top:0">Rejected by ${esc(ins.key)}?</h2><p>Kavach reads your rejection letter and policy, finds the rules and past decisions that apply, and writes your appeal.</p><a class="cta" href="/check">Check my claim</a></div>`
   return { urlPath, html: page({ urlPath, title, description, body, jsonld: [article(urlPath, title, description)] }) }
 }
 
@@ -295,11 +295,11 @@ fs.writeFileSync(
     title: 'Page not found | Kavach',
     description: 'This page does not exist.',
     body: `<h1>We couldn’t find that page</h1><p class="lead">The link may be old or mistyped. These are good places to start:</p>
-<ul class="list"><li><a href="/guides"><span>Guides by rejection reason</span><b>→</b></a></li><li><a href="/guides/${OMBUDSMAN_SLUG}"><span>How to complain to the Insurance Ombudsman</span><b>→</b></a></li><li><a href="/"><span>Check my claim</span><b>→</b></a></li></ul>`,
+<ul class="list"><li><a href="/guides"><span>Guides by rejection reason</span><b>→</b></a></li><li><a href="/guides/${OMBUDSMAN_SLUG}"><span>How to complain to the Insurance Ombudsman</span><b>→</b></a></li><li><a href="/check"><span>Check my claim</span><b>→</b></a></li></ul>`,
   }).replace(/<link rel="canonical"[^>]*>/, '<meta name="robots" content="noindex">'),
 )
 
-const urls = ['/', '/insights', ...pages.map((p) => p.urlPath)]
+const urls = ['/', '/check', '/insights', ...pages.map((p) => p.urlPath)]
 fs.writeFileSync(
   path.join(dist, 'sitemap.xml'),
   `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map((u) => `  <url><loc>${SITE}${u === '/' ? '/' : u}</loc><lastmod>${TODAY}</lastmod></url>`).join('\n')}\n</urlset>\n`,
