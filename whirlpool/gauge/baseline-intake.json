@@ -1,0 +1,1078 @@
+{
+  "suite": "kavach-intake",
+  "created_at": "2026-11-24T17:52:26+00:00",
+  "repeats": 3,
+  "summary": {
+    "runs": 21,
+    "pass_rate": 1.0,
+    "pass_all_k_rate": 1.0,
+    "flaky_cases": [],
+    "mean_score": 1.0,
+    "errors": 0,
+    "latency_p50_s": 3.3986,
+    "latency_p95_s": 5.867,
+    "cost_total_usd": 0.0,
+    "cost_mean_usd": 0.0,
+    "tokens_total": 548039,
+    "by_tag": {
+      "in": 1.0,
+      "my": 1.0,
+      "sg": 1.0
+    },
+    "failures_by_assertion": {},
+    "cases": {
+      "in_001_ped_star": {
+        "pass_rate": 1.0,
+        "pass_at_k": true,
+        "pass_all_k": true,
+        "mean_score": 1.0,
+        "tags": [
+          "in"
+        ]
+      },
+      "in_002_waiting_hdfc": {
+        "pass_rate": 1.0,
+        "pass_at_k": true,
+        "pass_all_k": true,
+        "mean_score": 1.0,
+        "tags": [
+          "in"
+        ]
+      },
+      "in_003_roomrent_care": {
+        "pass_rate": 1.0,
+        "pass_at_k": true,
+        "pass_all_k": true,
+        "mean_score": 1.0,
+        "tags": [
+          "in"
+        ]
+      },
+      "in_004_nondisclosure_niva": {
+        "pass_rate": 1.0,
+        "pass_at_k": true,
+        "pass_all_k": true,
+        "mean_score": 1.0,
+        "tags": [
+          "in"
+        ]
+      },
+      "in_005_diagnostic_bajaj": {
+        "pass_rate": 1.0,
+        "pass_at_k": true,
+        "pass_all_k": true,
+        "mean_score": 1.0,
+        "tags": [
+          "in"
+        ]
+      },
+      "my_001_waiting_period": {
+        "pass_rate": 1.0,
+        "pass_at_k": true,
+        "pass_all_k": true,
+        "mean_score": 1.0,
+        "tags": [
+          "my"
+        ]
+      },
+      "sg_001_nondisclosure_aia": {
+        "pass_rate": 1.0,
+        "pass_at_k": true,
+        "pass_all_k": true,
+        "mean_score": 1.0,
+        "tags": [
+          "sg"
+        ]
+      }
+    }
+  },
+  "results": [
+    {
+      "case_id": "in_001_ped_star",
+      "repeat": 0,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "4.85s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"STAR HEALTH AND ALLIED INSURANCE CO. LTD.\", \"tpa\": null, \"patient_name\": \"Mrs. Lakshmi Iyer (SYNTHETIC)\", \"hospital\": \"Sri Sai Multispeciality Hospital, Chennai\", \"policy_number\": \"P/161100/01/2026/004521\", \"claim_number\": \"CLI/2026/161100/0412387\", \"rejection_date\": \"2026-07-28\", \"policy_start\": null, \"admission_date\": \"2026-07-12\", \"first_diagnosis_date\": \"2026-07-05\", \"diagnosis\": \"Cholelithiasis with Chronic Cholecystitis\", \"claim_amount\": 184000.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": null, \"rejection_category\": \"pre_existing\", \"rejection_reason\": \"The insured was a known case of gall stone disease prior to the commencement of the policy.\", \"cited_clause\": \"Exclusion No.1 - Pre-Existing Diseases (Code Excl 01)\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 25256,
+        "output_tokens": 436,
+        "cost_usd": 0.0,
+        "latency_s": 4.851118206999985,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_001_ped_star",
+      "repeat": 1,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "2.64s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"STAR HEALTH AND ALLIED INSURANCE CO. LTD.\", \"tpa\": null, \"patient_name\": \"Mrs. Lakshmi Iyer (SYNTHETIC)\", \"hospital\": \"Sri Sai Multispeciality Hospital, Chennai\", \"policy_number\": \"P/161100/01/2026/004521\", \"claim_number\": \"CLI/2026/161100/0412387\", \"rejection_date\": \"2026-07-28\", \"policy_start\": null, \"admission_date\": \"2026-07-12\", \"first_diagnosis_date\": \"2026-07-05\", \"diagnosis\": \"Cholelithiasis with Chronic Cholecystitis\", \"claim_amount\": 184000.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": null, \"rejection_category\": \"pre_existing\", \"rejection_reason\": \"The insured was a known case of gall stone disease prior to the commencement of the policy.\", \"cited_clause\": \"Exclusion No.1 - Pre-Existing Diseases (Code Excl 01)\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 25256,
+        "output_tokens": 434,
+        "cost_usd": 0.0,
+        "latency_s": 2.6350166380000246,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_001_ped_star",
+      "repeat": 2,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "2.95s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"STAR HEALTH AND ALLIED INSURANCE CO. LTD.\", \"tpa\": null, \"patient_name\": \"Mrs. Lakshmi Iyer (SYNTHETIC)\", \"hospital\": \"Sri Sai Multispeciality Hospital, Chennai\", \"policy_number\": \"P/161100/01/2026/004521\", \"claim_number\": \"CLI/2026/161100/0412387\", \"rejection_date\": \"2026-07-28\", \"policy_start\": null, \"admission_date\": \"2026-07-12\", \"first_diagnosis_date\": \"2026-07-05\", \"diagnosis\": \"Cholelithiasis with chronic cholecystitis\", \"claim_amount\": 184000.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": null, \"rejection_category\": \"pre_existing\", \"rejection_reason\": \"The insured was a known case of gall stone disease prior to the commencement of the policy.\", \"cited_clause\": \"Exclusion No.1 - Pre-Existing Diseases (Code Excl 01)\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 25256,
+        "output_tokens": 436,
+        "cost_usd": 0.0,
+        "latency_s": 2.9516517790000307,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_002_waiting_hdfc",
+      "repeat": 0,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "4.37s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"HDFC ERGO GENERAL INSURANCE COMPANY LIMITED\", \"tpa\": null, \"patient_name\": \"Mr. Suresh Patil (SYNTHETIC)\", \"hospital\": \"NETRA EYE CARE HOSPITAL, PUNE\", \"policy_number\": \"2856 2034 1122 9087 000\", \"claim_number\": \"RR-HS26-11873420\", \"rejection_date\": \"2026-09-02\", \"policy_start\": \"2025-04-01\", \"admission_date\": \"2026-08-20\", \"first_diagnosis_date\": null, \"diagnosis\": \"Senile mature cataract, right eye\", \"claim_amount\": 62500.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": null, \"rejection_category\": \"specific_waiting_period\", \"rejection_reason\": \"The claim is not admissible as the policy has completed only 16 months against the required 24 months continuous coverage for cataract under the specified disease/procedure waiting period.\", \"cited_clause\": \"Code - Excl02\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 29896,
+        "output_tokens": 424,
+        "cost_usd": 0.0,
+        "latency_s": 4.373366035000004,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_002_waiting_hdfc",
+      "repeat": 1,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "3.27s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"HDFC ERGO General Insurance Company Limited\", \"tpa\": null, \"patient_name\": \"Mr. Suresh Patil (SYNTHETIC)\", \"hospital\": \"NETRA EYE CARE HOSPITAL, PUNE\", \"policy_number\": \"2856 2034 1122 9087 000\", \"claim_number\": \"RR-HS26-11873420\", \"rejection_date\": \"2026-09-02\", \"policy_start\": \"2025-04-01\", \"admission_date\": \"2026-08-20\", \"first_diagnosis_date\": null, \"diagnosis\": \"Senile mature cataract, right eye\", \"claim_amount\": 62500.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": null, \"rejection_category\": \"specific_waiting_period\", \"rejection_reason\": \"The claim is inadmissible as the cataract treatment was undertaken before the expiry of the 24-month waiting period for specified diseases under the policy.\", \"cited_clause\": \"Code - Excl02\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 29896,
+        "output_tokens": 418,
+        "cost_usd": 0.0,
+        "latency_s": 3.270401361999973,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_002_waiting_hdfc",
+      "repeat": 2,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "3.62s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"HDFC ERGO General Insurance Company Limited\", \"tpa\": null, \"patient_name\": \"Mr. Suresh Patil (SYNTHETIC)\", \"hospital\": \"Netra Eye Care Hospital, Pune\", \"policy_number\": \"2856 2034 1122 9087 000\", \"claim_number\": \"RR-HS26-11873420\", \"rejection_date\": \"2026-09-02\", \"policy_start\": \"2025-04-01\", \"admission_date\": \"2026-08-20\", \"first_diagnosis_date\": null, \"diagnosis\": \"Senile mature cataract, right eye\", \"claim_amount\": 62500.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": null, \"rejection_category\": \"specific_waiting_period\", \"rejection_reason\": \"Cataract and other disorders of lens is a listed condition under Specified Disease/Procedure waiting period which excludes such treatment until the expiry of 24 months of continuous coverage.\", \"cited_clause\": \"Code - Excl02\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 29896,
+        "output_tokens": 425,
+        "cost_usd": 0.0,
+        "latency_s": 3.6150295959999994,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_003_roomrent_care",
+      "repeat": 0,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "6.54s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"Care Health Insurance Limited\", \"tpa\": null, \"patient_name\": \"Ms. Ananya Rao\", \"hospital\": \"Apollo Spectra, Hyderabad\", \"policy_number\": \"71830459\", \"claim_number\": \"92614587\", \"rejection_date\": \"2026-06-19\", \"policy_start\": \"2023-01-10\", \"admission_date\": \"2026-06-03\", \"first_diagnosis_date\": \"2026-06-02\", \"diagnosis\": \"Dengue fever with thrombocytopenia\", \"claim_amount\": 112000.0, \"amount_approved\": 73600.0, \"currency\": \"INR\", \"rejection_code\": \"DED-RR-07\", \"rejection_category\": \"room_rent\", \"rejection_reason\": \"Room rent availed is higher than eligible room category, resulting in a proportionate deduction on associated medical expenses.\", \"cited_clause\": null}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 45811,
+        "output_tokens": 391,
+        "cost_usd": 0.0,
+        "latency_s": 6.542976014000033,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_003_roomrent_care",
+      "repeat": 1,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "3.86s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"Care Health Insurance Limited\", \"tpa\": null, \"patient_name\": \"Ms. Ananya Rao\", \"hospital\": \"Apollo Spectra, Hyderabad\", \"policy_number\": \"71830459\", \"claim_number\": \"92614587\", \"rejection_date\": \"2026-06-19\", \"policy_start\": \"2023-01-10\", \"admission_date\": \"2026-06-03\", \"first_diagnosis_date\": \"2026-06-02\", \"diagnosis\": \"Dengue fever with thrombocytopenia\", \"claim_amount\": 112000.0, \"amount_approved\": 73600.0, \"currency\": \"INR\", \"rejection_code\": \"DED-RR-07\", \"rejection_category\": \"room_rent\", \"rejection_reason\": \"Room rent availed is higher than the eligible room category, resulting in a proportionate deduction on associated medical expenses.\", \"cited_clause\": null}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 45811,
+        "output_tokens": 393,
+        "cost_usd": 0.0,
+        "latency_s": 3.8607780749999847,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_003_roomrent_care",
+      "repeat": 2,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "5.05s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"Care Health Insurance Limited\", \"tpa\": null, \"patient_name\": \"Ms. Ananya Rao\", \"hospital\": \"Apollo Spectra, Hyderabad\", \"policy_number\": \"71830459\", \"claim_number\": \"92614587\", \"rejection_date\": \"2026-06-19\", \"policy_start\": \"2023-01-10\", \"admission_date\": \"2026-06-03\", \"first_diagnosis_date\": \"2026-06-02\", \"diagnosis\": \"Dengue fever with thrombocytopenia\", \"claim_amount\": 112000.0, \"amount_approved\": 73600.0, \"currency\": \"INR\", \"rejection_code\": \"DED-RR-07\", \"rejection_category\": \"room_rent\", \"rejection_reason\": \"Room rent availed is higher than eligible room category, resulting in a proportionate deduction on associated medical expenses.\", \"cited_clause\": null}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 45811,
+        "output_tokens": 391,
+        "cost_usd": 0.0,
+        "latency_s": 5.049447259000033,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_004_nondisclosure_niva",
+      "repeat": 0,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "5.87s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"NIVA BUPA HEALTH INSURANCE COMPANY LIMITED\", \"tpa\": null, \"patient_name\": \"Mr. Imran Sheikh\", \"hospital\": \"FORTIS HOSPITAL, MUMBAI\", \"policy_number\": \"31458899201\", \"claim_number\": \"26RE0098812\", \"rejection_date\": \"2026-06-10\", \"policy_start\": \"2020-02-01\", \"admission_date\": \"2026-05-18\", \"first_diagnosis_date\": null, \"diagnosis\": \"Coronary Artery Disease\", \"claim_amount\": 345000.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": \"NB-ND-03\", \"rejection_category\": \"non_disclosure\", \"rejection_reason\": \"Investigation reveals that the insured is a known case of Type 2 Diabetes Mellitus for 8 years, which was not disclosed in the proposal form.\", \"cited_clause\": \"Section 6.1.14\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 34674,
+        "output_tokens": 403,
+        "cost_usd": 0.0,
+        "latency_s": 5.867028893999986,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_004_nondisclosure_niva",
+      "repeat": 1,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "3.94s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"Niva Bupa Health Insurance Company Limited\", \"tpa\": null, \"patient_name\": \"Mr. Imran Sheikh (SYNTHETIC)\", \"hospital\": \"Fortis Hospital, Mumbai\", \"policy_number\": \"31458899201\", \"claim_number\": \"26RE0098812\", \"rejection_date\": \"2026-06-10\", \"policy_start\": \"2020-02-01\", \"admission_date\": \"2026-05-18\", \"first_diagnosis_date\": null, \"diagnosis\": \"Coronary Artery Disease\", \"claim_amount\": 345000.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": \"NB-ND-03\", \"rejection_category\": \"non_disclosure\", \"rejection_reason\": \"Investigation reveals that the insured is a known case of Type 2 Diabetes Mellitus for 8 years, which was not disclosed in the proposal form.\", \"cited_clause\": \"Section 6.1.14\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 34674,
+        "output_tokens": 408,
+        "cost_usd": 0.0,
+        "latency_s": 3.941292121999993,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_004_nondisclosure_niva",
+      "repeat": 2,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "3.40s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"NIVA BUPA HEALTH INSURANCE COMPANY LIMITED\", \"tpa\": null, \"patient_name\": \"Mr. Imran Sheikh\", \"hospital\": \"FORTIS HOSPITAL, MUMBAI\", \"policy_number\": \"31458899201\", \"claim_number\": \"26RE0098812\", \"rejection_date\": \"2026-06-10\", \"policy_start\": \"2020-02-01\", \"admission_date\": \"2026-05-18\", \"first_diagnosis_date\": null, \"diagnosis\": \"Coronary Artery Disease\", \"claim_amount\": 345000.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": \"NB-ND-03\", \"rejection_category\": \"non_disclosure\", \"rejection_reason\": \"Investigation reveals that the insured is a known case of Type 2 Diabetes Mellitus for 8 years, which was not disclosed in the proposal form.\", \"cited_clause\": \"Section 6.1.14\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 34674,
+        "output_tokens": 405,
+        "cost_usd": 0.0,
+        "latency_s": 3.398610634000022,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_005_diagnostic_bajaj",
+      "repeat": 0,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "3.98s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"Bajaj General Insurance Limited\", \"tpa\": \"Medi Assist Insurance TPA Pvt. Ltd.\", \"patient_name\": \"Mrs. Gurpreet Kaur (SYNTHETIC)\", \"hospital\": \"DAYANAND MEDICAL COLLEGE & HOSPITAL, LUDHIANA\", \"policy_number\": \"OG-26-1501-8430-00001234\", \"claim_number\": \"MA-2026-BJ-5521873\", \"rejection_date\": \"2026-08-14\", \"policy_start\": \"2024-09-01\", \"admission_date\": \"2026-08-02\", \"first_diagnosis_date\": null, \"diagnosis\": \"Acute vestibular neuritis\", \"claim_amount\": 48700.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": \"MA-R-117\", \"rejection_category\": \"diagnostic_only\", \"rejection_reason\": \"Admission primarily for investigation and evaluation.\", \"cited_clause\": \"Excl04\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 16009,
+        "output_tokens": 407,
+        "cost_usd": 0.0,
+        "latency_s": 3.975443127999995,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_005_diagnostic_bajaj",
+      "repeat": 1,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "2.85s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"Bajaj General Insurance Limited\", \"tpa\": \"Medi Assist Insurance TPA Pvt. Ltd.\", \"patient_name\": \"Mrs. Gurpreet Kaur (SYNTHETIC)\", \"hospital\": \"DAYANAND MEDICAL COLLEGE & HOSPITAL, LUDHIANA\", \"policy_number\": \"OG-26-1501-8430-00001234\", \"claim_number\": \"MA-2026-BJ-5521873\", \"rejection_date\": \"2026-08-14\", \"policy_start\": \"2024-09-01\", \"admission_date\": \"2026-08-02\", \"first_diagnosis_date\": null, \"diagnosis\": \"Acute vestibular neuritis\", \"claim_amount\": 48700.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": \"MA-R-117\", \"rejection_category\": \"diagnostic_only\", \"rejection_reason\": \"Admission primarily for investigation and evaluation.\", \"cited_clause\": \"Excl04\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 16009,
+        "output_tokens": 407,
+        "cost_usd": 0.0,
+        "latency_s": 2.850019384999996,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_005_diagnostic_bajaj",
+      "repeat": 2,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "3.26s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"Bajaj General Insurance Limited\", \"tpa\": \"Medi Assist Insurance TPA Pvt. Ltd.\", \"patient_name\": \"Mrs. Gurpreet Kaur (SYNTHETIC)\", \"hospital\": \"DAYANAND MEDICAL COLLEGE & HOSPITAL, LUDHIANA\", \"policy_number\": \"OG-26-1501-8430-00001234\", \"claim_number\": \"MA-2026-BJ-5521873\", \"rejection_date\": \"2026-08-14\", \"policy_start\": \"2024-09-01\", \"admission_date\": \"2026-08-02\", \"first_diagnosis_date\": null, \"diagnosis\": \"Acute vestibular neuritis\", \"claim_amount\": 48700.0, \"amount_approved\": null, \"currency\": \"INR\", \"rejection_code\": \"MA-R-117\", \"rejection_category\": \"diagnostic_only\", \"rejection_reason\": \"Admission primarily for investigation and evaluation.\", \"cited_clause\": \"Excl04\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 16009,
+        "output_tokens": 409,
+        "cost_usd": 0.0,
+        "latency_s": 3.261765863999983,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "my_001_waiting_period",
+      "repeat": 0,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "my"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "1.47s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"PRUDENTIA LIFE ASSURANCE (MALAYSIA) BERHAD\", \"tpa\": null, \"patient_name\": \"Nur Aisyah binti Rahman\", \"hospital\": \"Sunway Medical Centre\", \"policy_number\": \"MED-2026-118734\", \"claim_number\": \"CLM-MY-2026-55102\", \"rejection_date\": \"2026-07-22\", \"policy_start\": \"2026-05-01\", \"admission_date\": \"2026-06-16\", \"first_diagnosis_date\": \"2026-06-16\", \"diagnosis\": \"Dengue fever\", \"claim_amount\": 9860.0, \"amount_approved\": null, \"currency\": \"MYR\", \"rejection_code\": null, \"rejection_category\": \"initial_waiting_period\", \"rejection_reason\": \"The claim falls within the 90-day waiting period from the policy effective date and is not payable.\", \"cited_clause\": \"Clause 4.2\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 2
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 1840,
+        "output_tokens": 381,
+        "cost_usd": 0.0,
+        "latency_s": 1.4661917150000363,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "my_001_waiting_period",
+      "repeat": 1,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "my"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "1.50s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"PRUDENTIA LIFE ASSURANCE (MALAYSIA) BERHAD\", \"tpa\": null, \"patient_name\": \"Nur Aisyah binti Rahman\", \"hospital\": \"Sunway Medical Centre\", \"policy_number\": \"MED-2026-118734\", \"claim_number\": \"CLM-MY-2026-55102\", \"rejection_date\": \"2026-07-22\", \"policy_start\": \"2026-05-01\", \"admission_date\": \"2026-06-16\", \"first_diagnosis_date\": \"2026-06-16\", \"diagnosis\": \"Dengue fever with warning signs\", \"claim_amount\": 9860.0, \"amount_approved\": null, \"currency\": \"MYR\", \"rejection_code\": null, \"rejection_category\": \"initial_waiting_period\", \"rejection_reason\": \"The claim falls within the 90-day waiting period from the policy effective date and is not payable.\", \"cited_clause\": \"Clause 4.2\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 2
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 1840,
+        "output_tokens": 384,
+        "cost_usd": 0.0,
+        "latency_s": 1.5020653500000094,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "my_001_waiting_period",
+      "repeat": 2,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "my"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "1.35s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"PRUDENTIA LIFE ASSURANCE (MALAYSIA) BERHAD\", \"tpa\": null, \"patient_name\": \"Nur Aisyah binti Rahman\", \"hospital\": \"Sunway Medical Centre\", \"policy_number\": \"MED-2026-118734\", \"claim_number\": \"CLM-MY-2026-55102\", \"rejection_date\": \"2026-07-22\", \"policy_start\": \"2026-05-01\", \"admission_date\": \"2026-06-16\", \"first_diagnosis_date\": \"2026-06-16\", \"diagnosis\": \"Dengue fever\", \"claim_amount\": 9860.0, \"amount_approved\": null, \"currency\": \"MYR\", \"rejection_code\": null, \"rejection_category\": \"initial_waiting_period\", \"rejection_reason\": \"The claim falls within the 90-day waiting period from the policy effective date and is not payable.\", \"cited_clause\": \"Clause 4.2\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 2
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 1840,
+        "output_tokens": 381,
+        "cost_usd": 0.0,
+        "latency_s": 1.3539133409999522,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "sg_001_nondisclosure_aia",
+      "repeat": 0,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "sg"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "4.75s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"AIA Singapore Private Limited\", \"tpa\": null, \"patient_name\": \"Mr. Tan Wei Ming (SYNTHETIC)\", \"hospital\": \"Mount Elizabeth Novena Hospital\", \"policy_number\": \"H2091847736\", \"claim_number\": \"CL-26-0811-55092\", \"rejection_date\": \"2026-08-14\", \"policy_start\": \"2023-03-03\", \"admission_date\": \"2026-07-02\", \"first_diagnosis_date\": \"2026-07-02\", \"diagnosis\": \"Acute appendicitis\", \"claim_amount\": 18450.0, \"amount_approved\": null, \"currency\": \"SGD\", \"rejection_code\": null, \"rejection_category\": \"non_disclosure\", \"rejection_reason\": \"The policy is voided and the claim is not payable due to failure to declare a past medical history of atopic eczema in the application.\", \"cited_clause\": \"Voiding your policy\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 26345,
+        "output_tokens": 406,
+        "cost_usd": 0.0,
+        "latency_s": 4.748709001999998,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "sg_001_nondisclosure_aia",
+      "repeat": 1,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "sg"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "3.31s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"AIA Singapore Private Limited\", \"tpa\": null, \"patient_name\": \"Mr. Tan Wei Ming (SYNTHETIC)\", \"hospital\": \"Mount Elizabeth Novena Hospital\", \"policy_number\": \"H2091847736\", \"claim_number\": \"CL-26-0811-55092\", \"rejection_date\": \"2026-08-14\", \"policy_start\": \"2023-03-03\", \"admission_date\": \"2026-07-02\", \"first_diagnosis_date\": \"2026-07-02\", \"diagnosis\": \"Acute appendicitis\", \"claim_amount\": 18450.0, \"amount_approved\": null, \"currency\": \"SGD\", \"rejection_code\": null, \"rejection_category\": \"non_disclosure\", \"rejection_reason\": \"Information regarding prior treatment for atopic eczema in 2021 and 2022 was not declared in the application.\", \"cited_clause\": \"Voiding your policy\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 26345,
+        "output_tokens": 404,
+        "cost_usd": 0.0,
+        "latency_s": 3.31308455300001,
+        "error": null,
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "sg_001_nondisclosure_aia",
+      "repeat": 2,
+      "passed": true,
+      "score": 1.0,
+      "tags": [
+        "sg"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "2.87s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        },
+        {
+          "kind": "tool_called",
+          "passed": true,
+          "score": 1.0,
+          "detail": ""
+        }
+      ],
+      "trace": {
+        "output": "{\"facts\": {\"insurer\": \"AIA Singapore Private Limited\", \"tpa\": null, \"patient_name\": \"Mr. Tan Wei Ming (SYNTHETIC)\", \"hospital\": \"Mount Elizabeth Novena Hospital\", \"policy_number\": \"H2091847736\", \"claim_number\": \"CL-26-0811-55092\", \"rejection_date\": \"2026-08-14\", \"policy_start\": \"2023-03-03\", \"admission_date\": \"2026-07-02\", \"first_diagnosis_date\": \"2026-07-02\", \"diagnosis\": \"Acute appendicitis\", \"claim_amount\": 18450.0, \"amount_approved\": null, \"currency\": \"SGD\", \"rejection_code\": null, \"rejection_category\": \"non_disclosure\", \"rejection_reason\": \"The policy was voided and the claim rejected because the insured failed to declare a history of atopic eczema in the application.\", \"cited_clause\": \"Voiding your policy\"}, \"doc_types\": {\"rejection_letter.txt\": \"rejection_letter\", \"discharge_summary.txt\": \"discharge_summary\", \"policy.pdf\": \"policy\"}}",
+        "tool_calls": [
+          {
+            "name": "intake",
+            "args": {
+              "documents": 3
+            },
+            "result": null
+          }
+        ],
+        "input_tokens": 26345,
+        "output_tokens": 403,
+        "cost_usd": 0.0,
+        "latency_s": 2.8687701440000524,
+        "error": null,
+        "metadata": {}
+      }
+    }
+  ]
+}
