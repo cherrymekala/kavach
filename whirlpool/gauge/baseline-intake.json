@@ -1,0 +1,913 @@
+{
+  "suite": "kavach-intake",
+  "created_at": "2026-11-24T17:37:20+00:00",
+  "repeats": 3,
+  "summary": {
+    "runs": 21,
+    "pass_rate": 0.0,
+    "pass_all_k_rate": 0.0,
+    "flaky_cases": [],
+    "mean_score": 0.3333,
+    "errors": 21,
+    "latency_p50_s": 0.111,
+    "latency_p95_s": 0.1501,
+    "cost_total_usd": 0.0,
+    "cost_mean_usd": 0.0,
+    "tokens_total": 0,
+    "by_tag": {
+      "in": 0.0,
+      "my": 0.0,
+      "sg": 0.0
+    },
+    "failures_by_assertion": {
+      "facts_match": 21,
+      "tool_called": 21
+    },
+    "cases": {
+      "in_001_ped_star": {
+        "pass_rate": 0.0,
+        "pass_at_k": false,
+        "pass_all_k": false,
+        "mean_score": 0.3333,
+        "tags": [
+          "in"
+        ]
+      },
+      "in_002_waiting_hdfc": {
+        "pass_rate": 0.0,
+        "pass_at_k": false,
+        "pass_all_k": false,
+        "mean_score": 0.3333,
+        "tags": [
+          "in"
+        ]
+      },
+      "in_003_roomrent_care": {
+        "pass_rate": 0.0,
+        "pass_at_k": false,
+        "pass_all_k": false,
+        "mean_score": 0.3333,
+        "tags": [
+          "in"
+        ]
+      },
+      "in_004_nondisclosure_niva": {
+        "pass_rate": 0.0,
+        "pass_at_k": false,
+        "pass_all_k": false,
+        "mean_score": 0.3333,
+        "tags": [
+          "in"
+        ]
+      },
+      "in_005_diagnostic_bajaj": {
+        "pass_rate": 0.0,
+        "pass_at_k": false,
+        "pass_all_k": false,
+        "mean_score": 0.3333,
+        "tags": [
+          "in"
+        ]
+      },
+      "my_001_waiting_period": {
+        "pass_rate": 0.0,
+        "pass_at_k": false,
+        "pass_all_k": false,
+        "mean_score": 0.3333,
+        "tags": [
+          "my"
+        ]
+      },
+      "sg_001_nondisclosure_aia": {
+        "pass_rate": 0.0,
+        "pass_at_k": false,
+        "pass_all_k": false,
+        "mean_score": 0.3333,
+        "tags": [
+          "sg"
+        ]
+      }
+    }
+  },
+  "results": [
+    {
+      "case_id": "in_001_ped_star",
+      "repeat": 0,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.25s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.25459792499998457,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_001_ped_star",
+      "repeat": 1,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.13s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.12870715500002916,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_001_ped_star",
+      "repeat": 2,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.11s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.1110214459999952,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_002_waiting_hdfc",
+      "repeat": 0,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.08s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.07832248299996536,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_002_waiting_hdfc",
+      "repeat": 1,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.08s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.08026197200001661,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_002_waiting_hdfc",
+      "repeat": 2,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.08s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.07545774999999821,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_003_roomrent_care",
+      "repeat": 0,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.15s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.1501145900000438,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_003_roomrent_care",
+      "repeat": 1,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.13s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.1264169799999877,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_003_roomrent_care",
+      "repeat": 2,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.14s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.13648805299999367,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_004_nondisclosure_niva",
+      "repeat": 0,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.07s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.06601832300003707,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_004_nondisclosure_niva",
+      "repeat": 1,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.10s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.09656261499998209,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_004_nondisclosure_niva",
+      "repeat": 2,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.07s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.06957619399997839,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_005_diagnostic_bajaj",
+      "repeat": 0,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.12s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.11689174199995023,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_005_diagnostic_bajaj",
+      "repeat": 1,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.10s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.10167670199996337,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "in_005_diagnostic_bajaj",
+      "repeat": 2,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "in"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.09s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.09025595899998962,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "my_001_waiting_period",
+      "repeat": 0,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "my"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.11s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.11346466399999144,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "my_001_waiting_period",
+      "repeat": 1,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "my"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.09s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.0900391769999942,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "my_001_waiting_period",
+      "repeat": 2,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "my"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.09s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.08918390399998088,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "sg_001_nondisclosure_aia",
+      "repeat": 0,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "sg"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.13s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.12736261800000648,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "sg_001_nondisclosure_aia",
+      "repeat": 1,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "sg"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.12s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.12273830699996324,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    },
+    {
+      "case_id": "sg_001_nondisclosure_aia",
+      "repeat": 2,
+      "passed": false,
+      "score": 0.3333,
+      "tags": [
+        "sg"
+      ],
+      "assertions": [
+        {
+          "kind": "max_latency",
+          "passed": true,
+          "score": 1.0,
+          "detail": "0.14s (max 120s)"
+        },
+        {
+          "kind": "facts_match",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        },
+        {
+          "kind": "tool_called",
+          "passed": false,
+          "score": 0.0,
+          "detail": "agent errored: ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}"
+        }
+      ],
+      "trace": {
+        "output": "",
+        "tool_calls": [],
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "latency_s": 0.14101489500001207,
+        "error": "ClientError: 402 RESOURCE_EXHAUSTED. {'error': {'code': 402, 'message': 'Your prepayment credits are depleted. Please go to AI Studio at https://ai.studio/projects to manage your project and billing. Learn more at https://ai.google.dev/gemini-api/docs/billing#prepay. ', 'status': 'RESOURCE_EXHAUSTED'}}",
+        "metadata": {}
+      }
+    }
+  ]
+}
