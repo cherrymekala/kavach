@@ -1,0 +1,116 @@
+suite:
+  name: kavach-full
+  repeats: 2
+  pass_threshold: 0.8
+cases:
+- id: in_001_ped_star
+  input: in_001_ped_star
+  tags:
+  - in
+  - strong
+  assert:
+  - type: field_equals
+    field: strength
+    value: strong
+    weight: 2
+  - type: tool_order
+    sequence: &id001
+    - Reading your documents
+    - Decoding the rejection
+    - Finding the rules that apply
+    - Looking up similar past cases
+    - Building your case
+    - Checking every source
+    critical: true
+  - type: regex
+    pattern: '"arguments": [1-9]'
+- id: in_002_waiting_hdfc
+  input: in_002_waiting_hdfc
+  tags:
+  - in
+  - weak
+  assert:
+  - type: field_equals
+    field: strength
+    value: weak
+    weight: 2
+  - type: tool_order
+    sequence: *id001
+    critical: true
+  - type: regex
+    pattern: '"arguments": [1-9]'
+- id: in_003_roomrent_care
+  input: in_003_roomrent_care
+  tags:
+  - in
+  - strong
+  assert:
+  - type: field_equals
+    field: strength
+    value: strong
+    weight: 2
+  - type: tool_order
+    sequence: *id001
+    critical: true
+  - type: regex
+    pattern: '"arguments": [1-9]'
+- id: in_004_nondisclosure_niva
+  input: in_004_nondisclosure_niva
+  tags:
+  - in
+  - strong
+  assert:
+  - type: field_equals
+    field: strength
+    value: strong
+    weight: 2
+  - type: tool_order
+    sequence: *id001
+    critical: true
+  - type: regex
+    pattern: '"arguments": [1-9]'
+- id: in_005_diagnostic_bajaj
+  input: in_005_diagnostic_bajaj
+  tags:
+  - in
+  - strong
+  assert:
+  - type: field_equals
+    field: strength
+    value: strong
+    weight: 2
+  - type: tool_order
+    sequence: *id001
+    critical: true
+  - type: regex
+    pattern: '"arguments": [1-9]'
+- id: my_001_waiting_period
+  input: my_001_waiting_period
+  tags:
+  - my
+  - strong
+  assert:
+  - type: field_equals
+    field: strength
+    value: strong
+    weight: 2
+  - type: tool_order
+    sequence: *id001
+    critical: true
+  - type: regex
+    pattern: '"arguments": [1-9]'
+- id: sg_001_nondisclosure_aia
+  input: sg_001_nondisclosure_aia
+  tags:
+  - sg
+  - strong
+  assert:
+  - type: field_equals
+    field: strength
+    value: strong
+    weight: 2
+  - type: tool_order
+    sequence: *id001
+    critical: true
+  - type: regex
+    pattern: '"arguments": [1-9]'
