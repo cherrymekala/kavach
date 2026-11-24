@@ -19,6 +19,17 @@ def client() -> genai.Client:
     return genai.Client(api_key=s.google_api_key)
 
 
+def _track(model: str, resp) -> None:
+    """Report token use to agentgauge while an eval run is recording; a no-op in production."""
+    try:
+        from agentgauge import record_llm
+    except ImportError:
+        return
+    u = getattr(resp, "usage_metadata", None)
+    if u is not None:
+        record_llm(model, u.prompt_token_count or 0, u.candidates_token_count or 0)
+
+
 def _mime(uri: str) -> str:
     return mimetypes.guess_type(uri)[0] or "application/octet-stream"
 
@@ -44,8 +55,9 @@ def structured(
     system: str, uris: list[str], schema, context: dict | None = None, model: str | None = None
 ):
     s = get_settings()
+    model = model or s.model_reasoning
     resp = client().models.generate_content(
-        model=model or s.model_reasoning,
+        model=model,
         contents=_parts(uris, context),
         config=types.GenerateContentConfig(
             system_instruction=system,
@@ -54,14 +66,17 @@ def structured(
             temperature=0,
         ),
     )
+    _track(model, resp)
     return schema.model_validate_json(resp.text)
 
 
 def text(system: str, context: dict, model: str | None = None) -> str:
     s = get_settings()
+    model = model or s.model_fast
     resp = client().models.generate_content(
-        model=model or s.model_fast,
+        model=model,
         contents=[json.dumps(context, default=str)],
         config=types.GenerateContentConfig(system_instruction=system),
     )
+    _track(model, resp)
     return resp.text

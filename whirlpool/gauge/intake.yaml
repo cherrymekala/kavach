@@ -1,0 +1,175 @@
+suite:
+  name: kavach-intake
+  repeats: 3
+  pass_threshold: 1.0
+  defaults:
+  - type: max_latency
+    seconds: 120
+cases:
+- id: in_001_ped_star
+  input: in_001_ped_star
+  tags:
+  - in
+  assert:
+  - type: facts_match
+    expected:
+      insurer: Star Health and Allied Insurance
+      tpa: null
+      policy_start: null
+      admission_date: '2026-07-12'
+      first_diagnosis_date: '2026-07-05'
+      claim_amount: 184000
+      currency: INR
+      rejection_code: null
+      rejection_category: pre_existing
+      cited_clause: Code Excl 01
+    doc_types:
+      rejection_letter.txt: rejection_letter
+      discharge_summary.txt: discharge_summary
+      policy.pdf: policy
+  - type: tool_called
+    name: intake
+    critical: true
+- id: in_002_waiting_hdfc
+  input: in_002_waiting_hdfc
+  tags:
+  - in
+  assert:
+  - type: facts_match
+    expected:
+      insurer: HDFC ERGO General Insurance
+      tpa: null
+      policy_start: '2025-04-01'
+      admission_date: '2026-08-20'
+      first_diagnosis_date: null
+      claim_amount: 62500
+      currency: INR
+      rejection_code: null
+      rejection_category: specific_waiting_period
+      cited_clause: Code - Excl02
+    doc_types:
+      rejection_letter.txt: rejection_letter
+      discharge_summary.txt: discharge_summary
+      policy.pdf: policy
+  - type: tool_called
+    name: intake
+    critical: true
+- id: in_003_roomrent_care
+  input: in_003_roomrent_care
+  tags:
+  - in
+  assert:
+  - type: facts_match
+    expected:
+      insurer: Care Health Insurance
+      tpa: null
+      policy_start: '2023-01-10'
+      admission_date: '2026-06-03'
+      first_diagnosis_date: '2026-06-02'
+      claim_amount: 112000
+      currency: INR
+      rejection_code: DED-RR-07
+      rejection_category: room_rent
+      cited_clause: null
+    doc_types:
+      rejection_letter.txt: rejection_letter
+      discharge_summary.txt: discharge_summary
+      policy.pdf: policy
+  - type: tool_called
+    name: intake
+    critical: true
+- id: in_004_nondisclosure_niva
+  input: in_004_nondisclosure_niva
+  tags:
+  - in
+  assert:
+  - type: facts_match
+    expected:
+      insurer: Niva Bupa Health Insurance
+      tpa: null
+      policy_start: '2020-02-01'
+      admission_date: '2026-05-18'
+      first_diagnosis_date: null
+      claim_amount: 345000
+      currency: INR
+      rejection_code: NB-ND-03
+      rejection_category: non_disclosure
+      cited_clause: 6.1.14
+    doc_types:
+      rejection_letter.txt: rejection_letter
+      discharge_summary.txt: discharge_summary
+      policy.pdf: policy
+  - type: tool_called
+    name: intake
+    critical: true
+- id: in_005_diagnostic_bajaj
+  input: in_005_diagnostic_bajaj
+  tags:
+  - in
+  assert:
+  - type: facts_match
+    expected:
+      insurer: Bajaj General Insurance
+      tpa: Medi Assist
+      policy_start: '2024-09-01'
+      admission_date: '2026-08-02'
+      first_diagnosis_date: null
+      claim_amount: 48700
+      currency: INR
+      rejection_code: MA-R-117
+      rejection_category: diagnostic_only
+      cited_clause: Excl04
+    doc_types:
+      rejection_letter.txt: rejection_letter
+      discharge_summary.txt: discharge_summary
+      policy.pdf: policy
+  - type: tool_called
+    name: intake
+    critical: true
+- id: my_001_waiting_period
+  input: my_001_waiting_period
+  tags:
+  - my
+  assert:
+  - type: facts_match
+    expected:
+      insurer: Prudentia Life Assurance (Malaysia) Berhad
+      tpa: null
+      policy_start: '2026-05-01'
+      admission_date: '2026-06-16'
+      first_diagnosis_date: '2026-06-16'
+      claim_amount: 9860
+      currency: MYR
+      rejection_code: null
+      rejection_category: initial_waiting_period
+      cited_clause: Clause 4.2
+    doc_types:
+      rejection_letter.txt: rejection_letter
+      discharge_summary.txt: discharge_summary
+  - type: tool_called
+    name: intake
+    critical: true
+- id: sg_001_nondisclosure_aia
+  input: sg_001_nondisclosure_aia
+  tags:
+  - sg
+  assert:
+  - type: facts_match
+    expected:
+      insurer: AIA Singapore
+      tpa: null
+      policy_start: '2023-03-03'
+      admission_date: '2026-07-02'
+      first_diagnosis_date: '2026-07-02'
+      claim_amount: 18450
+      currency: SGD
+      rejection_code: null
+      rejection_category: non_disclosure
+      cited_clause: Voiding your policy
+    doc_types:
+      rejection_letter.txt: rejection_letter
+      discharge_summary.txt: discharge_summary
+      policy.pdf: policy
+  - type: tool_called
+    name: intake
+    critical: true

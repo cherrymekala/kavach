@@ -11,6 +11,8 @@ Scored today (intake agent): document types, insurer, TPA, policy start, admissi
 
 `discharge/` holds pre-discharge cases (policy, policy schedule, draft discharge summary, interim bill); `run_evals.py --discharge` checks the verdict and that the expected risks are found.
 
+For repeated runs, flakiness, token cost and a regression gate, see [gauge/](gauge/README.md) (agentgauge).
+
 Later: strength verdict (`expected.strength`, strategist) and checker pass rate.
 
 The free AI Studio tier allows 250k input tokens per minute, and each policy is about 50k tokens, so the runner waits and retries on 429 errors. Run before every demo build. Target: 10 cases by week 1, 20 by week 2.

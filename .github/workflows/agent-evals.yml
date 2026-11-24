@@ -1,0 +1,53 @@
+name: Agent evals (agentgauge)
+
+# Manual: runs the intake suite against real Gemini, 3 repeats per case, and gates it against the
+# committed baseline if there is one. Needs the GOOGLE_API_KEY repository secret.
+on:
+  workflow_dispatch:
+
+jobs:
+  intake:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.14"
+          cache: pip
+          cache-dependency-path: sombrero/requirements.txt
+
+      - name: Install
+        run: |
+          pip install -r sombrero/requirements.txt -e sombrero
+          pip install "agentgauge @ git+https://github.com/cherrymekala/agentgauge"
+
+      - name: Fetch policy wordings
+        run: bash magellan/ingest/fetch_sources.sh
+
+      - name: Run suite
+        working-directory: whirlpool/gauge
+        env:
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: |
+          python build_suites.py
+          agentgauge run intake.yaml --agent agents:intake_agent --workers 1 \
+            --out runs/intake.json --html intake.html
+
+      - name: Gate against baseline
+        working-directory: whirlpool/gauge
+        run: |
+          if [ -f baseline-intake.json ]; then
+            agentgauge compare baseline-intake.json runs/intake.json --html intake.html
+          else
+            echo "No baseline yet: download runs/intake.json from this run's artifacts and commit it as whirlpool/gauge/baseline-intake.json" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: agent-evals
+          path: |
+            whirlpool/gauge/intake.html
+            whirlpool/gauge/runs/intake.json
