@@ -29,6 +29,8 @@ cp runs/intake.json baseline-intake.json
 ../../sombrero/.venv/bin/agentgauge compare baseline-intake.json runs/intake.json --html intake.html
 ```
 
+In CI (`.github/workflows/agent-evals.yml`) the suite runs on Vertex AI with keyless auth. Run `whirlpool/gauge/setup_vertex_ci.sh` once: it creates a service account limited to Vertex AI and a Workload Identity pool that only this repo can use, and it sets the repo variables. Locally, set `USE_VERTEX=true` in `.env` and run `gcloud auth application-default login`. Any run where agents error (quota, auth) now exits with a failure, so a broken run can't become the baseline.
+
 `full.yaml` (with `agents:full_agent`) scores the strength verdict and the stage order. It needs Vertex AI Search, the same as `run_evals.py --full`.
 
 Keep `--workers 1` on the free AI Studio tier: each policy is about 50k tokens, and the agents wait and retry on 429 errors.

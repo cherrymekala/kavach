@@ -1,9 +1,14 @@
 name: Agent evals (agentgauge)
 
-# Manual: runs the intake suite against real Gemini, 3 repeats per case, and gates it against the
-# committed baseline if there is one. Needs the GOOGLE_API_KEY repository secret.
+# Manual: runs the intake suite against Gemini on Vertex AI, 3 repeats per case, and gates it
+# against the committed baseline if there is one. Auth is keyless (Workload Identity Federation):
+# run whirlpool/gauge/setup_vertex_ci.sh once to create the GCP side and the repo variables.
 on:
   workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write # lets google-github-actions/auth exchange GitHub's OIDC token
 
 jobs:
   intake:
@@ -23,17 +28,22 @@ jobs:
           pip install -r sombrero/requirements.txt -e sombrero
           pip install "agentgauge @ git+https://github.com/cherrymekala/agentgauge"
 
+      - uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_EVALS_SA }}
+
       - name: Fetch policy wordings
         run: bash magellan/ingest/fetch_sources.sh
 
       - name: Run suite
         working-directory: whirlpool/gauge
         env:
-          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+          USE_VERTEX: "true"
         run: |
           python build_suites.py
           agentgauge run intake.yaml --agent agents:intake_agent --workers 1 \
-            --out runs/intake.json --html intake.html
+            --out runs/intake.json --html intake.html --max-errors 0
 
       - name: Gate against baseline
         working-directory: whirlpool/gauge
